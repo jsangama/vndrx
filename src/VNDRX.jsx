@@ -486,6 +486,9 @@ const SUPPLIERS = {
 
 const ORDER_PHONE = "51955273229";
 const ORDER_PHONE_DISPLAY = "955 273 229";
+const APP_PUBLIC_URL = "https://jsangama.github.io/vndrx/";
+const APP_QR_IMAGE = "./app-qr.png";
+const APP_QR_CARD = "./app-qr-card.svg";
 const ASWA_PROMO_LIBRARY = [
   {
     id: "main-flyer",
@@ -506,6 +509,16 @@ const ASWA_PROMO_LIBRARY = [
     accent: theme.greenLight,
     featured: true,
     message: "Promocion San Juanero 2026: material listo para vender en temporada. Pedidos al 955 273 229.",
+  },
+  {
+    id: "app-qr",
+    src: APP_QR_CARD,
+    title: "QR de la app",
+    subtitle: "Escanea para abrir la tienda y pedir",
+    note: "PIDE AQUÍ",
+    accent: "#22C55E",
+    featured: true,
+    message: `Escanea este QR para entrar a VNDRX y hacer tu pedido. Link: ${APP_PUBLIC_URL}`,
   },
   {
     id: "san-juanera-special",
