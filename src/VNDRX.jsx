@@ -32,6 +32,21 @@ const theme = {
   border: "#253823",
 };
 
+const HOME = {
+  page: "#F4EBDD",
+  surface: "#FFFDF8",
+  soft: "#F9F1E5",
+  soft2: "#FFF8EF",
+  text: "#273128",
+  muted: "#667166",
+  border: "#E5D9C7",
+  accent: "#A36D2C",
+  accent2: "#D6A65C",
+  leaf: "#47654B",
+  leaf2: "#6A8A6E",
+  shadow: "0 18px 36px rgba(76, 56, 23, 0.12)",
+};
+
 const ASSETS = {
   promoMain,
   promoAlt,
@@ -888,9 +903,10 @@ function createOrderRecord({ supplier, items, customer, payment, extras }) {
 function Badge({ text, color }) {
   return (
     <span style={{
-      background: color + "22", color, border: `1px solid ${color}55`,
-      borderRadius: 4, fontSize: 10, fontWeight: 800, padding: "2px 8px",
-      letterSpacing: 1.5, fontFamily: "monospace", whiteSpace: "nowrap",
+      background: `${color}18`, color, border: `1px solid ${color}33`,
+      borderRadius: 999, fontSize: 10, fontWeight: 800, padding: "5px 10px",
+      letterSpacing: 0.8, fontFamily: "'Trebuchet MS', 'Segoe UI', sans-serif", whiteSpace: "nowrap",
+      boxShadow: "0 8px 18px rgba(0,0,0,0.05)",
     }}>{text}</span>
   );
 }
@@ -898,9 +914,10 @@ function Badge({ text, color }) {
 function CertBadge({ cert }) {
   return (
     <span style={{
-      background: "#0A2010", border: `1px solid ${theme.green}55`,
-      color: theme.greenLight, borderRadius: 4, fontSize: 10,
-      fontWeight: 700, padding: "2px 7px", letterSpacing: 1,
+      background: HOME.soft2, border: `1px solid ${HOME.border}`,
+      color: HOME.leaf, borderRadius: 999, fontSize: 10,
+      fontWeight: 800, padding: "4px 8px", letterSpacing: 0.8,
+      fontFamily: "'Trebuchet MS', 'Segoe UI', sans-serif",
     }}>{cert}</span>
   );
 }
@@ -913,9 +930,9 @@ function ProductAvatar({ product, size = 52, radius = 14 }) {
     borderRadius: radius,
     overflow: "hidden",
     flexShrink: 0,
-    background: theme.bg,
-    border: `1px solid ${theme.border}`,
-    boxShadow: "0 10px 18px rgba(0,0,0,0.18)",
+    background: HOME.surface,
+    border: `1px solid ${HOME.border}`,
+    boxShadow: HOME.shadow,
   };
 
   if (media) {
@@ -946,17 +963,17 @@ function PromoTile({ image, title, subtitle, note, accent, fit = "cover", aspect
       style={{
         width: "100%",
         padding: 0,
-        border: `1px solid ${theme.border}`,
-        borderRadius: 18,
+        border: `1px solid ${HOME.border}`,
+        borderRadius: 20,
         overflow: "hidden",
-        background: theme.bgCard,
-        color: theme.cream,
+        background: HOME.surface,
+        color: HOME.text,
         cursor: "pointer",
         textAlign: "left",
-        boxShadow: "0 18px 30px rgba(0,0,0,0.22)",
+        boxShadow: HOME.shadow,
       }}
     >
-      <div style={{ position: "relative", aspectRatio, background: `linear-gradient(135deg, ${accent}22, ${theme.bg})`, overflow: "hidden" }}>
+      <div style={{ position: "relative", aspectRatio, background: `linear-gradient(135deg, ${accent}18, ${HOME.soft})`, overflow: "hidden" }}>
         <img
           src={image}
           alt={title}
@@ -968,14 +985,14 @@ function PromoTile({ image, title, subtitle, note, accent, fit = "cover", aspect
             display: "block",
           }}
         />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.58) 100%)" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(39,49,40,0.34) 100%)" }} />
         {note && (
           <span style={{
             position: "absolute",
             top: 10,
             left: 10,
             background: accent,
-            color: "#0F1A0E",
+            color: "#fff",
             borderRadius: 999,
             padding: "4px 10px",
             fontSize: 10,
@@ -987,8 +1004,8 @@ function PromoTile({ image, title, subtitle, note, accent, fit = "cover", aspect
         )}
       </div>
       <div style={{ padding: "12px 14px 14px" }}>
-        <div style={{ fontFamily: "Georgia, serif", fontSize: 15, fontWeight: 800, lineHeight: 1.2, marginBottom: 4 }}>{title}</div>
-        <div style={{ color: theme.creamDim, fontSize: 12, lineHeight: 1.45 }}>{subtitle}</div>
+        <div style={{ fontFamily: "Georgia, serif", fontSize: 15, fontWeight: 800, lineHeight: 1.2, marginBottom: 4, color: HOME.text }}>{title}</div>
+        <div style={{ color: HOME.muted, fontSize: 12, lineHeight: 1.45 }}>{subtitle}</div>
       </div>
     </button>
   );
@@ -1001,11 +1018,11 @@ function PromoBoard() {
   return (
     <section style={{ maxWidth: 1200, margin: "18px auto 0", padding: "0 20px" }}>
       <div style={{
-        background: `radial-gradient(circle at top left, #21331B 0%, #121D10 42%, ${theme.bgCard} 100%)`,
-        border: `1px solid ${theme.border}`,
+        background: `radial-gradient(circle at top left, ${HOME.soft2} 0%, ${HOME.page} 44%, ${HOME.surface} 100%)`,
+        border: `1px solid ${HOME.border}`,
         borderRadius: 24,
         padding: 18,
-        boxShadow: "0 28px 60px rgba(0,0,0,0.28)",
+        boxShadow: HOME.shadow,
       }}>
         <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 0.95fr)", gap: 18, alignItems: "stretch" }}>
           <button
@@ -1013,13 +1030,13 @@ function PromoBoard() {
             onClick={() => openAsset(ASSETS.promoMain)}
             style={{
               padding: 0,
-              border: `1px solid ${theme.border}`,
+              border: `1px solid ${HOME.border}`,
               borderRadius: 22,
               overflow: "hidden",
               cursor: "pointer",
-              background: "#0D150C",
+              background: HOME.surface,
               position: "relative",
-              boxShadow: "0 18px 28px rgba(0,0,0,0.24)",
+              boxShadow: HOME.shadow,
             }}
           >
             <div style={{ position: "relative", aspectRatio: "2 / 3", minHeight: 560 }}>
@@ -1029,11 +1046,11 @@ function PromoBoard() {
                 loading="lazy"
                 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
               />
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(11,18,11,0.12) 0%, rgba(11,18,11,0.22) 28%, rgba(11,18,11,0.66) 100%)" }} />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(255,250,242,0.06) 0%, rgba(39,49,40,0.18) 28%, rgba(39,49,40,0.56) 100%)" }} />
               <div style={{ position: "absolute", inset: 0, padding: 18, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-start", flexWrap: "wrap" }}>
-                  <Badge text="TEMPORADA SAN JUAN 2026" color={theme.goldLight} />
-                  <Badge text="LISTO PARA VENDER" color={theme.greenLight} />
+                  <Badge text="TEMPORADA SAN JUAN 2026" color={HOME.accent2} />
+                  <Badge text="LISTO PARA VENDER" color={HOME.leaf2} />
                 </div>
                 <div>
                   <div style={{ color: "#fff", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 900, lineHeight: 0.95, letterSpacing: -0.6, maxWidth: 420, textShadow: "0 8px 30px rgba(0,0,0,0.4)" }}>
@@ -1112,8 +1129,8 @@ function PromoBoard() {
             </div>
 
             <div style={{
-              background: `linear-gradient(135deg, ${theme.bgLight}, ${theme.bgCard})`,
-              border: `1px solid ${theme.border}`,
+              background: `linear-gradient(135deg, ${HOME.surface}, ${HOME.soft})`,
+              border: `1px solid ${HOME.border}`,
               borderRadius: 18,
               padding: 16,
               display: "flex",
@@ -1121,10 +1138,11 @@ function PromoBoard() {
               alignItems: "center",
               gap: 14,
               flexWrap: "wrap",
+              boxShadow: HOME.shadow,
             }}>
               <div style={{ minWidth: 240 }}>
-                <div style={{ color: theme.goldLight, fontSize: 13, fontWeight: 800, letterSpacing: 1, marginBottom: 5 }}>LISTA REAL PARA VENDER</div>
-                <div style={{ color: theme.cream, fontSize: 15, fontWeight: 700, lineHeight: 1.45 }}>
+                <div style={{ color: HOME.accent, fontSize: 13, fontWeight: 800, letterSpacing: 1, marginBottom: 5 }}>LISTA REAL PARA VENDER</div>
+                <div style={{ color: HOME.text, fontSize: 15, fontWeight: 700, lineHeight: 1.45 }}>
                   Abre el QR de Yape, revisa precios y manda el pedido sin salir de la tienda.
                 </div>
               </div>
@@ -1133,14 +1151,15 @@ function PromoBoard() {
                   type="button"
                   onClick={openWhatsApp}
                   style={{
-                    background: `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})`,
+                    background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})`,
                     border: "none",
                     borderRadius: 12,
-                    color: "#0F1A0E",
+                    color: "#fff",
                     padding: "11px 14px",
                     cursor: "pointer",
                     fontSize: 13,
                     fontWeight: 800,
+                    boxShadow: "0 10px 20px rgba(71,101,75,0.18)",
                   }}
                 >
                   Pedir ASWA
@@ -1149,10 +1168,10 @@ function PromoBoard() {
                   type="button"
                   onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}
                   style={{
-                    background: theme.bg,
-                    border: `1px solid ${theme.border}`,
+                    background: HOME.surface,
+                    border: `1px solid ${HOME.border}`,
                     borderRadius: 12,
-                    color: theme.cream,
+                    color: HOME.text,
                     padding: "11px 14px",
                     cursor: "pointer",
                     fontSize: 13,
@@ -1178,12 +1197,13 @@ function PromoBoard() {
               onClick={() => openAsset(asset.src)}
               style={{
                 padding: 0,
-                border: `1px solid ${theme.border}`,
+                border: `1px solid ${HOME.border}`,
                 borderRadius: 16,
                 overflow: "hidden",
-                background: theme.bg,
+                background: HOME.surface,
                 cursor: "pointer",
                 textAlign: "left",
+                boxShadow: "0 12px 22px rgba(76,56,23,0.06)",
               }}
             >
               <div style={{ aspectRatio: "4 / 3", overflow: "hidden" }}>
@@ -1194,7 +1214,7 @@ function PromoBoard() {
                   style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                 />
               </div>
-              <div style={{ padding: "10px 12px", color: theme.cream, fontSize: 12, fontWeight: 700 }}>
+              <div style={{ padding: "10px 12px", color: HOME.text, fontSize: 12, fontWeight: 700 }}>
                 {asset.label}
               </div>
             </button>
@@ -1204,10 +1224,10 @@ function PromoBoard() {
         <div style={{ marginTop: 18 }}>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-end", flexWrap: "wrap", marginBottom: 12 }}>
             <div>
-              <div style={{ color: theme.goldLight, fontSize: 13, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Kit para compartir</div>
-              <div style={{ color: theme.cream, fontSize: 15, fontWeight: 700, marginTop: 4 }}>Promociones y fotos listas para abrir o enviar</div>
+              <div style={{ color: HOME.accent, fontSize: 13, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Kit para compartir</div>
+              <div style={{ color: HOME.text, fontSize: 15, fontWeight: 700, marginTop: 4 }}>Promociones y fotos listas para abrir o enviar</div>
             </div>
-            <div style={{ color: theme.textDim, fontSize: 12 }}>Toca una tarjeta para verla completa.</div>
+            <div style={{ color: HOME.muted, fontSize: 12 }}>Toca una tarjeta para verla completa.</div>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
             {ASWA_PROMO_LIBRARY.filter((asset) => asset.featured).map((asset) => (
@@ -1232,10 +1252,10 @@ function PromoBoard() {
 
 function HubMetric({ label, value, hint, color = theme.goldLight }) {
   return (
-    <div style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 14, padding: 14, minHeight: 84 }}>
-      <div style={{ color: theme.textDim, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>{label}</div>
+    <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 14, minHeight: 84, boxShadow: "0 10px 18px rgba(76,56,23,0.05)" }}>
+      <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>{label}</div>
       <div style={{ color, fontSize: 20, fontWeight: 900, marginTop: 6, lineHeight: 1.1 }}>{value}</div>
-      {hint && <div style={{ color: theme.creamDim, fontSize: 11, marginTop: 4, lineHeight: 1.45 }}>{hint}</div>}
+      {hint && <div style={{ color: HOME.muted, fontSize: 11, marginTop: 4, lineHeight: 1.45 }}>{hint}</div>}
     </div>
   );
 }
@@ -1246,9 +1266,9 @@ function HubChip({ active, label, icon, onClick }) {
       type="button"
       onClick={onClick}
       style={{
-        border: `1px solid ${active ? theme.goldLight : theme.border}`,
-        background: active ? "rgba(240,192,64,0.12)" : theme.bg,
-        color: active ? theme.goldLight : theme.creamDim,
+        border: `1px solid ${active ? HOME.accent2 : HOME.border}`,
+        background: active ? HOME.soft2 : HOME.surface,
+        color: active ? HOME.accent : HOME.muted,
         borderRadius: 999,
         padding: "8px 12px",
         fontSize: 11,
@@ -1258,6 +1278,7 @@ function HubChip({ active, label, icon, onClick }) {
         alignItems: "center",
         gap: 7,
         whiteSpace: "nowrap",
+        boxShadow: active ? "0 10px 18px rgba(163,109,44,0.08)" : "none",
       }}
     >
       <span>{icon}</span>
@@ -1268,10 +1289,10 @@ function HubChip({ active, label, icon, onClick }) {
 
 function HubSection({ title, subtitle, children }) {
   return (
-    <section style={{ background: theme.bgLight, border: `1px solid ${theme.border}`, borderRadius: 16, padding: 16 }}>
+    <section style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 16, padding: 16, boxShadow: HOME.shadow }}>
       <div style={{ marginBottom: 12 }}>
-        <div style={{ color: theme.cream, fontSize: 15, fontWeight: 900 }}>{title}</div>
-        {subtitle && <div style={{ color: theme.textDim, fontSize: 11, lineHeight: 1.45, marginTop: 4 }}>{subtitle}</div>}
+        <div style={{ color: HOME.text, fontSize: 15, fontWeight: 900 }}>{title}</div>
+        {subtitle && <div style={{ color: HOME.muted, fontSize: 11, lineHeight: 1.45, marginTop: 4 }}>{subtitle}</div>}
       </div>
       {children}
     </section>
@@ -1793,15 +1814,15 @@ function ASWAControlHub({
 
   return (
     <div onClick={onClose} style={{ position: "fixed", inset: 0, zIndex: 120, background: "rgba(0,0,0,0.78)", backdropFilter: "blur(8px)", display: "flex", justifyContent: "center", alignItems: "flex-start", padding: 16, overflowY: "auto" }}>
-      <div onClick={(e) => e.stopPropagation()} style={{ width: "min(1100px, 100%)", background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 24, boxShadow: "0 30px 70px rgba(0,0,0,0.4)", overflow: "hidden", marginTop: 20 }}>
-        <div style={{ padding: 18, borderBottom: `1px solid ${theme.border}`, background: "linear-gradient(135deg, rgba(20,28,17,1), rgba(9,14,8,1))" }}>
+      <div onClick={(e) => e.stopPropagation()} style={{ width: "min(1100px, 100%)", background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 24, boxShadow: HOME.shadow, overflow: "hidden", marginTop: 20 }}>
+        <div style={{ padding: 18, borderBottom: `1px solid ${HOME.border}`, background: `linear-gradient(135deg, ${HOME.soft2}, ${HOME.surface})` }}>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
             <div>
-              <div style={{ color: theme.goldLight, fontSize: 12, fontWeight: 900, letterSpacing: 1.2, textTransform: "uppercase" }}>Centro ASWA de funciones</div>
-              <div style={{ color: theme.cream, fontSize: 22, fontWeight: 900, marginTop: 6 }}>Herramientas de venta, bonos y pedidos</div>
-              <div style={{ color: theme.textDim, fontSize: 12, marginTop: 6, lineHeight: 1.5 }}>Lo que trae ASWA para vender mejor, resumido dentro de tu tienda y conectado al pedido real por WhatsApp.</div>
+              <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1.2, textTransform: "uppercase" }}>Centro ASWA de funciones</div>
+              <div style={{ color: HOME.text, fontSize: 22, fontWeight: 900, marginTop: 6 }}>Herramientas de venta, bonos y pedidos</div>
+              <div style={{ color: HOME.muted, fontSize: 12, marginTop: 6, lineHeight: 1.5 }}>Lo que trae ASWA para vender mejor, resumido dentro de tu tienda y conectado al pedido real por WhatsApp.</div>
             </div>
-            <button type="button" onClick={onClose} style={{ background: theme.bg, border: `1px solid ${theme.border}`, borderRadius: 12, color: theme.cream, width: 38, height: 38, cursor: "pointer", fontSize: 18, fontWeight: 800 }}>×</button>
+            <button type="button" onClick={onClose} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 12, color: HOME.text, width: 38, height: 38, cursor: "pointer", fontSize: 18, fontWeight: 800 }}>×</button>
           </div>
         </div>
 
@@ -1835,41 +1856,50 @@ function ASWAControlHub({
 function DeliveryZoneSelector({ selected, onSelect, zones }) {
   return (
     <div style={{ marginBottom: 14 }}>
-      <div style={{ color: theme.creamDim, fontSize: 11, fontWeight: 700, marginBottom: 8, letterSpacing: 1 }}>
-        📦 ZONA DE ENTREGA
+      <div style={{ color: HOME.text, fontSize: 11, fontWeight: 800, marginBottom: 8, letterSpacing: 1, textTransform: "uppercase" }}>
+        Entrega y zona
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
         {zones.map((zone) => (
-          <div
+          <button
+            type="button"
             key={zone.id}
             onClick={() => onSelect(zone)}
             style={{
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-              background: selected?.id === zone.id ? theme.bgLight : theme.bg,
-              border: `1px solid ${selected?.id === zone.id ? theme.greenLight + "77" : theme.border}`,
-              borderRadius: 8, padding: "8px 12px", cursor: "pointer", transition: "all 0.15s",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 12,
+              width: "100%",
+              background: selected?.id === zone.id ? HOME.soft2 : HOME.surface,
+              border: `1px solid ${selected?.id === zone.id ? HOME.accent2 : HOME.border}`,
+              borderRadius: 14,
+              padding: "10px 12px",
+              cursor: "pointer",
+              transition: "all 0.15s",
+              boxShadow: selected?.id === zone.id ? "0 10px 18px rgba(163,109,44,0.08)" : "none",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <span style={{ fontSize: 13 }}>{zone.emoji}</span>
               <div>
-                <div style={{ color: theme.cream, fontSize: 12, fontWeight: 600 }}>{zone.name}</div>
-                <div style={{ color: theme.textDim, fontSize: 10 }}>{zone.address}</div>
+                <div style={{ color: HOME.text, fontSize: 12, fontWeight: 700, lineHeight: 1.3 }}>{zone.name}</div>
+                <div style={{ color: HOME.muted, fontSize: 10, lineHeight: 1.4 }}>{zone.address}</div>
               </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
               {zone.cost === 0
-                ? <span style={{ background: "#0A2010", color: theme.greenLight, borderRadius: 10, fontSize: 10, fontWeight: 700, padding: "2px 8px" }}>GRATIS</span>
-                : <span style={{ fontFamily: "monospace", color: theme.gold, fontSize: 13, fontWeight: 700 }}>+S/ {zone.cost.toFixed(2)}</span>
+                ? <span style={{ background: "#E8F3E8", color: HOME.leaf, borderRadius: 999, fontSize: 10, fontWeight: 800, padding: "3px 8px" }}>Gratis</span>
+                : <span style={{ fontFamily: "monospace", color: HOME.accent, fontSize: 13, fontWeight: 800 }}>+S/ {zone.cost.toFixed(2)}</span>
               }
-              {selected?.id === zone.id && <span style={{ color: theme.greenLight, fontSize: 13 }}>✓</span>}
+              {selected?.id === zone.id && <span style={{ color: HOME.leaf, fontSize: 13, fontWeight: 900 }}>✓</span>}
             </div>
-          </div>
+          </button>
         ))}
       </div>
       {selected && selected.cost > 0 && (
-        <div style={{ marginTop: 7, background: "#0A1C0A", border: `1px solid ${theme.border}`, borderRadius: 6, padding: "6px 12px", fontSize: 11, color: theme.creamDim }}>
-          💡 Delivery <strong style={{ color: theme.gold }}>S/ {selected.cost.toFixed(2)} fijo</strong> — sin importar cuántas unidades o sacos pidas.
+        <div style={{ marginTop: 8, background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 10, padding: "8px 12px", fontSize: 11, color: HOME.muted, lineHeight: 1.5 }}>
+          💡 Delivery <strong style={{ color: HOME.accent }}>S/ {selected.cost.toFixed(2)} fijo</strong> sin importar cuántas unidades o sacos pidas.
         </div>
       )}
     </div>
@@ -1882,205 +1912,208 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
   const minQty = product.minOrder || 1;
   const [qty, setQty] = useState(minQty);
   const [zone, setZone] = useState((product.zones || ZONES_REYLEON)[0]);
-  const [expanded, setExpanded] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false);
 
   const pres = product.presentations[selPres];
   const subtotal = pres.price * qty;
   const total = subtotal + (zone?.cost || 0);
 
   return (
-    <div style={{
-      background: theme.bgCard,
-      border: `1px solid ${theme.border}`,
-      borderRadius: 16, overflow: "hidden",
-      display: "flex", flexDirection: "column",
-      transition: "border-color 0.2s",
-    }}
-      onMouseEnter={e => e.currentTarget.style.borderColor = lc.badge + "66"}
-      onMouseLeave={e => e.currentTarget.style.borderColor = theme.border}
+    <article
+      style={{
+        background: HOME.surface,
+        border: `1px solid ${HOME.border}`,
+        borderRadius: 24,
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        boxShadow: HOME.shadow,
+        transition: "transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = lc.badge + "66";
+        e.currentTarget.style.transform = "translateY(-2px)";
+        e.currentTarget.style.boxShadow = "0 24px 42px rgba(76, 56, 23, 0.14)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = HOME.border;
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.boxShadow = HOME.shadow;
+      }}
     >
-      {/* Header */}
-      <div style={{
-        background: `linear-gradient(135deg, ${lc.bg} 0%, ${lc.accent}55 100%)`,
-        padding: "18px 20px 14px",
-        borderBottom: `1px solid ${theme.border}`,
-      }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
+      <div style={{ padding: 16, background: `linear-gradient(135deg, ${lc.bg} 0%, ${lc.accent}16 100%)`, borderBottom: `1px solid ${HOME.border}` }}>
+        <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-start", marginBottom: 12, flexWrap: "wrap" }}>
           <Badge text={lc.label} color={lc.badge} />
           {product.saving > 0 && (
-            <span style={{ background: "#0A2010", color: theme.greenLight, borderRadius: 20, fontSize: 10, fontWeight: 700, padding: "2px 9px" }}>
-              -{product.saving}% vs tienda
+            <span style={{ background: "#EEF7EA", color: HOME.leaf, borderRadius: 999, fontSize: 10, fontWeight: 800, padding: "4px 9px" }}>
+              Ahorra {product.saving}%
             </span>
           )}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <ProductAvatar product={product} size={58} radius={16} />
+
+        <div style={{ display: "grid", gridTemplateColumns: "88px 1fr", gap: 14, alignItems: "center" }}>
+          <ProductAvatar product={product} size={88} radius={22} />
           <div>
-            <div style={{ fontFamily: "Georgia, serif", fontSize: 17, fontWeight: 700, color: theme.cream, lineHeight: 1.2 }}>
-              {product.name}
+            <div style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 800, color: HOME.text, lineHeight: 1.15 }}>{product.name}</div>
+            <div style={{ color: HOME.muted, fontSize: 12, marginTop: 4, lineHeight: 1.45 }}>{product.subtitle}</div>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
+              <span style={{ background: "#EEF7EA", color: HOME.leaf, borderRadius: 999, padding: "4px 9px", fontSize: 10, fontWeight: 800 }}>Listo para casa</span>
+              <span style={{ background: "#F6EADB", color: HOME.accent, borderRadius: 999, padding: "4px 9px", fontSize: 10, fontWeight: 800 }}>Desde S/ {pres.price.toFixed(2)}</span>
             </div>
-            <div style={{ color: theme.creamDim, fontSize: 12, marginTop: 3 }}>{product.subtitle}</div>
           </div>
         </div>
       </div>
 
-      {/* Quality info */}
-      <div style={{ padding: "10px 18px", background: theme.bg + "99", borderBottom: `1px solid ${theme.border}`, display: "flex", gap: 16 }}>
-        <div>
-          <div style={{ color: theme.textDim, fontSize: 10, fontWeight: 600, letterSpacing: 1 }}>CALIDAD</div>
-          <div style={{ color: theme.gold, fontSize: 12, fontWeight: 700 }}>{product.quality}</div>
-        </div>
-        <div>
-          <div style={{ color: theme.textDim, fontSize: 10, fontWeight: 600, letterSpacing: 1 }}>VARIEDAD</div>
-          <div style={{ color: theme.creamDim, fontSize: 12 }}>{product.variety}</div>
-        </div>
-      </div>
-
-      <div style={{ padding: "14px 18px", flex: 1 }}>
-        {/* Description */}
-        <p style={{ color: theme.creamDim, fontSize: 12, lineHeight: 1.65, margin: "0 0 12px" }}>
-          {expanded ? product.desc : product.desc.slice(0, 110) + (product.desc.length > 110 ? "..." : "")}
-          {product.desc.length > 110 && (
-            <span onClick={() => setExpanded(!expanded)} style={{ color: theme.gold, cursor: "pointer", marginLeft: 4, fontSize: 11 }}>
-              {expanded ? " ver menos" : " ver más"}
-            </span>
+      <div style={{ padding: 16, flex: 1 }}>
+        <div style={{ color: HOME.text, fontSize: 13, lineHeight: 1.7, marginBottom: 10 }}>
+          {detailsOpen ? product.desc : (product.tip || product.desc).slice(0, 115) + ((product.tip || product.desc).length > 115 ? "..." : "")}
+          {((product.tip || product.desc).length > 115 || product.desc.length > 115) && (
+            <button
+              type="button"
+              onClick={() => setDetailsOpen((s) => !s)}
+              style={{ border: "none", background: "none", color: HOME.accent, cursor: "pointer", fontWeight: 800, padding: 0, marginLeft: 6, fontSize: 12 }}
+            >
+              {detailsOpen ? "ver menos" : "ver más"}
+            </button>
           )}
-        </p>
-
-        {/* Tags */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 14 }}>
-          {product.tags.map(t => (
-            <span key={t} style={{ background: theme.bgLight, border: `1px solid ${theme.border}`, color: theme.greenLight, borderRadius: 20, fontSize: 10, padding: "2px 9px" }}>
-              ✓ {t}
-            </span>
-          ))}
         </div>
 
-        {/* Cooking tip */}
-        <div style={{ background: theme.bg, borderRadius: 8, padding: "8px 12px", marginBottom: 14, borderLeft: `3px solid ${lc.badge}` }}>
-          <div style={{ color: theme.textDim, fontSize: 10, fontWeight: 700, letterSpacing: 1, marginBottom: 3 }}>🍳 COCCIÓN</div>
-          <div style={{ color: theme.creamDim, fontSize: 11, lineHeight: 1.5 }}>{product.cooking}</div>
-        </div>
+        {detailsOpen && (
+          <div style={{ display: "grid", gap: 10, marginBottom: 14 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 8 }}>
+              <div style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 10 }}>
+                <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Calidad</div>
+                <div style={{ color: HOME.text, fontSize: 12, fontWeight: 700, marginTop: 4, lineHeight: 1.4 }}>{product.quality}</div>
+              </div>
+              <div style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 10 }}>
+                <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Variedad</div>
+                <div style={{ color: HOME.text, fontSize: 12, fontWeight: 700, marginTop: 4, lineHeight: 1.4 }}>{product.variety}</div>
+              </div>
+            </div>
 
-        {/* Presentation selector */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              {product.tags.map((t) => (
+                <span key={t} style={{ background: "#EEF7EA", border: `1px solid #D7E6D5`, color: HOME.leaf, borderRadius: 999, fontSize: 10, fontWeight: 700, padding: "4px 9px" }}>
+                  ✓ {t}
+                </span>
+              ))}
+            </div>
+
+            <div style={{ background: HOME.soft2, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 12 }}>
+              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, marginBottom: 4, textTransform: "uppercase" }}>Cocina con calma</div>
+              <div style={{ color: HOME.text, fontSize: 12, lineHeight: 1.6 }}>{product.cooking}</div>
+            </div>
+
+            {product.minOrderNote && (
+              <div style={{ background: "#FFF4E8", border: `1px solid #E8C98D`, borderRadius: 14, padding: 12, color: "#A36216", fontSize: 11, lineHeight: 1.5, display: "flex", gap: 8, alignItems: "flex-start" }}>
+                <span>⚠️</span>
+                <span>{product.minOrderNote}</span>
+              </div>
+            )}
+          </div>
+        )}
+
         <div style={{ marginBottom: 14 }}>
-          <div style={{ color: theme.creamDim, fontSize: 11, fontWeight: 700, marginBottom: 8, letterSpacing: 1 }}>📦 PRESENTACIÓN</div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 5 }}>
+          <div style={{ color: HOME.muted, fontSize: 11, fontWeight: 800, marginBottom: 8, letterSpacing: 1, textTransform: "uppercase" }}>Presentación</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 6 }}>
             {product.presentations.map((p, i) => (
-              <div
+              <button
                 key={i}
+                type="button"
                 onClick={() => { setSelPres(i); setQty(1); }}
                 style={{
-                  background: selPres === i ? lc.accent : theme.bg,
-                  border: `1px solid ${selPres === i ? lc.badge : theme.border}`,
-                  borderRadius: 8, padding: "7px 6px", cursor: "pointer",
-                  textAlign: "center", transition: "all 0.15s",
+                  background: selPres === i ? HOME.soft : "#FFF",
+                  border: `1px solid ${selPres === i ? HOME.accent2 : HOME.border}`,
+                  borderRadius: 14,
+                  padding: "9px 6px",
+                  cursor: "pointer",
+                  textAlign: "center",
+                  transition: "all 0.15s",
                 }}
               >
-                <div style={{ color: selPres === i ? theme.cream : theme.creamDim, fontSize: 11, fontWeight: 600 }}>{p.label}</div>
-                <div style={{ fontFamily: "monospace", color: theme.gold, fontSize: 12, fontWeight: 700 }}>S/ {p.price.toFixed(2)}</div>
-              </div>
+                <div style={{ color: HOME.text, fontSize: 11, fontWeight: 700, lineHeight: 1.2 }}>{p.label}</div>
+                <div style={{ fontFamily: "monospace", color: HOME.accent, fontSize: 12, fontWeight: 800, marginTop: 3 }}>S/ {p.price.toFixed(2)}</div>
+              </button>
             ))}
           </div>
         </div>
 
-        {/* Zone selector — oculto en promo escolar (delivery gratis incluido) */}
         {!product.schoolOnly && (
           <DeliveryZoneSelector selected={zone} onSelect={setZone} zones={product.zones || ZONES_REYLEON} />
         )}
 
-        {/* Qty & total */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: product.minOrderNote ? 8 : 12 }}>
-          <div style={{ display: "flex", alignItems: "center", background: theme.bg, borderRadius: 8, border: `1px solid ${theme.border}`, overflow: "hidden" }}>
-            <button onClick={() => setQty(Math.max(minQty, qty - 1))} style={{ background: "none", border: "none", color: theme.cream, width: 32, height: 32, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>−</button>
-            <span style={{ fontFamily: "monospace", color: theme.cream, minWidth: 28, textAlign: "center", fontSize: 14, fontWeight: 700 }}>{qty}</span>
-            <button onClick={() => setQty(qty + 1)} style={{ background: "none", border: "none", color: theme.cream, width: 32, height: 32, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>+</button>
-          </div>
-          <span style={{ color: theme.textDim, fontSize: 11 }}>{pres.unit}{qty > 1 ? "s" : ""}</span>
-        </div>
-        {product.minOrderNote && (
-          <div style={{
-            background: "#1A1000", border: "1px solid #C47A1E55",
-            borderRadius: 7, padding: "6px 11px", marginBottom: 12,
-            fontSize: 11, color: "#C47A1E", display: "flex", gap: 6, alignItems: "center",
-          }}>
-            <span>⚠️</span> {product.minOrderNote}
-          </div>
-        )}
-
-        {/* School-only notice + delivery gratis */}
         {product.schoolOnly && (
-          <div style={{
-            background: "#001A2E", border: "1px solid #3B82F655",
-            borderRadius: 10, padding: "10px 13px", marginBottom: 12,
-          }}>
-            <div style={{ color: "#60A5FA", fontSize: 11, fontWeight: 800, letterSpacing: 0.5, marginBottom: 6 }}>
-              🎒 EXCLUSIVO INSTITUCIONES EDUCATIVAS
+          <div style={{ background: "#EEF6FF", border: "1px solid #C5DAFF", borderRadius: 14, padding: 12, marginBottom: 14 }}>
+            <div style={{ color: "#2E5BAA", fontSize: 11, fontWeight: 800, letterSpacing: 0.5, marginBottom: 6, textTransform: "uppercase" }}>
+              Exclusivo para instituciones
             </div>
-            <div style={{ color: "#93C5FD", fontSize: 11, lineHeight: 1.5, marginBottom: 8 }}>
-              Solo disponible para <strong>colegios, escuelas y jardines</strong>. Indica el nombre de tu institución al hacer el pedido.
-            </div>
-            <div style={{ background: "#002A1A", border: "1px solid #16A34A55", borderRadius: 7, padding: "6px 10px", display: "flex", alignItems: "center", gap: 6 }}>
-              <span style={{ fontSize: 14 }}>🚚</span>
-              <span style={{ color: "#4ADE80", fontSize: 12, fontWeight: 700 }}>Delivery GRATIS a tu institución — beneficio de la promoción</span>
+            <div style={{ color: "#335C8D", fontSize: 11, lineHeight: 1.55 }}>
+              Solo para colegios, escuelas y jardines. Es un beneficio pensado para atender pedidos grandes con calma.
             </div>
           </div>
         )}
 
-        {/* Price breakdown */}
-        <div style={{ background: theme.bg, borderRadius: 10, padding: "10px 13px", marginBottom: 12, border: `1px solid ${theme.border}` }}>
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-            <span style={{ color: theme.textDim, fontSize: 11 }}>{qty} × {pres.label} — S/ {pres.price.toFixed(2)}</span>
-            <span style={{ fontFamily: "monospace", color: theme.creamDim, fontSize: 12 }}>S/ {subtotal.toFixed(2)}</span>
+        <div style={{ background: HOME.soft2, border: `1px solid ${HOME.border}`, borderRadius: 16, padding: 12, marginBottom: 14 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 10, marginBottom: 8 }}>
+            <span style={{ color: HOME.muted, fontSize: 11 }}>Cantidad</span>
+            <span style={{ color: HOME.accent, fontSize: 11, fontWeight: 800 }}>Tu pedido se siente como en casa</span>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-            <span style={{ color: theme.textDim, fontSize: 11 }}>Delivery — {zone?.name}</span>
-            <span style={{ fontFamily: "monospace", color: zone?.cost === 0 ? theme.greenLight : theme.gold, fontSize: 12 }}>
-              {zone?.cost === 0 ? "Gratis" : `+S/ ${zone?.cost.toFixed(2)}`}
-            </span>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, marginBottom: 10 }}>
+            <div style={{ display: "flex", alignItems: "center", background: "#FFF", borderRadius: 999, border: `1px solid ${HOME.border}`, overflow: "hidden" }}>
+              <button onClick={() => setQty(Math.max(minQty, qty - 1))} type="button" style={{ background: "none", border: "none", color: HOME.text, width: 34, height: 34, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>−</button>
+              <span style={{ fontFamily: "monospace", color: HOME.text, minWidth: 30, textAlign: "center", fontSize: 14, fontWeight: 800 }}>{qty}</span>
+              <button onClick={() => setQty(qty + 1)} type="button" style={{ background: "none", border: "none", color: HOME.text, width: 34, height: 34, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>+</button>
+            </div>
+            <div style={{ textAlign: "right" }}>
+              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Total</div>
+              <div style={{ color: HOME.text, fontFamily: "monospace", fontSize: 18, fontWeight: 900 }}>S/ {total.toFixed(2)}</div>
+            </div>
           </div>
-          <div style={{ borderTop: `1px solid ${theme.border}`, paddingTop: 8, display: "flex", justifyContent: "space-between" }}>
-            <span style={{ color: theme.cream, fontWeight: 700, fontSize: 13 }}>Total</span>
-            <span style={{ fontFamily: "monospace", color: theme.goldLight, fontWeight: 800, fontSize: 17 }}>S/ {total.toFixed(2)}</span>
+          <div style={{ display: "flex", justifyContent: "space-between", color: HOME.muted, fontSize: 11, lineHeight: 1.4 }}>
+            <span>{qty} × {pres.label}</span>
+            <span>Delivery {zone?.cost === 0 ? "gratis" : `+S/ ${zone?.cost.toFixed(2)}`}</span>
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
           <button
             onClick={() => onAdd(product, pres, qty, zone)}
+            type="button"
             style={{
               width: "100%",
-              background: cartItem
-                ? `linear-gradient(135deg, ${theme.green}, ${theme.greenLight})`
-                : `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})`,
-              border: "none", borderRadius: 10,
-              color: cartItem ? "#fff" : "#0F1A0E",
-              fontSize: 13, fontWeight: 800, padding: "12px 0",
-              cursor: "pointer", letterSpacing: 0.5,
+              background: cartItem ? HOME.leaf : `linear-gradient(135deg, ${HOME.accent}, ${HOME.accent2})`,
+              border: "none",
+              borderRadius: 14,
+              color: "#fff",
+              fontSize: 13,
+              fontWeight: 900,
+              padding: "13px 0",
+              cursor: "pointer",
+              boxShadow: "0 12px 22px rgba(163, 109, 44, 0.18)",
             }}
           >
-            {cartItem ? `✓ ${cartItem.qty} en carrito` : "Agregar"}
+            {cartItem ? `✓ En tu pedido (${cartItem.qty})` : "Agregar al pedido"}
           </button>
           <button
             onClick={() => onQuickBuy?.(product, pres, qty, zone)}
+            type="button"
             style={{
               width: "100%",
-              background: theme.bgCard,
-              border: `1px solid ${theme.border}`,
-              borderRadius: 10,
-              color: theme.cream,
+              background: "#FFF",
+              border: `1px solid ${HOME.border}`,
+              borderRadius: 14,
+              color: HOME.text,
               fontSize: 13,
-              fontWeight: 800,
-              padding: "12px 0",
+              fontWeight: 900,
+              padding: "13px 0",
               cursor: "pointer",
-              letterSpacing: 0.3,
             }}
           >
             Pedir ahora
           </button>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -3282,80 +3315,110 @@ export default function VNDRX() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: theme.bg, fontFamily: "'Segoe UI', system-ui, sans-serif", color: theme.text }}>
-      <style>{`* { box-sizing: border-box; } ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: ${theme.bg}; } ::-webkit-scrollbar-thumb { background: ${theme.border}; border-radius: 3px; } input { outline: none; } input::placeholder { color: ${theme.textDim}; } input:focus { border-color: ${theme.gold} !important; }`}</style>
+    <div style={{ minHeight: "100vh", background: HOME.page, fontFamily: "'Trebuchet MS', 'Segoe UI', sans-serif", color: HOME.text }}>
+      <style>{`* { box-sizing: border-box; } ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: ${HOME.page}; } ::-webkit-scrollbar-thumb { background: ${HOME.border}; border-radius: 3px; } input { outline: none; } input::placeholder { color: ${HOME.muted}; } input:focus { border-color: ${HOME.accent} !important; }`}</style>
 
       {/* NAV */}
-      <nav style={{ background: theme.bgCard, borderBottom: `1px solid ${theme.border}`, padding: "0 24px", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50 }}>
+      <nav style={{ background: "rgba(255, 252, 248, 0.9)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${HOME.border}`, padding: "0 20px", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 8px 20px rgba(76, 56, 23, 0.06)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ background: `linear-gradient(135deg, ${theme.gold}, ${theme.greenLight})`, borderRadius: 10, width: 34, height: 34, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>🌾</div>
+          <div style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.accent2})`, borderRadius: 16, width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, boxShadow: "0 10px 20px rgba(71,101,75,0.18)" }}>🌾</div>
           <div>
-            <div style={{ fontFamily: "Georgia, serif", fontSize: 18, fontWeight: 800, background: `linear-gradient(90deg, ${theme.goldLight}, ${theme.greenLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1 }}>VNDRX</div>
-            <div style={{ fontSize: 9, color: theme.textDim, letterSpacing: 2, fontFamily: "monospace" }}>DIRECTO DEL ORIGEN A TI</div>
+            <div style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 900, color: HOME.text, lineHeight: 1 }}>VNDRX</div>
+            <div style={{ fontSize: 10, color: HOME.muted, letterSpacing: 1.8, fontFamily: "monospace", textTransform: "uppercase" }}>pedido fácil y cercano</div>
           </div>
         </div>
         <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar producto..." style={{ background: theme.bg, border: `1px solid ${theme.border}`, borderRadius: 8, color: theme.cream, padding: "7px 13px", fontSize: 13, width: 220 }} />
-          <button onClick={() => openCart("cart")} style={{ background: cartCount > 0 ? `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})` : theme.bgLight, border: `1px solid ${cartCount > 0 ? theme.gold : theme.border}`, borderRadius: 10, color: cartCount > 0 ? "#0F1A0E" : theme.cream, padding: "7px 15px", cursor: "pointer", fontSize: 13, fontWeight: 700 }}>
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar producto..." style={{ background: "#FFF", border: `1px solid ${HOME.border}`, borderRadius: 999, color: HOME.text, padding: "10px 14px", fontSize: 13, width: 240, boxShadow: "0 8px 16px rgba(76,56,23,0.05)" }} />
+          <button onClick={() => openCart("cart")} style={{ background: cartCount > 0 ? `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})` : "#FFF", border: `1px solid ${cartCount > 0 ? HOME.leaf : HOME.border}`, borderRadius: 999, color: cartCount > 0 ? "#fff" : HOME.text, padding: "10px 15px", cursor: "pointer", fontSize: 13, fontWeight: 800, boxShadow: cartCount > 0 ? "0 10px 18px rgba(71,101,75,0.16)" : "0 8px 16px rgba(76,56,23,0.05)" }}>
             🛒 {cartCount > 0 ? `${cartCount} items` : "Carrito"}
           </button>
         </div>
       </nav>
 
-      {/* HERO / SUPPLIER CARD */}
-      <div style={{ background: `linear-gradient(135deg, ${theme.bgCard}, ${theme.bgLight})`, borderBottom: `1px solid ${theme.border}`, padding: "32px 24px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "flex-start", gap: 20, flexWrap: "wrap" }}>
-            <div style={{ flex: 1, minWidth: 260 }}>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: theme.bg, border: `1px solid ${theme.gold}44`, borderRadius: 20, padding: "5px 14px", marginBottom: 14, fontSize: 11, color: theme.gold, fontFamily: "monospace", letterSpacing: 1 }}>
-                🔗 CONEXIÓN DIRECTA · CERO INTERMEDIARIOS
+      {/* HERO / WELCOME */}
+      <div style={{ background: `linear-gradient(180deg, #FFF9F2 0%, ${HOME.page} 100%)`, borderBottom: `1px solid ${HOME.border}`, padding: "34px 20px 24px" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.15fr) minmax(0, 0.85fr)", gap: 18, alignItems: "stretch" }}>
+            <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 28, padding: 24, boxShadow: HOME.shadow }}>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 999, padding: "6px 14px", marginBottom: 14, fontSize: 11, color: HOME.accent, fontFamily: "monospace", letterSpacing: 1, textTransform: "uppercase" }}>
+                🏡 te atendemos como en casa
               </div>
-              <h1 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(26px,4vw,42px)", fontWeight: 800, lineHeight: 1.2, margin: "0 0 10px", color: theme.cream }}>
-                Piladora Rey León<br />
-                <span style={{ background: `linear-gradient(90deg, ${theme.gold}, ${theme.greenLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>directo a tu hogar</span>
+              <h1 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(30px,4vw,48px)", fontWeight: 900, lineHeight: 1.05, margin: "0 0 10px", color: HOME.text }}>
+                Pide tranquilo, recibe en casa
               </h1>
-              <p style={{ color: theme.creamDim, fontSize: 14, lineHeight: 1.7, margin: "0 0 16px", maxWidth: 480 }}>
-                Más de 25 años produciendo arroz de calidad en San Martín. Compra directo del molino — sin bodega, sin minimarket, sin sobreprecio.
+              <p style={{ color: HOME.muted, fontSize: 15, lineHeight: 1.75, margin: "0 0 18px", maxWidth: 600 }}>
+                En VNDRX te ayudamos a elegir, pagar y pedir sin enredos. Todo está pensado para que tu cliente se sienta acompañado, como cuando alguien de confianza le atiende en persona.
               </p>
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                {["ISO 9001", "HACCP", "BPM"].map(c => <CertBadge key={c} cert={c} />)}
-              </div>
-            </div>
-            <div style={{ background: theme.bg, borderRadius: 14, padding: "16px 20px", border: `1px solid ${theme.border}`, minWidth: 220 }}>
-              <div style={{ color: theme.textDim, fontSize: 11, fontWeight: 700, letterSpacing: 1, marginBottom: 10 }}>📞 PEDIDOS WHATSAPP</div>
-              <div style={{ color: theme.gold, fontSize: 18, fontWeight: 800, marginBottom: 4 }}>{ORDER_PHONE_DISPLAY}</div>
-              <div style={{ color: theme.creamDim, fontSize: 12, marginBottom: 4 }}>ventas@reyleon.pe</div>
-              <div style={{ color: theme.creamDim, fontSize: 12, marginBottom: 12 }}>arrozpacifico.com</div>
-              <div style={{ borderTop: `1px solid ${theme.border}`, paddingTop: 10, display: "flex", gap: 20 }}>
-                {[{ n: "25+", l: "años" }, { n: "45", l: "trabajadores" }, { n: "14", l: "productos" }].map(s => (
-                  <div key={s.l} style={{ textAlign: "center" }}>
-                    <div style={{ fontFamily: "monospace", color: theme.goldLight, fontSize: 16, fontWeight: 700 }}>{s.n}</div>
-                    <div style={{ color: theme.textDim, fontSize: 10 }}>{s.l}</div>
-                  </div>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 18 }}>
+                {["pedido fácil", "foto real", "whatsapp directo", "pago claro"].map((item) => (
+                  <span key={item} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 999, padding: "7px 11px", fontSize: 11, color: HOME.text, fontWeight: 700 }}>
+                    {item}
+                  </span>
                 ))}
               </div>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <button
+                  type="button"
+                  onClick={() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                  style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})`, border: "none", color: "#fff", borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.18)" }}
+                >
+                  Ver catálogo
+                </button>
+                <button
+                  type="button"
+                  onClick={() => (cartCount > 0 ? openCart("checkout") : document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" }))}
+                  style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                >
+                  Ir al pedido
+                </button>
+              </div>
             </div>
-            {/* ASWA card */}
-            <div style={{ background: "#1A0D00", borderRadius: 14, padding: "16px 20px", border: `1px solid #C47A1E44`, minWidth: 220 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-                <span style={{ fontSize: 20 }}>🌽</span>
-                <div>
-                  <div style={{ color: "#F0C040", fontSize: 14, fontWeight: 800, lineHeight: 1 }}>ASWA</div>
-                  <div style={{ color: "#C8BC9A", fontSize: 10 }}>La Rica Chicha · Morales</div>
+
+            <div style={{ display: "grid", gap: 14 }}>
+              <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 24, padding: 18, boxShadow: HOME.shadow }}>
+                <div style={{ color: HOME.accent, fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase", marginBottom: 10 }}>Cómo pedir</div>
+                <div style={{ display: "grid", gap: 10 }}>
+                  {[
+                    "1. Elige tu producto favorito",
+                    "2. Toca Agregar o Pedir ahora",
+                    "3. Confirma por WhatsApp",
+                  ].map((step) => (
+                    <div key={step} style={{ background: HOME.soft2, border: `1px solid ${HOME.border}`, borderRadius: 16, padding: "10px 12px", color: HOME.text, fontSize: 13, fontWeight: 700, lineHeight: 1.45 }}>
+                      {step}
+                    </div>
+                  ))}
                 </div>
               </div>
-              <div style={{ color: "#7A9474", fontSize: 11, fontWeight: 700, letterSpacing: 1, marginBottom: 8 }}>📞 CONTACTO DIRECTO</div>
-              <div style={{ color: "#C47A1E", fontSize: 16, fontWeight: 800, marginBottom: 3 }}>986 445 531</div>
-              <div style={{ color: "#C8BC9A", fontSize: 12, marginBottom: 3 }}>Pedidos: {ORDER_PHONE_DISPLAY}</div>
-              <div style={{ color: "#C8BC9A", fontSize: 12, marginBottom: 10 }}>@aswa.laricachicha</div>
-              <div style={{ borderTop: `1px solid #253823`, paddingTop: 10, display: "flex", gap: 14 }}>
-                {[{ n: "3", l: "zonas" }, { n: "4", l: "productos" }, { n: "30–60", l: "min" }].map(s => (
-                  <div key={s.l} style={{ textAlign: "center" }}>
-                    <div style={{ fontFamily: "monospace", color: "#F0C040", fontSize: 15, fontWeight: 700 }}>{s.n}</div>
-                    <div style={{ color: "#7A9474", fontSize: 10 }}>{s.l}</div>
+
+              <div style={{ background: `linear-gradient(135deg, #FFF8EF, #F6EEDD)`, border: `1px solid ${HOME.border}`, borderRadius: 24, padding: 18, boxShadow: HOME.shadow }}>
+                <div style={{ color: HOME.muted, fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>Atención directa</div>
+                <div style={{ color: HOME.text, fontSize: 18, fontWeight: 900, fontFamily: "Georgia, serif", marginBottom: 10 }}>Tu pedido entra al WhatsApp central</div>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }}>
+                  <div>
+                    <div style={{ color: HOME.muted, fontSize: 11, textTransform: "uppercase", fontWeight: 800, letterSpacing: 1 }}>Número</div>
+                    <div style={{ color: HOME.leaf, fontSize: 18, fontWeight: 900 }}>{ORDER_PHONE_DISPLAY}</div>
                   </div>
-                ))}
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                    <span style={{ background: "#EAF5EA", color: HOME.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>ASWA</span>
+                    <span style={{ background: "#F9EEDB", color: HOME.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Rey León</span>
+                  </div>
+                </div>
               </div>
+            </div>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: 12, marginTop: 14 }}>
+            <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14, boxShadow: HOME.shadow }}>
+              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Atención amable</div>
+              <div style={{ color: HOME.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Te guiamos paso a paso para que comprar se sienta fácil y cercano.</div>
+            </div>
+            <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14, boxShadow: HOME.shadow }}>
+              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Pedido rápido</div>
+              <div style={{ color: HOME.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Cada producto tiene un botón para agregarlo o abrir el pedido al instante.</div>
+            </div>
+            <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14, boxShadow: HOME.shadow }}>
+              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Confianza</div>
+              <div style={{ color: HOME.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Fotos reales, precios visibles y mensaje listo para WhatsApp.</div>
             </div>
           </div>
         </div>
@@ -3363,21 +3426,22 @@ export default function VNDRX() {
 
       <PromoBoard />
 
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px 10px" }}>
+      <div id="catalog" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px 10px" }}>
         <div style={{
-          background: `linear-gradient(135deg, ${theme.bgLight}, ${theme.bgCard})`,
-          border: `1px solid ${theme.border}`,
-          borderRadius: 18,
+          background: "rgba(255,255,255,0.82)",
+          backdropFilter: "blur(8px)",
+          border: `1px solid ${HOME.border}`,
+          borderRadius: 22,
           padding: 16,
-          boxShadow: "0 18px 30px rgba(0,0,0,0.15)",
+          boxShadow: HOME.shadow,
         }}>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
             <div>
-              <div style={{ color: theme.goldLight, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Centro ASWA</div>
-              <div style={{ color: theme.cream, fontSize: 16, fontWeight: 900, marginTop: 4 }}>Tutorial, referidos, bonos, GPS, historial y soporte en un solo lugar</div>
-              <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.5, marginTop: 4 }}>Lo mejor de ASWA sumado a tu tienda actual para vender mas rapido.</div>
+              <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Centro ASWA</div>
+              <div style={{ color: HOME.text, fontSize: 16, fontWeight: 900, marginTop: 4 }}>Tutorial, referidos, bonos, GPS, historial y soporte en un solo lugar</div>
+              <div style={{ color: HOME.muted, fontSize: 12, lineHeight: 1.5, marginTop: 4 }}>Lo mejor de ASWA sumado a tu tienda actual para vender más rápido.</div>
             </div>
-            <button type="button" onClick={() => { setHubTab("tutorial"); setHubOpen(true); }} style={{ background: `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})`, border: "none", color: "#0F1A0E", borderRadius: 12, padding: "11px 14px", cursor: "pointer", fontWeight: 900 }}>
+            <button type="button" onClick={() => { setHubTab("tutorial"); setHubOpen(true); }} style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})`, border: "none", color: "#fff", borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.16)" }}>
               Abrir hub
             </button>
           </div>
@@ -3398,13 +3462,14 @@ export default function VNDRX() {
                 type="button"
                 onClick={() => { setHubTab(item.id); setHubOpen(true); }}
                 style={{
-                  background: theme.bg,
-                  border: `1px solid ${theme.border}`,
-                  borderRadius: 12,
+                  background: "#FFF",
+                  border: `1px solid ${HOME.border}`,
+                  borderRadius: 14,
                   padding: "11px 10px",
-                  color: theme.cream,
+                  color: HOME.text,
                   cursor: "pointer",
                   textAlign: "left",
+                  boxShadow: "0 8px 18px rgba(76,56,23,0.04)",
                 }}
               >
                 <div style={{ fontSize: 15 }}>{item.icon}</div>
@@ -3416,23 +3481,24 @@ export default function VNDRX() {
       </div>
 
       {/* LINE FILTERS */}
-      <div style={{ background: theme.bgCard, borderBottom: `1px solid ${theme.border}`, padding: "12px 24px", display: "flex", gap: 8, overflowX: "auto" }}>
+      <div style={{ background: "rgba(255,255,255,0.74)", borderBottom: `1px solid ${HOME.border}`, padding: "12px 20px", display: "flex", gap: 8, overflowX: "auto", backdropFilter: "blur(8px)" }}>
         {Object.entries(LINE_LABELS).map(([key, label]) => {
           const lc = key !== "all" ? LINE_COLORS[key] : null;
           const active = activeLine === key;
           return (
             <button key={key} onClick={() => setActiveLine(key)} style={{
-              background: active ? (lc ? lc.badge : theme.gold) : "transparent",
-              border: `1px solid ${active ? (lc ? lc.badge : theme.gold) : theme.border}`,
-              borderRadius: 20, color: active ? "#0F1A0E" : theme.creamDim,
-              padding: "6px 18px", cursor: "pointer", fontSize: 12,
-              fontWeight: active ? 800 : 400, whiteSpace: "nowrap", transition: "all 0.2s",
+              background: active ? (lc ? lc.badge + "18" : HOME.soft) : "#FFF",
+              border: `1px solid ${active ? (lc ? lc.badge : HOME.accent2) : HOME.border}`,
+              borderRadius: 999, color: active ? HOME.text : HOME.muted,
+              padding: "8px 16px", cursor: "pointer", fontSize: 12,
+              fontWeight: active ? 800 : 700, whiteSpace: "nowrap", transition: "all 0.2s",
+              boxShadow: active ? "0 8px 16px rgba(76,56,23,0.08)" : "none",
             }}>
               {label}
             </button>
           );
         })}
-        <span style={{ marginLeft: "auto", color: theme.textDim, fontSize: 12, alignSelf: "center", whiteSpace: "nowrap" }}>
+        <span style={{ marginLeft: "auto", color: HOME.muted, fontSize: 12, alignSelf: "center", whiteSpace: "nowrap" }}>
           {filtered.length} producto{filtered.length !== 1 ? "s" : ""}
         </span>
       </div>
