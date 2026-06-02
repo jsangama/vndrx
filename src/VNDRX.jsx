@@ -738,15 +738,10 @@ function groupCartBySupplier(cart) {
   );
 }
 
-function buildOrderMessage({ supplier, items, customer, payment, extras = {} }) {
-  const subtotal = items.reduce((a, i) => a + i.pres.price * i.qty, 0);
-  const delivery = items.reduce((a, i) => a + (i.zone?.cost || 0), 0);
-  const total = subtotal + delivery;
-  const lines = [
-    `Hola, quiero hacer un pedido en ${supplier.name}.`,
-    "",
-    `Nombre: ${customer.name}`,
-    `Teléfono: ${customer.phone}`,
+function buildOrderContactLines(customer, extras = {}) {
+  return [
+    customer.name ? `Nombre: ${customer.name}` : null,
+    customer.phone ? `Teléfono: ${customer.phone}` : null,
     customer.district ? `Zona / distrito: ${customer.district}` : null,
     customer.address ? `Dirección: ${customer.address}` : null,
     customer.reference ? `Referencia: ${customer.reference}` : null,
@@ -758,12 +753,23 @@ function buildOrderMessage({ supplier, items, customer, payment, extras = {} }) 
     extras.gift?.enabled ? "Pedido como regalo" : null,
     extras.gift?.relation ? `Relación: ${extras.gift.relation}` : null,
     extras.gift?.recipient ? `Recibe: ${extras.gift.recipient}` : null,
-    extras.gift?.phone ? `Telefono del regalo: ${extras.gift.phone}` : null,
+    extras.gift?.phone ? `Teléfono del regalo: ${extras.gift.phone}` : null,
     extras.gift?.message ? `Tarjeta: ${extras.gift.message}` : null,
     extras.fulfillmentMode ? `Modalidad: ${extras.fulfillmentMode}` : null,
     extras.reservation?.enabled ? `Reserva: ${extras.reservation.date} ${extras.reservation.time}` : null,
     extras.reservation?.mode ? `Entrega: ${extras.reservation.mode}` : null,
     extras.reservation?.note ? `Nota de reserva: ${extras.reservation.note}` : null,
+  ];
+}
+
+function buildOrderMessage({ supplier, items, customer, payment, extras = {} }) {
+  const subtotal = items.reduce((a, i) => a + i.pres.price * i.qty, 0);
+  const delivery = items.reduce((a, i) => a + (i.zone?.cost || 0), 0);
+  const total = subtotal + delivery;
+  const lines = [
+    `Hola, quiero hacer un pedido en ${supplier.name}.`,
+    "",
+    ...buildOrderContactLines(customer, extras),
     "",
     `Pago: ${payment}`,
     "",
@@ -776,6 +782,66 @@ function buildOrderMessage({ supplier, items, customer, payment, extras = {} }) 
     `Subtotal: ${formatMoney(subtotal)}`,
     `Delivery: ${formatMoney(delivery)}`,
     `Total: ${formatMoney(total)}`,
+    "",
+    "Quedo atento para confirmar el pedido.",
+  ];
+
+  return lines.filter(Boolean).join("\n");
+}
+
+function buildCombinedOrderMessage({ groups, customer, payment, extras = {} }) {
+  const safeGroups = groups.filter((group) => group?.items?.length);
+  if (safeGroups.length === 0) return "";
+  if (safeGroups.length === 1) {
+    return buildOrderMessage({
+      supplier: safeGroups[0].supplier,
+      items: safeGroups[0].items,
+      customer,
+      payment,
+      extras,
+    });
+  }
+
+  const subtotal = safeGroups.reduce(
+    (sum, group) => sum + group.items.reduce((groupSum, item) => groupSum + item.pres.price * item.qty, 0),
+    0,
+  );
+  const delivery = safeGroups.reduce(
+    (sum, group) => sum + group.items.reduce((groupSum, item) => groupSum + (item.zone?.cost || 0), 0),
+    0,
+  );
+  const total = subtotal + delivery;
+  const sections = safeGroups.flatMap((group, index) => {
+    const groupSubtotal = group.items.reduce((sum, item) => sum + item.pres.price * item.qty, 0);
+    const groupDelivery = group.items.reduce((sum, item) => sum + (item.zone?.cost || 0), 0);
+    const groupTotal = groupSubtotal + groupDelivery;
+
+    return [
+      `${index + 1}. ${group.supplier.name}`,
+      ...group.items.map((item) => {
+        const itemTotal = item.pres.price * item.qty + (item.zone?.cost || 0);
+        return `- ${item.qty} x ${item.product.name} (${item.pres.label}) | ${item.zone?.name || "Sin zona"} | ${formatMoney(itemTotal)}`;
+      }),
+      `Subtotal grupo: ${formatMoney(groupSubtotal)}`,
+      `Delivery grupo: ${formatMoney(groupDelivery)}`,
+      `Total grupo: ${formatMoney(groupTotal)}`,
+      "",
+    ];
+  });
+
+  const lines = [
+    "Hola, quiero hacer un pedido en VNDRX.",
+    "",
+    ...buildOrderContactLines(customer, extras),
+    "",
+    `Pago: ${payment}`,
+    "",
+    "Pedido completo:",
+    ...sections,
+    "",
+    `Subtotal general: ${formatMoney(subtotal)}`,
+    `Delivery general: ${formatMoney(delivery)}`,
+    `Total general: ${formatMoney(total)}`,
     "",
     "Quedo atento para confirmar el pedido.",
   ];
@@ -1810,7 +1876,7 @@ function DeliveryZoneSelector({ selected, onSelect, zones }) {
   );
 }
 
-function ProductCard({ product, onAdd, cartItem }) {
+function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
   const lc = LINE_COLORS[product.line];
   const [selPres, setSelPres] = useState(0);
   const minQty = product.minOrder || 1;
@@ -1979,21 +2045,40 @@ function ProductCard({ product, onAdd, cartItem }) {
           </div>
         </div>
 
-        <button
-          onClick={() => onAdd(product, pres, qty, zone)}
-          style={{
-            width: "100%",
-            background: cartItem
-              ? `linear-gradient(135deg, ${theme.green}, ${theme.greenLight})`
-              : `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})`,
-            border: "none", borderRadius: 10,
-            color: cartItem ? "#fff" : "#0F1A0E",
-            fontSize: 13, fontWeight: 800, padding: "12px 0",
-            cursor: "pointer", letterSpacing: 0.5,
-          }}
-        >
-          {cartItem ? `✓ En carrito (${cartItem.qty} ${cartItem.pres.unit}s)` : "Agregar al carrito"}
-        </button>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+          <button
+            onClick={() => onAdd(product, pres, qty, zone)}
+            style={{
+              width: "100%",
+              background: cartItem
+                ? `linear-gradient(135deg, ${theme.green}, ${theme.greenLight})`
+                : `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})`,
+              border: "none", borderRadius: 10,
+              color: cartItem ? "#fff" : "#0F1A0E",
+              fontSize: 13, fontWeight: 800, padding: "12px 0",
+              cursor: "pointer", letterSpacing: 0.5,
+            }}
+          >
+            {cartItem ? `✓ ${cartItem.qty} en carrito` : "Agregar"}
+          </button>
+          <button
+            onClick={() => onQuickBuy?.(product, pres, qty, zone)}
+            style={{
+              width: "100%",
+              background: theme.bgCard,
+              border: `1px solid ${theme.border}`,
+              borderRadius: 10,
+              color: theme.cream,
+              fontSize: 13,
+              fontWeight: 800,
+              padding: "12px 0",
+              cursor: "pointer",
+              letterSpacing: 0.3,
+            }}
+          >
+            Pedir ahora
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -2234,8 +2319,8 @@ function CartDrawer({ cart, onClose, onRemove }) {
 
 // ── APP ──────────────────────────────────────────────────────────────────────
 
-function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer = {}, referralCode = "", referredBy = "", gpsState = {} }) {
-  const [step, setStep] = useState("cart");
+function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer = {}, referralCode = "", referredBy = "", gpsState = {}, initialStep = "cart" }) {
+  const [step, setStep] = useState(initialStep);
   const [payment, setPayment] = useState("cod");
   const [status, setStatus] = useState("");
   const [customer, setCustomer] = useState({
@@ -2286,26 +2371,40 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
     }));
   }, [initialCustomer, referralCode, referredBy]);
 
+  useEffect(() => {
+    setStep(initialStep);
+  }, [initialStep]);
+
   const setField = (field, value) => {
     setCustomer((prev) => ({ ...prev, [field]: value }));
   };
 
-  const makeMessage = (group) =>
+  const extras = {
+    gps: activeGps,
+    fulfillmentMode,
+    gift: giftEnabled ? { enabled: true, relation: giftRelation, recipient: giftName, phone: giftPhone, message: giftMessage } : null,
+    reservation: reservationEnabled ? { enabled: true, date: reservationDate, time: reservationTime, note: reservationNote, mode: fulfillmentMode } : null,
+  };
+
+  const makeGroupMessage = (group) =>
     buildOrderMessage({
       supplier: group.supplier,
       items: group.items,
       customer,
       payment: paymentLabel(payment),
-      extras: {
-        gps: activeGps,
-        fulfillmentMode,
-        gift: giftEnabled ? { enabled: true, relation: giftRelation, recipient: giftName, phone: giftPhone, message: giftMessage } : null,
-        reservation: reservationEnabled ? { enabled: true, date: reservationDate, time: reservationTime, note: reservationNote, mode: fulfillmentMode } : null,
-      },
+      extras,
     });
 
-  const copyOrder = async (group) => {
-    const message = makeMessage(group);
+  const makeCombinedMessage = () =>
+    buildCombinedOrderMessage({
+      groups,
+      customer,
+      payment: paymentLabel(payment),
+      extras,
+    });
+
+  const copyGroupOrder = async (group) => {
+    const message = makeGroupMessage(group);
     try {
       await navigator.clipboard.writeText(message);
       setStatus(`Pedido copiado. Se enviará al ${ORDER_PHONE_DISPLAY}`);
@@ -2314,8 +2413,18 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
     }
   };
 
-  const openWhatsApp = async (group) => {
-    const message = makeMessage(group);
+  const copyCombinedOrder = async () => {
+    const message = makeCombinedMessage();
+    try {
+      await navigator.clipboard.writeText(message);
+      setStatus(`Pedido completo copiado. Se enviará al ${ORDER_PHONE_DISPLAY}`);
+    } catch {
+      setStatus("No se pudo copiar el pedido completo");
+    }
+  };
+
+  const openGroupWhatsApp = async (group) => {
+    const message = makeGroupMessage(group);
     const url = `https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank", "noopener,noreferrer");
     setStatus(`Pedido listo para enviar a ${ORDER_PHONE_DISPLAY}`);
@@ -2324,19 +2433,33 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
       items: group.items,
       customer: {
         ...customer,
-        extras: {
-          gps: activeGps,
-          gift: giftEnabled ? { enabled: true, relation: giftRelation, recipient: giftName, phone: giftPhone, message: giftMessage } : null,
-          reservation: reservationEnabled ? { enabled: true, date: reservationDate, time: reservationTime, note: reservationNote, mode: fulfillmentMode } : null,
-        },
+        extras,
       },
       payment,
-      extras: {
-        gps: activeGps,
-        fulfillmentMode,
-        gift: giftEnabled ? { enabled: true, relation: giftRelation, recipient: giftName, phone: giftPhone, message: giftMessage } : null,
-        reservation: reservationEnabled ? { enabled: true, date: reservationDate, time: reservationTime, note: reservationNote, mode: fulfillmentMode } : null,
+      extras,
+    });
+    onOrderSent?.(orderRecord);
+    try {
+      await navigator.clipboard.writeText(message);
+    } catch {
+      // Clipboard is optional.
+    }
+  };
+
+  const openCombinedWhatsApp = async () => {
+    const message = makeCombinedMessage();
+    const url = `https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+    setStatus(`Pedido completo listo para enviar a ${ORDER_PHONE_DISPLAY}`);
+    const orderRecord = createOrderRecord({
+      supplier: mixedSuppliers ? { key: "mixto", name: "Pedido mixto" } : groups[0]?.supplier,
+      items: cart,
+      customer: {
+        ...customer,
+        extras,
       },
+      payment,
+      extras,
     });
     onOrderSent?.(orderRecord);
     try {
@@ -2531,9 +2654,50 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
               )}
 
               <div style={{ background: theme.bgLight, borderRadius: 14, padding: 14, border: `1px solid ${theme.border}` }}>
-                <div style={{ color: theme.cream, fontSize: 14, fontWeight: 800, marginBottom: 10 }}>Pedido centralizado</div>
+                <div style={{ color: theme.cream, fontSize: 14, fontWeight: 800, marginBottom: 8 }}>Pedido fácil</div>
                 <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.5, marginBottom: 12 }}>
-                  Completa tus datos y envía todo al mismo WhatsApp. Si mezclaste productos de dos marcas, el mensaje igual se centraliza en un solo número.
+                  Un solo botón envía todo junto. Si quieres separar por marca, tienes las opciones de abajo como apoyo.
+                </div>
+
+                <div style={{ display: "grid", gap: 8, marginBottom: 12 }}>
+                  <button
+                    type="button"
+                    onClick={openCombinedWhatsApp}
+                    disabled={!canSend}
+                    style={{
+                      width: "100%",
+                      background: `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})`,
+                      border: "none",
+                      borderRadius: 12,
+                      color: "#0F1A0E",
+                      fontSize: 14,
+                      fontWeight: 900,
+                      padding: "13px 0",
+                      cursor: canSend ? "pointer" : "not-allowed",
+                      opacity: canSend ? 1 : 0.7,
+                    }}
+                  >
+                    Enviar pedido completo por WhatsApp
+                  </button>
+                  <button
+                    type="button"
+                    onClick={copyCombinedOrder}
+                    disabled={!canSend}
+                    style={{
+                      width: "100%",
+                      background: theme.bgCard,
+                      border: `1px solid ${theme.border}`,
+                      borderRadius: 12,
+                      color: theme.cream,
+                      fontSize: 13,
+                      fontWeight: 800,
+                      padding: "12px 0",
+                      cursor: canSend ? "pointer" : "not-allowed",
+                      opacity: canSend ? 1 : 0.55,
+                    }}
+                  >
+                    Copiar pedido completo
+                  </button>
                 </div>
 
                 {groups.map((group) => {
@@ -2579,7 +2743,7 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
 
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                         <button
-                          onClick={() => copyOrder(group)}
+                          onClick={() => copyGroupOrder(group)}
                           disabled={!canSend}
                           style={{
                             width: "100%",
@@ -2595,9 +2759,9 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
                           }}
                         >
                           Copiar pedido
-                        </button>
+                          </button>
                         <button
-                          onClick={() => openWhatsApp(group)}
+                          onClick={() => openGroupWhatsApp(group)}
                           disabled={!canSend}
                           style={{
                             width: "100%",
@@ -2686,6 +2850,7 @@ export default function VNDRX() {
   const [orders, setOrders] = usePersistentState(STORAGE_KEYS.orders, []);
   const [reviews, setReviews] = usePersistentState(STORAGE_KEYS.reviews, []);
   const [cartOpen, setCartOpen] = useState(false);
+  const [cartStartStep, setCartStartStep] = useState("cart");
   const [activeLine, setActiveLine] = useState("all");
   const [search, setSearch] = useState("");
   const [hubOpen, setHubOpen] = useState(false);
@@ -2768,6 +2933,15 @@ export default function VNDRX() {
   };
 
   const removeFromCart = uid => setCart(prev => prev.filter(i => i.uid !== uid));
+  const openCart = (step = "cart") => {
+    setCartStartStep(step);
+    setCartOpen(true);
+  };
+  const quickBuy = (product, pres, qty, zone) => {
+    addToCart(product, pres, qty, zone);
+    openCart("checkout");
+    showToast("Pedido rápido listo. Completa tus datos y envíalo.", "success");
+  };
   const cartCount = cart.reduce((a, i) => a + i.qty, 0);
   const totalHistory = orders.reduce((a, order) => a + (order.total || 0), 0);
   const bonusPoints = orders.reduce((a, order) => a + (order.bonusEarned || 0), 0);
@@ -2780,7 +2954,7 @@ export default function VNDRX() {
     return acc;
   }, {});
   const topSupplierKey = Object.entries(orderTotalsBySupplier).sort((a, b) => b[1] - a[1])[0]?.[0] || "reyleon";
-  const topSupplierName = topSupplierKey === "aswa" ? "ASWA" : "Rey Leon";
+  const topSupplierName = topSupplierKey === "aswa" ? "ASWA" : topSupplierKey === "mixto" ? "Pedido mixto" : "Rey Leon";
 
   const handleOrderSent = (order) => {
     setOrders((prev) => [order, ...prev].slice(0, 40));
@@ -2816,19 +2990,27 @@ export default function VNDRX() {
       uid: `${item.product.id}-${item.pres.label}-${Date.now()}-${index}`,
     }));
     setCart(recreated);
-    setCartOpen(true);
+    openCart("cart");
     setHubOpen(false);
     showToast("Pedido repetido en el carrito", "success");
   };
 
   const openOrder = async (order) => {
-    const message = buildOrderMessage({
-      supplier: { key: order.supplierKey, name: order.supplierName },
-      items: order.items,
-      customer: order.customer,
-      payment: order.paymentLabel || paymentLabel(order.payment),
-      extras: order.extras || {},
-    });
+    const orderGroups = groupCartBySupplier(order.items || []);
+    const message = (order.supplierKey === "mixto" || orderGroups.length > 1)
+      ? buildCombinedOrderMessage({
+        groups: orderGroups,
+        customer: order.customer,
+        payment: order.paymentLabel || paymentLabel(order.payment),
+        extras: order.extras || {},
+      })
+      : buildOrderMessage({
+        supplier: { key: order.supplierKey, name: order.supplierName },
+        items: order.items,
+        customer: order.customer,
+        payment: order.paymentLabel || paymentLabel(order.payment),
+        extras: order.extras || {},
+      });
     const url = `https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank", "noopener,noreferrer");
     try {
@@ -3035,7 +3217,7 @@ export default function VNDRX() {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
-    setCartOpen(true);
+    openCart("cart");
     showToast("Carrito abierto");
   };
 
@@ -3049,6 +3231,11 @@ export default function VNDRX() {
 
   const quickOrderFromHub = async () => {
     setHubOpen(false);
+    if (cartCount > 0) {
+      openCart("checkout");
+      showToast("Pedido rápido listo para enviar", "success");
+      return;
+    }
     await supportWhatsApp("Hola, quiero hacer un pedido en VNDRX.");
   };
 
@@ -3109,7 +3296,7 @@ export default function VNDRX() {
         </div>
         <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar producto..." style={{ background: theme.bg, border: `1px solid ${theme.border}`, borderRadius: 8, color: theme.cream, padding: "7px 13px", fontSize: 13, width: 220 }} />
-          <button onClick={() => setCartOpen(true)} style={{ background: cartCount > 0 ? `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})` : theme.bgLight, border: `1px solid ${cartCount > 0 ? theme.gold : theme.border}`, borderRadius: 10, color: cartCount > 0 ? "#0F1A0E" : theme.cream, padding: "7px 15px", cursor: "pointer", fontSize: 13, fontWeight: 700 }}>
+          <button onClick={() => openCart("cart")} style={{ background: cartCount > 0 ? `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})` : theme.bgLight, border: `1px solid ${cartCount > 0 ? theme.gold : theme.border}`, borderRadius: 10, color: cartCount > 0 ? "#0F1A0E" : theme.cream, padding: "7px 15px", cursor: "pointer", fontSize: 13, fontWeight: 700 }}>
             🛒 {cartCount > 0 ? `${cartCount} items` : "Carrito"}
           </button>
         </div>
@@ -3275,6 +3462,26 @@ export default function VNDRX() {
           </div>
         )}
 
+        <div style={{
+          background: "linear-gradient(135deg, #121D10 0%, #1D2B18 100%)",
+          border: `1px solid ${theme.border}`,
+          borderRadius: 14,
+          padding: "12px 14px",
+          marginBottom: 18,
+          display: "flex",
+          gap: 12,
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}>
+          <div style={{ fontSize: 22 }}>⚡</div>
+          <div style={{ flex: 1, minWidth: 220 }}>
+            <div style={{ color: theme.cream, fontSize: 14, fontWeight: 800 }}>Pedido rápido</div>
+            <div style={{ color: theme.creamDim, fontSize: 12, lineHeight: 1.5 }}>
+              En cada producto toca <strong style={{ color: theme.goldLight }}>Pedir ahora</strong> y te llevamos directo al checkout.
+            </div>
+          </div>
+        </div>
+
         {filtered.length === 0 ? (
           <div style={{ textAlign: "center", color: theme.textDim, padding: 60 }}>
             <div style={{ fontSize: 44 }}>🔍</div>
@@ -3287,6 +3494,7 @@ export default function VNDRX() {
                 key={p.id}
                 product={p}
                 onAdd={addToCart}
+                onQuickBuy={quickBuy}
                 cartItem={cart.find(i => i.product.id === p.id)}
               />
             ))}
@@ -3339,7 +3547,13 @@ export default function VNDRX() {
       />
 
       <button
-        onClick={() => window.open(`https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent("Hola, quiero hacer un pedido en VNDRX.")}`, "_blank", "noopener,noreferrer")}
+        onClick={() => {
+          if (cartCount > 0) {
+            openCart("checkout");
+            return;
+          }
+          window.open(`https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent("Hola, quiero hacer un pedido en VNDRX.")}`, "_blank", "noopener,noreferrer");
+        }}
         style={{
           position: "fixed",
           right: 18,
@@ -3359,8 +3573,8 @@ export default function VNDRX() {
           gap: 8,
         }}
       >
-        <span>💬</span>
-        <span>Pedir por WhatsApp</span>
+        <span>{cartCount > 0 ? "🛒" : "💬"}</span>
+        <span>{cartCount > 0 ? `Ir al pedido (${cartCount})` : "Pedir por WhatsApp"}</span>
       </button>
 
       {cartOpen && (
@@ -3373,6 +3587,7 @@ export default function VNDRX() {
           referralCode={profile.referralCode}
           referredBy={profile.referredBy}
           gpsState={gpsState}
+          initialStep={cartStartStep}
         />
       )}
     </div>
