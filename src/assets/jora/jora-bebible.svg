@@ -1,0 +1,55 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="60" y1="40" x2="1140" y2="1160" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFF7E8"/>
+      <stop offset="0.55" stop-color="#F9E5BD"/>
+      <stop offset="1" stop-color="#D79A3F"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="420" y1="260" x2="820" y2="980" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FBDC98"/>
+      <stop offset="1" stop-color="#8A4D10"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="1200" fill="url(#bg)"/>
+  <circle cx="1040" cy="170" r="180" fill="#FFF5D0" fill-opacity="0.44"/>
+  <circle cx="150" cy="990" r="220" fill="#FFF5D0" fill-opacity="0.28"/>
+
+  <text x="70" y="112" fill="#214E1E" font-family="Arial, sans-serif" font-size="34" font-weight="900" letter-spacing="4">CHICHA DE JORA</text>
+  <text x="70" y="232" fill="#1B4218" font-family="Georgia, 'Times New Roman', serif" font-size="96" font-weight="900">PARA BEBER</text>
+  <text x="70" y="300" fill="#8A4D10" font-family="Arial, sans-serif" font-size="30" font-weight="800">ENDULZA AL GUSTO, MEJOR CON MIEL</text>
+
+  <rect x="76" y="360" rx="28" ry="28" width="404" height="112" fill="#FFFDF8" fill-opacity="0.78" stroke="#D4A017" stroke-width="3"/>
+  <text x="112" y="414" fill="#214E1E" font-family="Arial, sans-serif" font-size="28" font-weight="900">BEBE FRIA O A TEMPERATURA</text>
+  <text x="112" y="448" fill="#7A5B2E" font-family="Arial, sans-serif" font-size="20" font-weight="700">AGREGA MIEL O TU ENDULZANTE</text>
+
+  <g>
+    <rect x="642" y="184" width="312" height="808" rx="144" fill="#FFF6D8" fill-opacity="0.78"/>
+    <rect x="686" y="112" width="224" height="128" rx="42" fill="#D79A2B"/>
+    <rect x="698" y="80" width="200" height="62" rx="24" fill="#B06F16"/>
+    <ellipse cx="798" cy="562" rx="146" ry="298" fill="url(#amber)"/>
+    <rect x="672" y="384" width="252" height="184" rx="20" fill="#214E1E" fill-opacity="0.92"/>
+    <rect x="692" y="406" width="212" height="140" rx="16" fill="#FDF2C8"/>
+    <text x="798" y="458" text-anchor="middle" fill="#214E1E" font-family="Georgia, 'Times New Roman', serif" font-size="42" font-weight="900">JORA</text>
+    <text x="798" y="494" text-anchor="middle" fill="#8A4D10" font-family="Arial, sans-serif" font-size="20" font-weight="800">LISTA PARA BEBER</text>
+    <text x="798" y="526" text-anchor="middle" fill="#6C542E" font-family="Arial, sans-serif" font-size="16" font-weight="700">ENDULZA A TU GUSTO</text>
+    <circle cx="798" cy="808" r="112" fill="#FFF4CE"/>
+    <text x="798" y="774" text-anchor="middle" fill="#214E1E" font-family="Arial, sans-serif" font-size="24" font-weight="900">100% NATURAL</text>
+    <text x="798" y="806" text-anchor="middle" fill="#8A4D10" font-family="Arial, sans-serif" font-size="18" font-weight="800">RECOMENDADA</text>
+    <text x="798" y="834" text-anchor="middle" fill="#8A4D10" font-family="Arial, sans-serif" font-size="18" font-weight="800">CON MIEL DE ABEJA</text>
+  </g>
+
+  <g>
+    <ellipse cx="318" cy="932" rx="158" ry="46" fill="#C88E39" fill-opacity="0.28"/>
+    <rect x="202" y="672" width="178" height="248" rx="22" fill="#FFF8E8" stroke="#D4A017" stroke-width="3"/>
+    <path d="M228 886C252 844 276 818 292 818C308 818 340 844 364 886H228Z" fill="#D79A2B"/>
+    <rect x="246" y="722" width="78" height="140" rx="18" fill="#F1C864"/>
+    <rect x="258" y="700" width="54" height="34" rx="12" fill="#D79A2B"/>
+    <circle cx="286" cy="786" r="26" fill="#FFF4CE"/>
+    <path d="M277 786C280 774 296 772 301 782C303 788 300 800 290 802C282 804 276 794 277 786Z" fill="#8A4D10"/>
+  </g>
+
+  <rect x="850" y="78" width="276" height="156" rx="26" fill="#FFFDF8" fill-opacity="0.78" stroke="#D4A017" stroke-width="3"/>
+  <text x="988" y="136" text-anchor="middle" fill="#214E1E" font-family="Arial, sans-serif" font-size="26" font-weight="900">ENDULZANTES</text>
+  <text x="988" y="176" text-anchor="middle" fill="#8A4D10" font-family="Arial, sans-serif" font-size="22" font-weight="800">MIEL · PANELA · AZUCAR</text>
+</svg>

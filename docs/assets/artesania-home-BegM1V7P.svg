@@ -1,0 +1,92 @@
+<svg width="1200" height="1600" viewBox="0 0 1200 1600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="60" x2="1080" y2="1560" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF6EA"/>
+      <stop offset="0.48" stop-color="#F2D7B0"/>
+      <stop offset="1" stop-color="#C98A5B"/>
+    </linearGradient>
+    <linearGradient id="clay" x1="360" y1="250" x2="840" y2="1210" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E7BF96"/>
+      <stop offset="0.52" stop-color="#C47A4C"/>
+      <stop offset="1" stop-color="#9F5A33"/>
+    </linearGradient>
+    <linearGradient id="plate" x1="120" y1="0" x2="1020" y2="1360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F9EFD9"/>
+      <stop offset="1" stop-color="#E2C08A"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1200" height="1600" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#5B341E" flood-opacity="0.26"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="1600" fill="url(#bg)"/>
+  <circle cx="160" cy="220" r="130" fill="#FFFFFF" fill-opacity="0.22"/>
+  <circle cx="1050" cy="250" r="180" fill="#FFFFFF" fill-opacity="0.18"/>
+  <circle cx="1050" cy="1290" r="210" fill="#FFFFFF" fill-opacity="0.12"/>
+  <circle cx="140" cy="1240" r="160" fill="#FFFFFF" fill-opacity="0.12"/>
+
+  <g opacity="0.22">
+    <circle cx="160" cy="450" r="8" fill="#7A4A2A"/>
+    <circle cx="240" cy="500" r="8" fill="#7A4A2A"/>
+    <circle cx="1040" cy="470" r="8" fill="#7A4A2A"/>
+    <circle cx="960" cy="530" r="8" fill="#7A4A2A"/>
+    <circle cx="220" cy="1080" r="8" fill="#7A4A2A"/>
+    <circle cx="1030" cy="1120" r="8" fill="#7A4A2A"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <ellipse cx="600" cy="1290" rx="320" ry="62" fill="#7A4A2A" fill-opacity="0.24"/>
+
+    <g>
+      <path d="M440 360C440 318 478 290 600 290C722 290 760 318 760 360L784 480C802 576 804 780 792 932C782 1040 704 1118 600 1120C496 1118 418 1040 408 932C396 780 398 576 416 480L440 360Z" fill="url(#clay)"/>
+      <ellipse cx="600" cy="302" rx="122" ry="44" fill="#7B471F"/>
+      <ellipse cx="600" cy="302" rx="96" ry="28" fill="#EACFA7"/>
+      <rect x="458" y="492" width="284" height="26" rx="13" fill="#F0D6B1" fill-opacity="0.52"/>
+      <rect x="450" y="600" width="300" height="16" rx="8" fill="#8E552E" fill-opacity="0.72"/>
+      <rect x="450" y="742" width="300" height="16" rx="8" fill="#8E552E" fill-opacity="0.72"/>
+      <rect x="450" y="876" width="300" height="16" rx="8" fill="#8E552E" fill-opacity="0.72"/>
+      <rect x="458" y="386" width="284" height="18" rx="9" fill="#F6E7CB" fill-opacity="0.54"/>
+      <circle cx="600" cy="666" r="74" fill="#F5E2C0" fill-opacity="0.26"/>
+      <circle cx="600" cy="666" r="48" fill="none" stroke="#F3E5CD" stroke-width="10" stroke-dasharray="4 12"/>
+      <text x="600" y="656" text-anchor="middle" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#FFF9F0">Artesanía</text>
+      <text x="600" y="690" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#FFF4E0">Lamista</text>
+    </g>
+
+    <g transform="translate(112,480)">
+      <ellipse cx="0" cy="440" rx="116" ry="26" fill="#7A4A2A" fill-opacity="0.22"/>
+      <path d="M-78 130C-78 72 -30 28 0 28C30 28 78 72 78 130V332C78 382 42 424 0 424C-42 424 -78 382 -78 332V130Z" fill="url(#plate)"/>
+      <ellipse cx="0" cy="126" rx="84" ry="26" fill="#FFF7ED"/>
+      <path d="M-53 162H53" stroke="#B87547" stroke-width="8" stroke-linecap="round"/>
+      <path d="M-44 206H44" stroke="#C68A56" stroke-width="8" stroke-linecap="round"/>
+      <path d="M-36 250H36" stroke="#B87547" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="0" cy="314" r="46" fill="none" stroke="#B87547" stroke-width="8"/>
+      <circle cx="0" cy="314" r="18" fill="#C98A5B"/>
+      <text x="0" y="470" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#6D3C22">Platos</text>
+    </g>
+
+    <g transform="translate(940,470)">
+      <ellipse cx="0" cy="430" rx="122" ry="24" fill="#7A4A2A" fill-opacity="0.22"/>
+      <path d="M-80 122C-80 72 -36 32 0 32C36 32 80 72 80 122V342C80 390 46 424 0 424C-46 424 -80 390 -80 342V122Z" fill="url(#clay)"/>
+      <ellipse cx="0" cy="120" rx="78" ry="26" fill="#7B471F"/>
+      <ellipse cx="0" cy="120" rx="60" ry="16" fill="#E9D0AA"/>
+      <path d="M-40 196H40" stroke="#F6E7CB" stroke-width="8" stroke-linecap="round"/>
+      <path d="M-34 238H34" stroke="#F6E7CB" stroke-width="8" stroke-linecap="round"/>
+      <path d="M-28 282H28" stroke="#F6E7CB" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="0" cy="320" r="34" fill="none" stroke="#F6E7CB" stroke-width="8"/>
+      <text x="0" y="468" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#6D3C22">Floreros</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="110" y="102" width="332" height="56" rx="28" fill="#5C7A4E" fill-opacity="0.92"/>
+    <text x="276" y="138" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="800" fill="#FFFFFF" letter-spacing="2">ARTESANIA LAMISTA</text>
+    <text x="600" y="180" text-anchor="middle" font-family="Georgia, serif" font-size="68" font-weight="700" fill="#7A4A2A">Barro hecho a mano</text>
+    <text x="600" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#664028">Tinajas, platos, ollas, tiestos y floreros para tu casa</text>
+  </g>
+
+  <g>
+    <rect x="180" y="1414" width="840" height="110" rx="28" fill="#7A4A2A" fill-opacity="0.18"/>
+    <text x="600" y="1461" text-anchor="middle" font-family="Georgia, serif" font-size="34" font-weight="700" fill="#7A4A2A">Piezas unicas para decorar, cocinar y regalar</text>
+    <text x="600" y="1503" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#664028">Hecho en barro lamista con acabado tradicional</text>
+  </g>
+</svg>

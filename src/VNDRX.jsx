@@ -12,9 +12,52 @@ import juaneEscolar from "./assets/aswa/juane-escolar.png";
 import juaneEscolarAlt from "./assets/aswa/juane-escolar-alt.png";
 import comboEscolar from "./assets/aswa/combo-escolar-san-juan.png";
 import comboEscolarAlt from "./assets/aswa/combo-escolar-san-juan-alt.png";
-import priceSheet from "./assets/rice/precios-arroz-1.jpeg";
-import yapeQr from "./assets/payment/yape-qr.jpeg";
-import yapeQrNumber from "./assets/aswa/yape-qr-number.jpeg";
+import priceSheet from "./assets/rice/precios-arroz-1.png";
+import joraHome from "./assets/jora/jora-home.svg";
+import joraSazon from "./assets/jora/jora-sazon.svg";
+import joraBebible from "./assets/jora/jora-bebible.svg";
+import telaHome from "./assets/tela/tela-home.svg";
+import telaBolsas from "./assets/tela/tela-bolsas.svg";
+import telaModa from "./assets/tela/tela-moda.svg";
+import telaHogar from "./assets/tela/tela-hogar.svg";
+import bocaditosHome from "./assets/bocaditos/bocaditos-home.svg";
+import bocaditosManiConPasas from "./assets/bocaditos/mani-con-pasas.jpg";
+import bocaditosManiConfitadoRojo from "./assets/bocaditos/mani-confitado-rojo.jpg";
+import bocaditosRoquitasRojas from "./assets/bocaditos/roquitas-rojas.jpg";
+import bocaditosManiConfitado from "./assets/bocaditos/mani-confitado.jpg";
+import bocaditosTurron from "./assets/bocaditos/turron.jpg";
+import bocaditosManiTostadoSalado from "./assets/bocaditos/mani-tostado-salado.jpg";
+import bocaditosTurca from "./assets/bocaditos/turca.jpg";
+import bocaditosNuto from "./assets/bocaditos/nuto.jpg";
+import bocaditosSuspiroColores from "./assets/bocaditos/suspiro-colores.jpg";
+import bocaditosSuspiroBlanco from "./assets/bocaditos/suspiro-blanco.jpg";
+import bocaditosRosquitaAlmidon from "./assets/bocaditos/rosquita-almidon.jpg";
+import bocaditosCocada from "./assets/bocaditos/cocada.jpg";
+import bocaditosChiflePlatano from "./assets/bocaditos/chifle-platano.jpg";
+import bocaditosChifleMaduro from "./assets/bocaditos/chifle-maduro.jpg";
+import bocaditosRoscaDulce from "./assets/bocaditos/rosca-dulce.svg";
+import artesaniaHome from "./assets/artesania/artesania-home.svg";
+import artesaniaTinaja from "./assets/artesania/artesania-tinaja.svg";
+import artesaniaPlato from "./assets/artesania/artesania-plato.svg";
+import artesaniaPate from "./assets/artesania/artesania-pate.svg";
+import artesaniaOllaArrocera from "./assets/artesania/artesania-olla-arrocera.svg";
+import artesaniaTiesto from "./assets/artesania/artesania-tiesto.svg";
+import artesaniaFlorero from "./assets/artesania/artesania-florero.svg";
+import riceExtraVerdeCatalogo from "./assets/rice/catalog/extra-verde-catalogo.jpeg";
+import riceAnejoFeronCatalogo from "./assets/rice/catalog/anejo-feron-catalogo.jpeg";
+import riceAnejoValorCatalogo from "./assets/rice/catalog/anejo-valor-catalogo.jpeg";
+import riceSuperiorVerdeCatalogo from "./assets/rice/catalog/superior-verde-catalogo.jpeg";
+import riceSuperiorAzulCatalogo from "./assets/rice/catalog/superior-azul-catalogo.jpeg";
+import riceVallesDelGuayoCatalogo from "./assets/rice/catalog/valles-del-guayo-catalogo.jpeg";
+import riceIntegradoRojoCatalogo from "./assets/rice/catalog/integrado-rojo-catalogo.jpeg";
+import riceIntegradoLilaCatalogo from "./assets/rice/catalog/integrado-lila-catalogo.jpeg";
+import riceArroz34Catalogo from "./assets/rice/catalog/arroz-3-4-catalogo.jpeg";
+import riceArrocilloCatalogo from "./assets/rice/catalog/arrocillo-catalogo.jpeg";
+import riceAfrechoCatalogo from "./assets/rice/catalog/afrecho-catalogo.jpeg";
+import ricePolvilloFinoCatalogo from "./assets/rice/catalog/polvillo-fino-catalogo.jpeg";
+import ricePolvilloGruesoCatalogo from "./assets/rice/catalog/polvillo-grueso-catalogo.jpeg";
+import riceCascarillaPrensadaCatalogo from "./assets/rice/catalog/cascarilla-prensada-catalogo.jpeg";
+import yapeQrCard from "./assets/aswa/yape-molino-card.png";
 
 const theme = {
   bg: "#0F1A0E",
@@ -61,12 +104,42 @@ const ASSETS = {
   comboEscolar,
   comboEscolarAlt,
   priceSheet,
-  yapeQr,
-  yapeQrNumber,
+  joraHome,
+  joraSazon,
+  joraBebible,
+  telaHome,
+  telaBolsas,
+  telaModa,
+  telaHogar,
+  bocaditosHome,
+  bocaditosManiConPasas,
+  bocaditosManiConfitadoRojo,
+  bocaditosRoquitasRojas,
+  bocaditosManiConfitado,
+  bocaditosTurron,
+  bocaditosManiTostadoSalado,
+  bocaditosTurca,
+  bocaditosNuto,
+  bocaditosSuspiroColores,
+  bocaditosSuspiroBlanco,
+  bocaditosRosquitaAlmidon,
+  bocaditosCocada,
+  bocaditosChiflePlatano,
+  bocaditosChifleMaduro,
+  bocaditosRoscaDulce,
+  artesaniaHome,
+  artesaniaTinaja,
+  artesaniaPlato,
+  artesaniaPate,
+  artesaniaOllaArrocera,
+  artesaniaTiesto,
+  artesaniaFlorero,
+  yapeQr: yapeQrCard,
+  yapeQrNumber: yapeQrCard,
 };
 
 const ZONES_ASWA_ESCOLAR = [
-  { id: "colegio", name: "Delivery gratis a tu institución", address: "Colegios · Escuelas · Jardines — Morales, Tarapoto, La Banda", cost: 0, emoji: "🎒" },
+  { id: "colegio", name: "Delivery gratis a tu institución", address: "Colegios · Escuelas · Jardines · Secciones educativas", cost: 0, emoji: "🎒" },
 ];
 const ZONES_REYLEON = [
   { id: "recojo", name: "Recojo en molino", address: "Ctra. Marginal Norte Km 9.8, Cacatachi", cost: 0, emoji: "🏭" },
@@ -77,20 +150,57 @@ const ZONES_REYLEON = [
 ];
 
 const ZONES_ASWA = [
-  { id: "recojo", name: "Recojo en local", address: "Morales, San Martín", cost: 0, emoji: "🏭" },
   { id: "morales", name: "Morales", address: "Aprox. 25 min", cost: 3, emoji: "📍" },
   { id: "tarapoto", name: "Tarapoto", address: "Centro y alrededores, aprox. 35 min", cost: 4, emoji: "📍" },
   { id: "banda", name: "La Banda de Shilcayo", address: "Ruta a La Banda, aprox. 45 min", cost: 5, emoji: "📍" },
   { id: "agencia", name: "Envío a agencia (nacional)", address: "Coordina recojo en agencia de transporte", cost: 10, emoji: "🚌" },
+  { id: "recojo", name: "Recojo en local", address: "Morales, San Martín", cost: 0, emoji: "🏭" },
 ];
 
 // COLOR por línea
+const ZONES_ARTESANIA = [
+  { id: "recojo", name: "Recojo en taller", address: "Morales, San Martin", cost: 0, emoji: "🏺" },
+  { id: "morales", name: "Morales", address: "Aprox. 20 min", cost: 3, emoji: "📍" },
+  { id: "tarapoto", name: "Tarapoto", address: "Centro y alrededores", cost: 4, emoji: "📍" },
+  { id: "banda", name: "La Banda de Shilcayo", address: "Ruta a La Banda", cost: 5, emoji: "📍" },
+  { id: "agencia", name: "Envio a agencia", address: "Coordina recojo en agencia de transporte", cost: 10, emoji: "🚚" },
+];
+
+const ZONES_JORA = [
+  { id: "recojo", name: "Recojo en local", address: "Morales, San Martin", cost: 0, emoji: "🏠" },
+  { id: "morales", name: "Morales", address: "Aprox. 25 min", cost: 3, emoji: "📍" },
+  { id: "tarapoto", name: "Tarapoto", address: "Centro y alrededores", cost: 4, emoji: "📍" },
+  { id: "banda", name: "La Banda de Shilcayo", address: "Ruta a La Banda", cost: 5, emoji: "📍" },
+  { id: "agencia", name: "Envio a agencia", address: "Coordina recojo en agencia de transporte", cost: 10, emoji: "🛻" },
+];
+
+const ZONES_BOCADITOS = [
+  { id: "recojo", name: "Recojo en local", address: "Morales, San Martin", cost: 0, emoji: "🏪" },
+  { id: "morales", name: "Morales", address: "Aprox. 20 min", cost: 3, emoji: "📍" },
+  { id: "tarapoto", name: "Tarapoto", address: "Centro y alrededores", cost: 4, emoji: "📍" },
+  { id: "banda", name: "La Banda de Shilcayo", address: "Ruta a La Banda", cost: 5, emoji: "📍" },
+  { id: "agencia", name: "Envio a agencia", address: "Coordina recojo en agencia de transporte", cost: 10, emoji: "🛵" },
+];
+
 const LINE_COLORS = {
   premium: { accent: "#1A4A14", badge: "#4A9E3F", label: "PREMIUM", bg: "#0F2D0A" },
   superior: { accent: "#1A2E4A", badge: "#3F7A9E", label: "SUPERIOR", bg: "#0A1D2D" },
   economico: { accent: "#4A1A14", badge: "#9E3F3F", label: "ECONÓMICO", bg: "#2D0A0A" },
   derivados: { accent: "#3A2A0A", badge: "#9E7A1A", label: "DERIVADOS", bg: "#2D1E00" },
   chicha: { accent: "#4A2800", badge: "#C47A1E", label: "CHICHA ASWA", bg: "#2D1500" },
+  jora_culinaria: { accent: "#7A4A12", badge: "#D59B3D", label: "SAZONADOR", bg: "#3D2508" },
+  jora_bebible: { accent: "#8A5A1C", badge: "#F0C040", label: "BEBIBLE", bg: "#4A2E0A" },
+  jora_familiar: { accent: "#5C3A12", badge: "#C88E39", label: "FAMILIAR", bg: "#2E1B08" },
+  tela_bolsas: { accent: "#29496B", badge: "#7EA6D8", label: "BOLSAS", bg: "#10213C" },
+  tela_moda: { accent: "#6A3552", badge: "#D58AA7", label: "MODA REGIONAL", bg: "#3A1026" },
+  tela_hogar: { accent: "#335E43", badge: "#A9CFB1", label: "HOGAR", bg: "#1F3326" },
+  bocaditos_mani: { accent: "#6B3E17", badge: "#C88E39", label: "MANÍ", bg: "#2E1A08" },
+  bocaditos_galleta: { accent: "#8A5A1C", badge: "#D9A34B", label: "GALLETAS", bg: "#40230A" },
+  bocaditos_dulce: { accent: "#8C3F21", badge: "#D97A2E", label: "DULCES", bg: "#401C10" },
+  bocaditos_chifle: { accent: "#335E43", badge: "#7DB16A", label: "CHIFLES", bg: "#1C3323" },
+  artesania_barro: { accent: "#7A4A2A", badge: "#C98A5B", label: "BARRO", bg: "#2A1A11" },
+  artesania_mesa: { accent: "#8C5B2A", badge: "#D6A56D", label: "MESA", bg: "#39230F" },
+  artesania_decor: { accent: "#5C7A4E", badge: "#A8B78D", label: "DECOR", bg: "#1D281A" },
 };
 
 const products = [
@@ -415,13 +525,14 @@ const products = [
     minOrder: 1,
     minOrderNote: "Sin pedido mínimo — desde 1 bidón",
     schoolOnly: false,
+    defaultZoneId: "morales",
     presentations: [
       { label: "Recarga (ya tengo bidón)", price: 50.00, unit: "bidón" },
       { label: "Con bidón nuevo", price: 70.00, unit: "bidón" },
     ],
     saving: 0,
     cooking: "Consumir fría · Gran capacidad para fiestas y eventos",
-    tip: "Si ya tienes tu bidón vacío, entrégalo al recibir y paga solo S/ 50.00.",
+    tip: "El delivery se cobra según tu zona. Si ya tienes tu bidón vacío, entrégalo al recibir y paga solo S/ 50.00.",
     zones: ZONES_ASWA,
   },
   {
@@ -468,6 +579,672 @@ const products = [
     tip: "¡Combínalo con una chicha ASWA para la experiencia sanjuanera completa!",
     zones: ZONES_ASWA_ESCOLAR,
   },
+  // ── JORA TRADICIONAL ────────────────────────────────────────────────────────
+  {
+    id: 19,
+    name: "Jora Sazonadora",
+    subtitle: "Base natural para aderezar tus comidas",
+    line: "jora_culinaria",
+    supplier: "Chicha de Jora",
+    img: "🍯",
+    desc: "Chicha de jora pensada para cocina y aderezos. Usa esta base natural para dar mas sabor a guisos, carnes y marinados, con un perfil tradicional y aromatico.",
+    quality: "Tradicional · Uso culinario",
+    variety: "Maiz de jora",
+    tags: ["Para aderezar", "Cocina tradicional", "Natural", "Sin conservantes"],
+    defaultZoneId: "morales",
+    presentations: [
+      { label: "Botella 1 L", price: 7.00, unit: "botella" },
+      { label: "Bidon 5 L", price: 28.00, unit: "bidon" },
+    ],
+    saving: 0,
+    cooking: "Usa como base de aderezo en guisos, carnes y marinados.",
+    tip: "Ideal para saborizar recetas tradicionales sin perder el toque natural.",
+    zones: ZONES_JORA,
+  },
+  {
+    id: 20,
+    name: "Jora para Beber",
+    subtitle: "Endulza al gusto para beber",
+    line: "jora_bebible",
+    supplier: "Chicha de Jora",
+    img: "🥤",
+    desc: "Si la quieres beber, endulzala al gusto con el dulce que prefieras. Recomendamos miel de abeja para un sabor mas suave y natural.",
+    quality: "Bebida tradicional",
+    variety: "Maiz de jora",
+    tags: ["Bebible", "Endulza al gusto", "Recomendada con miel", "Natural"],
+    defaultZoneId: "morales",
+    presentations: [
+      { label: "Botella 500 ml", price: 4.00, unit: "botella" },
+      { label: "Botella 1 L", price: 7.50, unit: "botella" },
+    ],
+    saving: 0,
+    cooking: "Servir fria o a temperatura ambiente. Endulzar al gusto.",
+    tip: "Recomendamos miel de abeja para un sabor mas suave y tradicional.",
+    zones: ZONES_JORA,
+  },
+  {
+    id: 21,
+    name: "Jora Familiar",
+    subtitle: "Presentacion grande para compartir",
+    line: "jora_familiar",
+    supplier: "Chicha de Jora",
+    img: "🍶",
+    desc: "Presentacion familiar para la mesa del hogar o reuniones pequenas. Puedes usarla en cocina o servirla endulzada a tu gusto para compartir en casa.",
+    quality: "Familiar · Para compartir",
+    variety: "Maiz de jora",
+    tags: ["Familiar", "Para compartir", "Cocina o bebida", "Natural"],
+    defaultZoneId: "morales",
+    presentations: [
+      { label: "Botella 2 L", price: 13.00, unit: "botella" },
+      { label: "Bidon 5 L", price: 30.00, unit: "bidon" },
+    ],
+    saving: 0,
+    cooking: "Compartir en familia, en cocina o bebida endulzada.",
+    tip: "Puedes endulzarla al gusto; la miel de abeja queda muy bien.",
+    zones: ZONES_JORA,
+  },
+  // â”€â”€ TELA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  {
+    id: 22,
+    name: "Bolsas de Tela Reforzadas",
+    subtitle: "Reusables para compras y uso diario",
+    line: "tela_bolsas",
+    supplier: "Tienda Tela",
+    img: "👜",
+    desc: "Bolsas de tela resistentes para compras, feria y uso diario. Practicas, ligeras y faciles de llevar, ideales para pedidos rapidos o para vender en detalle.",
+    quality: "Resistentes y reutilizables",
+    variety: "Tela reforzada",
+    tags: ["Reutilizables", "Uso diario", "Ligera", "Reforzada"],
+    presentations: [
+      { label: "Unidad", price: 12.00, unit: "bolsa" },
+      { label: "Docena", price: 120.00, unit: "paquete" },
+    ],
+    saving: 0,
+    cooking: "Lavar a mano o en ciclo suave. Secado a la sombra.",
+    tip: "Perfectas para compras, feria y regalos de marca.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 23,
+    name: "Alforjas Artesanales",
+    subtitle: "Estilo tradicional para carga ligera",
+    line: "tela_bolsas",
+    supplier: "Tienda Tela",
+    img: "🧺",
+    desc: "Alforjas artesanales con estilo tradicional, pensadas para llevar objetos personales, mercado o utiles de trabajo con un toque rustico y funcional.",
+    quality: "Artesanal",
+    variety: "Tela y acabados decorativos",
+    tags: ["Artesanales", "Tradicionales", "Utiles", "Decorativas"],
+    presentations: [
+      { label: "Unidad", price: 28.00, unit: "alforja" },
+      { label: "Par", price: 50.00, unit: "par" },
+    ],
+    saving: 0,
+    cooking: "Limpiar con paño humedo y secar sin sol directo.",
+    tip: "Buen producto para turismo, ferias y ventas regionales.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 24,
+    name: "Panueloletas Regionales",
+    subtitle: "Color y estilo para vestir",
+    line: "tela_moda",
+    supplier: "Tienda Tela",
+    img: "🧣",
+    desc: "Panueloletas regionales para complementar la vestimenta y resaltar la identidad local. Ligeras, coloridas y faciles de combinar.",
+    quality: "Moda regional",
+    variety: "Tela estampada",
+    tags: ["Regional", "Coloridas", "Ligeras", "Accesorio"],
+    presentations: [
+      { label: "Unidad", price: 16.00, unit: "panueloleta" },
+      { label: "Par", price: 30.00, unit: "par" },
+    ],
+    saving: 0,
+    cooking: "Lavar en frio para conservar colores y textura.",
+    tip: "Ideal para festividades, danzas y regalos.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 25,
+    name: "Vestidos Regionales",
+    subtitle: "Tradicion para lucir con orgullo",
+    line: "tela_moda",
+    supplier: "Tienda Tela",
+    img: "👗",
+    desc: "Vestidos regionales con corte tradicional y acabados decorativos. Pensados para presentaciones, danzas, festividades y venta por encargo.",
+    quality: "Confeccion regional",
+    variety: "Tela decorada",
+    tags: ["Regional", "Festivo", "Por encargo", "Confeccion"],
+    presentations: [
+      { label: "Talla estandar", price: 120.00, unit: "vestido" },
+      { label: "Confeccion especial", price: 160.00, unit: "vestido" },
+    ],
+    saving: 0,
+    cooking: "Limpieza en seco o lavado delicado. Guardar colgado.",
+    tip: "Ideal para actividades culturales, comparsas y presentaciones.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 26,
+    name: "Mochilas Urbanas",
+    subtitle: "Practicidad para estudio y trabajo",
+    line: "tela_bolsas",
+    supplier: "Tienda Tela",
+    img: "🎒",
+    desc: "Mochilas urbanas resistentes, pensadas para estudio, oficina o salidas. Buen espacio interior y estilo sencillo para el dia a dia.",
+    quality: "Resistente",
+    variety: "Tela reforzada",
+    tags: ["Estudio", "Trabajo", "Resistente", "Comoda"],
+    presentations: [
+      { label: "Unidad", price: 45.00, unit: "mochila" },
+      { label: "Premium", price: 65.00, unit: "mochila" },
+    ],
+    saving: 0,
+    cooking: "Limpiar con paño humedo y dejar ventilar.",
+    tip: "Ideal para escolares, oficinistas y ventas por detalle.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 27,
+    name: "Sabanas de Algodon",
+    subtitle: "Suavidad para un descanso comodo",
+    line: "tela_hogar",
+    supplier: "Tienda Tela",
+    img: "🛏️",
+    desc: "Sabanas suaves y practicas para vestir la cama con comodidad. Disponible en presentaciones para hogar, hospedaje o venta por conjunto.",
+    quality: "Hogar",
+    variety: "Algodon y mezcla suave",
+    tags: ["Hogar", "Suaves", "Comodas", "Descanso"],
+    presentations: [
+      { label: "Juego sencillo", price: 55.00, unit: "juego" },
+      { label: "Juego premium", price: 75.00, unit: "juego" },
+    ],
+    saving: 0,
+    cooking: "Lavar con agua tibia y secar a la sombra.",
+    tip: "Buena opcion para dormitorio y habitaciones de alquiler.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 28,
+    name: "Edredones Acolchados",
+    subtitle: "Abrigo y estilo para tu cama",
+    line: "tela_hogar",
+    supplier: "Tienda Tela",
+    img: "🛌",
+    desc: "Edredones acolchados con buena presencia y abrigo para noches frescas. Pensados para hogar, hospedaje o venta como regalo.",
+    quality: "Acolchado",
+    variety: "Tela suave",
+    tags: ["Abrigador", "Decorativo", "Hogar", "Regalo"],
+    presentations: [
+      { label: "1 plaza", price: 110.00, unit: "edredon" },
+      { label: "2 plazas", price: 150.00, unit: "edredon" },
+    ],
+    saving: 0,
+    cooking: "Lavar en ciclo delicado o limpieza especializada.",
+    tip: "Excelente para temporadas frías y habitaciones familiares.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 29,
+    name: "Colchas Tejidas",
+    subtitle: "Textura decorativa para el dormitorio",
+    line: "tela_hogar",
+    supplier: "Tienda Tela",
+    img: "🧶",
+    desc: "Colchas tejidas con acabado decorativo y textura agradable. Dan color y elegancia al dormitorio con una imagen mas artesanal.",
+    quality: "Decorativa",
+    variety: "Tejido artesanal",
+    tags: ["Decorativa", "Artesanal", "Dormitorio", "Textura"],
+    presentations: [
+      { label: "1 plaza", price: 95.00, unit: "colcha" },
+      { label: "2 plazas", price: 135.00, unit: "colcha" },
+    ],
+    saving: 0,
+    cooking: "Lavado delicado para conservar el tejido.",
+    tip: "Ideal para venta en casas, hoteles y hospedajes.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 30,
+    name: "Cubrecamas Decorativos",
+    subtitle: "Cubre y viste la cama con estilo",
+    line: "tela_hogar",
+    supplier: "Tienda Tela",
+    img: "🪡",
+    desc: "Cubrecamas decorativos para proteger y embellecer la cama. Una opcion practica para renovar habitaciones y destacar el ambiente.",
+    quality: "Decorativo",
+    variety: "Tela resistente",
+    tags: ["Proteccion", "Decoracion", "Hogar", "Estilo"],
+    presentations: [
+      { label: "1 plaza", price: 120.00, unit: "cubrecama" },
+      { label: "2 plazas", price: 170.00, unit: "cubrecama" },
+    ],
+    saving: 0,
+    cooking: "Lavar en frio y evitar secadora fuerte.",
+    tip: "Muy util para renovar habitaciones sin gastar demasiado.",
+    zones: ZONES_REYLEON,
+  },
+  // â”€â”€ BOCADITOS REGIONALES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  {
+    id: 31,
+    name: "Ñuto",
+    subtitle: "Bocadito artesanal tradicional",
+    line: "bocaditos_galleta",
+    supplier: "Bocaditos Regionales",
+    img: "🍪",
+    desc: "Bocadito regional de masa artesanal, ideal para la lonchera, la mesa familiar o para vender como detalle regional.",
+    quality: "Artesanal",
+    variety: "Tradicional",
+    tags: ["Regional", "Artesanal", "Para compartir", "Dulce"],
+    presentations: [
+      { label: "Bolsa pequeña", price: 4.00, unit: "bolsa" },
+      { label: "Bolsa familiar", price: 7.00, unit: "bolsa" },
+    ],
+    saving: 0,
+    cooking: "Listo para comer.",
+    tip: "Buen acompañante para cafe o refresco.",
+    zones: ZONES_BOCADITOS,
+  },
+  {
+    id: 32,
+    name: "Rosquitas de Almidón",
+    subtitle: "Rosquitas artesanales y suaves",
+    line: "bocaditos_galleta",
+    supplier: "Bocaditos Regionales",
+    img: "🍩",
+    desc: "Rosquitas artesanales de almidon con textura suave y sabor tradicional. Una opcion clásica para compartir.",
+    quality: "Artesanal",
+    variety: "Almidon",
+    tags: ["Rosquitas", "Tradicional", "Compartir", "Casero"],
+    presentations: [
+      { label: "Bolsa", price: 3.50, unit: "bolsa" },
+      { label: "Docena", price: 12.00, unit: "docena" },
+    ],
+    saving: 0,
+    cooking: "Listas para comer.",
+    tip: "Ideal para merienda o para vender en colegios y bodegas.",
+    zones: ZONES_BOCADITOS,
+  },
+  {
+    id: 33,
+    name: "Turcas Galletas",
+    subtitle: "Galletas regionales de sabor casero",
+    line: "bocaditos_galleta",
+    supplier: "Bocaditos Regionales",
+    img: "🍪",
+    desc: "Turcas galletas de corte artesanal, pensadas para acompañar el cafe o servir como bocadito de mesa.",
+    quality: "Artesanal",
+    variety: "Galleta regional",
+    tags: ["Galletas", "Regional", "Casero", "Mesa"],
+    presentations: [
+      { label: "Bolsa", price: 4.00, unit: "bolsa" },
+      { label: "Caja", price: 7.50, unit: "caja" },
+    ],
+    saving: 0,
+    cooking: "Listas para comer.",
+    tip: "Una presentacion simple y rica para compartir.",
+    zones: ZONES_BOCADITOS,
+  },
+  {
+    id: 34,
+    name: "Maní Tostado Salado",
+    subtitle: "Crujiente y clasico para picar",
+    line: "bocaditos_mani",
+    supplier: "Bocaditos Regionales",
+    img: "🥜",
+    desc: "Mani tostado salado de sabor clasico, crocante y listo para compartir en casa, ferias o para la venta por detalle.",
+    quality: "Artesanal",
+    variety: "Salado",
+    tags: ["Mani", "Salado", "Crocante", "Clasico"],
+    presentations: [
+      { label: "Bolsa", price: 3.50, unit: "bolsa" },
+      { label: "Paquete", price: 6.50, unit: "paquete" },
+    ],
+    saving: 0,
+    cooking: "Listo para comer.",
+    tip: "Buen detalle para kioscos y bodegas.",
+    zones: ZONES_BOCADITOS,
+  },
+  {
+    id: 35,
+    name: "Maní Tostado Salado con Pasas",
+    subtitle: "Mezcla crocante con un toque dulce",
+    line: "bocaditos_mani",
+    supplier: "Bocaditos Regionales",
+    img: "🥜",
+    desc: "Mezcla de mani tostado salado con pasas para un balance de sabor entre crocante, salado y dulce.",
+    quality: "Artesanal",
+    variety: "Con pasas",
+    tags: ["Mani", "Pasas", "Mezcla", "Crocante"],
+    presentations: [
+      { label: "Bolsa", price: 4.00, unit: "bolsa" },
+      { label: "Paquete", price: 7.00, unit: "paquete" },
+    ],
+    saving: 0,
+    cooking: "Listo para comer.",
+    tip: "Muy pedido para loncheras y reuniones.",
+    zones: ZONES_BOCADITOS,
+  },
+  {
+    id: 36,
+    name: "Rosquitas Rojas",
+    subtitle: "Rosquitas con brillo y color tradicional",
+    line: "bocaditos_galleta",
+    supplier: "Bocaditos Regionales",
+    img: "🍩",
+    desc: "Rosquitas rojas artesanales con acabado llamativo y sabor tradicional. Ideales para vitrina y mesa familiar.",
+    quality: "Artesanal",
+    variety: "Rojas",
+    tags: ["Rosquitas", "Coloridas", "Tradicional", "Dulce"],
+    presentations: [
+      { label: "Bolsa", price: 3.50, unit: "bolsa" },
+      { label: "Caja", price: 6.50, unit: "caja" },
+    ],
+    saving: 0,
+    cooking: "Listas para comer.",
+    tip: "Perfectas para vender por detalle.",
+    zones: ZONES_BOCADITOS,
+  },
+  {
+    id: 37,
+    name: "Maní Confitado",
+    subtitle: "Dulce crocante para compartir",
+    line: "bocaditos_mani",
+    supplier: "Bocaditos Regionales",
+    img: "🥜",
+    desc: "Mani confitado artesanal, con acabado brillante y sabor dulce para picar o vender como bocadito regional.",
+    quality: "Artesanal",
+    variety: "Confitado",
+    tags: ["Mani", "Confitado", "Dulce", "Crocante"],
+    presentations: [
+      { label: "Bolsa", price: 4.50, unit: "bolsa" },
+      { label: "Paquete", price: 8.00, unit: "paquete" },
+    ],
+    saving: 0,
+    cooking: "Listo para comer.",
+    tip: "Muy buena opcion para ferias y detalle de mesa.",
+    zones: ZONES_BOCADITOS,
+  },
+  {
+    id: 38,
+    name: "Maní Confitado Rojo",
+    subtitle: "Version roja con acabado artesanal",
+    line: "bocaditos_mani",
+    supplier: "Bocaditos Regionales",
+    img: "🥜",
+    desc: "Mani confitado rojo con color vibrante y sabor tradicional. Un bocadito llamativo para la vitrina y la mesa.",
+    quality: "Artesanal",
+    variety: "Confitado rojo",
+    tags: ["Mani", "Rojo", "Confitado", "Dulce"],
+    presentations: [
+      { label: "Bolsa", price: 4.50, unit: "bolsa" },
+      { label: "Paquete", price: 8.00, unit: "paquete" },
+    ],
+    saving: 0,
+    cooking: "Listo para comer.",
+    tip: "Luce muy bien como producto de detalle.",
+    zones: ZONES_BOCADITOS,
+  },
+  {
+    id: 39,
+    name: "Turrón",
+    subtitle: "Dulce clasico de mesa y lonche",
+    line: "bocaditos_dulce",
+    supplier: "Bocaditos Regionales",
+    img: "🍯",
+    desc: "Turron artesanal para disfrutar en familia, acompanar el cafe o vender como postre tradicional regional.",
+    quality: "Artesanal",
+    variety: "Tradicional",
+    tags: ["Turron", "Dulce", "Regional", "Mesa"],
+    presentations: [
+      { label: "Porcion", price: 6.00, unit: "porcion" },
+      { label: "Caja", price: 18.00, unit: "caja" },
+    ],
+    saving: 0,
+    cooking: "Listo para comer.",
+    tip: "Un clasico que siempre llama la atencion.",
+    zones: ZONES_BOCADITOS,
+  },
+  {
+    id: 40,
+    name: "Chifle de Plátano",
+    subtitle: "Crujiente y salado",
+    line: "bocaditos_chifle",
+    supplier: "Bocaditos Regionales",
+    img: "🍌",
+    desc: "Chifle de platano frito, crocante y sabroso para picar solo o acompanado de tus comidas.",
+    quality: "Artesanal",
+    variety: "Platano",
+    tags: ["Chifle", "Platano", "Crujiente", "Salado"],
+    presentations: [
+      { label: "Bolsa", price: 4.00, unit: "bolsa" },
+      { label: "Paquete", price: 7.50, unit: "paquete" },
+    ],
+    saving: 0,
+    cooking: "Listo para comer.",
+    tip: "Ideal para kiosco y venta por detalle.",
+    zones: ZONES_BOCADITOS,
+  },
+  {
+    id: 41,
+    name: "Chifle de Maduro",
+    subtitle: "Mas dulce y dorado",
+    line: "bocaditos_chifle",
+    supplier: "Bocaditos Regionales",
+    img: "🍌",
+    desc: "Chifle de maduro de sabor mas dulce, doradito y crujiente. Un bocadito regional muy pedido.",
+    quality: "Artesanal",
+    variety: "Maduro",
+    tags: ["Chifle", "Maduro", "Dulce", "Crujiente"],
+    presentations: [
+      { label: "Bolsa", price: 4.00, unit: "bolsa" },
+      { label: "Paquete", price: 7.50, unit: "paquete" },
+    ],
+    saving: 0,
+    cooking: "Listo para comer.",
+    tip: "Muy bueno para merienda o compartir.",
+    zones: ZONES_BOCADITOS,
+  },
+  {
+    id: 42,
+    name: "Cocada",
+    subtitle: "Dulce artesanal de coco",
+    line: "bocaditos_dulce",
+    supplier: "Bocaditos Regionales",
+    img: "🥥",
+    desc: "Cocada artesanal con sabor a coco y textura suave. Un dulce regional que gusta a grandes y chicos.",
+    quality: "Artesanal",
+    variety: "Coco",
+    tags: ["Coco", "Dulce", "Artesanal", "Regional"],
+    presentations: [
+      { label: "Bolsa", price: 3.50, unit: "bolsa" },
+      { label: "Caja", price: 8.00, unit: "caja" },
+    ],
+    saving: 0,
+    cooking: "Listo para comer.",
+    tip: "Buen complemento para lonche o mesa de invitados.",
+    zones: ZONES_BOCADITOS,
+  },
+  {
+    id: 43,
+    name: "Suspiro Blanco",
+    subtitle: "Suave, dulce y clasico",
+    line: "bocaditos_dulce",
+    supplier: "Bocaditos Regionales",
+    img: "🍥",
+    desc: "Suspiro blanco artesanal de sabor suave y apariencia delicada. Ideal para regalar o servir en reuniones familiares.",
+    quality: "Artesanal",
+    variety: "Blanco",
+    tags: ["Suspiro", "Blanco", "Dulce", "Casero"],
+    presentations: [
+      { label: "Bolsa", price: 4.00, unit: "bolsa" },
+      { label: "Caja", price: 9.00, unit: "caja" },
+    ],
+    saving: 0,
+    cooking: "Listo para comer.",
+    tip: "Perfecto para acompañar cafe o te.",
+    zones: ZONES_BOCADITOS,
+  },
+  {
+    id: 44,
+    name: "Suspiro de Colores",
+    subtitle: "Dulce colorido para vitrina",
+    line: "bocaditos_dulce",
+    supplier: "Bocaditos Regionales",
+    img: "🍥",
+    desc: "Suspiro de colores artesanal con presentacion llamativa y sabor dulce. Muy vistoso para la venta por detalle.",
+    quality: "Artesanal",
+    variety: "Colores",
+    tags: ["Suspiro", "Colores", "Dulce", "Vistoso"],
+    presentations: [
+      { label: "Bolsa", price: 4.00, unit: "bolsa" },
+      { label: "Caja", price: 9.00, unit: "caja" },
+    ],
+    saving: 0,
+    cooking: "Listo para comer.",
+    tip: "Luce hermoso en vitrinas y mesas de venta.",
+    zones: ZONES_BOCADITOS,
+  },
+  {
+    id: 45,
+    name: "Rosca Bañada de Dulce",
+    subtitle: "Rosca clasica con cobertura dulce",
+    line: "bocaditos_dulce",
+    supplier: "Bocaditos Regionales",
+    img: "🍩",
+    desc: "Rosca artesanal banada de dulce para compartir en casa o vender por encargo. Un clasico de mesa con sabor casero.",
+    quality: "Artesanal",
+    variety: "Banada de dulce",
+    tags: ["Rosca", "Dulce", "Casero", "Compartir"],
+    presentations: [
+      { label: "Unidad", price: 5.00, unit: "rosca" },
+      { label: "Combo 2", price: 9.00, unit: "combo" },
+    ],
+    saving: 0,
+    cooking: "Lista para comer.",
+    tip: "Ideal para cafecito y reuniones familiares.",
+    zones: ZONES_BOCADITOS,
+  },
+  {
+    id: 46,
+    name: "Tinaja Lamista",
+    subtitle: "Pieza de barro hecha a mano",
+    line: "artesania_barro",
+    supplier: "Artesania Lamista",
+    img: "🏺",
+    desc: "Tinaja lamista artesanal para decorar la casa o usar como pieza tradicional. Cada acabado mantiene el estilo de barro hecho a mano.",
+    quality: "Hecha a mano",
+    variety: "Lamista",
+    tags: ["Barro", "Lamista", "Artesanal", "Decoracion"],
+    presentations: [
+      { label: "Pequeña", price: 48.00, unit: "pieza" },
+      { label: "Grande", price: 72.00, unit: "pieza" },
+    ],
+    saving: 0,
+    cooking: "Lavar con agua tibia, secar bien y evitar golpes bruscos.",
+    tip: "Pieza fragil: cada tinaja puede variar ligeramente.",
+    zones: ZONES_ARTESANIA,
+  },
+  {
+    id: 47,
+    name: "Plato Artesanal",
+    subtitle: "Para mesa, regalo o decoracion",
+    line: "artesania_mesa",
+    supplier: "Artesania Lamista",
+    img: "🍽️",
+    desc: "Plato artesanal de barro con acabado tradicional para vestir la mesa, regalar o complementar una coleccion lamista.",
+    quality: "Hecho a mano",
+    variety: "Mesa",
+    tags: ["Plato", "Artesanal", "Mesa", "Regalo"],
+    presentations: [
+      { label: "Unidad", price: 14.00, unit: "plato" },
+      { label: "Juego x4", price: 48.00, unit: "juego" },
+    ],
+    saving: 0,
+    cooking: "Lavar a mano y secar por completo antes de guardar.",
+    tip: "Perfecto para servir o decorar con estilo regional.",
+    zones: ZONES_ARTESANIA,
+  },
+  {
+    id: 48,
+    name: "Pate Artesanal",
+    subtitle: "Pieza utilitaria de barro",
+    line: "artesania_barro",
+    supplier: "Artesania Lamista",
+    img: "🥘",
+    desc: "Pate de barro artesanal para cocina, presentacion o decoracion. Mantiene el acabado tradicional lamista y un estilo rustico elegante.",
+    quality: "Hecho a mano",
+    variety: "Utilitario",
+    tags: ["Barro", "Utilitario", "Lamista", "Cocina"],
+    presentations: [
+      { label: "Unidad", price: 28.00, unit: "pieza" },
+      { label: "Grande", price: 40.00, unit: "pieza" },
+    ],
+    saving: 0,
+    cooking: "Evitar cambios bruscos de temperatura y secar bien.",
+    tip: "Cada pieza artesanal tiene pequenas variaciones naturales.",
+    zones: ZONES_ARTESANIA,
+  },
+  {
+    id: 49,
+    name: "Olla Arrocera de Barro",
+    subtitle: "Para cocina lenta y sabor casero",
+    line: "artesania_barro",
+    supplier: "Artesania Lamista",
+    img: "🍲",
+    desc: "Olla arrocera de barro hecha a mano para quienes aman cocinar con un toque tradicional y casero.",
+    quality: "Hecha a mano",
+    variety: "Cocina",
+    tags: ["Olla", "Barro", "Cocina", "Tradicional"],
+    presentations: [
+      { label: "Pequeña", price: 35.00, unit: "pieza" },
+      { label: "Grande", price: 55.00, unit: "pieza" },
+    ],
+    saving: 0,
+    cooking: "Curar antes del primer uso y lavar con agua tibia.",
+    tip: "Ideal para cocina lenta y una mesa con identidad.",
+    zones: ZONES_ARTESANIA,
+  },
+  {
+    id: 50,
+    name: "Tiesto de Barro",
+    subtitle: "Decoracion utilitaria de barro",
+    line: "artesania_decor",
+    supplier: "Artesania Lamista",
+    img: "🪴",
+    desc: "Tiesto de barro lamista para plantas, decoracion o uso utilitario. Un detalle sencillo que da calidez al hogar.",
+    quality: "Hecho a mano",
+    variety: "Decorativo",
+    tags: ["Tiesto", "Barro", "Decoracion", "Hogar"],
+    presentations: [
+      { label: "Unidad", price: 20.00, unit: "pieza" },
+      { label: "Decorado", price: 32.00, unit: "pieza" },
+    ],
+    saving: 0,
+    cooking: "Evitar caidas y secar bien luego de limpiarlo.",
+    tip: "Perfecto para plantas pequenas o rincones del hogar.",
+    zones: ZONES_ARTESANIA,
+  },
+  {
+    id: 51,
+    name: "Florero de Barro Lamista",
+    subtitle: "Decoracion tradicional para el hogar",
+    line: "artesania_decor",
+    supplier: "Artesania Lamista",
+    img: "💐",
+    desc: "Florero de barro lamista para flores naturales o secas. Una pieza decorativa con identidad regional y acabado artesanal.",
+    quality: "Hecho a mano",
+    variety: "Decoracion",
+    tags: ["Florero", "Barro", "Decoracion", "Lamista"],
+    presentations: [
+      { label: "Unidad", price: 25.00, unit: "pieza" },
+      { label: "Decorado", price: 38.00, unit: "pieza" },
+    ],
+    saving: 0,
+    cooking: "Limpieza suave y evitar golpes.",
+    tip: "Muy bueno para adornar salas, vitrinas o regalos.",
+    zones: ZONES_ARTESANIA,
+  },
 ];
 
 const LINE_LABELS = {
@@ -477,6 +1254,19 @@ const LINE_LABELS = {
   economico: "Económico",
   derivados: "Derivados",
   chicha: "Chicha ASWA",
+  jora_culinaria: "Sazonador",
+  jora_bebible: "Bebible",
+  jora_familiar: "Familiar",
+  tela_bolsas: "Bolsas y mochilas",
+  tela_moda: "Moda regional",
+  tela_hogar: "Hogar y descanso",
+  bocaditos_mani: "Mani",
+  bocaditos_galleta: "Galletas",
+  bocaditos_dulce: "Dulces",
+  bocaditos_chifle: "Chifles",
+  artesania_barro: "Barro",
+  artesania_mesa: "Mesa",
+  artesania_decor: "Decor",
 };
 
 const SUPPLIERS = {
@@ -497,13 +1287,299 @@ const SUPPLIERS = {
     displayPhone: "986 445 531",
     instagram: "@aswa.laricachicha",
   },
+  jora: {
+    key: "jora",
+    name: "Chicha de Jora",
+    shortName: "Jora",
+    phone: "51955273229",
+    displayPhone: "955 273 229",
+    instagram: "@jora.tradicional",
+  },
+  tela: {
+    key: "tela",
+    name: "Tienda Tela",
+    shortName: "Tela",
+    phone: "51955273229",
+    displayPhone: "955 273 229",
+    instagram: "@tienda.tela",
+  },
+  bocaditos: {
+    key: "bocaditos",
+    name: "Bocaditos Regionales",
+    shortName: "Bocaditos",
+    phone: "51955273229",
+    displayPhone: "955 273 229",
+    instagram: "@bocaditos.artesanales",
+  },
+  artesania: {
+    key: "artesania",
+    name: "Artesania Lamista",
+    shortName: "Artesania",
+    phone: "51955273229",
+    displayPhone: "955 273 229",
+    instagram: "@artesania.lamista",
+  },
+};
+
+const COMPANY_VIEWS = {
+  reyleon: {
+    key: "reyleon",
+    name: "Piladora Rey León",
+    shortName: "Rey León",
+    tagline: "Arroz directo del molino",
+    description: "Elige Rey León para ver todos sus arroces, derivados y precios de origen. Menos ruido al inicio, más claridad para comprar rápido.",
+    heroTitle: "Pide tu arroz sin enredos",
+    heroText: "Fotos reales, precios visibles y delivery por zona para que el cliente encuentre rápido lo que busca.",
+    heroChips: ["Arroz premium", "Precios de origen", "Delivery por zona"],
+    heroImage: priceSheet,
+    heroNote: "MOLINO DIRECTO",
+    infoTitle: "Piladora Rey León",
+    infoBody: "Arroz para hogar, menús, restaurantes e industria. Revisa premium, superior, económico y derivados en un catálogo limpio.",
+    companyPhone: SUPPLIERS.reyleon.displayPhone,
+    companyContact: "Ventas directas del molino",
+    primaryButton: "Ver arroces",
+    secondaryButton: "Cambiar empresa",
+  },
+  aswa: {
+    key: "aswa",
+    name: "ASWA La Rica Chicha",
+    shortName: "ASWA",
+    tagline: "Chicha, bidón y escolares",
+    description: "Elige ASWA para ver las promociones sanjuaneras, chicha, bidón 20L y escolares con delivery gratis para instituciones.",
+    heroTitle: "ASWA para pedidos rápidos",
+    heroText: "Chicha, bidón y combo escolar con fotos reales, pago por Yape y acceso directo a su app.",
+    heroChips: ["Delivery gratis escolar", "Bidón 20L", "App ASWA"],
+    heroImage: ASSETS.promoMain,
+    heroNote: "SAN JUAN 2026",
+    infoTitle: "ASWA La Rica Chicha",
+    infoBody: "La Rica Chicha para colegios, eventos y pedidos de temporada. El bidón público cobra delivery por zona y los escolares mantienen delivery gratis.",
+    companyPhone: SUPPLIERS.aswa.displayPhone,
+    companyContact: "Pedidos sanjuaneros y escolares",
+    primaryButton: "Ver productos ASWA",
+    secondaryButton: "Abrir app ASWA",
+  },
+  jora: {
+    key: "jora",
+    name: "Chicha de Jora",
+    shortName: "Jora",
+    tagline: "Sazonador y bebida natural",
+    description: "Elige Jora para ver solo chicha de jora: puedes usarla para aderezar tu comida o beberla endulzada a tu gusto, idealmente con miel de abeja.",
+    heroTitle: "Chicha de jora para casa",
+    heroText: "Una tienda separada para chicha de jora, pensada para sazonar tus comidas o tomarla endulzada con miel de abeja o tu endulzante favorito.",
+    heroChips: ["Para sazonar", "Para beber", "Miel recomendada"],
+    heroImage: ASSETS.joraHome,
+    heroNote: "JORA TRADICIONAL",
+    infoTitle: "Chicha de Jora",
+    infoBody: "Tienda separada para chicha de jora: aderezo natural para cocina y bebida tradicional endulzada al gusto.",
+    companyPhone: SUPPLIERS.jora.displayPhone,
+    companyContact: "Pedidos y consejos de uso",
+    primaryButton: "Ver Jora",
+    secondaryButton: "Cambiar empresa",
+  },
+  tela: {
+    key: "tela",
+    name: "Tienda Tela",
+    shortName: "Tela",
+    tagline: "Bolsas, moda regional y hogar",
+    description: "Elige Tela para ver bolsas, alforjas, panueloletas, vestidos regionales, mochilas, sabanas, edredones, colchas y cubrecamas en una tienda separada.",
+    heroTitle: "Tela para vestir y decorar",
+    heroText: "Una tienda propia para textiles del hogar, accesorios y moda regional. Todo listo para elegir sin mezclarlo con otras categorias.",
+    heroChips: ["Bolsas y mochilas", "Moda regional", "Hogar y descanso"],
+    heroImage: ASSETS.telaHome,
+    heroNote: "TEXTIL TIENDA",
+    infoTitle: "Tienda Tela",
+    infoBody: "Bolsas, alforjas, panueloletas, vestidos regionales, mochilas, sabanas, edredones, colchas y cubrecamas.",
+    companyPhone: SUPPLIERS.tela.displayPhone,
+    companyContact: "Pedidos textiles y hogar",
+    primaryButton: "Ver productos Tela",
+    secondaryButton: "Cotizar por WhatsApp",
+  },
+  bocaditos: {
+    key: "bocaditos",
+    name: "Bocaditos Regionales",
+    shortName: "Bocaditos",
+    tagline: "Artesanales dulces y salados",
+    description: "Elige Bocaditos para ver ñuto, rosquitas, turcas, maní tostado, maní confitado, turrón, chifles, cocada, suspiros y rosca bañada de dulce en una tienda separada.",
+    heroTitle: "Bocaditos para compartir",
+    heroText: "Una tienda propia para bocaditos regionales artesanales. Ideal para compartir, regalar o acompañar tu café y tus reuniones.",
+    heroChips: ["Maní y galletas", "Dulces", "Chifles"],
+    heroImage: ASSETS.bocaditosHome,
+    heroNote: "BOCADITOS 100%",
+    infoTitle: "Bocaditos Regionales",
+    infoBody: "Una tienda separada para bocaditos artesanales: maní, galletas, chifles y dulces regionales.",
+    companyPhone: SUPPLIERS.bocaditos.displayPhone,
+    companyContact: "Pedidos artesanales y regionales",
+    primaryButton: "Ver bocaditos",
+    secondaryButton: "Pedir por WhatsApp",
+  },
+  artesania: {
+    key: "artesania",
+    name: "Artesania Lamista",
+    shortName: "Artesania",
+    tagline: "Barro hecho a mano",
+    description: "Elige Artesania para ver tinajas lamistas, platos artesanales, pate, olla arrocera de barro, tiestos y floreros en una tienda separada.",
+    heroTitle: "Artesania que viste tu casa",
+    heroText: "Piezas de barro y decoracion hechas a mano para cocina, mesa, regalo o adorno. Todo en una tienda separada y facil de pedir.",
+    heroChips: ["Barro lamista", "Hecho a mano", "Decoracion"],
+    heroImage: ASSETS.artesaniaHome,
+    heroNote: "BARRO LAMISTA",
+    infoTitle: "Artesania Lamista",
+    infoBody: "Piezas de barro y utilitarios hechos a mano para tu casa, cocina o decoracion.",
+    companyPhone: SUPPLIERS.artesania.displayPhone,
+    companyContact: "Pedidos de barro y decoracion",
+    primaryButton: "Ver artesania",
+    secondaryButton: "Pedir por WhatsApp",
+  },
+};
+
+const COMPANY_FILTERS = {
+  reyleon: [
+    { id: "all", label: "Todos" },
+    { id: "premium", label: "Premium" },
+    { id: "superior", label: "Superior" },
+    { id: "economico", label: "Económico" },
+    { id: "derivados", label: "Derivados" },
+  ],
+  aswa: [
+    { id: "all", label: "Todos" },
+    { id: "chicha", label: "Chicha" },
+    { id: "bidon", label: "Bidón" },
+    { id: "escolar", label: "Escolar" },
+  ],
+  jora: [
+    { id: "all", label: "Todos" },
+    { id: "jora_culinaria", label: "Sazonador" },
+    { id: "jora_bebible", label: "Bebible" },
+    { id: "jora_familiar", label: "Familiar" },
+  ],
+  tela: [
+    { id: "all", label: "Todos" },
+    { id: "tela_bolsas", label: "Bolsas y mochilas" },
+    { id: "tela_moda", label: "Moda regional" },
+    { id: "tela_hogar", label: "Hogar y descanso" },
+  ],
+  bocaditos: [
+    { id: "all", label: "Todos" },
+    { id: "bocaditos_mani", label: "Maní" },
+    { id: "bocaditos_galleta", label: "Galletas" },
+    { id: "bocaditos_dulce", label: "Dulces" },
+    { id: "bocaditos_chifle", label: "Chifles" },
+  ],
+  artesania: [
+    { id: "all", label: "Todos" },
+    { id: "artesania_barro", label: "Barro" },
+    { id: "artesania_mesa", label: "Mesa" },
+    { id: "artesania_decor", label: "Decoracion" },
+  ],
 };
 
 const ORDER_PHONE = "51955273229";
 const ORDER_PHONE_DISPLAY = "955 273 229";
-const APP_PUBLIC_URL = "https://jsangama.github.io/vndrx/";
-const APP_QR_IMAGE = "./app-qr.png";
-const APP_QR_CARD = "./app-qr-card.svg";
+const ASWA_APP_URL = "https://jsangama.github.io/aswa/?v=guide141";
+const REYLEON_PAYMENT_METHODS = [
+  {
+    val: "cod",
+    label: "Pago contra entrega",
+    badge: "EF",
+    detail: "Paga al recibir tu pedido",
+    hint: "Efectivo exacto al motorizado o en el local.",
+    color: theme.greenLight,
+  },
+  {
+    val: "yape",
+    label: "Yape",
+    badge: "YP",
+    detail: "918 429 034 · Noyolith Quine Rojas",
+    hint: "Envía tu comprobante al WhatsApp del molino.",
+    color: "#C084FC",
+  },
+  {
+    val: "plin",
+    label: "Plin",
+    badge: "PL",
+    detail: "Datos del molino por WhatsApp",
+    hint: "Se comparte antes de confirmar el pago.",
+    color: "#22C55E",
+  },
+  {
+    val: "bim",
+    label: "BIM",
+    badge: "BM",
+    detail: "Datos del molino por WhatsApp",
+    hint: "Se comparte antes de confirmar el pago.",
+    color: "#F59E0B",
+  },
+  {
+    val: "agora",
+    label: "Agora",
+    badge: "AG",
+    detail: "Enlace del molino por WhatsApp",
+    hint: "Te compartimos el enlace de pago.",
+    color: "#FB7185",
+  },
+  {
+    val: "bbva",
+    label: "Transferencia BBVA",
+    badge: "BV",
+    detail: "NET CASH BBVA ZURITA",
+    account: "0011-0310-01-00167706",
+    cci: "011-0310-01-00167706-28",
+    hint: "Cuenta y CCI del molino para transferencias.",
+    color: "#60A5FA",
+  },
+  {
+    val: "bcp",
+    label: "Transferencia BCP",
+    badge: "BC",
+    detail: "NET CASH BCP ZURITA",
+    account: "550-146-407-751-071",
+    cci: "002-550-114-640-751-071-28",
+    hint: "Cuenta y CCI del molino para transferencias.",
+    color: "#FB923C",
+  },
+  {
+    val: "card",
+    label: "Tarjeta / online",
+    badge: "ON",
+    detail: "Link del molino por WhatsApp",
+    hint: "Compartimos el enlace de cobro.",
+    color: "#A78BFA",
+  },
+];
+const REYLEON_BANK_DETAILS = {
+  bbva: {
+    bank: "NET CASH BBVA ZURITA",
+    account: "0011-0310-01-00167706",
+    cci: "011-0310-01-00167706-28",
+  },
+  bcp: {
+    bank: "NET CASH BCP ZURITA",
+    account: "550-146-407-751-071",
+    cci: "002-550-114-640-751-071-28",
+  },
+};
+const paymentBadgeStyle = (opt, selected = false) => ({
+  width: 38,
+  height: 38,
+  borderRadius: 12,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  background: selected ? `linear-gradient(135deg, ${opt.color}, ${opt.color}66)` : theme.bgCard,
+  border: `1px solid ${selected ? opt.color : theme.border}`,
+  color: selected ? "#0F1A0E" : opt.color,
+  fontSize: 12,
+  fontWeight: 900,
+  letterSpacing: 0.6,
+  boxShadow: selected ? `0 0 0 4px ${opt.color}22` : "none",
+});
+const paymentDetailCardStyle = (tone = "#60A5FA") => ({
+  marginTop: 12,
+  background: `linear-gradient(135deg, ${tone}20, #11120f)`,
+  border: `1px solid ${tone}66`,
+  borderRadius: 14,
+  padding: 12,
+});
 const ASWA_PROMO_LIBRARY = [
   {
     id: "main-flyer",
@@ -524,16 +1600,6 @@ const ASWA_PROMO_LIBRARY = [
     accent: theme.greenLight,
     featured: true,
     message: "Promocion San Juanero 2026: material listo para vender en temporada. Pedidos al 955 273 229.",
-  },
-  {
-    id: "app-qr",
-    src: APP_QR_CARD,
-    title: "QR de la app",
-    subtitle: "Escanea para abrir la tienda y pedir",
-    note: "PIDE AQUÍ",
-    accent: "#22C55E",
-    featured: true,
-    message: `Escanea este QR para entrar a VNDRX y hacer tu pedido. Link: ${APP_PUBLIC_URL}`,
   },
   {
     id: "san-juanera-special",
@@ -615,27 +1681,41 @@ const ASWA_PROMO_LIBRARY = [
     featured: false,
     message: "Bidon sanjuanero 20L ASWA edicion 2026. Pide por WhatsApp al 955 273 229.",
   },
+];
+
+const JORA_PROMO_LIBRARY = [
   {
-    id: "yape-number",
-    src: ASSETS.yapeQrNumber,
-    title: "Yape con numero",
-    subtitle: "918 429 034 - Noyolith Quine Rojas",
-    note: "PAGO",
-    accent: "#8B5CF6",
+    id: "jora-sazonadora",
+    src: ASSETS.joraSazon,
+    title: "Jora Sazonadora",
+    subtitle: "Base natural para aderezar tus comidas",
+    note: "COCINA",
+    accent: "#D59B3D",
     featured: true,
-    message: "Paga con Yape al 918 429 034. Nombre: Noyolith Quine Rojas. Confirma tu pago y haz tu pedido al 955 273 229.",
+    message: "Chicha de jora para sazonar comidas y dar mas sabor a guisos, carnes y marinados. Pedidos al 955 273 229.",
   },
   {
-    id: "price-sheet",
-    src: ASSETS.priceSheet,
-    title: "Precios del arroz",
-    subtitle: "Consulta rapida de la lista comercial",
-    note: "LISTA",
-    accent: "#D97706",
-    featured: false,
-    message: "Consulta la lista de precios del arroz y pide directo al molino. Pedidos al 955 273 229.",
+    id: "jora-bebible",
+    src: ASSETS.joraBebible,
+    title: "Jora para beber",
+    subtitle: "Endulza al gusto",
+    note: "BEBIBLE",
+    accent: "#F0C040",
+    featured: true,
+    message: "Chicha de jora para beber: endulzala al gusto; recomendamos miel de abeja para un sabor mas suave. Pedidos al 955 273 229.",
+  },
+  {
+    id: "jora-familiar",
+    src: ASSETS.joraHome,
+    title: "Jora familiar",
+    subtitle: "Presentacion para compartir",
+    note: "FAMILIA",
+    accent: "#8A5A1C",
+    featured: true,
+    message: "Chicha de jora en presentacion familiar para compartir en casa o en cocina. Pedidos al 955 273 229.",
   },
 ];
+
 const STORAGE_KEYS = {
   profile: "vndrx-profile-v2",
   orders: "vndrx-orders-v2",
@@ -719,6 +1799,10 @@ function formatMoney(amount) {
 
 function getSupplierKey(product) {
   if (product.supplier?.toLowerCase().includes("aswa")) return "aswa";
+  if (product.supplier?.toLowerCase().includes("jora")) return "jora";
+  if (product.supplier?.toLowerCase().includes("tela")) return "tela";
+  if (product.supplier?.toLowerCase().includes("bocaditos")) return "bocaditos";
+  if (product.supplier?.toLowerCase().includes("artesan") || product.supplier?.toLowerCase().includes("lamista")) return "artesania";
   return product.line === "chicha" ? "aswa" : "reyleon";
 }
 
@@ -726,11 +1810,68 @@ function getSupplier(product) {
   return SUPPLIERS[getSupplierKey(product)];
 }
 
+function getProductCategory(product) {
+  const supplierKey = getSupplierKey(product);
+  if (supplierKey === "aswa") {
+    if (product.id === 16) return "bidon";
+    if (product.schoolOnly || product.id === 17 || product.id === 18) return "escolar";
+    return "chicha";
+  }
+  return product.line;
+}
+
 const PRODUCT_MEDIA = {
-  15: ASSETS.chicha400ml,
-  16: ASSETS.bidon20l,
-  17: ASSETS.comboEscolar,
-  18: ASSETS.juaneEscolar,
+  1: { src: riceExtraVerdeCatalogo, fit: "cover" },
+  2: { src: riceAnejoFeronCatalogo, fit: "cover" },
+  3: { src: riceAnejoValorCatalogo, fit: "contain" },
+  4: { src: riceSuperiorVerdeCatalogo, fit: "contain" },
+  5: { src: riceSuperiorAzulCatalogo, fit: "contain" },
+  6: { src: riceVallesDelGuayoCatalogo, fit: "contain" },
+  7: { src: riceIntegradoRojoCatalogo, fit: "contain" },
+  8: { src: riceIntegradoLilaCatalogo, fit: "contain" },
+  9: { src: riceArroz34Catalogo, fit: "contain" },
+  10: { src: riceArrocilloCatalogo, fit: "contain" },
+  11: { src: riceAfrechoCatalogo, fit: "contain" },
+  12: { src: ricePolvilloFinoCatalogo, fit: "contain" },
+  13: { src: ricePolvilloGruesoCatalogo, fit: "contain" },
+  14: { src: riceCascarillaPrensadaCatalogo, fit: "contain" },
+  15: { src: ASSETS.chicha400ml, fit: "contain" },
+  16: { src: ASSETS.bidon20l, fit: "contain" },
+  17: { src: ASSETS.comboEscolar, fit: "contain" },
+  18: { src: ASSETS.juaneEscolar, fit: "contain" },
+  19: { src: ASSETS.joraSazon, fit: "contain" },
+  20: { src: ASSETS.joraBebible, fit: "contain" },
+  21: { src: ASSETS.joraHome, fit: "contain" },
+  22: { src: ASSETS.telaBolsas, fit: "contain" },
+  23: { src: ASSETS.telaBolsas, fit: "contain" },
+  24: { src: ASSETS.telaModa, fit: "contain" },
+  25: { src: ASSETS.telaModa, fit: "contain" },
+  26: { src: ASSETS.telaBolsas, fit: "contain" },
+  27: { src: ASSETS.telaHogar, fit: "contain" },
+  28: { src: ASSETS.telaHogar, fit: "contain" },
+  29: { src: ASSETS.telaHogar, fit: "contain" },
+  30: { src: ASSETS.telaHogar, fit: "contain" },
+  31: { src: ASSETS.bocaditosNuto, fit: "contain" },
+  32: { src: ASSETS.bocaditosRosquitaAlmidon, fit: "contain" },
+  33: { src: ASSETS.bocaditosTurca, fit: "contain" },
+  34: { src: ASSETS.bocaditosManiTostadoSalado, fit: "contain" },
+  35: { src: ASSETS.bocaditosManiConPasas, fit: "contain" },
+  36: { src: ASSETS.bocaditosRoquitasRojas, fit: "contain" },
+  37: { src: ASSETS.bocaditosManiConfitado, fit: "contain" },
+  38: { src: ASSETS.bocaditosManiConfitadoRojo, fit: "contain" },
+  39: { src: ASSETS.bocaditosTurron, fit: "contain" },
+  40: { src: ASSETS.bocaditosChiflePlatano, fit: "contain" },
+  41: { src: ASSETS.bocaditosChifleMaduro, fit: "contain" },
+  42: { src: ASSETS.bocaditosCocada, fit: "contain" },
+  43: { src: ASSETS.bocaditosSuspiroBlanco, fit: "contain" },
+  44: { src: ASSETS.bocaditosSuspiroColores, fit: "contain" },
+  45: { src: ASSETS.bocaditosRoscaDulce, fit: "contain" },
+  46: { src: ASSETS.artesaniaTinaja, fit: "contain" },
+  47: { src: ASSETS.artesaniaPlato, fit: "contain" },
+  48: { src: ASSETS.artesaniaPate, fit: "contain" },
+  49: { src: ASSETS.artesaniaOllaArrocera, fit: "contain" },
+  50: { src: ASSETS.artesaniaTiesto, fit: "contain" },
+  51: { src: ASSETS.artesaniaFlorero, fit: "contain" },
 };
 
 function getProductMedia(product) {
@@ -922,26 +2063,56 @@ function CertBadge({ cert }) {
   );
 }
 
-function ProductAvatar({ product, size = 52, radius = 14 }) {
+function ProductAvatar({ product, size = 52, radius = 14, onClick, title, ariaLabel }) {
   const media = getProductMedia(product);
+  const mediaSrc = typeof media === "string" ? media : media?.src;
+  const mediaFit = typeof media === "string" ? "contain" : (media?.fit || "contain");
+  const interactive = typeof onClick === "function";
   const boxStyle = {
     width: size,
     height: size,
     borderRadius: radius,
     overflow: "hidden",
     flexShrink: 0,
-    background: HOME.surface,
+    background: HOME.soft2,
     border: `1px solid ${HOME.border}`,
     boxShadow: HOME.shadow,
   };
 
-  if (media) {
+  if (mediaSrc) {
+    if (interactive) {
+      return (
+        <button
+          type="button"
+          onClick={onClick}
+          title={title || `Ver imagen grande de ${product.name}`}
+          aria-label={ariaLabel || `Ver imagen grande de ${product.name}`}
+          style={{
+            ...boxStyle,
+            padding: 0,
+            cursor: "zoom-in",
+            border: `1px solid ${HOME.border}`,
+            background: HOME.soft2,
+            display: "block",
+            appearance: "none",
+          }}
+        >
+          <img
+            src={mediaSrc}
+            alt={product.name}
+            style={{ width: "100%", height: "100%", objectFit: mediaFit, display: "block" }}
+            loading="lazy"
+          />
+        </button>
+      );
+    }
+
     return (
       <div style={boxStyle}>
         <img
-          src={media}
+          src={mediaSrc}
           alt={product.name}
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          style={{ width: "100%", height: "100%", objectFit: mediaFit, display: "block" }}
           loading="lazy"
         />
       </div>
@@ -951,6 +2122,122 @@ function ProductAvatar({ product, size = 52, radius = 14 }) {
   return (
     <div style={{ ...boxStyle, display: "flex", alignItems: "center", justifyContent: "center", fontSize: Math.round(size * 0.54), lineHeight: 1 }}>
       {product.img}
+    </div>
+  );
+}
+
+function ImageZoomModal({ open, src, alt, title, subtitle, onClose }) {
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open, onClose]);
+
+  if (!open || !src) return null;
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 220,
+        background: "rgba(12, 18, 12, 0.86)",
+        backdropFilter: "blur(12px)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 16,
+      }}
+    >
+      <div
+        onClick={(event) => event.stopPropagation()}
+        style={{
+          width: "min(920px, 100%)",
+          maxHeight: "92vh",
+          background: "#FBF7EF",
+          borderRadius: 26,
+          overflow: "hidden",
+          border: `1px solid ${HOME.border}`,
+          boxShadow: "0 32px 80px rgba(0,0,0,0.36)",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <div
+          style={{
+            padding: "14px 16px",
+            borderBottom: `1px solid ${HOME.border}`,
+            background: "linear-gradient(135deg, #FFF8EC, #F2E5CB)",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 12,
+            flexWrap: "wrap",
+          }}
+        >
+          <div style={{ minWidth: 0 }}>
+            <div style={{ color: HOME.accent, fontSize: 10, fontWeight: 900, letterSpacing: 1.2, textTransform: "uppercase" }}>
+              Imagen ampliada
+            </div>
+            <div style={{ color: HOME.text, fontFamily: "Georgia, serif", fontSize: 18, fontWeight: 900, marginTop: 2 }}>
+              {title || alt || "Producto"}
+            </div>
+            {subtitle && (
+              <div style={{ color: HOME.muted, fontSize: 12, marginTop: 2 }}>
+                {subtitle}
+              </div>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            style={{
+              background: "#FFF",
+              border: `1px solid ${HOME.border}`,
+              color: HOME.text,
+              borderRadius: 999,
+              padding: "10px 14px",
+              fontWeight: 800,
+              cursor: "pointer",
+              boxShadow: "0 8px 16px rgba(76,56,23,0.08)",
+            }}
+          >
+            Cerrar
+          </button>
+        </div>
+        <div
+          style={{
+            flex: 1,
+            minHeight: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 18,
+            background: "radial-gradient(circle at top, #FFFFFF 0%, #F4EAD6 100%)",
+          }}
+        >
+          <img
+            src={src}
+            alt={alt || title || "Imagen ampliada"}
+            style={{
+              width: "100%",
+              height: "100%",
+              maxHeight: "calc(92vh - 120px)",
+              objectFit: "contain",
+              display: "block",
+              borderRadius: 20,
+              boxShadow: "0 14px 34px rgba(0,0,0,0.16)",
+            }}
+          />
+        </div>
+        <div style={{ padding: "0 16px 16px", color: HOME.muted, fontSize: 12, lineHeight: 1.5 }}>
+          Toca fuera de la imagen o presiona <strong>Esc</strong> para cerrar.
+        </div>
+      </div>
     </div>
   );
 }
@@ -1057,7 +2344,7 @@ function PromoBoard() {
                     Promociones reales para vender hoy
                   </div>
                   <div style={{ color: "#F7EED0", fontSize: 14, lineHeight: 1.7, marginTop: 10, maxWidth: 440 }}>
-                    Chicha ASWA, juane escolar y bidón sanjuanero con precios claros, foto real y pago por Yape.
+                    Chicha ASWA, juane escolar y bidon sanjuanero con foto real y pedido por WhatsApp.
                   </div>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 12 }}>
                     {["100% natural", "Delivery a instituciones", "Pide por WhatsApp"].map((chip) => (
@@ -1074,24 +2361,24 @@ function PromoBoard() {
           <div style={{ display: "grid", gap: 14 }}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: 14 }}>
               <PromoTile
-                image={ASSETS.yapeQr}
-                title="Paga con Yape"
-                subtitle="918 429 034 · Noyolith Quine Rojas"
-                note="ESCANEA"
-                accent="#8B5CF6"
+                image={ASSETS.promoAlt}
+                title="Promo ASWA alterna"
+                subtitle="Arte limpio para compartir"
+                note="ASWA"
+                accent="#22C55E"
                 fit="contain"
                 aspectRatio="3 / 4"
-                onClick={() => openAsset(ASSETS.yapeQr)}
+                onClick={() => openAsset(ASSETS.promoAlt)}
               />
               <PromoTile
-                image={ASSETS.priceSheet}
-                title="Precios del arroz"
-                subtitle="Tabla actualizada para consulta rápida"
-                note="MAYORISTA"
-                accent="#D97706"
-                fit="cover"
+                image={ASSETS.promoFlayer}
+                title="Flyer ASWA"
+                subtitle="Promocion lista para redes"
+                note="TEMPORADA"
+                accent="#F59E0B"
+                fit="contain"
                 aspectRatio="3 / 4"
-                onClick={() => openAsset(ASSETS.priceSheet)}
+                onClick={() => openAsset(ASSETS.promoFlayer)}
               />
             </div>
 
@@ -1250,6 +2537,364 @@ function PromoBoard() {
   );
 }
 
+function JoraBoard() {
+  const openAsset = (src) => window.open(src, "_blank", "noopener,noreferrer");
+  const openWhatsApp = () => window.open(`https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent("Hola, quiero pedir chicha de jora.")}`, "_blank", "noopener,noreferrer");
+
+  return (
+    <section style={{ maxWidth: 1200, margin: "18px auto 0", padding: "0 20px" }}>
+      <div style={{
+        background: `radial-gradient(circle at top left, #FFF9EE 0%, #F8E4B8 42%, #ECD09A 100%)`,
+        border: `1px solid ${HOME.border}`,
+        borderRadius: 24,
+        padding: 18,
+        boxShadow: HOME.shadow,
+      }}>
+        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 0.95fr)", gap: 18, alignItems: "stretch" }}>
+          <button
+            type="button"
+            onClick={() => openAsset(ASSETS.joraHome)}
+            style={{
+              padding: 0,
+              border: `1px solid ${HOME.border}`,
+              borderRadius: 22,
+              overflow: "hidden",
+              cursor: "pointer",
+              background: HOME.surface,
+              position: "relative",
+              boxShadow: HOME.shadow,
+            }}
+          >
+            <div style={{ position: "relative", aspectRatio: "2 / 3", minHeight: 560 }}>
+              <img
+                src={ASSETS.joraHome}
+                alt="Chicha de Jora"
+                loading="lazy"
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(255,250,242,0.08) 0%, rgba(39,49,40,0.16) 30%, rgba(39,49,40,0.5) 100%)" }} />
+              <div style={{ position: "absolute", inset: 0, padding: 18, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-start", flexWrap: "wrap" }}>
+                  <Badge text="NUEVA TIENDA" color="#D59B3D" />
+                  <Badge text="SAZONAR O BEBER" color="#8A5A1C" />
+                </div>
+                <div>
+                  <div style={{ color: "#fff", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 900, lineHeight: 0.95, letterSpacing: -0.6, maxWidth: 420, textShadow: "0 8px 30px rgba(0,0,0,0.4)" }}>
+                    Chicha de jora para casa
+                  </div>
+                  <div style={{ color: "#F7EED0", fontSize: 14, lineHeight: 1.7, marginTop: 10, maxWidth: 440 }}>
+                    Para aderezar tu comida como sazonador. Si la quieres beber, endulza al gusto; recomendamos miel de abeja.
+                  </div>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 12 }}>
+                    {["Sazonador natural", "Bebible", "Miel recomendada"].map((chip) => (
+                      <span key={chip} style={{ background: "#0F1A0ECC", color: "#fff", border: "1px solid #FFFFFF22", borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 700 }}>
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </button>
+
+          <div style={{ display: "grid", gap: 14 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: 14 }}>
+              <PromoTile
+                image={ASSETS.joraSazon}
+                title="Jora Sazonadora"
+                subtitle="Base natural para cocina"
+                note="COCINA"
+                accent="#D59B3D"
+                fit="contain"
+                aspectRatio="3 / 4"
+                onClick={() => openAsset(ASSETS.joraSazon)}
+              />
+              <PromoTile
+                image={ASSETS.joraBebible}
+                title="Jora para beber"
+                subtitle="Endulza al gusto"
+                note="BEBIBLE"
+                accent="#F0C040"
+                fit="contain"
+                aspectRatio="3 / 4"
+                onClick={() => openAsset(ASSETS.joraBebible)}
+              />
+            </div>
+
+            <div style={{
+              background: `linear-gradient(135deg, ${HOME.surface}, ${HOME.soft})`,
+              border: `1px solid ${HOME.border}`,
+              borderRadius: 18,
+              padding: 16,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 14,
+              flexWrap: "wrap",
+              boxShadow: HOME.shadow,
+            }}>
+              <div style={{ minWidth: 240 }}>
+                <div style={{ color: HOME.accent, fontSize: 13, fontWeight: 800, letterSpacing: 1, marginBottom: 5 }}>LISTA REAL PARA VENDER</div>
+                <div style={{ color: HOME.text, fontSize: 15, fontWeight: 700, lineHeight: 1.45 }}>
+                  Para beberla, endulza al gusto; recomendamos miel de abeja. Para comida, usala como aderezo natural.
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <button
+                  type="button"
+                  onClick={openWhatsApp}
+                  style={{
+                    background: `linear-gradient(135deg, #D59B3D, #F0C040)`,
+                    border: "none",
+                    borderRadius: 12,
+                    color: "#0F1A0E",
+                    padding: "11px 14px",
+                    cursor: "pointer",
+                    fontSize: 13,
+                    fontWeight: 800,
+                    boxShadow: "0 10px 20px rgba(71,101,75,0.18)",
+                  }}
+                >
+                  Pedir Jora
+                </button>
+                <button
+                  type="button"
+                  onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}
+                  style={{
+                    background: HOME.surface,
+                    border: `1px solid ${HOME.border}`,
+                    borderRadius: 12,
+                    color: HOME.text,
+                    padding: "11px 14px",
+                    cursor: "pointer",
+                    fontSize: 13,
+                    fontWeight: 700,
+                  }}
+                >
+                  Ver catalogo
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ marginTop: 14, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
+          {JORA_PROMO_LIBRARY.map((asset) => (
+            <button
+              key={asset.id}
+              type="button"
+              onClick={() => openAsset(asset.src)}
+              style={{
+                padding: 0,
+                border: `1px solid ${HOME.border}`,
+                borderRadius: 16,
+                overflow: "hidden",
+                background: HOME.surface,
+                cursor: "pointer",
+                textAlign: "left",
+                boxShadow: "0 12px 22px rgba(76,56,23,0.06)",
+              }}
+            >
+              <div style={{ aspectRatio: "4 / 3", overflow: "hidden" }}>
+                <img
+                  src={asset.src}
+                  alt={asset.title}
+                  loading="lazy"
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                />
+              </div>
+              <div style={{ padding: "10px 12px", color: HOME.text, fontSize: 12, fontWeight: 700 }}>
+                {asset.title}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function TelaBoard() {
+  const openAsset = (src) => window.open(src, "_blank", "noopener,noreferrer");
+  const openWhatsApp = () => window.open(`https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent("Hola, quiero pedir productos de la tienda Tela.")}`, "_blank", "noopener,noreferrer");
+
+  return (
+    <section style={{ maxWidth: 1200, margin: "18px auto 0", padding: "0 20px" }}>
+      <div style={{
+        background: `radial-gradient(circle at top left, #FFF6F2 0%, #ECD6DE 42%, #D8B0C1 100%)`,
+        border: `1px solid ${HOME.border}`,
+        borderRadius: 24,
+        padding: 18,
+        boxShadow: HOME.shadow,
+      }}>
+        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 0.95fr)", gap: 18, alignItems: "stretch" }}>
+          <button
+            type="button"
+            onClick={() => openAsset(ASSETS.telaHome)}
+            style={{
+              padding: 0,
+              border: `1px solid ${HOME.border}`,
+              borderRadius: 22,
+              overflow: "hidden",
+              cursor: "pointer",
+              background: HOME.surface,
+              position: "relative",
+              boxShadow: HOME.shadow,
+            }}
+          >
+            <div style={{ position: "relative", aspectRatio: "2 / 3", minHeight: 560 }}>
+              <img
+                src={ASSETS.telaHome}
+                alt="Tienda Tela"
+                loading="lazy"
+                style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+              />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(255,250,242,0.08) 0%, rgba(39,49,40,0.16) 30%, rgba(39,49,40,0.5) 100%)" }} />
+              <div style={{ position: "absolute", inset: 0, padding: 18, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-start", flexWrap: "wrap" }}>
+                  <Badge text="NUEVA TIENDA" color="#D58AA7" />
+                  <Badge text="TEXIL Y HOGAR" color="#7EA6D8" />
+                </div>
+                <div>
+                  <div style={{ color: "#fff", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 900, lineHeight: 0.95, letterSpacing: -0.6, maxWidth: 420, textShadow: "0 8px 30px rgba(0,0,0,0.4)" }}>
+                    Tela para vestir y decorar
+                  </div>
+                  <div style={{ color: "#F7EED0", fontSize: 14, lineHeight: 1.7, marginTop: 10, maxWidth: 440 }}>
+                    Bolsas, alforjas, panueloletas, vestidos regionales, mochilas, sabanas, edredones, colchas y cubrecamas.
+                  </div>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 12 }}>
+                    {["Bolsas", "Moda regional", "Hogar y descanso"].map((chip) => (
+                      <span key={chip} style={{ background: "#0F1A0ECC", color: "#fff", border: "1px solid #FFFFFF22", borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 700 }}>
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </button>
+
+          <div style={{ display: "grid", gap: 14 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: 14 }}>
+              <PromoTile
+                image={ASSETS.telaBolsas}
+                title="Bolsas y mochilas"
+                subtitle="Reutilizables y urbanas"
+                note="BOLSAS"
+                accent="#7EA6D8"
+                fit="contain"
+                aspectRatio="3 / 4"
+                onClick={() => openAsset(ASSETS.telaBolsas)}
+              />
+              <PromoTile
+                image={ASSETS.telaModa}
+                title="Moda regional"
+                subtitle="Panueloletas y vestidos"
+                note="MODA"
+                accent="#D58AA7"
+                fit="contain"
+                aspectRatio="3 / 4"
+                onClick={() => openAsset(ASSETS.telaModa)}
+              />
+            </div>
+
+            <div style={{
+              background: `linear-gradient(135deg, ${HOME.surface}, ${HOME.soft})`,
+              border: `1px solid ${HOME.border}`,
+              borderRadius: 18,
+              padding: 16,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 14,
+              flexWrap: "wrap",
+              boxShadow: HOME.shadow,
+            }}>
+              <div style={{ minWidth: 240 }}>
+                <div style={{ color: HOME.accent, fontSize: 13, fontWeight: 800, letterSpacing: 1, marginBottom: 5 }}>LISTA REAL PARA VENDER</div>
+                <div style={{ color: HOME.text, fontSize: 15, fontWeight: 700, lineHeight: 1.45 }}>
+                  Bolsas, alforjas, panueloletas, vestimenta regional y articulos de hogar para elegir rapido.
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <button
+                  type="button"
+                  onClick={openWhatsApp}
+                  style={{
+                    background: "linear-gradient(135deg, #6A3552, #D58AA7)",
+                    border: "none",
+                    borderRadius: 12,
+                    color: "#fff",
+                    padding: "11px 14px",
+                    cursor: "pointer",
+                    fontSize: 13,
+                    fontWeight: 800,
+                    boxShadow: "0 10px 20px rgba(71,101,75,0.18)",
+                  }}
+                >
+                  Pedir Tela
+                </button>
+                <button
+                  type="button"
+                  onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}
+                  style={{
+                    background: HOME.surface,
+                    border: `1px solid ${HOME.border}`,
+                    borderRadius: 12,
+                    color: HOME.text,
+                    padding: "11px 14px",
+                    cursor: "pointer",
+                    fontSize: 13,
+                    fontWeight: 700,
+                  }}
+                >
+                  Ver catalogo
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ marginTop: 14, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
+          {[
+            { src: ASSETS.telaBolsas, label: "Bolsas y mochilas" },
+            { src: ASSETS.telaModa, label: "Moda regional" },
+            { src: ASSETS.telaHogar, label: "Hogar y descanso" },
+          ].map((asset) => (
+            <button
+              key={asset.label}
+              type="button"
+              onClick={() => openAsset(asset.src)}
+              style={{
+                padding: 0,
+                border: `1px solid ${HOME.border}`,
+                borderRadius: 16,
+                overflow: "hidden",
+                background: HOME.surface,
+                cursor: "pointer",
+                textAlign: "left",
+                boxShadow: "0 12px 22px rgba(76,56,23,0.06)",
+              }}
+            >
+              <div style={{ aspectRatio: "4 / 3", overflow: "hidden" }}>
+                <img
+                  src={asset.src}
+                  alt={asset.label}
+                  loading="lazy"
+                  style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+                />
+              </div>
+              <div style={{ padding: "10px 12px", color: HOME.text, fontSize: 12, fontWeight: 700 }}>
+                {asset.label}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function HubMetric({ label, value, hint, color = theme.goldLight }) {
   return (
     <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 14, minHeight: 84, boxShadow: "0 10px 18px rgba(76,56,23,0.05)" }}>
@@ -1367,11 +3012,15 @@ function ASWAControlHub({
     { id: "en ruta", label: "En ruta" },
     { id: "entregado", label: "Entregados" },
     { id: "aswa", label: "ASWA" },
+    { id: "tela", label: "Tela" },
+    { id: "bocaditos", label: "Bocaditos" },
     { id: "reyleon", label: "Rey León" },
   ];
   const filteredPanelOrders = data.orders.filter((order) => {
     if (panelFilter === "all") return true;
     if (panelFilter === "aswa") return order.supplierKey === "aswa";
+    if (panelFilter === "tela") return order.supplierKey === "tela";
+    if (panelFilter === "bocaditos") return order.supplierKey === "bocaditos";
     if (panelFilter === "reyleon") return order.supplierKey === "reyleon";
     return (order.status || "pendiente") === panelFilter;
   });
@@ -1906,13 +3555,775 @@ function DeliveryZoneSelector({ selected, onSelect, zones }) {
   );
 }
 
+function getDefaultZone(product) {
+  const zones = product.zones || ZONES_REYLEON;
+  if (product.defaultZoneId) {
+    return zones.find((zone) => zone.id === product.defaultZoneId) || zones[0];
+  }
+  return zones[0];
+}
+
+function CompanyChooserScreen({ onChooseCompany, toastBubble }) {
+  const options = [
+    {
+      key: "reyleon",
+      view: COMPANY_VIEWS.reyleon,
+      image: ASSETS.priceSheet,
+      accent: HOME.accent,
+      chips: ["Arroz premium", "Superior", "Derivados"],
+      note: "Molino directo",
+      description: "Entra a la tienda de Rey Leon y mira solo sus arroces, derivados y precios de origen.",
+      count: products.filter((product) => getSupplierKey(product) === "reyleon").length,
+      extra: "Delivery por zona",
+    },
+    {
+      key: "aswa",
+      view: COMPANY_VIEWS.aswa,
+      image: ASSETS.promoMain,
+      accent: HOME.leaf,
+      chips: ["Chicha", "Bidon", "Escolar"],
+      note: "San Juan 2026",
+      description: "Entra a ASWA para ver chicha, bidon 20L y promos escolares en una tienda separada.",
+      count: products.filter((product) => getSupplierKey(product) === "aswa").length,
+      extra: "Delivery gratis escolar",
+    },
+    {
+      key: "jora",
+      view: COMPANY_VIEWS.jora,
+      image: ASSETS.joraHome,
+      accent: "#D59B3D",
+      chips: ["Sazonador", "Bebible", "Natural"],
+      note: "Nueva tienda",
+      description: "Entra a chicha de jora para aderezar comidas o beberla endulzada a tu gusto.",
+      count: products.filter((product) => getSupplierKey(product) === "jora").length,
+      extra: "Miel recomendada",
+    },
+    {
+      key: "tela",
+      view: COMPANY_VIEWS.tela,
+      image: ASSETS.telaHome,
+      accent: "#6A3552",
+      chips: ["Bolsas", "Moda regional", "Hogar"],
+      note: "Textiles",
+      description: "Entra a tienda tela para bolsas, alforjas, panueloletas, vestidos regionales y hogar.",
+      count: products.filter((product) => getSupplierKey(product) === "tela").length,
+      extra: "Cuidados y descanso",
+    },
+    {
+      key: "bocaditos",
+      view: COMPANY_VIEWS.bocaditos,
+      image: ASSETS.bocaditosHome,
+      accent: "#B66A2C",
+      chips: ["Maní", "Galletas", "Dulces"],
+      note: "Artesanales",
+      description: "Entra a Bocaditos para ver ñuto, rosquitas, turcas, maní, chifles y dulces regionales en una tienda separada.",
+      count: products.filter((product) => getSupplierKey(product) === "bocaditos").length,
+      extra: "Detalle regional",
+    },
+    {
+      key: "artesania",
+      view: COMPANY_VIEWS.artesania,
+      image: ASSETS.artesaniaHome,
+      accent: "#A95E2A",
+      chips: ["Barro", "Decoracion", "Hecho a mano"],
+      note: "Lamista",
+      description: "Entra a artesania para tinajas, platos, olla arrocera, tiestos y floreros en una tienda separada.",
+      count: products.filter((product) => getSupplierKey(product) === "artesania").length,
+      extra: "Barro y tradicion",
+    },
+  ];
+
+  return (
+    <div style={{ minHeight: "100vh", background: HOME.page, fontFamily: "'Trebuchet MS', 'Segoe UI', sans-serif", color: HOME.text }}>
+      <style>{`* { box-sizing: border-box; } ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: ${HOME.page}; } ::-webkit-scrollbar-thumb { background: ${HOME.border}; border-radius: 3px; }`}</style>
+
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "30px 20px 42px" }}>
+        <div style={{
+          background: `linear-gradient(135deg, ${HOME.surface} 0%, ${HOME.soft2} 100%)`,
+          border: `1px solid ${HOME.border}`,
+          borderRadius: 28,
+          padding: 22,
+          boxShadow: HOME.shadow,
+        }}>
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 16, flexWrap: "wrap", alignItems: "flex-start" }}>
+            <div style={{ maxWidth: 720 }}>
+              <div style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                background: HOME.soft,
+                border: `1px solid ${HOME.border}`,
+                borderRadius: 999,
+                padding: "6px 12px",
+                color: HOME.accent,
+                fontSize: 11,
+                fontWeight: 900,
+                letterSpacing: 1,
+                textTransform: "uppercase",
+                marginBottom: 14,
+              }}>
+                Elige tu empresa
+              </div>
+              <h1 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(30px, 4.2vw, 52px)", fontWeight: 900, lineHeight: 1.03, margin: 0 }}>
+                Primero selecciona la tienda que quieres visitar
+              </h1>
+              <p style={{ color: HOME.muted, fontSize: 15, lineHeight: 1.7, margin: "12px 0 0", maxWidth: 720 }}>
+                La app se abre en modo limpio: eliges la marca que quieres visitar y enseguida ves solo su informacion, sus productos y su forma de pedir.
+              </p>
+            </div>
+            <div style={{
+              background: HOME.surface,
+              border: `1px solid ${HOME.border}`,
+              borderRadius: 18,
+              padding: "14px 16px",
+              minWidth: 220,
+              boxShadow: "0 10px 22px rgba(76,56,23,0.06)",
+            }}>
+              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Modo tiendas separadas</div>
+              <div style={{ color: HOME.text, fontSize: 13, fontWeight: 800, lineHeight: 1.5, marginTop: 6 }}>
+                Cada cliente empieza por la marca correcta y compra mas rapido sin ver todo mezclado.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", gap: 18, marginTop: 18 }}>
+          {options.map((option) => (
+            <button
+              key={option.key}
+              type="button"
+              onClick={() => onChooseCompany(option.key)}
+              style={{
+                textAlign: "left",
+                background: HOME.surface,
+                border: `1px solid ${HOME.border}`,
+                borderRadius: 26,
+                padding: 14,
+                cursor: "pointer",
+                boxShadow: HOME.shadow,
+                transition: "transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.borderColor = option.accent + "66";
+                e.currentTarget.style.boxShadow = "0 24px 40px rgba(76,56,23,0.12)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.borderColor = HOME.border;
+                e.currentTarget.style.boxShadow = HOME.shadow;
+              }}
+            >
+              <div style={{ display: "grid", gridTemplateColumns: "130px minmax(0, 1fr)", gap: 14, alignItems: "stretch" }}>
+                <div style={{ position: "relative", borderRadius: 20, overflow: "hidden", minHeight: 190, background: HOME.soft }}>
+                  <img
+                    src={option.image}
+                    alt={option.view.name}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  />
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(39,49,40,0.34) 100%)" }} />
+                  <span style={{
+                    position: "absolute",
+                    top: 10,
+                    left: 10,
+                    background: option.accent,
+                    color: "#fff",
+                    borderRadius: 999,
+                    padding: "5px 10px",
+                    fontSize: 10,
+                    fontWeight: 900,
+                    letterSpacing: 0.8,
+                  }}>
+                    {option.note}
+                  </span>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", minWidth: 0 }}>
+                  <div>
+                    <div style={{ color: option.accent, fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>
+                      {option.view.tagline}
+                    </div>
+                    <div style={{ fontFamily: "Georgia, serif", fontSize: 26, fontWeight: 900, lineHeight: 1.05, marginTop: 6 }}>
+                      {option.view.shortName}
+                    </div>
+                    <div style={{ color: HOME.text, fontSize: 13, lineHeight: 1.65, marginTop: 8 }}>
+                      {option.description}
+                    </div>
+                  </div>
+
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 14 }}>
+                    {option.chips.map((chip) => (
+                      <span
+                        key={chip}
+                        style={{
+                          background: HOME.soft,
+                          border: `1px solid ${HOME.border}`,
+                          borderRadius: 999,
+                          color: HOME.text,
+                          fontSize: 10,
+                          fontWeight: 800,
+                          padding: "6px 9px",
+                        }}
+                      >
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 14 }}>
+                    <span style={{ background: "#EEF7EA", color: HOME.leaf, borderRadius: 999, fontSize: 10, fontWeight: 800, padding: "6px 9px" }}>
+                      {option.count} productos
+                    </span>
+                    <span style={{ background: "#F9EEDB", color: HOME.accent, borderRadius: 999, fontSize: 10, fontWeight: 800, padding: "6px 9px" }}>
+                      {option.extra}
+                    </span>
+                  </div>
+
+                  <div style={{
+                    marginTop: 16,
+                    background: `linear-gradient(135deg, ${option.accent}, ${option.accent}cc)`,
+                    borderRadius: 14,
+                    color: "#fff",
+                    fontSize: 13,
+                    fontWeight: 900,
+                    padding: "12px 14px",
+                    width: "fit-content",
+                    boxShadow: "0 10px 18px rgba(0,0,0,0.08)",
+                  }}>
+                    Entrar a {option.view.shortName}
+                  </div>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        <div style={{
+          marginTop: 18,
+          background: `linear-gradient(135deg, ${HOME.surface}, ${HOME.soft})`,
+          border: `1px solid ${HOME.border}`,
+          borderRadius: 18,
+          padding: "14px 16px",
+          color: HOME.muted,
+          fontSize: 13,
+          lineHeight: 1.7,
+          boxShadow: HOME.shadow,
+        }}>
+          Solo eliges una vez y luego la tienda te muestra el catalogo correcto, con su informacion y sus productos separados.
+        </div>
+        {toastBubble}
+      </div>
+    </div>
+  );
+}
+
+function BocaditosBoard() {
+  const openAsset = (src) => window.open(src, "_blank", "noopener,noreferrer");
+  const openWhatsApp = () => window.open(`https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent("Hola, quiero pedir bocaditos regionales artesanales.")}`, "_blank", "noopener,noreferrer");
+
+  return (
+    <section style={{ maxWidth: 1200, margin: "18px auto 0", padding: "0 20px" }}>
+      <div style={{
+        background: `radial-gradient(circle at top left, #FFF7ED 0%, #F7E3C1 42%, #E8BB83 100%)`,
+        border: `1px solid ${HOME.border}`,
+        borderRadius: 24,
+        padding: 18,
+        boxShadow: HOME.shadow,
+      }}>
+        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 0.95fr)", gap: 18, alignItems: "stretch" }}>
+          <button
+            type="button"
+            onClick={() => openAsset(ASSETS.bocaditosHome)}
+            style={{
+              padding: 0,
+              border: `1px solid ${HOME.border}`,
+              borderRadius: 22,
+              overflow: "hidden",
+              cursor: "pointer",
+              background: HOME.surface,
+              position: "relative",
+              boxShadow: HOME.shadow,
+            }}
+          >
+            <div style={{ position: "relative", aspectRatio: "2 / 3", minHeight: 560 }}>
+              <img
+                src={ASSETS.bocaditosHome}
+                alt="Bocaditos regionales"
+                loading="lazy"
+                style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+              />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(255,250,242,0.08) 0%, rgba(39,49,40,0.16) 30%, rgba(39,49,40,0.5) 100%)" }} />
+              <div style={{ position: "absolute", inset: 0, padding: 18, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-start", flexWrap: "wrap" }}>
+                  <Badge text="NUEVA TIENDA" color="#B66A2C" />
+                  <Badge text="ARTESANALES" color="#8C3F21" />
+                </div>
+                <div>
+                  <div style={{ color: "#fff", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 900, lineHeight: 0.95, letterSpacing: -0.6, maxWidth: 420, textShadow: "0 8px 30px rgba(0,0,0,0.4)" }}>
+                    Bocaditos regionales para compartir
+                  </div>
+                  <div style={{ color: "#F7EED0", fontSize: 14, lineHeight: 1.7, marginTop: 10, maxWidth: 440 }}>
+                    Ñuto, rosquitas, turcas, maní tostado, manís confitados, chifles y dulces clásicos para la casa o para vender.
+                  </div>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 12 }}>
+                    {["Maní", "Galletas", "Dulces"].map((chip) => (
+                      <span key={chip} style={{ background: "#0F1A0ECC", color: "#fff", border: "1px solid #FFFFFF22", borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 700 }}>
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </button>
+
+          <div style={{ display: "grid", gap: 14 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: 14 }}>
+              <PromoTile
+                image={ASSETS.bocaditosManiTostadoSalado}
+                title="Maní tostado"
+                subtitle="Salado y con pasas"
+                note="MANI"
+                accent="#B66A2C"
+                fit="contain"
+                aspectRatio="3 / 4"
+                onClick={() => openAsset(ASSETS.bocaditosManiTostadoSalado)}
+              />
+              <PromoTile
+                image={ASSETS.bocaditosRosquitaAlmidon}
+                title="Rosquitas y turcas"
+                subtitle="Galletas artesanales"
+                note="GALLETAS"
+                accent="#8C3F21"
+                fit="contain"
+                aspectRatio="3 / 4"
+                onClick={() => openAsset(ASSETS.bocaditosRosquitaAlmidon)}
+              />
+            </div>
+
+            <div style={{
+              background: `linear-gradient(135deg, ${HOME.surface}, ${HOME.soft})`,
+              border: `1px solid ${HOME.border}`,
+              borderRadius: 18,
+              padding: 16,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 14,
+              flexWrap: "wrap",
+              boxShadow: HOME.shadow,
+            }}>
+              <div style={{ minWidth: 240 }}>
+                <div style={{ color: HOME.accent, fontSize: 13, fontWeight: 800, letterSpacing: 1, marginBottom: 5 }}>LISTO PARA PEDIR</div>
+                <div style={{ color: HOME.text, fontSize: 15, fontWeight: 700, lineHeight: 1.45 }}>
+                  Bocaditos artesanales para lonche, cafecito y reuniones familiares. Todo entra al WhatsApp central.
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <button
+                  type="button"
+                  onClick={openWhatsApp}
+                  style={{
+                    background: `linear-gradient(135deg, #B66A2C, #D97A2E)`,
+                    border: "none",
+                    borderRadius: 12,
+                    color: "#0F1A0E",
+                    padding: "11px 14px",
+                    cursor: "pointer",
+                    fontSize: 13,
+                    fontWeight: 800,
+                    boxShadow: "0 10px 20px rgba(71,101,75,0.18)",
+                  }}
+                >
+                  Pedir Bocaditos
+                </button>
+                <button
+                  type="button"
+                  onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}
+                  style={{
+                    background: HOME.surface,
+                    border: `1px solid ${HOME.border}`,
+                    borderRadius: 12,
+                    color: HOME.text,
+                    padding: "11px 14px",
+                    cursor: "pointer",
+                    fontSize: 13,
+                    fontWeight: 700,
+                  }}
+                >
+                  Ver catalogo
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ marginTop: 14, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
+          {[
+            { src: ASSETS.bocaditosManiConfitado, title: "Maní confitado" },
+            { src: ASSETS.bocaditosTurron, title: "Turrón" },
+            { src: ASSETS.bocaditosChiflePlatano, title: "Chifle de plátano" },
+            { src: ASSETS.bocaditosSuspiroColores, title: "Suspiro de colores" },
+            { src: ASSETS.bocaditosCocada, title: "Cocada" },
+            { src: ASSETS.bocaditosRoscaDulce, title: "Rosca bañada de dulce" },
+          ].map((asset) => (
+            <button
+              key={asset.title}
+              type="button"
+              onClick={() => openAsset(asset.src)}
+              style={{
+                padding: 0,
+                border: `1px solid ${HOME.border}`,
+                borderRadius: 16,
+                overflow: "hidden",
+                background: HOME.surface,
+                cursor: "pointer",
+                textAlign: "left",
+                boxShadow: "0 12px 22px rgba(76,56,23,0.06)",
+              }}
+            >
+              <div style={{ aspectRatio: "4 / 3", overflow: "hidden" }}>
+                <img
+                  src={asset.src}
+                  alt={asset.title}
+                  loading="lazy"
+                  style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+                />
+              </div>
+              <div style={{ padding: "10px 12px", color: HOME.text, fontSize: 12, fontWeight: 700 }}>
+                {asset.title}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ArtesaniaBoard() {
+  const openAsset = (src) => window.open(src, "_blank", "noopener,noreferrer");
+  const openWhatsApp = () => window.open(`https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent("Hola, quiero pedir artesania lamista.")}`, "_blank", "noopener,noreferrer");
+
+  return (
+    <section style={{ maxWidth: 1200, margin: "18px auto 0", padding: "0 20px" }}>
+      <div style={{
+        background: `radial-gradient(circle at top left, #FFF8EC 0%, #F4DEC0 42%, #D6A16F 100%)`,
+        border: `1px solid ${HOME.border}`,
+        borderRadius: 24,
+        padding: 18,
+        boxShadow: HOME.shadow,
+      }}>
+        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 0.95fr)", gap: 18, alignItems: "stretch" }}>
+          <button
+            type="button"
+            onClick={() => openAsset(ASSETS.artesaniaHome)}
+            style={{
+              padding: 0,
+              border: `1px solid ${HOME.border}`,
+              borderRadius: 22,
+              overflow: "hidden",
+              cursor: "pointer",
+              background: HOME.surface,
+              position: "relative",
+              boxShadow: HOME.shadow,
+            }}
+          >
+            <div style={{ position: "relative", aspectRatio: "2 / 3", minHeight: 560 }}>
+              <img
+                src={ASSETS.artesaniaHome}
+                alt="Artesania lamista"
+                loading="lazy"
+                style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+              />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(255,250,242,0.06) 0%, rgba(39,49,40,0.14) 30%, rgba(39,49,40,0.42) 100%)" }} />
+              <div style={{ position: "absolute", inset: 0, padding: 18, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-start", flexWrap: "wrap" }}>
+                  <Badge text="NUEVA TIENDA" color="#A95E2A" />
+                  <Badge text="BARRO LAMISTA" color="#5C7A4E" />
+                </div>
+                <div>
+                  <div style={{ color: "#fff", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 900, lineHeight: 0.95, letterSpacing: -0.6, maxWidth: 420, textShadow: "0 8px 30px rgba(0,0,0,0.4)" }}>
+                    Artesania lamista para tu casa
+                  </div>
+                  <div style={{ color: "#F7EED0", fontSize: 14, lineHeight: 1.7, marginTop: 10, maxWidth: 440 }}>
+                    Tinajas, platos, pate, olla arrocera, tiestos y floreros hechos a mano para decorar, cocinar y regalar.
+                  </div>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 12 }}>
+                    {["Barro", "Mesa", "Decoracion"].map((chip) => (
+                      <span key={chip} style={{ background: "#0F1A0ECC", color: "#fff", border: "1px solid #FFFFFF22", borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 700 }}>
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </button>
+
+          <div style={{ display: "grid", gap: 14 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: 14 }}>
+              <PromoTile
+                image={ASSETS.artesaniaTinaja}
+                title="Tinaja lamista"
+                subtitle="Pieza artesanal de barro"
+                note="BARRO"
+                accent="#A95E2A"
+                fit="contain"
+                aspectRatio="3 / 4"
+                onClick={() => openAsset(ASSETS.artesaniaTinaja)}
+              />
+              <PromoTile
+                image={ASSETS.artesaniaPlato}
+                title="Platos artesanales"
+                subtitle="Mesa, regalo y decoracion"
+                note="MESA"
+                accent="#8C5B2A"
+                fit="contain"
+                aspectRatio="3 / 4"
+                onClick={() => openAsset(ASSETS.artesaniaPlato)}
+              />
+            </div>
+
+            <div style={{
+              background: `linear-gradient(135deg, ${HOME.surface}, ${HOME.soft})`,
+              border: `1px solid ${HOME.border}`,
+              borderRadius: 18,
+              padding: 16,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 14,
+              flexWrap: "wrap",
+              boxShadow: HOME.shadow,
+            }}>
+              <div style={{ minWidth: 240 }}>
+                <div style={{ color: HOME.accent, fontSize: 13, fontWeight: 800, letterSpacing: 1, marginBottom: 5 }}>LISTO PARA PEDIR</div>
+                <div style={{ color: HOME.text, fontSize: 15, fontWeight: 700, lineHeight: 1.45 }}>
+                  Artesania lamista para tu sala, cocina, mesa o regalo especial. Todo entra al WhatsApp central.
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <button
+                  type="button"
+                  onClick={openWhatsApp}
+                  style={{
+                    background: `linear-gradient(135deg, #A95E2A, #D18B57)`,
+                    border: "none",
+                    borderRadius: 12,
+                    color: "#fff",
+                    padding: "11px 14px",
+                    cursor: "pointer",
+                    fontSize: 13,
+                    fontWeight: 800,
+                    boxShadow: "0 10px 20px rgba(71,101,75,0.18)",
+                  }}
+                >
+                  Pedir Artesania
+                </button>
+                <button
+                  type="button"
+                  onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}
+                  style={{
+                    background: HOME.surface,
+                    border: `1px solid ${HOME.border}`,
+                    borderRadius: 12,
+                    color: HOME.text,
+                    padding: "11px 14px",
+                    cursor: "pointer",
+                    fontSize: 13,
+                    fontWeight: 700,
+                  }}
+                >
+                  Ver catalogo
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ marginTop: 14, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
+          {[
+            { src: ASSETS.artesaniaPate, title: "Pate artesanal" },
+            { src: ASSETS.artesaniaOllaArrocera, title: "Olla arrocera" },
+            { src: ASSETS.artesaniaTiesto, title: "Tiesto de barro" },
+            { src: ASSETS.artesaniaFlorero, title: "Florero lamista" },
+          ].map((asset) => (
+            <button
+              key={asset.title}
+              type="button"
+              onClick={() => openAsset(asset.src)}
+              style={{
+                padding: 0,
+                border: `1px solid ${HOME.border}`,
+                borderRadius: 16,
+                overflow: "hidden",
+                background: HOME.surface,
+                cursor: "pointer",
+                textAlign: "left",
+                boxShadow: "0 12px 22px rgba(76,56,23,0.06)",
+              }}
+            >
+              <div style={{ aspectRatio: "4 / 3", overflow: "hidden" }}>
+                <img
+                  src={asset.src}
+                  alt={asset.title}
+                  loading="lazy"
+                  style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+                />
+              </div>
+              <div style={{ padding: "10px 12px", color: HOME.text, fontSize: 12, fontWeight: 700 }}>
+                {asset.title}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
+  const tiles = [
+    {
+      image: riceExtraVerdeCatalogo,
+      title: "Arroz premium",
+      subtitle: "Ideal para casa, menues y restaurantes",
+      note: "MOLINO",
+      accent: HOME.accent,
+    },
+    {
+      image: riceSuperiorVerdeCatalogo,
+      title: "Arroz superior",
+      subtitle: "Uso diario, rendidor y claro para comprar",
+      note: "USO DIARIO",
+      accent: HOME.leaf,
+    },
+    {
+      image: riceAfrechoCatalogo,
+      title: "Derivados",
+      subtitle: "Afrecho, polvillo y cascarilla",
+      note: "INDUSTRIA",
+      accent: HOME.gold,
+    },
+  ];
+
+  return (
+    <section style={{ maxWidth: 1200, margin: "18px auto 0", padding: "0 20px" }}>
+      <div style={{
+        background: `radial-gradient(circle at top left, ${HOME.soft2} 0%, ${HOME.page} 44%, ${HOME.surface} 100%)`,
+        border: `1px solid ${HOME.border}`,
+        borderRadius: 24,
+        padding: 18,
+        boxShadow: HOME.shadow,
+      }}>
+        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 0.95fr) minmax(0, 1.05fr)", gap: 18, alignItems: "stretch" }}>
+          <PromoTile
+            image={ASSETS.priceSheet}
+            title="Catálogo de precios"
+            subtitle="Consulta la lista comercial antes de pedir"
+            note="REY LEON"
+            accent={HOME.accent}
+            fit="contain"
+            aspectRatio="3 / 4"
+            onClick={onOpenPriceSheet}
+          />
+
+          <div style={{ display: "grid", gap: 14 }}>
+            <div style={{
+              background: `linear-gradient(135deg, ${HOME.surface}, ${HOME.soft})`,
+              border: `1px solid ${HOME.border}`,
+              borderRadius: 18,
+              padding: 16,
+              boxShadow: HOME.shadow,
+            }}>
+              <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Piladora Rey Leon</div>
+              <div style={{ color: HOME.text, fontSize: 18, fontWeight: 900, marginTop: 6 }}>Compra directo del molino y sin ruido visual</div>
+              <div style={{ color: HOME.muted, fontSize: 13, lineHeight: 1.65, marginTop: 8 }}>
+                Aqui el cliente ve solo los arroces y derivados de Rey Leon. Fotos reales, precios claros y delivery por zona para comprar rapido.
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10, marginTop: 14 }}>
+                <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 12 }}>
+                  <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Linea fuerte</div>
+                  <div style={{ color: HOME.text, fontSize: 13, fontWeight: 800, marginTop: 5 }}>Premium, superior y economico</div>
+                </div>
+                <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 12 }}>
+                  <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Apoyo</div>
+                  <div style={{ color: HOME.text, fontSize: 13, fontWeight: 800, marginTop: 5 }}>Derivados, afrecho y cascarilla</div>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 12 }}>
+              {tiles.map((tile) => (
+                <PromoTile
+                  key={tile.title}
+                  image={tile.image}
+                  title={tile.title}
+                  subtitle={tile.subtitle}
+                  note={tile.note}
+                  accent={tile.accent}
+                  fit="contain"
+                  aspectRatio="1 / 1.15"
+                  onClick={onOpenPriceSheet}
+                />
+              ))}
+            </div>
+
+            <div style={{
+              background: `linear-gradient(135deg, ${HOME.surface}, ${HOME.soft2})`,
+              border: `1px solid ${HOME.border}`,
+              borderRadius: 18,
+              padding: 16,
+              display: "flex",
+              justifyContent: "space-between",
+              gap: 12,
+              alignItems: "center",
+              flexWrap: "wrap",
+              boxShadow: HOME.shadow,
+            }}>
+              <div style={{ minWidth: 240 }}>
+                <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Atencion directa</div>
+                <div style={{ color: HOME.text, fontSize: 15, fontWeight: 800, lineHeight: 1.45, marginTop: 5 }}>
+                  Consulta precios o escribe al molino para cerrar tu compra.
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={onContact}
+                style={{
+                  background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})`,
+                  border: "none",
+                  borderRadius: 12,
+                  color: "#fff",
+                  padding: "11px 14px",
+                  cursor: "pointer",
+                  fontSize: 13,
+                  fontWeight: 900,
+                  boxShadow: "0 10px 20px rgba(71,101,75,0.18)",
+                }}
+              >
+                Contactar ventas del molino
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
   const lc = LINE_COLORS[product.line];
   const [selPres, setSelPres] = useState(0);
   const minQty = product.minOrder || 1;
   const [qty, setQty] = useState(minQty);
-  const [zone, setZone] = useState((product.zones || ZONES_REYLEON)[0]);
+  const [zone, setZone] = useState(() => getDefaultZone(product));
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [imageZoomOpen, setImageZoomOpen] = useState(false);
+  const media = getProductMedia(product);
+  const mediaSrc = typeof media === "string" ? media : media?.src;
+  const careLabel = product.careLabel || (getSupplierKey(product) === "tela" ? "Cuidados" : getSupplierKey(product) === "bocaditos" ? "Listo para comer" : getSupplierKey(product) === "artesania" ? "Hecho a mano" : "Cocina con calma");
 
   const pres = product.presentations[selPres];
   const subtotal = pres.price * qty;
@@ -1952,7 +4363,14 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "88px 1fr", gap: 14, alignItems: "center" }}>
-          <ProductAvatar product={product} size={88} radius={22} />
+          <ProductAvatar
+            product={product}
+            size={88}
+            radius={22}
+            onClick={mediaSrc ? () => setImageZoomOpen(true) : undefined}
+            title={mediaSrc ? `Ver ${product.name} en grande` : undefined}
+            ariaLabel={mediaSrc ? `Abrir imagen grande de ${product.name}` : undefined}
+          />
           <div>
             <div style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 800, color: HOME.text, lineHeight: 1.15 }}>{product.name}</div>
             <div style={{ color: HOME.muted, fontSize: 12, marginTop: 4, lineHeight: 1.45 }}>{product.subtitle}</div>
@@ -1963,6 +4381,15 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
           </div>
         </div>
       </div>
+
+      <ImageZoomModal
+        open={imageZoomOpen}
+        src={mediaSrc}
+        alt={product.name}
+        title={product.name}
+        subtitle={product.subtitle}
+        onClose={() => setImageZoomOpen(false)}
+      />
 
       <div style={{ padding: 16, flex: 1 }}>
         <div style={{ color: HOME.text, fontSize: 13, lineHeight: 1.7, marginBottom: 10 }}>
@@ -2000,7 +4427,7 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
             </div>
 
             <div style={{ background: HOME.soft2, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 12 }}>
-              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, marginBottom: 4, textTransform: "uppercase" }}>Cocina con calma</div>
+              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, marginBottom: 4, textTransform: "uppercase" }}>{careLabel}</div>
               <div style={{ color: HOME.text, fontSize: 12, lineHeight: 1.6 }}>{product.cooking}</div>
             </div>
 
@@ -2108,12 +4535,132 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
               padding: "13px 0",
               cursor: "pointer",
             }}
-          >
+            >
             Pedir ahora
           </button>
         </div>
+        {product.line === "chicha" && (
+          <button
+            type="button"
+            onClick={() => window.open(ASWA_APP_URL, "_blank", "noopener,noreferrer")}
+            style={{
+              width: "100%",
+              marginTop: 10,
+              background: HOME.soft2,
+              border: `1px solid ${HOME.accent2}`,
+              borderRadius: 14,
+              color: HOME.leaf,
+              fontSize: 13,
+              fontWeight: 900,
+              padding: "12px 0",
+              cursor: "pointer",
+              boxShadow: "0 10px 18px rgba(163, 109, 44, 0.08)",
+            }}
+          >
+            Abrir app ASWA La Rica Chicha
+          </button>
+        )}
       </div>
     </article>
+  );
+}
+
+function EmbeddedAppModal({ open, title, subtitle, url, onClose }) {
+  if (!open) return null;
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 160,
+        background: "rgba(14, 20, 12, 0.82)",
+        backdropFilter: "blur(10px)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 16,
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          width: "min(1240px, 100%)",
+          height: "min(92vh, 980px)",
+          background: "#F7F2E8",
+          borderRadius: 24,
+          overflow: "hidden",
+          border: `1px solid ${theme.border}`,
+          boxShadow: "0 30px 70px rgba(0,0,0,0.35)",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <div
+          style={{
+            padding: "14px 16px",
+            borderBottom: `1px solid ${theme.border}`,
+            background: "linear-gradient(135deg, #FFF8EC, #F3E6CE)",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 12,
+            flexWrap: "wrap",
+          }}
+        >
+          <div style={{ minWidth: 220 }}>
+            <div style={{ color: theme.accent, fontSize: 10, fontWeight: 900, letterSpacing: 1.2, textTransform: "uppercase" }}>Tienda hermana</div>
+            <div style={{ color: theme.text, fontFamily: "Georgia, serif", fontSize: 18, fontWeight: 900, marginTop: 2 }}>{title}</div>
+            <div style={{ color: theme.muted, fontSize: 12, marginTop: 2 }}>{subtitle}</div>
+          </div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <button
+              type="button"
+              onClick={() => window.open(url, "_blank", "noopener,noreferrer")}
+              style={{
+                background: "#FFF",
+                border: `1px solid ${theme.border}`,
+                color: theme.text,
+                borderRadius: 999,
+                padding: "10px 14px",
+                fontWeight: 800,
+                cursor: "pointer",
+              }}
+            >
+              Abrir fuera
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              style={{
+                background: `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})`,
+                border: "none",
+                color: "#0F1A0E",
+                borderRadius: 999,
+                padding: "10px 14px",
+                fontWeight: 900,
+                cursor: "pointer",
+              }}
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+        <iframe
+          src={url}
+          title={title}
+          loading="lazy"
+          style={{
+            width: "100%",
+            flex: 1,
+            border: 0,
+            background: "#FFF",
+          }}
+          allow="clipboard-read; clipboard-write; fullscreen; geolocation"
+        />
+      </div>
+    </div>
   );
 }
 
@@ -2179,106 +4726,280 @@ function CartDrawer({ cart, onClose, onRemove }) {
 
           {step === "payment" && (
             <div>
-              {/* Payment options */}
-              {[
-                { val: "yape", icon: "💜", label: "Yape", desc: "918-429-034 · Noyolith Quine Rojas", color: "#6B2D8B" },
-                { val: "bbva", icon: "🔵", label: "Transferencia BBVA", desc: "Net Cash BBVA Zurita", color: "#004A97" },
-                { val: "bcp", icon: "🟠", label: "Transferencia BCP", desc: "Net Cash BCP Zurita", color: "#E05A00" },
-                { val: "cod", icon: "💵", label: "Pago contra entrega", desc: "Pagas en efectivo al recibir", color: theme.green },
-              ].map(opt => (
-                <div key={opt.val} onClick={() => setPayment(opt.val)} style={{
-                  background: payment === opt.val ? theme.bgLight : theme.bg,
-                  border: `2px solid ${payment === opt.val ? opt.color : theme.border}`,
-                  borderRadius: 12, padding: "12px 14px", marginBottom: 10, cursor: "pointer",
-                  display: "flex", gap: 12, alignItems: "center", transition: "all 0.15s",
-                }}>
-                  <span style={{ fontSize: 22 }}>{opt.icon}</span>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ color: theme.cream, fontWeight: 700, fontSize: 14 }}>{opt.label}</div>
-                    <div style={{ color: theme.textDim, fontSize: 12 }}>{opt.desc}</div>
-                  </div>
-                  {payment === opt.val && <span style={{ color: opt.color, fontSize: 16, fontWeight: 700 }}>✓</span>}
+              <div style={{ background: theme.bgLight, borderRadius: 12, padding: 14, border: `1px solid ${theme.border}`, marginBottom: 12 }}>
+                <div style={{ color: theme.cream, fontSize: 14, fontWeight: 800, marginBottom: 6 }}>Cuadro de pagos del molino</div>
+                <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.5, marginBottom: 12 }}>
+                  Aquí ves los métodos disponibles y los datos del molino que sí se muestran de forma directa.
                 </div>
-              ))}
 
-              {/* Payment detail box */}
-              {payment === "yape" && (
-                <div style={{ background: "#1A0A2E", border: "1px solid #6B2D8B55", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-                  <div style={{ color: "#C084FC", fontSize: 11, fontWeight: 700, letterSpacing: 1, marginBottom: 10 }}>💜 DATOS YAPE</div>
-                  <div style={{ display: "grid", gridTemplateColumns: "110px 1fr", gap: 12, alignItems: "center" }}>
+                <div style={{ display: "grid", gap: 8 }}>
+                  {REYLEON_PAYMENT_METHODS.map((opt) => (
                     <button
-                      type="button"
-                      onClick={() => window.open(ASSETS.yapeQr, "_blank", "noopener,noreferrer")}
+                      key={opt.val}
+                      onClick={() => setPayment(opt.val)}
                       style={{
-                        border: `1px solid #6B2D8B55`,
+                        background: payment === opt.val ? theme.bg : theme.bgCard,
+                        border: `1px solid ${payment === opt.val ? opt.color : theme.border}`,
                         borderRadius: 12,
-                        padding: 8,
-                        background: "#0D0520",
+                        padding: "11px 12px",
                         cursor: "pointer",
-                        overflow: "hidden",
+                        display: "grid",
+                        gridTemplateColumns: "12px 1fr auto",
+                        gap: 12,
+                        alignItems: "center",
+                        textAlign: "left",
                       }}
                     >
-                      <img
-                        src={ASSETS.yapeQr}
-                        alt="QR de Yape"
-                        loading="lazy"
-                        style={{ width: "100%", height: "100%", display: "block", objectFit: "cover", borderRadius: 8 }}
-                      />
+                      <span style={{ width: 12, height: 12, borderRadius: 999, background: opt.color, boxShadow: payment === opt.val ? `0 0 0 4px ${opt.color}22` : "none" }} />
+                      <div>
+                        <div style={{ color: theme.cream, fontWeight: 800, fontSize: 14 }}>{opt.label}</div>
+                        <div style={{ color: theme.textDim, fontSize: 12, marginTop: 3, lineHeight: 1.4 }}>{opt.detail}</div>
+                      </div>
+                      {payment === opt.val && <span style={{ color: opt.color, fontSize: 16, fontWeight: 800 }}>✓</span>}
                     </button>
-                    <div>
-                      <div style={{ color: theme.cream, fontSize: 20, fontWeight: 800, fontFamily: "monospace", marginBottom: 4 }}>918-429-034</div>
-                      <div style={{ color: theme.creamDim, fontSize: 13, marginBottom: 12 }}>Titular: Noyolith Quine Rojas</div>
-                      <div style={{ background: "#0D0520", borderRadius: 8, padding: "8px 12px", fontSize: 12, color: "#C084FC", lineHeight: 1.5 }}>
-                        💡 Yapea al número y envía captura por WhatsApp al <strong style={{ color: theme.cream }}>{ORDER_PHONE_DISPLAY}</strong> para confirmar tu pedido.
+                  ))}
+                </div>
+
+                <div style={{ marginTop: 10, background: theme.bg, borderRadius: 10, padding: 12, border: `1px solid ${theme.border}` }}>
+                  <div style={{ color: theme.textDim, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Detalle seleccionado</div>
+                  <div style={{ color: theme.cream, fontSize: 16, fontWeight: 900, marginTop: 5 }}>{selectedPaymentMethod.label}</div>
+                  <div style={{ color: theme.creamDim, fontSize: 13, lineHeight: 1.55, marginTop: 4 }}>{selectedPaymentMethod.detail}</div>
+                  <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.5, marginTop: 8 }}>
+                    {selectedPaymentMethod.val === "yape"
+                      ? `Yape del molino: 918 429 034 · Noyolith Quine Rojas. Envía tu comprobante al WhatsApp ${ORDER_PHONE_DISPLAY}.`
+                      : selectedPaymentMethod.val === "cod"
+                        ? "Pagas al recibir tu pedido."
+                        : `Este método se confirma por WhatsApp con el molino: ${ORDER_PHONE_DISPLAY}.`}
+                  </div>
+                </div>
+
+                {selectedBankDetail && (
+                  <div style={paymentDetailCardStyle(selectedPaymentMethod.color)}>
+                    <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
+                      <div style={{ minWidth: 190, flex: 1 }}>
+                        <div style={{ color: selectedPaymentMethod.color, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{selectedBankDetail.bank}</div>
+                        <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>{selectedBankDetail.account}</div>
+                        <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>CCI: {selectedBankDetail.cci}</div>
+                        <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
+                          Usa estos datos para transferir al molino. Copia la cuenta o el CCI y comparte el comprobante por WhatsApp al {ORDER_PHONE_DISPLAY}.
+                        </div>
+                        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
+                          <button
+                            type="button"
+                            onClick={() => navigator.clipboard?.writeText(selectedBankDetail.account)}
+                            style={{
+                              background: "#fff",
+                              border: "none",
+                              borderRadius: 10,
+                              color: "#201038",
+                              padding: "9px 12px",
+                              fontSize: 12,
+                              fontWeight: 900,
+                              cursor: "pointer",
+                            }}
+                          >
+                            Copiar cuenta
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => navigator.clipboard?.writeText(selectedBankDetail.cci)}
+                            style={{
+                              background: "transparent",
+                              border: `1px solid ${selectedPaymentMethod.color}66`,
+                              borderRadius: 10,
+                              color: "#D8B4FE",
+                              padding: "9px 12px",
+                              fontSize: 12,
+                              fontWeight: 900,
+                              cursor: "pointer",
+                            }}
+                          >
+                            Copiar CCI
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
-              {payment === "bbva" && (
-                <div style={{ background: "#001A3A", border: "1px solid #004A9755", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-                  <div style={{ color: "#60A5FA", fontSize: 11, fontWeight: 700, letterSpacing: 1, marginBottom: 10 }}>🔵 DATOS BBVA · NET CASH ZURITA</div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                    <div style={{ background: "#001229", borderRadius: 8, padding: "8px 12px" }}>
-                      <div style={{ color: "#60A5FA", fontSize: 10, fontWeight: 700 }}>N° CUENTA</div>
-                      <div style={{ color: theme.cream, fontFamily: "monospace", fontSize: 15, fontWeight: 700 }}>0011-0310-01-00167706</div>
+                )}
+
+                {selectedPaymentMethod.val === "yape" && (
+                  <div style={{ marginTop: 12, background: "linear-gradient(135deg, #201038, #11120f)", border: "1px solid #7C3AED55", borderRadius: 14, padding: 12 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
+                      <div style={{ minWidth: 190, flex: 1 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                          <div style={paymentBadgeStyle(selectedPaymentMethod, true)}>{selectedPaymentMethod.badge}</div>
+                          <div>
+                            <div style={{ color: "#D8B4FE", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Yape del molino</div>
+                            <div style={{ color: theme.textDim, fontSize: 11, marginTop: 2 }}>Pago directo con QR y numero visible</div>
+                          </div>
+                        </div>
+                        <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>918 429 034</div>
+                        <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>Titular: Noyolith Quine Rojas</div>
+                        <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
+                          Escanea el QR o comparte este número para que el cliente pague directo al molino.
+                        </div>
+                        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
+                          <button
+                            type="button"
+                            onClick={() => navigator.clipboard?.writeText("918429034")}
+                            style={{
+                              background: "#fff",
+                              border: "none",
+                              borderRadius: 10,
+                              color: "#201038",
+                              padding: "9px 12px",
+                              fontSize: 12,
+                              fontWeight: 900,
+                              cursor: "pointer",
+                            }}
+                          >
+                            Copiar número
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => window.open(ASSETS.yapeQr, "_blank", "noopener,noreferrer")}
+                            style={{
+                              background: "transparent",
+                              border: "1px solid #7C3AED66",
+                              borderRadius: 10,
+                              color: "#D8B4FE",
+                              padding: "9px 12px",
+                              fontSize: 12,
+                              fontWeight: 900,
+                              cursor: "pointer",
+                            }}
+                          >
+                            Abrir QR
+                          </button>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => window.open(ASSETS.yapeQr, "_blank", "noopener,noreferrer")}
+                        style={{
+                          width: 126,
+                          minWidth: 126,
+                          border: "1px solid #7C3AED55",
+                          borderRadius: 14,
+                          padding: 8,
+                          background: "#0D0520",
+                          cursor: "pointer",
+                          overflow: "hidden",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <img
+                          src={ASSETS.yapeQr}
+                          alt="QR de Yape del molino"
+                          loading="lazy"
+                          style={{ width: "100%", display: "block", objectFit: "contain", borderRadius: 8 }}
+                        />
+                      </button>
                     </div>
-                    <div style={{ background: "#001229", borderRadius: 8, padding: "8px 12px" }}>
-                      <div style={{ color: "#60A5FA", fontSize: 10, fontWeight: 700 }}>CCI</div>
-                      <div style={{ color: theme.cream, fontFamily: "monospace", fontSize: 15, fontWeight: 700 }}>011-310-000100167706-09</div>
+                    <div style={{ marginTop: 10, background: "#0D0520", borderRadius: 10, padding: "9px 12px", color: "#D8B4FE", fontSize: 12, lineHeight: 1.5 }}>
+                      Después de pagar, envía la captura al WhatsApp del molino: <strong style={{ color: theme.cream }}>{ORDER_PHONE_DISPLAY}</strong>.
                     </div>
                   </div>
-                  <div style={{ marginTop: 10, background: "#001229", borderRadius: 8, padding: "8px 12px", fontSize: 12, color: "#60A5FA" }}>
-                    💡 Transfiere y envía captura por WhatsApp al <strong style={{ color: theme.cream }}>{ORDER_PHONE_DISPLAY}</strong>.
-                  </div>
-                </div>
-              )}
-              {payment === "bcp" && (
-                <div style={{ background: "#2D1200", border: "1px solid #E05A0055", borderRadius: 12, padding: 16, marginBottom: 12 }}>
-                  <div style={{ color: "#FB923C", fontSize: 11, fontWeight: 700, letterSpacing: 1, marginBottom: 10 }}>🟠 DATOS BCP · NET CASH ZURITA</div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                    <div style={{ background: "#1A0A00", borderRadius: 8, padding: "8px 12px" }}>
-                      <div style={{ color: "#FB923C", fontSize: 10, fontWeight: 700 }}>N° CUENTA</div>
-                      <div style={{ color: theme.cream, fontFamily: "monospace", fontSize: 14, fontWeight: 700 }}>550-146-407-751-071</div>
+                )}
+
+                {selectedPaymentMethod.account && (
+                  <div style={paymentDetailCardStyle(selectedPaymentMethod.color)}>
+                    <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
+                      <div style={{ minWidth: 190, flex: 1 }}>
+                        <div style={{ color: selectedPaymentMethod.color, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{selectedPaymentMethod.detail}</div>
+                        <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>{selectedPaymentMethod.account}</div>
+                        <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>CCI: {selectedPaymentMethod.cci}</div>
+                        <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
+                          Usa estos datos para transferir al molino. Si quieres, copia la cuenta o el CCI y comparte el comprobante al WhatsApp {ORDER_PHONE_DISPLAY}.
+                        </div>
+                        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
+                          <button
+                            type="button"
+                            onClick={() => navigator.clipboard?.writeText(selectedPaymentMethod.account || "")}
+                            style={{
+                              background: "#fff",
+                              border: "none",
+                              borderRadius: 10,
+                              color: "#201038",
+                              padding: "9px 12px",
+                              fontSize: 12,
+                              fontWeight: 900,
+                              cursor: "pointer",
+                            }}
+                          >
+                            Copiar cuenta
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => navigator.clipboard?.writeText(selectedPaymentMethod.cci || "")}
+                            style={{
+                              background: "transparent",
+                              border: `1px solid ${selectedPaymentMethod.color}66`,
+                              borderRadius: 10,
+                              color: "#D8B4FE",
+                              padding: "9px 12px",
+                              fontSize: 12,
+                              fontWeight: 900,
+                              cursor: "pointer",
+                            }}
+                          >
+                            Copiar CCI
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    <div style={{ background: "#1A0A00", borderRadius: 8, padding: "8px 12px" }}>
-                      <div style={{ color: "#FB923C", fontSize: 10, fontWeight: 700 }}>CCI</div>
-                      <div style={{ color: theme.cream, fontFamily: "monospace", fontSize: 13, fontWeight: 700 }}>002-550-114-640-751-071-28</div>
+                  </div>
+                )}
+
+                {selectedPaymentMethod.account && (
+                  <div style={paymentDetailCardStyle(selectedPaymentMethod.color)}>
+                    <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
+                      <div style={{ minWidth: 190, flex: 1 }}>
+                        <div style={{ color: selectedPaymentMethod.color, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{selectedPaymentMethod.detail}</div>
+                        <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>{selectedPaymentMethod.account}</div>
+                        <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>CCI: {selectedPaymentMethod.cci}</div>
+                        <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
+                          Usa estos datos para transferir al molino. Si quieres, copia la cuenta o el CCI y comparte el comprobante al WhatsApp {ORDER_PHONE_DISPLAY}.
+                        </div>
+                        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
+                          <button
+                            type="button"
+                            onClick={() => navigator.clipboard?.writeText(selectedPaymentMethod.account || "")}
+                            style={{
+                              background: "#fff",
+                              border: "none",
+                              borderRadius: 10,
+                              color: "#201038",
+                              padding: "9px 12px",
+                              fontSize: 12,
+                              fontWeight: 900,
+                              cursor: "pointer",
+                            }}
+                          >
+                            Copiar cuenta
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => navigator.clipboard?.writeText(selectedPaymentMethod.cci || "")}
+                            style={{
+                              background: "transparent",
+                              border: `1px solid ${selectedPaymentMethod.color}66`,
+                              borderRadius: 10,
+                              color: "#D8B4FE",
+                              padding: "9px 12px",
+                              fontSize: 12,
+                              fontWeight: 900,
+                              cursor: "pointer",
+                            }}
+                          >
+                            Copiar CCI
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div style={{ marginTop: 10, background: "#1A0A00", borderRadius: 8, padding: "8px 12px", fontSize: 12, color: "#FB923C" }}>
-                    💡 Transfiere y envía captura por WhatsApp al <strong style={{ color: theme.cream }}>{ORDER_PHONE_DISPLAY}</strong>.
-                  </div>
-                </div>
-              )}
-              {payment === "cod" && (
-                <div style={{ background: "#0A1C0A", border: `1px solid ${theme.green}55`, borderRadius: 12, padding: 16, marginBottom: 12 }}>
-                  <div style={{ color: theme.greenLight, fontSize: 12 }}>
-                    💵 Prepara el monto exacto al momento de recibir tu pedido.<br />
-                    <strong style={{ color: theme.cream }}>Total a pagar: S/ {grandTotal.toFixed(2)}</strong>
-                  </div>
-                </div>
-              )}
+                )}
+              </div>
 
               {/* Order summary */}
               <div style={{ background: theme.bg, borderRadius: 12, padding: 14, border: `1px solid ${theme.border}` }}>
@@ -2384,6 +5105,8 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
   const mixedSuppliers = groups.length > 1;
   const canSend = Boolean(customer.name.trim() && customer.phone.trim() && (fulfillmentMode === "recojo" || customer.address.trim()));
   const activeGps = gpsState?.label && gpsState?.url ? gpsState : null;
+  const selectedPaymentMethod = REYLEON_PAYMENT_METHODS.find((opt) => opt.val === payment) || REYLEON_PAYMENT_METHODS[0];
+  const selectedBankDetail = REYLEON_BANK_DETAILS[selectedPaymentMethod.val] || null;
 
   const inputStyle = {
     width: "100%",
@@ -2592,47 +5315,191 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
               </div>
 
               <div style={{ background: theme.bgLight, borderRadius: 14, padding: 14, border: `1px solid ${theme.border}`, marginBottom: 14 }}>
-                <div style={{ color: theme.cream, fontSize: 14, fontWeight: 800, marginBottom: 10 }}>Método de pago preferido</div>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-start", marginBottom: 8 }}>
+                  <div>
+                    <div style={{ color: theme.cream, fontSize: 14, fontWeight: 800 }}>Cuadro de pagos del molino</div>
+                    <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.45, marginTop: 4 }}>
+                      Elige tu medio de pago y revisa los datos del molino antes de cerrar el pedido.
+                    </div>
+                  </div>
+                  <Badge text="REY LEÓN" color={theme.goldLight} />
+                </div>
+
                 <div style={{ display: "grid", gap: 10 }}>
-                  {[
-                    { val: "cod", label: "Pago contra entrega", desc: "Pagas cuando recibes tu pedido", color: theme.greenLight },
-                    { val: "yape", label: "Yape", desc: "Te compartimos los datos por WhatsApp", color: "#C084FC" },
-                    { val: "plin", label: "Plin", desc: "Te compartimos el numero por WhatsApp", color: "#22C55E" },
-                    { val: "bim", label: "BIM", desc: "Te compartimos el numero por WhatsApp", color: "#F59E0B" },
-                    { val: "agora", label: "Agora", desc: "Te compartimos el enlace por WhatsApp", color: "#FB7185" },
-                    { val: "bbva", label: "Transferencia BBVA", desc: "Te compartimos la cuenta por WhatsApp", color: "#60A5FA" },
-                    { val: "bcp", label: "Transferencia BCP", desc: "Te compartimos la cuenta por WhatsApp", color: "#FB923C" },
-                    { val: "card", label: "Tarjeta / online", desc: "Te compartimos el enlace por WhatsApp", color: "#A78BFA" },
-                  ].map((opt) => (
+                  {REYLEON_PAYMENT_METHODS.map((opt) => (
                     <button
                       key={opt.val}
                       onClick={() => setPayment(opt.val)}
-                      style={{
-                        background: payment === opt.val ? theme.bg : theme.bgCard,
-                        border: `1px solid ${payment === opt.val ? opt.color : theme.border}`,
-                        borderRadius: 12,
-                        padding: "12px 14px",
-                        cursor: "pointer",
-                        display: "flex",
-                        gap: 12,
-                        alignItems: "center",
-                        textAlign: "left",
-                      }}
-                    >
-                      <span style={{ width: 12, height: 12, borderRadius: 999, background: opt.color, boxShadow: payment === opt.val ? `0 0 0 4px ${opt.color}22` : "none" }} />
-                      <div style={{ flex: 1 }}>
-                        <div style={{ color: theme.cream, fontWeight: 700, fontSize: 14 }}>{opt.label}</div>
-                        <div style={{ color: theme.textDim, fontSize: 12 }}>{opt.desc}</div>
+                    style={{
+                      background: payment === opt.val ? theme.bg : theme.bgCard,
+                      border: `1px solid ${payment === opt.val ? opt.color : theme.border}`,
+                      borderRadius: 14,
+                      padding: "12px 14px",
+                      cursor: "pointer",
+                      display: "grid",
+                      gridTemplateColumns: "42px 1fr auto",
+                      gap: 12,
+                      alignItems: "center",
+                      textAlign: "left",
+                    }}
+                  >
+                    <div style={paymentBadgeStyle(opt, payment === opt.val)}>{opt.badge}</div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ color: theme.cream, fontWeight: 800, fontSize: 14 }}>{opt.label}</div>
+                      <div style={{ color: theme.textDim, fontSize: 12, marginTop: 3, lineHeight: 1.4 }}>{opt.detail}</div>
+                      <div style={{ color: theme.creamDim, fontSize: 11, marginTop: 4, lineHeight: 1.4 }}>{opt.hint}</div>
+                    </div>
+                    {payment === opt.val && <span style={{ color: opt.color, fontSize: 16, fontWeight: 800 }}>✓</span>}
+                  </button>
+                ))}
+              </div>
+
+                <div style={{ marginTop: 10, background: theme.bg, borderRadius: 12, padding: 12, border: `1px solid ${theme.border}` }}>
+                  <div style={{ color: theme.textDim, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Datos visibles</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 8 }}>
+                    <div style={paymentBadgeStyle(selectedPaymentMethod, true)}>{selectedPaymentMethod.badge}</div>
+                    <div style={{ minWidth: 0, flex: 1 }}>
+                      <div style={{ color: theme.cream, fontSize: 16, fontWeight: 900 }}>{selectedPaymentMethod.label}</div>
+                      <div style={{ color: theme.creamDim, fontSize: 13, lineHeight: 1.55, marginTop: 3 }}>
+                        {selectedPaymentMethod.detail}
                       </div>
-                      {payment === opt.val && <span style={{ color: opt.color, fontSize: 16, fontWeight: 700 }}>✓</span>}
-                    </button>
-                  ))}
+                    </div>
+                  </div>
+                  <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.5, marginTop: 8 }}>
+                    {selectedPaymentMethod.hint}
+                  </div>
+                  <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.5, marginTop: 8 }}>
+                    {selectedPaymentMethod.val === "yape"
+                      ? `Envía tu comprobante al WhatsApp del molino: ${ORDER_PHONE_DISPLAY}.`
+                      : selectedPaymentMethod.val === "cod"
+                        ? "Recomendado para empezar: paga al recibir tu pedido."
+                        : `Este método se confirma por WhatsApp con el molino: ${ORDER_PHONE_DISPLAY}.`}
+                  </div>
                 </div>
-                <div style={{ marginTop: 10, background: theme.bg, borderRadius: 10, padding: 12, border: `1px solid ${theme.border}`, color: theme.creamDim, fontSize: 12, lineHeight: 1.5 }}>
-                  {payment === "cod"
-                    ? "Recomendado para empezar: el cliente paga al recibir. Si prefieres Yape o transferencia, abre el pedido por WhatsApp y confirma los datos de pago con el proveedor."
-                    : "Al abrir el pedido por WhatsApp, el proveedor te compartirá los datos de pago para confirmar tu compra."}
-                </div>
+
+                {selectedPaymentMethod.val === "yape" && (
+                  <div style={{ marginTop: 12, background: "linear-gradient(135deg, #201038, #11120f)", border: "1px solid #7C3AED55", borderRadius: 14, padding: 12 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
+                      <div style={{ minWidth: 190, flex: 1 }}>
+                        <div style={{ color: "#D8B4FE", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Yape del molino</div>
+                        <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>918 429 034</div>
+                        <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>Titular: Noyolith Quine Rojas</div>
+                        <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
+                          Escanea el QR o comparte este número para que el cliente pague directo al molino.
+                        </div>
+                        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
+                          <button
+                            type="button"
+                            onClick={() => navigator.clipboard?.writeText("918429034")}
+                            style={{
+                              background: "#fff",
+                              border: "none",
+                              borderRadius: 10,
+                              color: "#201038",
+                              padding: "9px 12px",
+                              fontSize: 12,
+                              fontWeight: 900,
+                              cursor: "pointer",
+                            }}
+                          >
+                            Copiar número
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => window.open(ASSETS.yapeQr, "_blank", "noopener,noreferrer")}
+                            style={{
+                              background: "transparent",
+                              border: "1px solid #7C3AED66",
+                              borderRadius: 10,
+                              color: "#D8B4FE",
+                              padding: "9px 12px",
+                              fontSize: 12,
+                              fontWeight: 900,
+                              cursor: "pointer",
+                            }}
+                          >
+                            Abrir QR
+                          </button>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => window.open(ASSETS.yapeQr, "_blank", "noopener,noreferrer")}
+                        style={{
+                          width: 126,
+                          minWidth: 126,
+                          border: "1px solid #7C3AED55",
+                          borderRadius: 14,
+                          padding: 8,
+                          background: "#0D0520",
+                          cursor: "pointer",
+                          overflow: "hidden",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <img
+                          src={ASSETS.yapeQr}
+                          alt="QR de Yape del molino"
+                          loading="lazy"
+                          style={{ width: "100%", display: "block", objectFit: "contain", borderRadius: 8 }}
+                        />
+                      </button>
+                    </div>
+                    <div style={{ marginTop: 10, background: "#0D0520", borderRadius: 10, padding: "9px 12px", color: "#D8B4FE", fontSize: 12, lineHeight: 1.5 }}>
+                      Después de pagar, envía la captura al WhatsApp del molino: <strong style={{ color: theme.cream }}>{ORDER_PHONE_DISPLAY}</strong>.
+                    </div>
+                  </div>
+                )}
+
+                {selectedBankDetail && (
+                  <div style={paymentDetailCardStyle(selectedPaymentMethod.color)}>
+                    <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
+                      <div style={{ minWidth: 190, flex: 1 }}>
+                        <div style={{ color: selectedPaymentMethod.color, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{selectedBankDetail.bank}</div>
+                        <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>{selectedBankDetail.account}</div>
+                        <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>CCI: {selectedBankDetail.cci}</div>
+                        <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
+                          Usa estos datos para transferir al molino. Copia la cuenta o el CCI y comparte el comprobante por WhatsApp al {ORDER_PHONE_DISPLAY}.
+                        </div>
+                        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
+                          <button
+                            type="button"
+                            onClick={() => navigator.clipboard?.writeText(selectedBankDetail.account)}
+                            style={{
+                              background: "#fff",
+                              border: "none",
+                              borderRadius: 10,
+                              color: "#201038",
+                              padding: "9px 12px",
+                              fontSize: 12,
+                              fontWeight: 900,
+                              cursor: "pointer",
+                            }}
+                          >
+                            Copiar cuenta
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => navigator.clipboard?.writeText(selectedBankDetail.cci)}
+                            style={{
+                              background: "transparent",
+                              border: `1px solid ${selectedPaymentMethod.color}66`,
+                              borderRadius: 10,
+                              color: "#D8B4FE",
+                              padding: "9px 12px",
+                              fontSize: 12,
+                              fontWeight: 900,
+                              cursor: "pointer",
+                            }}
+                          >
+                            Copiar CCI
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
               </div>
 
               <div style={{ background: theme.bgLight, borderRadius: 14, padding: 14, border: `1px solid ${theme.border}`, marginBottom: 14 }}>
@@ -2885,9 +5752,11 @@ export default function VNDRX() {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartStartStep, setCartStartStep] = useState("cart");
   const [activeLine, setActiveLine] = useState("all");
+  const [selectedCompany, setSelectedCompany] = useState(null);
   const [search, setSearch] = useState("");
   const [hubOpen, setHubOpen] = useState(false);
   const [hubTab, setHubTab] = useState("tutorial");
+  const [embeddedStore, setEmbeddedStore] = useState(null);
   const [toast, setToast] = useState(null);
   const [canInstall, setCanInstall] = useState(false);
   const [gpsState, setGpsState] = useState(null);
@@ -2956,6 +5825,29 @@ export default function VNDRX() {
     toastTimerRef.current = window.setTimeout(() => setToast(null), 2800);
   };
 
+  const selectCompany = (companyKey) => {
+    setSelectedCompany(companyKey);
+    setActiveLine("all");
+    setSearch("");
+    setHubOpen(false);
+    setEmbeddedStore(null);
+    setCartOpen(false);
+    setCartStartStep("cart");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    showToast(`Entraste a ${COMPANY_VIEWS[companyKey].shortName}`, "success");
+  };
+
+  const changeCompany = () => {
+    setHubOpen(false);
+    setEmbeddedStore(null);
+    setCartOpen(false);
+    setSelectedCompany(null);
+    setActiveLine("all");
+    setSearch("");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    showToast("Elige una empresa para empezar");
+  };
+
   const addToCart = (product, pres, qty, zone) => {
     const uid = `${getSupplierKey(product)}-${product.id}-${pres.label}`;
     setCart(prev => {
@@ -2987,7 +5879,9 @@ export default function VNDRX() {
     return acc;
   }, {});
   const topSupplierKey = Object.entries(orderTotalsBySupplier).sort((a, b) => b[1] - a[1])[0]?.[0] || "reyleon";
-  const topSupplierName = topSupplierKey === "aswa" ? "ASWA" : topSupplierKey === "mixto" ? "Pedido mixto" : "Rey Leon";
+  const topSupplierName = topSupplierKey === "mixto"
+    ? "Pedido mixto"
+    : SUPPLIERS[topSupplierKey]?.shortName || "Rey Leon";
 
   const handleOrderSent = (order) => {
     setOrders((prev) => [order, ...prev].slice(0, 40));
@@ -3153,6 +6047,16 @@ export default function VNDRX() {
     }
   };
 
+  const openEmbeddedStore = (url, title, subtitle) => {
+    setHubOpen(false);
+    setEmbeddedStore({ url, title, subtitle });
+    showToast("Tienda hermana abierta dentro de VNDRX", "success");
+  };
+
+  const closeEmbeddedStore = () => {
+    setEmbeddedStore(null);
+  };
+
   const openPromoAsset = (src) => {
     window.open(src, "_blank", "noopener,noreferrer");
   };
@@ -3188,8 +6092,11 @@ export default function VNDRX() {
     const totalOrders = orders.length;
     const pendingOrders = orders.filter((order) => order.status !== "entregado").length;
     const deliveredOrders = orders.filter((order) => order.status === "entregado").length;
-    const aswaOrders = orders.filter((order) => order.supplierKey === "aswa").length;
-    const reyleonOrders = totalOrders - aswaOrders;
+    const ordersBySupplier = orders.reduce((acc, order) => {
+      const key = order.supplierKey || "reyleon";
+      acc[key] = (acc[key] || 0) + 1;
+      return acc;
+    }, {});
     const avgTicket = totalOrders ? totalHistory / totalOrders : 0;
     const topProductEntry = orders.reduce((acc, order) => {
       order.items.forEach((item) => {
@@ -3206,14 +6113,17 @@ export default function VNDRX() {
       return acc;
     }, {});
     const topProduct = Object.values(topProductEntry).sort((a, b) => b.qty - a.qty)[0];
+    const supplierLines = Object.entries(ordersBySupplier).map(([key, count]) => {
+      const name = key === "mixto" ? "Pedido mixto" : SUPPLIERS[key]?.shortName || key;
+      return `${name}: ${count}`;
+    });
 
     return [
       "Resumen diario VNDRX",
       `Pedidos totales: ${totalOrders}`,
       `Pendientes: ${pendingOrders}`,
       `Entregados: ${deliveredOrders}`,
-      `Rey Leon: ${reyleonOrders}`,
-      `ASWA: ${aswaOrders}`,
+      ...supplierLines,
       `Venta total: ${formatMoney(totalHistory)}`,
       `Ticket promedio: ${formatMoney(avgTicket)}`,
       topProduct ? `Mas vendido: ${topProduct.name} ${topProduct.label} (${topProduct.qty})` : null,
@@ -3272,10 +6182,24 @@ export default function VNDRX() {
     await supportWhatsApp("Hola, quiero hacer un pedido en VNDRX.");
   };
 
-  const filtered = products.filter(p => {
-    const matchLine = activeLine === "all" || p.line === activeLine;
-    const matchSearch = p.name.toLowerCase().includes(search.toLowerCase()) || p.subtitle.toLowerCase().includes(search.toLowerCase());
-    return matchLine && matchSearch;
+  const selectedCompanyView = selectedCompany ? COMPANY_VIEWS[selectedCompany] : null;
+  const companyFilters = selectedCompany ? COMPANY_FILTERS[selectedCompany] || [] : [];
+  const isAswa = selectedCompany === "aswa";
+  const isJora = selectedCompany === "jora";
+  const isTela = selectedCompany === "tela";
+  const isBocaditos = selectedCompany === "bocaditos";
+  const isArtesania = selectedCompany === "artesania";
+  const selectedCompanyProducts = selectedCompany
+    ? products.filter((product) => getSupplierKey(product) === selectedCompany)
+    : [];
+  const filtered = selectedCompanyProducts.filter((product) => {
+    const matchCategory = activeLine === "all" || getProductCategory(product) === activeLine;
+    const searchText = search.trim().toLowerCase();
+    const matchSearch = !searchText
+      || product.name.toLowerCase().includes(searchText)
+      || product.subtitle.toLowerCase().includes(searchText)
+      || product.desc.toLowerCase().includes(searchText);
+    return matchCategory && matchSearch;
   });
 
   const hubData = {
@@ -3289,7 +6213,7 @@ export default function VNDRX() {
     topSupplierName,
     gpsState,
     canInstall,
-    promoAssets: ASWA_PROMO_LIBRARY,
+    promoAssets: isAswa ? ASWA_PROMO_LIBRARY : isJora ? JORA_PROMO_LIBRARY : [],
   };
 
   const hubActions = {
@@ -3314,6 +6238,29 @@ export default function VNDRX() {
     saveReview,
   };
 
+  const toastBubble = toast ? (
+    <div style={{
+      position: "fixed",
+      left: 18,
+      bottom: 18,
+      zIndex: 80,
+      background: toast.type === "success" ? "linear-gradient(135deg, #16361b, #0d1a0e)" : "linear-gradient(135deg, #1c2318, #0d120c)",
+      border: `1px solid ${toast.type === "success" ? theme.greenLight : theme.border}`,
+      borderRadius: 14,
+      padding: "12px 14px",
+      color: theme.cream,
+      boxShadow: "0 18px 30px rgba(0,0,0,0.28)",
+      maxWidth: 280,
+    }}>
+      <div style={{ color: toast.type === "success" ? theme.greenLight : theme.goldLight, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{toast.type || "info"}</div>
+      <div style={{ marginTop: 4, fontSize: 12, lineHeight: 1.45 }}>{toast.message}</div>
+    </div>
+  ) : null;
+
+  if (!selectedCompany) {
+    return <CompanyChooserScreen onChooseCompany={selectCompany} toastBubble={toastBubble} />;
+  }
+
   return (
     <div style={{ minHeight: "100vh", background: HOME.page, fontFamily: "'Trebuchet MS', 'Segoe UI', sans-serif", color: HOME.text }}>
       <style>{`* { box-sizing: border-box; } ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: ${HOME.page}; } ::-webkit-scrollbar-thumb { background: ${HOME.border}; border-radius: 3px; } input { outline: none; } input::placeholder { color: ${HOME.muted}; } input:focus { border-color: ${HOME.accent} !important; }`}</style>
@@ -3321,14 +6268,19 @@ export default function VNDRX() {
       {/* NAV */}
       <nav style={{ background: "rgba(255, 252, 248, 0.9)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${HOME.border}`, padding: "0 20px", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 8px 20px rgba(76, 56, 23, 0.06)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.accent2})`, borderRadius: 16, width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, boxShadow: "0 10px 20px rgba(71,101,75,0.18)" }}>🌾</div>
+          <div style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.accent2})`, borderRadius: 16, width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, boxShadow: "0 10px 20px rgba(71,101,75,0.18)" }}>{isAswa ? "🌽" : isJora ? "🍯" : isTela ? "🧵" : isBocaditos ? "🍪" : isArtesania ? "🏺" : "🌾"}</div>
           <div>
-            <div style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 900, color: HOME.text, lineHeight: 1 }}>VNDRX</div>
-            <div style={{ fontSize: 10, color: HOME.muted, letterSpacing: 1.8, fontFamily: "monospace", textTransform: "uppercase" }}>pedido fácil y cercano</div>
+            <div style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 900, color: HOME.text, lineHeight: 1 }}>{selectedCompanyView?.shortName || "VNDRX"}</div>
+            <div style={{ fontSize: 10, color: HOME.muted, letterSpacing: 1.8, fontFamily: "monospace", textTransform: "uppercase" }}>{selectedCompanyView?.tagline || "pedido facil y cercano"}</div>
           </div>
         </div>
         <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar producto..." style={{ background: "#FFF", border: `1px solid ${HOME.border}`, borderRadius: 999, color: HOME.text, padding: "10px 14px", fontSize: 13, width: 240, boxShadow: "0 8px 16px rgba(76,56,23,0.05)" }} />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder={`Buscar en ${selectedCompanyView?.shortName || "la tienda"}...`} style={{ background: "#FFF", border: `1px solid ${HOME.border}`, borderRadius: 999, color: HOME.text, padding: "10px 14px", fontSize: 13, width: 240, boxShadow: "0 8px 16px rgba(76,56,23,0.05)" }} />
+          {selectedCompanyView && (
+            <button onClick={changeCompany} style={{ background: "#FFF", border: `1px solid ${HOME.border}`, borderRadius: 999, color: HOME.text, padding: "10px 14px", cursor: "pointer", fontSize: 13, fontWeight: 800, boxShadow: "0 8px 16px rgba(76,56,23,0.05)" }}>
+              Cambiar empresa
+            </button>
+          )}
           <button onClick={() => openCart("cart")} style={{ background: cartCount > 0 ? `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})` : "#FFF", border: `1px solid ${cartCount > 0 ? HOME.leaf : HOME.border}`, borderRadius: 999, color: cartCount > 0 ? "#fff" : HOME.text, padding: "10px 15px", cursor: "pointer", fontSize: 13, fontWeight: 800, boxShadow: cartCount > 0 ? "0 10px 18px rgba(71,101,75,0.16)" : "0 8px 16px rgba(76,56,23,0.05)" }}>
             🛒 {cartCount > 0 ? `${cartCount} items` : "Carrito"}
           </button>
@@ -3341,16 +6293,16 @@ export default function VNDRX() {
           <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.15fr) minmax(0, 0.85fr)", gap: 18, alignItems: "stretch" }}>
             <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 28, padding: 24, boxShadow: HOME.shadow }}>
               <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 999, padding: "6px 14px", marginBottom: 14, fontSize: 11, color: HOME.accent, fontFamily: "monospace", letterSpacing: 1, textTransform: "uppercase" }}>
-                🏡 te atendemos como en casa
+                {selectedCompanyView?.heroNote || "Te atendemos como en casa"}
               </div>
               <h1 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(30px,4vw,48px)", fontWeight: 900, lineHeight: 1.05, margin: "0 0 10px", color: HOME.text }}>
-                Pide tranquilo, recibe en casa
+                {selectedCompanyView?.heroTitle || "Pide tranquilo, recibe en casa"}
               </h1>
               <p style={{ color: HOME.muted, fontSize: 15, lineHeight: 1.75, margin: "0 0 18px", maxWidth: 600 }}>
-                En VNDRX te ayudamos a elegir, pagar y pedir sin enredos. Todo está pensado para que tu cliente se sienta acompañado, como cuando alguien de confianza le atiende en persona.
+                {selectedCompanyView?.heroText || "En VNDRX te ayudamos a elegir, pagar y pedir sin enredos. Todo esta pensado para que tu cliente se sienta acompañado, como cuando alguien de confianza le atiende en persona."}
               </p>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 18 }}>
-                {["pedido fácil", "foto real", "whatsapp directo", "pago claro"].map((item) => (
+                {(selectedCompanyView?.heroChips || ["pedido facil", "foto real", "whatsapp directo", "pago claro"]).map((item) => (
                   <span key={item} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 999, padding: "7px 11px", fontSize: 11, color: HOME.text, fontWeight: 700 }}>
                     {item}
                   </span>
@@ -3364,13 +6316,87 @@ export default function VNDRX() {
                 >
                   Ver catálogo
                 </button>
-                <button
-                  type="button"
-                  onClick={() => (cartCount > 0 ? openCart("checkout") : document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" }))}
-                  style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
-                >
-                  Ir al pedido
-                </button>
+                {isAswa ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => openEmbeddedStore(
+                        ASWA_APP_URL,
+                        "ASWA La Rica Chicha",
+                        "Mas productos dentro de VNDRX, sin salir de la app",
+                      )}
+                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                    >
+                      Mas productos ASWA
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => window.open(ASWA_APP_URL, "_blank", "noopener,noreferrer")}
+                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                    >
+                      Abrir en pestaña
+                    </button>
+                  </>
+                ) : isJora ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => supportWhatsApp("Hola, quiero pedir chicha de jora.")}
+                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                    >
+                      Pedir Jora
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => supportWhatsApp("Hola, quiero saber como usar la chicha de jora para sazonar comida y beberla con miel de abeja.")}
+                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                    >
+                      Consultar uso
+                    </button>
+                  </>
+                ) : isTela ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => supportWhatsApp("Hola, quiero consultar productos de la tienda Tela.")}
+                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                    >
+                      Pedir Tela
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                    >
+                      Ver hogar
+                    </button>
+                  </>
+                ) : isBocaditos ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => supportWhatsApp("Hola, quiero pedir bocaditos regionales artesanales.")}
+                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                    >
+                      Pedir Bocaditos
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                    >
+                      Ver bocaditos
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => supportWhatsApp(`Hola, quiero consultar precios de ${selectedCompanyView?.shortName || "la tienda"}.`)}
+                    style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                  >
+                    Contactar ventas
+                  </button>
+                )}
               </div>
             </div>
 
@@ -3391,16 +6417,45 @@ export default function VNDRX() {
               </div>
 
               <div style={{ background: `linear-gradient(135deg, #FFF8EF, #F6EEDD)`, border: `1px solid ${HOME.border}`, borderRadius: 24, padding: 18, boxShadow: HOME.shadow }}>
-                <div style={{ color: HOME.muted, fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>Atención directa</div>
-                <div style={{ color: HOME.text, fontSize: 18, fontWeight: 900, fontFamily: "Georgia, serif", marginBottom: 10 }}>Tu pedido entra al WhatsApp central</div>
+                <div style={{ color: HOME.muted, fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>Atencion directa</div>
+                <div style={{ color: HOME.text, fontSize: 18, fontWeight: 900, fontFamily: "Georgia, serif", marginBottom: 10 }}>{selectedCompanyView?.infoTitle || "Tu pedido entra al WhatsApp central"}</div>
                 <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }}>
                   <div>
                     <div style={{ color: HOME.muted, fontSize: 11, textTransform: "uppercase", fontWeight: 800, letterSpacing: 1 }}>Número</div>
                     <div style={{ color: HOME.leaf, fontSize: 18, fontWeight: 900 }}>{ORDER_PHONE_DISPLAY}</div>
                   </div>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                    <span style={{ background: "#EAF5EA", color: HOME.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>ASWA</span>
-                    <span style={{ background: "#F9EEDB", color: HOME.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Rey León</span>
+                    {isAswa ? (
+                      <>
+                        <span style={{ background: "#EAF5EA", color: HOME.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>ASWA</span>
+                        <span style={{ background: "#F9EEDB", color: HOME.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Escolar gratis</span>
+                      </>
+                    ) : isJora ? (
+                      <>
+                        <span style={{ background: "#F9EEDB", color: HOME.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Jora</span>
+                        <span style={{ background: "#EAF5EA", color: HOME.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Sazonador y bebida</span>
+                      </>
+                    ) : isTela ? (
+                      <>
+                        <span style={{ background: "#F9EEDB", color: "#6A3552", borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Tela</span>
+                        <span style={{ background: "#EAF5EA", color: "#335E43", borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Hogar y moda</span>
+                      </>
+                    ) : isBocaditos ? (
+                      <>
+                        <span style={{ background: "#F9EEDB", color: "#8C3F21", borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Bocaditos</span>
+                        <span style={{ background: "#EAF5EA", color: "#335E43", borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Maní y dulces</span>
+                      </>
+                    ) : isArtesania ? (
+                      <>
+                        <span style={{ background: "#F9EEDB", color: "#7A4A2A", borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Artesania</span>
+                        <span style={{ background: "#EAF5EA", color: "#5C7A4E", borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Hecho a mano</span>
+                      </>
+                    ) : (
+                      <>
+                        <span style={{ background: "#F9EEDB", color: HOME.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Rey Leon</span>
+                        <span style={{ background: "#EAF5EA", color: HOME.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Delivery por zona</span>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -3424,7 +6479,22 @@ export default function VNDRX() {
         </div>
       </div>
 
-      <PromoBoard />
+      {isAswa ? (
+        <PromoBoard />
+      ) : isJora ? (
+        <JoraBoard />
+      ) : isTela ? (
+        <TelaBoard />
+      ) : isBocaditos ? (
+        <BocaditosBoard />
+      ) : isArtesania ? (
+        <ArtesaniaBoard />
+      ) : (
+        <ReyLeonBoard
+          onOpenPriceSheet={() => openPromoAsset(ASSETS.priceSheet)}
+          onContact={() => supportWhatsApp("Hola, quiero consultar precios de Rey Leon.")}
+        />
+      )}
 
       <div id="catalog" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px 10px" }}>
         <div style={{
@@ -3437,57 +6507,257 @@ export default function VNDRX() {
         }}>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
             <div>
-              <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Centro ASWA</div>
-              <div style={{ color: HOME.text, fontSize: 16, fontWeight: 900, marginTop: 4 }}>Tutorial, referidos, bonos, GPS, historial y soporte en un solo lugar</div>
-              <div style={{ color: HOME.muted, fontSize: 12, lineHeight: 1.5, marginTop: 4 }}>Lo mejor de ASWA sumado a tu tienda actual para vender más rápido.</div>
+              <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>
+                {isAswa ? "Centro ASWA" : isJora ? "Chicha de Jora" : isTela ? "Tienda Tela" : isBocaditos ? "Bocaditos Regionales" : isArtesania ? "Artesania Lamista" : "Molino Rey Leon"}
+              </div>
+              <div style={{ color: HOME.text, fontSize: 16, fontWeight: 900, marginTop: 4 }}>
+                {isAswa
+                  ? "Tutorial, referidos, bonos, GPS, historial y soporte en un solo lugar"
+                  : isJora
+                    ? "Chicha de jora para sazonar, beber y compartir en una sola tienda"
+                    : isTela
+                      ? "Bolsas, alforjas, moda regional, sabanas y descanso en una sola tienda"
+                      : isBocaditos
+                        ? "Ñuto, rosquitas, turcas, maní, chifles y dulces artesanales en una sola tienda"
+                        : isArtesania
+                          ? "Tinajas, platos, pate, olla arrocera, tiestos y floreros artesanales en una tienda separada"
+                    : "Arroz, derivados y precios directos del molino"}
+              </div>
+              <div style={{ color: HOME.muted, fontSize: 12, lineHeight: 1.5, marginTop: 4 }}>
+                {isAswa
+                  ? "Lo mejor de ASWA sumado a tu tienda actual para vender mas rapido."
+                  : isJora
+                    ? "Para beberla, endulza al gusto; recomendamos miel de abeja. Para comida, usala como aderezo natural."
+                    : isTela
+                      ? "Escoge bolsas, mochilas, panueloletas, vestidos regionales y articulos para el hogar sin mezclarlo con otras marcas."
+                      : isBocaditos
+                        ? "El cliente encuentra rapido bocaditos regionales con fotos reales y compra sin ver otras marcas."
+                        : isArtesania
+                          ? "El cliente encuentra rapido artesania lamista con fotos reales y compra sin ver otras marcas."
+                    : "El cliente ve solo los productos de Rey Leon con fotos reales y compra sin ver otras marcas."}
+              </div>
             </div>
-            <button type="button" onClick={() => { setHubTab("tutorial"); setHubOpen(true); }} style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})`, border: "none", color: "#fff", borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.16)" }}>
-              Abrir hub
-            </button>
+            {isAswa ? (
+              <button type="button" onClick={() => { setHubTab("tutorial"); setHubOpen(true); }} style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})`, border: "none", color: "#fff", borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.16)" }}>
+                Abrir hub
+              </button>
+            ) : isJora ? (
+              <button type="button" onClick={() => supportWhatsApp("Hola, quiero consultar la chicha de jora.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+                Consultar Jora
+              </button>
+            ) : isTela ? (
+              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir productos de la tienda Tela.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+                Pedir Tela
+              </button>
+            ) : isBocaditos ? (
+              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir bocaditos regionales artesanales.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+                Pedir Bocaditos
+              </button>
+            ) : isArtesania ? (
+              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir artesania lamista.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+                Pedir Artesania
+              </button>
+            ) : (
+              <div style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 999, padding: "10px 14px", color: HOME.text, fontSize: 12, fontWeight: 800 }}>
+                {selectedCompanyView?.companyPhone || ORDER_PHONE_DISPLAY}
+              </div>
+            )}
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 8, marginTop: 14 }}>
-            {[
-              { id: "tutorial", label: "Tutorial", icon: "🎓" },
-              { id: "referidos", label: "Referidos", icon: "🤝" },
-              { id: "bonos", label: "Bonos", icon: "🏅" },
-              { id: "gps", label: "GPS", icon: "📍" },
-              { id: "historial", label: "Historial", icon: "🕘" },
-              { id: "soporte", label: "Soporte", icon: "💬" },
-              { id: "panel", label: "Panel", icon: "🛠️" },
-              { id: "install", label: "Instalar", icon: "⬇️" },
-            ].map((item) => (
+          {isAswa && (
+            <>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 8, marginTop: 14 }}>
+              {[
+                { id: "tutorial", label: "Tutorial", icon: "🎓" },
+                { id: "referidos", label: "Referidos", icon: "🤝" },
+                { id: "bonos", label: "Bonos", icon: "🏅" },
+                { id: "gps", label: "GPS", icon: "📍" },
+                { id: "historial", label: "Historial", icon: "🕘" },
+                { id: "soporte", label: "Soporte", icon: "💬" },
+                { id: "panel", label: "Panel", icon: "🛠️" },
+                { id: "install", label: "Instalar", icon: "⬇️" },
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => { setHubTab(item.id); setHubOpen(true); }}
+                  style={{
+                    background: "#FFF",
+                    border: `1px solid ${HOME.border}`,
+                    borderRadius: 14,
+                    padding: "11px 10px",
+                    color: HOME.text,
+                    cursor: "pointer",
+                    textAlign: "left",
+                    boxShadow: "0 8px 18px rgba(76,56,23,0.04)",
+                  }}
+                >
+                  <div style={{ fontSize: 15 }}>{item.icon}</div>
+                  <div style={{ fontSize: 12, fontWeight: 800, marginTop: 4 }}>{item.label}</div>
+                </button>
+              ))}
+            </div>
+            <div style={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
               <button
-                key={item.id}
                 type="button"
-                onClick={() => { setHubTab(item.id); setHubOpen(true); }}
+                onClick={() => openEmbeddedStore(
+                  ASWA_APP_URL,
+                  "ASWA La Rica Chicha",
+                  "Mas productos dentro de VNDRX, sin salir de la app",
+                )}
                 style={{
-                  background: "#FFF",
+                  background: "linear-gradient(135deg, #F9EEDB, #FFF8EF)",
                   border: `1px solid ${HOME.border}`,
-                  borderRadius: 14,
-                  padding: "11px 10px",
                   color: HOME.text,
+                  borderRadius: 999,
+                  padding: "11px 16px",
                   cursor: "pointer",
-                  textAlign: "left",
-                  boxShadow: "0 8px 18px rgba(76,56,23,0.04)",
+                  fontSize: 12,
+                  fontWeight: 900,
+                  boxShadow: "0 8px 16px rgba(76,56,23,0.05)",
                 }}
               >
-                <div style={{ fontSize: 15 }}>{item.icon}</div>
-                <div style={{ fontSize: 12, fontWeight: 800, marginTop: 4 }}>{item.label}</div>
+                Ver mas productos ASWA dentro de VNDRX
               </button>
-            ))}
-          </div>
+            </div>
+            </>
+          )}
+          {isJora && (
+            <>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10, marginTop: 14 }}>
+              {[
+                { title: "Sazonador", desc: "Para guisos y aderezos", color: "#D59B3D" },
+                { title: "Bebible", desc: "Endulza al gusto", color: "#F0C040" },
+                { title: "Miel recomendada", desc: "Sabor mas suave y natural", color: "#8A5A1C" },
+              ].map((item) => (
+                <div key={item.title} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 14, boxShadow: HOME.shadow }}>
+                  <div style={{ display: "inline-flex", background: `${item.color}20`, color: item.color, borderRadius: 999, padding: "5px 10px", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{item.title}</div>
+                  <div style={{ color: HOME.text, fontSize: 13, fontWeight: 700, lineHeight: 1.5, marginTop: 8 }}>{item.desc}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
+              <button
+                type="button"
+                onClick={() => supportWhatsApp("Hola, quiero pedir chicha de jora.")}
+                style={{
+                  background: "linear-gradient(135deg, #D59B3D, #F0C040)",
+                  border: "none",
+                  color: "#0F1A0E",
+                  borderRadius: 999,
+                  padding: "11px 16px",
+                  cursor: "pointer",
+                  fontSize: 12,
+                  fontWeight: 900,
+                  boxShadow: "0 8px 16px rgba(76,56,23,0.05)",
+                }}
+              >
+                Pedir Jora
+              </button>
+            </div>
+            </>
+          )}
+          {isTela && (
+            <>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10, marginTop: 14 }}>
+              {[
+                { title: "Bolsas", desc: "Compras y uso diario", color: "#7EA6D8" },
+                { title: "Moda regional", desc: "Panueloletas y vestidos", color: "#D58AA7" },
+                { title: "Hogar", desc: "Sabanas y cubrecamas", color: "#A9CFB1" },
+              ].map((item) => (
+                <div key={item.title} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 14, boxShadow: HOME.shadow }} >
+                  <div style={{ display: "inline-flex", background: `${item.color}20`, color: item.color, borderRadius: 999, padding: "5px 10px", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{item.title}</div>
+                  <div style={{ color: HOME.text, fontSize: 13, fontWeight: 700, lineHeight: 1.5, marginTop: 8 }}>{item.desc}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
+              <button
+                type="button"
+                onClick={() => supportWhatsApp("Hola, quiero pedir productos de la tienda Tela.")}
+                style={{
+                  background: "linear-gradient(135deg, #6A3552, #D58AA7)",
+                  border: "none",
+                  color: "#fff",
+                  borderRadius: 999,
+                  padding: "11px 16px",
+                  cursor: "pointer",
+                  fontSize: 12,
+                  fontWeight: 900,
+                  boxShadow: "0 8px 16px rgba(76,56,23,0.05)",
+                }}
+              >
+                Pedir Tela
+              </button>
+            </div>
+            </>
+          )}
+          {isBocaditos && (
+            <>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10, marginTop: 14 }}>
+              {[
+                { title: "Maní", desc: "Tostado y confitado", color: "#B66A2C" },
+                { title: "Galletas", desc: "Rosquitas y turcas", color: "#8C3F21" },
+                { title: "Dulces", desc: "Turrón, cocada y suspiros", color: "#D97A2E" },
+              ].map((item) => (
+                <div key={item.title} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 14, boxShadow: HOME.shadow }} >
+                  <div style={{ display: "inline-flex", background: `${item.color}20`, color: item.color, borderRadius: 999, padding: "5px 10px", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{item.title}</div>
+                  <div style={{ color: HOME.text, fontSize: 13, fontWeight: 700, lineHeight: 1.5, marginTop: 8 }}>{item.desc}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
+              <button
+                type="button"
+                onClick={() => supportWhatsApp("Hola, quiero pedir bocaditos regionales artesanales.")}
+                style={{
+                  background: "linear-gradient(135deg, #B66A2C, #D97A2E)",
+                  border: "none",
+                  color: "#0F1A0E",
+                  borderRadius: 999,
+                  padding: "11px 16px",
+                  cursor: "pointer",
+                  fontSize: 12,
+                  fontWeight: 900,
+                  boxShadow: "0 8px 16px rgba(76,56,23,0.05)",
+                }}
+              >
+                Pedir Bocaditos
+              </button>
+            </div>
+            </>
+          )}
         </div>
       </div>
 
       {/* LINE FILTERS */}
       <div style={{ background: "rgba(255,255,255,0.74)", borderBottom: `1px solid ${HOME.border}`, padding: "12px 20px", display: "flex", gap: 8, overflowX: "auto", backdropFilter: "blur(8px)" }}>
-        {Object.entries(LINE_LABELS).map(([key, label]) => {
-          const lc = key !== "all" ? LINE_COLORS[key] : null;
-          const active = activeLine === key;
+        {companyFilters.map(({ id, label }) => {
+          const lc = id === "all"
+            ? null
+            : ({
+              premium: LINE_COLORS.premium,
+              superior: LINE_COLORS.superior,
+              economico: LINE_COLORS.economico,
+              derivados: LINE_COLORS.derivados,
+              chicha: LINE_COLORS.chicha,
+              jora_culinaria: LINE_COLORS.jora_culinaria,
+              jora_bebible: LINE_COLORS.jora_bebible,
+              jora_familiar: LINE_COLORS.jora_familiar,
+              tela_bolsas: LINE_COLORS.tela_bolsas,
+              tela_moda: LINE_COLORS.tela_moda,
+              tela_hogar: LINE_COLORS.tela_hogar,
+              bocaditos_mani: LINE_COLORS.bocaditos_mani,
+              bocaditos_galleta: LINE_COLORS.bocaditos_galleta,
+              bocaditos_dulce: LINE_COLORS.bocaditos_dulce,
+              bocaditos_chifle: LINE_COLORS.bocaditos_chifle,
+              bidon: { badge: HOME.gold, bg: "#FDF0D8", label: "BIDON" },
+              escolar: { badge: HOME.leaf, bg: "#EAF5EA", label: "ESCOLAR" },
+            }[id] || { badge: HOME.accent2, bg: HOME.soft, label });
+          const active = activeLine === id;
           return (
-            <button key={key} onClick={() => setActiveLine(key)} style={{
-              background: active ? (lc ? lc.badge + "18" : HOME.soft) : "#FFF",
+            <button key={id} onClick={() => setActiveLine(id)} style={{
+              background: active ? (lc ? `${lc.badge}18` : HOME.soft) : "#FFF",
               border: `1px solid ${active ? (lc ? lc.badge : HOME.accent2) : HOME.border}`,
               borderRadius: 999, color: active ? HOME.text : HOME.muted,
               padding: "8px 16px", cursor: "pointer", fontSize: 12,
@@ -3506,7 +6776,7 @@ export default function VNDRX() {
       {/* PRODUCTS GRID */}
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 20px" }}>
         {/* San Juan promo banner */}
-        {activeLine === "chicha" && (
+        {isAswa ? (
           <div style={{
             background: "linear-gradient(135deg, #1A3A00 0%, #2D5A00 50%, #1A3A00 100%)",
             border: "2px solid #C47A1E88",
@@ -3526,7 +6796,47 @@ export default function VNDRX() {
               OFERTA ESPECIAL
             </div>
           </div>
-        )}
+        ) : isJora ? (
+          <div style={{
+            background: "linear-gradient(135deg, #6B4210 0%, #D59B3D 50%, #8A5A1C 100%)",
+            border: "2px solid #F0C04088",
+            borderRadius: 14, padding: "16px 22px", marginBottom: 28,
+            display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap",
+          }}>
+            <div style={{ fontSize: 36 }}>🍯</div>
+            <div style={{ flex: 1 }}>
+              <div style={{ color: "#FFF7DC", fontSize: 16, fontWeight: 800, fontFamily: "Georgia, serif" }}>
+                Chicha de Jora · Sazonador y bebida tradicional
+              </div>
+              <div style={{ color: "#FFF0C6", fontSize: 13, marginTop: 4 }}>
+                Para aderezar tu comida o beberla endulzada al gusto. Recomendamos miel de abeja.
+              </div>
+            </div>
+            <div style={{ background: "#F0C040", borderRadius: 20, padding: "6px 16px", color: "#0F1A0E", fontSize: 12, fontWeight: 800 }}>
+              NUEVA TIENDA
+            </div>
+          </div>
+        ) : isTela ? (
+          <div style={{
+            background: "linear-gradient(135deg, #402238 0%, #6A3552 50%, #8B5C6F 100%)",
+            border: "2px solid #D58AA788",
+            borderRadius: 14, padding: "16px 22px", marginBottom: 28,
+            display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap",
+          }}>
+            <div style={{ fontSize: 36 }}>🧵</div>
+            <div style={{ flex: 1 }}>
+              <div style={{ color: "#FFF7F2", fontSize: 16, fontWeight: 800, fontFamily: "Georgia, serif" }}>
+                Tienda Tela · Bolsas, moda regional y hogar
+              </div>
+              <div style={{ color: "#F2DFE5", fontSize: 13, marginTop: 4 }}>
+                Bolsas, alforjas, panueloletas, vestidos regionales, mochilas, sabanas, edredones, colchas y cubrecamas.
+              </div>
+            </div>
+            <div style={{ background: "#F0C040", borderRadius: 20, padding: "6px 16px", color: "#0F1A0E", fontSize: 12, fontWeight: 800 }}>
+              NUEVO CATALOGO
+            </div>
+          </div>
+        ) : null}
 
         <div style={{
           background: "linear-gradient(135deg, #121D10 0%, #1D2B18 100%)",
@@ -3569,12 +6879,28 @@ export default function VNDRX() {
 
         {/* VALUE PROPS */}
         <div style={{ marginTop: 52, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
-          {[
-            { icon: "🏭", title: "Del Molino a Ti", desc: "Compras directamente a la Piladora Rey León. Sin bodega, sin minimarket." },
-            { icon: "✅", title: "ISO 9001 · HACCP · BPM", desc: "Certificaciones internacionales que garantizan calidad en cada grano." },
-            { icon: "🚚", title: "Delivery por Zona", desc: "Costo fijo por zona, no por cantidad. Pides 1 o 10 sacos — mismo delivery." },
-            { icon: "💰", title: "Precio de Origen", desc: "Ahorras hasta 38% vs precio de tienda al comprar directo del productor." },
-          ].map(vp => (
+          {(
+            isAswa
+              ? [
+                { icon: "🌽", title: "Pedidos claros", desc: "Chicha, bidon y escolar separados para que el cliente elija rapido." },
+                { icon: "🎒", title: "Delivery escolar", desc: "Las secciones educativas mantienen delivery gratis en sus promociones." },
+                { icon: "🟣", title: "Yape listo", desc: "Escanea, confirma y envia el pedido centralizado al numero correcto." },
+                { icon: "📱", title: "App ASWA", desc: "Los productos sanjuaneros abren la app hermana cuando haga falta." },
+              ]
+              : isJora
+                ? [
+                  { icon: "🍯", title: "Sazonador natural", desc: "Usala para aderezar guisos, carnes y marinados con sabor de casa." },
+                  { icon: "🥤", title: "Bebible", desc: "Si la quieres tomar, endulza al gusto; la miel de abeja queda excelente." },
+                  { icon: "🌾", title: "Tradicion", desc: "Una tienda separada, clara y facil de entender para tu cliente." },
+                  { icon: "💬", title: "Pedido directo", desc: "Un solo boton para preguntar, pedir y compartir por WhatsApp." },
+                ]
+              : [
+                { icon: "🏭", title: "Del Molino a Ti", desc: "Compras directamente a la Piladora Rey Leon. Sin bodega, sin minimarket." },
+                { icon: "✅", title: "ISO 9001 · HACCP · BPM", desc: "Certificaciones internacionales que garantizan calidad en cada grano." },
+                { icon: "🚚", title: "Delivery por Zona", desc: "Costo fijo por zona, no por cantidad. Pides 1 o 10 sacos, mismo delivery." },
+                { icon: "💰", title: "Precio de Origen", desc: "Ahorras comprando directo del productor con precios visibles." },
+              ]
+          ).map(vp => (
             <div key={vp.title} style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 14, padding: "16px 18px", textAlign: "center" }}>
               <div style={{ fontSize: 28 }}>{vp.icon}</div>
               <div style={{ fontFamily: "Georgia, serif", fontSize: 14, fontWeight: 700, color: theme.cream, margin: "8px 0 5px" }}>{vp.title}</div>
@@ -3584,33 +6910,28 @@ export default function VNDRX() {
         </div>
       </div>
 
-      {toast && (
-        <div style={{
-          position: "fixed",
-          left: 18,
-          bottom: 18,
-          zIndex: 80,
-          background: toast.type === "success" ? "linear-gradient(135deg, #16361b, #0d1a0e)" : "linear-gradient(135deg, #1c2318, #0d120c)",
-          border: `1px solid ${toast.type === "success" ? theme.greenLight : theme.border}`,
-          borderRadius: 14,
-          padding: "12px 14px",
-          color: theme.cream,
-          boxShadow: "0 18px 30px rgba(0,0,0,0.28)",
-          maxWidth: 280,
-        }}>
-          <div style={{ color: toast.type === "success" ? theme.greenLight : theme.goldLight, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{toast.type || "info"}</div>
-          <div style={{ marginTop: 4, fontSize: 12, lineHeight: 1.45 }}>{toast.message}</div>
-        </div>
+      {toastBubble}
+
+      {isAswa && (
+        <ASWAControlHub
+          open={hubOpen}
+          tab={hubTab}
+          onClose={() => setHubOpen(false)}
+          onTabChange={setHubTab}
+          data={hubData}
+          actions={hubActions}
+        />
       )}
 
-      <ASWAControlHub
-        open={hubOpen}
-        tab={hubTab}
-        onClose={() => setHubOpen(false)}
-        onTabChange={setHubTab}
-        data={hubData}
-        actions={hubActions}
-      />
+      {embeddedStore && (
+        <EmbeddedAppModal
+          open={Boolean(embeddedStore)}
+          title={embeddedStore.title}
+          subtitle={embeddedStore.subtitle}
+          url={embeddedStore.url}
+          onClose={closeEmbeddedStore}
+        />
+      )}
 
       <button
         onClick={() => {
@@ -3618,7 +6939,7 @@ export default function VNDRX() {
             openCart("checkout");
             return;
           }
-          window.open(`https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent("Hola, quiero hacer un pedido en VNDRX.")}`, "_blank", "noopener,noreferrer");
+          window.open(`https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent(`Hola, quiero hacer un pedido en ${selectedCompanyView?.shortName || "VNDRX"}.`)}`, "_blank", "noopener,noreferrer");
         }}
         style={{
           position: "fixed",
@@ -3640,7 +6961,7 @@ export default function VNDRX() {
         }}
       >
         <span>{cartCount > 0 ? "🛒" : "💬"}</span>
-        <span>{cartCount > 0 ? `Ir al pedido (${cartCount})` : "Pedir por WhatsApp"}</span>
+        <span>{cartCount > 0 ? `Ir al pedido (${cartCount})` : `Pedir ${selectedCompanyView?.shortName || "ahora"}`}</span>
       </button>
 
       {cartOpen && (

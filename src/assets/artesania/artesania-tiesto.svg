@@ -1,0 +1,35 @@
+<svg width="1000" height="1000" viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="60" x2="900" y2="940" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF7EB"/>
+      <stop offset="0.5" stop-color="#F0D1AA"/>
+      <stop offset="1" stop-color="#C97F4C"/>
+    </linearGradient>
+    <linearGradient id="pot" x1="260" y1="260" x2="740" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EED2A9"/>
+      <stop offset="0.52" stop-color="#C77A49"/>
+      <stop offset="1" stop-color="#9C5632"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1000" height="1000" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#5B341E" flood-opacity="0.24"/>
+    </filter>
+  </defs>
+  <rect width="1000" height="1000" fill="url(#bg)"/>
+  <ellipse cx="500" cy="832" rx="260" ry="46" fill="#7A4A2A" fill-opacity="0.2"/>
+  <g filter="url(#shadow)">
+    <path d="M310 398C310 330 366 282 440 282H560C634 282 690 330 690 398V602C690 684 632 734 500 734C368 734 310 684 310 602V398Z" fill="url(#pot)"/>
+    <ellipse cx="500" cy="282" rx="192" ry="52" fill="#7A4A2A"/>
+    <ellipse cx="500" cy="282" rx="154" ry="34" fill="#EFD6AF"/>
+    <rect x="350" y="406" width="300" height="18" rx="9" fill="#FFF4E0" fill-opacity="0.56"/>
+    <rect x="344" y="514" width="312" height="12" rx="6" fill="#8E552E" fill-opacity="0.72"/>
+    <rect x="344" y="616" width="312" height="12" rx="6" fill="#8E552E" fill-opacity="0.72"/>
+    <path d="M500 188C560 188 608 224 608 266V286H392V266C392 224 440 188 500 188Z" fill="#D99F6E"/>
+    <circle cx="500" cy="494" r="90" fill="#F5E2C0" fill-opacity="0.2"/>
+    <circle cx="500" cy="494" r="58" fill="none" stroke="#F7E9CE" stroke-width="10" stroke-dasharray="5 12"/>
+    <text x="500" y="484" text-anchor="middle" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#FFF9F0">Tiesto</text>
+    <text x="500" y="518" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#FFF4E0">de barro</text>
+    <path d="M500 186C500 162 522 144 544 144" stroke="#F5E2C0" stroke-width="10" stroke-linecap="round"/>
+    <path d="M500 186C500 162 478 144 456 144" stroke="#F5E2C0" stroke-width="10" stroke-linecap="round"/>
+  </g>
+  <text x="500" y="88" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="800" fill="#7A4A2A" letter-spacing="2">DECORACION Y HOGAR</text>
+</svg>

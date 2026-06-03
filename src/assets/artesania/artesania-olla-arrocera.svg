@@ -1,0 +1,38 @@
+<svg width="1000" height="1000" viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="50" x2="910" y2="940" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF7EB"/>
+      <stop offset="0.5" stop-color="#F3D4A9"/>
+      <stop offset="1" stop-color="#C97F4C"/>
+    </linearGradient>
+    <linearGradient id="pot" x1="240" y1="240" x2="760" y2="780" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F0D3AA"/>
+      <stop offset="0.54" stop-color="#CA7E4D"/>
+      <stop offset="1" stop-color="#A05A35"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1000" height="1000" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#5B341E" flood-opacity="0.24"/>
+    </filter>
+  </defs>
+  <rect width="1000" height="1000" fill="url(#bg)"/>
+  <ellipse cx="500" cy="830" rx="290" ry="54" fill="#7A4A2A" fill-opacity="0.2"/>
+  <g filter="url(#shadow)">
+    <path d="M322 396C322 326 378 272 448 272H552C622 272 678 326 678 396V604C678 678 628 734 500 734C372 734 322 678 322 604V396Z" fill="url(#pot)"/>
+    <ellipse cx="500" cy="270" rx="210" ry="54" fill="#7A4A2A"/>
+    <ellipse cx="500" cy="270" rx="172" ry="36" fill="#EFD6AF"/>
+    <rect x="356" y="414" width="288" height="18" rx="9" fill="#F7E9CE" fill-opacity="0.56"/>
+    <rect x="350" y="520" width="300" height="14" rx="7" fill="#8E552E" fill-opacity="0.72"/>
+    <rect x="350" y="624" width="300" height="14" rx="7" fill="#8E552E" fill-opacity="0.72"/>
+    <path d="M390 334H610" stroke="#FFF3DF" stroke-width="12" stroke-linecap="round"/>
+    <path d="M408 372H592" stroke="#B97546" stroke-width="10" stroke-linecap="round"/>
+    <path d="M418 676H582" stroke="#FFF3DF" stroke-width="12" stroke-linecap="round"/>
+    <path d="M390 198C390 166 424 138 500 138C576 138 610 166 610 198V244H390V198Z" fill="#DCA978"/>
+    <path d="M448 146H552L538 188H462L448 146Z" fill="#F7E9CE"/>
+    <path d="M378 204H622" stroke="#5C7A4E" stroke-width="14" stroke-linecap="round"/>
+    <circle cx="500" cy="498" r="74" fill="#F6E2C1" fill-opacity="0.24"/>
+    <circle cx="500" cy="498" r="48" fill="none" stroke="#F7E9CE" stroke-width="10" stroke-dasharray="4 10"/>
+    <text x="500" y="488" text-anchor="middle" font-family="Georgia, serif" font-size="30" font-weight="700" fill="#FFF9F0">Olla</text>
+    <text x="500" y="524" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#FFF4E0">arrocera</text>
+  </g>
+  <text x="500" y="88" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="800" fill="#7A4A2A" letter-spacing="2">BARRO PARA COCINA</text>
+</svg>

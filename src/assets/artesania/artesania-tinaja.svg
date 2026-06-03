@@ -1,0 +1,37 @@
+<svg width="1000" height="1000" viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="40" x2="900" y2="960" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF6EA"/>
+      <stop offset="0.5" stop-color="#F4D3AD"/>
+      <stop offset="1" stop-color="#C57D4D"/>
+    </linearGradient>
+    <linearGradient id="jar" x1="280" y1="190" x2="720" y2="860" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F1D5AF"/>
+      <stop offset="0.48" stop-color="#C97E4D"/>
+      <stop offset="1" stop-color="#9C5632"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1000" height="1000" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#5B341E" flood-opacity="0.24"/>
+    </filter>
+  </defs>
+  <rect width="1000" height="1000" fill="url(#bg)"/>
+  <ellipse cx="500" cy="872" rx="250" ry="46" fill="#7A4A2A" fill-opacity="0.22"/>
+  <g filter="url(#shadow)">
+    <path d="M390 190C390 154 420 126 500 126C580 126 610 154 610 190L632 276C646 336 650 472 642 618C634 742 582 830 500 840C418 830 366 742 358 618C350 472 354 336 368 276L390 190Z" fill="url(#jar)"/>
+    <ellipse cx="500" cy="154" rx="110" ry="34" fill="#7B471F"/>
+    <ellipse cx="500" cy="154" rx="84" ry="22" fill="#E9CFAB"/>
+    <rect x="404" y="304" width="192" height="18" rx="9" fill="#F6E7CB" fill-opacity="0.58"/>
+    <rect x="398" y="420" width="204" height="16" rx="8" fill="#8E552E" fill-opacity="0.72"/>
+    <rect x="398" y="548" width="204" height="16" rx="8" fill="#8E552E" fill-opacity="0.72"/>
+    <rect x="398" y="678" width="204" height="16" rx="8" fill="#8E552E" fill-opacity="0.72"/>
+    <path d="M422 224C422 196 446 176 500 176C554 176 578 196 578 224V258C578 284 554 304 500 304C446 304 422 284 422 258V224Z" fill="#DDAF79"/>
+    <path d="M454 182C456 170 468 162 500 162C532 162 544 170 546 182H454Z" fill="#F6E7CB"/>
+    <circle cx="500" cy="474" r="86" fill="#F5E2C0" fill-opacity="0.26"/>
+    <circle cx="500" cy="474" r="56" fill="none" stroke="#F3E5CD" stroke-width="10" stroke-dasharray="4 10"/>
+    <text x="500" y="462" text-anchor="middle" font-family="Georgia, serif" font-size="30" font-weight="700" fill="#FFF9F0">Tinaja</text>
+    <text x="500" y="498" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#FFF4E0">Lamista</text>
+    <path d="M340 268C340 240 364 224 386 224" stroke="#F4DDB9" stroke-width="10" stroke-linecap="round"/>
+    <path d="M660 268C660 240 636 224 614 224" stroke="#F4DDB9" stroke-width="10" stroke-linecap="round"/>
+  </g>
+  <text x="500" y="86" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="800" fill="#7A4A2A" letter-spacing="2">HECHA A MANO</text>
+</svg>

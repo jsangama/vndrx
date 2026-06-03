@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-label="Sabanas y cubrecamas">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F7FFF8"/>
+      <stop offset="55%" stop-color="#DCEFD8"/>
+      <stop offset="100%" stop-color="#A9CFB1"/>
+    </linearGradient>
+    <linearGradient id="bed" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFF1C8"/>
+      <stop offset="100%" stop-color="#D1A44A"/>
+    </linearGradient>
+    <linearGradient id="blanket" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7EBB8C"/>
+      <stop offset="100%" stop-color="#4F7F60"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#48624A" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+  <rect width="1000" height="1000" fill="url(#bg)"/>
+  <rect x="76" y="76" width="848" height="848" rx="42" fill="rgba(255,255,255,0.5)" stroke="#D7E9D4" stroke-width="2" filter="url(#shadow)"/>
+  <text x="120" y="180" font-family="Georgia, serif" font-size="68" font-weight="700" fill="#335E43">HOGAR</text>
+  <text x="120" y="235" font-family="Arial, sans-serif" font-size="26" letter-spacing="2" fill="#58736D">SABANAS, EDREDONES Y CUBRECAMAS</text>
+  <text x="120" y="286" font-family="Arial, sans-serif" font-size="18" fill="#5E6E63">Para descansar mejor y vestir tu cama con calidez</text>
+
+  <g transform="translate(120 350)" filter="url(#shadow)">
+    <rect x="0" y="0" width="720" height="390" rx="34" fill="#FFFFFF" stroke="#D7E9D4"/>
+    <rect x="82" y="138" width="540" height="150" rx="24" fill="url(#bed)"/>
+    <rect x="94" y="158" width="516" height="104" rx="20" fill="url(#blanket)"/>
+    <rect x="120" y="112" width="130" height="58" rx="18" fill="#FFF8D6"/>
+    <rect x="472" y="112" width="130" height="58" rx="18" fill="#FFF8D6"/>
+    <rect x="92" y="280" width="530" height="30" rx="15" fill="#C89A42"/>
+    <circle cx="170" cy="182" r="14" fill="#D8E8D6"/>
+    <circle cx="260" cy="182" r="14" fill="#D8E8D6"/>
+    <circle cx="350" cy="182" r="14" fill="#D8E8D6"/>
+    <circle cx="440" cy="182" r="14" fill="#D8E8D6"/>
+    <circle cx="530" cy="182" r="14" fill="#D8E8D6"/>
+    <text x="124" y="334" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#5B3448">Sabanas y cubrecamas</text>
+  </g>
+</svg>

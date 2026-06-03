@@ -1,0 +1,58 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="60" y1="40" x2="1140" y2="1160" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFF9EE"/>
+      <stop offset="0.52" stop-color="#F7E0B0"/>
+      <stop offset="1" stop-color="#D89A3D"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="400" y1="260" x2="820" y2="980" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F8D38A"/>
+      <stop offset="1" stop-color="#8D4F10"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="1200" fill="url(#bg)"/>
+  <circle cx="1020" cy="190" r="180" fill="#FFF5D0" fill-opacity="0.44"/>
+  <circle cx="176" cy="1020" r="220" fill="#FFF5D0" fill-opacity="0.30"/>
+
+  <text x="72" y="112" fill="#214E1E" font-family="Arial, sans-serif" font-size="34" font-weight="900" letter-spacing="4">CHICHA DE JORA</text>
+  <text x="72" y="232" fill="#1B4218" font-family="Georgia, 'Times New Roman', serif" font-size="96" font-weight="900">PARA SAZONAR</text>
+  <text x="72" y="300" fill="#8A4D10" font-family="Arial, sans-serif" font-size="30" font-weight="800">Y DAR MAS SABOR A TUS PLATOS</text>
+
+  <rect x="76" y="362" rx="28" ry="28" width="406" height="112" fill="#FFFDF8" fill-opacity="0.78" stroke="#D4A017" stroke-width="3"/>
+  <text x="112" y="416" fill="#214E1E" font-family="Arial, sans-serif" font-size="28" font-weight="900">GUISOS · CARNES · MARINADOS</text>
+  <text x="112" y="450" fill="#7A5B2E" font-family="Arial, sans-serif" font-size="20" font-weight="700">USO CULINARIO TRADICIONAL</text>
+
+  <g>
+    <rect x="620" y="190" width="320" height="800" rx="150" fill="#FFF6D8" fill-opacity="0.78"/>
+    <rect x="664" y="120" width="232" height="126" rx="42" fill="#D79A2B"/>
+    <rect x="676" y="88" width="208" height="64" rx="24" fill="#B06F16"/>
+    <ellipse cx="782" cy="570" rx="148" ry="300" fill="url(#amber)"/>
+    <rect x="650" y="378" width="264" height="180" rx="20" fill="#214E1E" fill-opacity="0.92"/>
+    <rect x="672" y="400" width="220" height="136" rx="16" fill="#FDF2C8"/>
+    <text x="782" y="452" text-anchor="middle" fill="#214E1E" font-family="Georgia, 'Times New Roman', serif" font-size="42" font-weight="900">JORA</text>
+    <text x="782" y="488" text-anchor="middle" fill="#8A4D10" font-family="Arial, sans-serif" font-size="20" font-weight="800">SABOR DE CASA</text>
+    <text x="782" y="520" text-anchor="middle" fill="#6C542E" font-family="Arial, sans-serif" font-size="16" font-weight="700">LISTA PARA TUS ADEREZOS</text>
+    <circle cx="784" cy="802" r="112" fill="#FFF4CE"/>
+    <text x="784" y="770" text-anchor="middle" fill="#214E1E" font-family="Arial, sans-serif" font-size="24" font-weight="900">100% NATURAL</text>
+    <text x="784" y="802" text-anchor="middle" fill="#8A4D10" font-family="Arial, sans-serif" font-size="18" font-weight="800">SABOR</text>
+    <text x="784" y="828" text-anchor="middle" fill="#8A4D10" font-family="Arial, sans-serif" font-size="18" font-weight="800">TRADICIONAL</text>
+  </g>
+
+  <g>
+    <ellipse cx="304" cy="934" rx="154" ry="44" fill="#C88E39" fill-opacity="0.28"/>
+    <rect x="188" y="684" width="182" height="242" rx="22" fill="#FFF8E8" stroke="#D4A017" stroke-width="3"/>
+    <path d="M214 878C238 836 264 810 278 810C294 810 326 836 350 878H214Z" fill="#D79A2B"/>
+    <rect x="242" y="734" width="90" height="138" rx="20" fill="#E2B15D"/>
+    <rect x="256" y="706" width="62" height="42" rx="14" fill="#D79A2B"/>
+    <path d="M242 806C260 796 286 792 302 792C320 792 336 796 332 806C320 814 286 820 276 820C260 820 240 814 242 806Z" fill="#FFF4CE"/>
+  </g>
+
+  <rect x="86" y="532" rx="28" ry="28" width="402" height="124" fill="#1F4C19" fill-opacity="0.92"/>
+  <text x="118" y="582" fill="#FFF7DC" font-family="Arial, sans-serif" font-size="28" font-weight="900">PARA COCINAR</text>
+  <text x="118" y="624" fill="#F0C040" font-family="Arial, sans-serif" font-size="22" font-weight="800">AGREGA SABOR A SOPAS Y GUISOS</text>
+
+  <rect x="850" y="80" width="272" height="150" rx="26" fill="#FFFDF8" fill-opacity="0.78" stroke="#D4A017" stroke-width="3"/>
+  <text x="986" y="138" text-anchor="middle" fill="#214E1E" font-family="Arial, sans-serif" font-size="26" font-weight="900">USO PRINCIPAL</text>
+  <text x="986" y="178" text-anchor="middle" fill="#8A4D10" font-family="Arial, sans-serif" font-size="22" font-weight="800">ADEREZOS Y MARINADOS</text>
+</svg>

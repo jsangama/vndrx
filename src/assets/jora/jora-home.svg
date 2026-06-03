@@ -1,0 +1,82 @@
+<svg width="1200" height="1500" viewBox="0 0 1200 1500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="40" x2="1120" y2="1460" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFF8EA"/>
+      <stop offset="0.45" stop-color="#F8E3B8"/>
+      <stop offset="1" stop-color="#E2B15D"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="360" y1="320" x2="860" y2="1180" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F8D38A"/>
+      <stop offset="0.52" stop-color="#D68D23"/>
+      <stop offset="1" stop-color="#8A4D10"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="520" y1="220" x2="520" y2="1320" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFF7DC" stop-opacity="0.84"/>
+      <stop offset="1" stop-color="#FFF0C7" stop-opacity="0.98"/>
+    </linearGradient>
+    <filter id="shadow" x="180" y="180" width="860" height="1160" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="20" stdDeviation="18" flood-color="#6B4210" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="1500" fill="url(#bg)"/>
+  <circle cx="1020" cy="180" r="230" fill="#FFF0C4" fill-opacity="0.42"/>
+  <circle cx="180" cy="1340" r="240" fill="#FFF0C4" fill-opacity="0.36"/>
+  <path d="M70 160C130 82 208 56 262 60C236 118 182 182 104 214C82 184 68 176 70 160Z" fill="#6E8B3D" fill-opacity="0.34"/>
+  <path d="M1000 86C1054 46 1122 44 1160 58C1120 126 1062 166 988 188C978 146 978 112 1000 86Z" fill="#6E8B3D" fill-opacity="0.34"/>
+  <path d="M46 1160C122 1138 184 1162 234 1220C160 1236 98 1262 58 1320C28 1268 24 1216 46 1160Z" fill="#6E8B3D" fill-opacity="0.26"/>
+  <path d="M1056 1162C1122 1136 1174 1148 1200 1188C1180 1254 1140 1300 1062 1338C1044 1276 1044 1218 1056 1162Z" fill="#6E8B3D" fill-opacity="0.26"/>
+
+  <text x="90" y="124" fill="#214E1E" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-weight="700" letter-spacing="4">CHICHA DE JORA</text>
+  <text x="88" y="236" fill="#1D2F19" font-family="Georgia, 'Times New Roman', serif" font-size="112" font-weight="900" letter-spacing="-2">JORA</text>
+  <text x="88" y="304" fill="#8A4D10" font-family="Arial, sans-serif" font-size="38" font-weight="800" letter-spacing="3">SABOR DE CASA</text>
+
+  <rect x="86" y="360" rx="32" ry="32" width="420" height="120" fill="#FFFDF6" fill-opacity="0.78" stroke="#D4A017" stroke-width="3"/>
+  <text x="124" y="410" fill="#214E1E" font-family="Arial, sans-serif" font-size="32" font-weight="800">PARA SAZONAR</text>
+  <text x="124" y="454" fill="#7A5B2E" font-family="Arial, sans-serif" font-size="24" font-weight="700">Y DAR MAS SABOR A TUS GUISOS</text>
+
+  <rect x="86" y="512" rx="32" ry="32" width="420" height="120" fill="#FFFDF6" fill-opacity="0.78" stroke="#D4A017" stroke-width="3"/>
+  <text x="124" y="562" fill="#214E1E" font-family="Arial, sans-serif" font-size="32" font-weight="800">PARA BEBER</text>
+  <text x="124" y="606" fill="#7A5B2E" font-family="Arial, sans-serif" font-size="24" font-weight="700">ENDULZA AL GUSTO, MEJOR CON MIEL</text>
+
+  <g filter="url(#shadow)">
+    <rect x="520" y="220" width="380" height="1030" rx="190" fill="url(#glass)"/>
+    <rect x="576" y="118" width="268" height="170" rx="82" fill="#F3D08B"/>
+    <rect x="608" y="50" width="204" height="92" rx="32" fill="#D79A2B"/>
+    <rect x="608" y="50" width="204" height="92" rx="32" fill="none" stroke="#FFF7DC" stroke-width="8"/>
+    <ellipse cx="710" cy="740" rx="178" ry="360" fill="url(#amber)" fill-opacity="0.92"/>
+    <rect x="558" y="462" width="304" height="250" rx="22" fill="#214E1E" fill-opacity="0.92"/>
+    <rect x="582" y="486" width="256" height="200" rx="18" fill="#FDF4CF"/>
+    <text x="712" y="544" text-anchor="middle" fill="#1B4218" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="900">JORA</text>
+    <text x="712" y="588" text-anchor="middle" fill="#8A4D10" font-family="Arial, sans-serif" font-size="24" font-weight="800">TRADICION NATURAL</text>
+    <text x="712" y="628" text-anchor="middle" fill="#6C542E" font-family="Arial, sans-serif" font-size="18" font-weight="700">PARA COCINA Y BEBIDA</text>
+    <circle cx="708" cy="875" r="140" fill="#FFF3C9" fill-opacity="0.92"/>
+    <text x="708" y="845" text-anchor="middle" fill="#214E1E" font-family="Arial, sans-serif" font-size="26" font-weight="900">100% NATURAL</text>
+    <text x="708" y="882" text-anchor="middle" fill="#8A4D10" font-family="Arial, sans-serif" font-size="20" font-weight="700">HECHA CON MAIZ</text>
+    <text x="708" y="916" text-anchor="middle" fill="#8A4D10" font-family="Arial, sans-serif" font-size="20" font-weight="700">Y SABOR TRADICIONAL</text>
+    <rect x="824" y="602" width="98" height="280" rx="44" fill="#E9A93C"/>
+    <rect x="838" y="532" width="70" height="84" rx="20" fill="#D79A2B"/>
+    <rect x="838" y="532" width="70" height="84" rx="20" fill="none" stroke="#FFF7DC" stroke-width="4"/>
+    <rect x="836" y="632" width="74" height="192" rx="18" fill="#FFF2C6" fill-opacity="0.82"/>
+    <text x="873" y="722" text-anchor="middle" fill="#214E1E" font-family="Arial, sans-serif" font-size="20" font-weight="900">LISTA</text>
+    <text x="873" y="748" text-anchor="middle" fill="#8A4D10" font-family="Arial, sans-serif" font-size="17" font-weight="800">PARA</text>
+    <text x="873" y="774" text-anchor="middle" fill="#8A4D10" font-family="Arial, sans-serif" font-size="17" font-weight="800">BEBER</text>
+  </g>
+
+  <g>
+    <ellipse cx="620" cy="1304" rx="190" ry="52" fill="#C88E39" fill-opacity="0.28"/>
+    <path d="M444 1298C474 1240 548 1200 640 1200C730 1200 806 1240 838 1298C782 1308 710 1312 640 1312C568 1312 496 1308 444 1298Z" fill="#6E4A18"/>
+    <path d="M468 1288C504 1260 566 1246 640 1246C714 1246 776 1260 812 1288C760 1296 706 1300 640 1300C574 1300 520 1296 468 1288Z" fill="#916024"/>
+    <path d="M470 1290C528 1250 584 1228 640 1228C698 1228 754 1250 810 1290C764 1300 708 1304 640 1304C572 1304 516 1300 470 1290Z" fill="#D59B3D"/>
+    <path d="M558 1258C570 1238 598 1228 640 1228C682 1228 710 1238 722 1258C700 1268 674 1274 640 1274C606 1274 580 1268 558 1258Z" fill="#FFF7DC"/>
+    <rect x="598" y="1212" width="84" height="58" rx="18" fill="#FFF7DC"/>
+    <rect x="610" y="1178" width="60" height="46" rx="14" fill="#D79A2B"/>
+    <rect x="466" y="1218" width="62" height="34" rx="12" fill="#D4A017"/>
+    <rect x="672" y="1218" width="62" height="34" rx="12" fill="#D4A017"/>
+  </g>
+
+  <rect x="860" y="80" width="256" height="156" rx="28" fill="#1F4C19" fill-opacity="0.94"/>
+  <text x="988" y="134" text-anchor="middle" fill="#FFF7DC" font-family="Arial, sans-serif" font-size="28" font-weight="900">RECOMENDADA</text>
+  <text x="988" y="176" text-anchor="middle" fill="#F0C040" font-family="Arial, sans-serif" font-size="24" font-weight="800">CON MIEL DE ABEJA</text>
+  <text x="988" y="214" text-anchor="middle" fill="#FFF7DC" font-family="Arial, sans-serif" font-size="18" font-weight="700">O TU ENDULZANTE FAVORITO</text>
+</svg>
