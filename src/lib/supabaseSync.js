@@ -152,3 +152,35 @@ export async function fetchReviewsFromSupabase() {
   if (result.error) throw result.error;
   return (result.data || []).map(reviewFromRow);
 }
+
+export async function probeSupabaseConnection() {
+  if (!SUPABASE_ENABLED || !supabase) {
+    return {
+      ok: false,
+      ready: false,
+      message: "Configura la URL y la anon key primero.",
+    };
+  }
+
+  const startedAt = Date.now();
+  const result = await supabase
+    .from(SUPABASE_TABLES.orders)
+    .select("id", { count: "exact", head: true })
+    .limit(1);
+
+  if (result.error) {
+    return {
+      ok: false,
+      ready: true,
+      message: result.error.message || "No se pudo verificar la conexión.",
+      elapsedMs: Date.now() - startedAt,
+    };
+  }
+
+  return {
+    ok: true,
+    ready: true,
+    message: "Conexión lista. La base responde correctamente.",
+    elapsedMs: Date.now() - startedAt,
+  };
+}

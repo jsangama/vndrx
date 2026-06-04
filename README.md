@@ -58,6 +58,7 @@ VITE_SUPABASE_ANON_KEY=tu_clave_anon_publica
 Pega la URL y la anon key en el hub interno y guarda la conexion.
 
 4. Reinicia el servidor de desarrollo con `npm run dev`, o deja que la app recargue si usaste el panel interno.
+5. Usa el botón `Probar conexión` del panel para confirmar que Supabase responde antes de empezar a vender.
 
 ### Tablas que usa
 

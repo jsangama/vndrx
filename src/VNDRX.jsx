@@ -17,6 +17,7 @@ import {
   deleteOrderFromSupabase,
   fetchOrdersFromSupabase,
   fetchReviewsFromSupabase,
+  probeSupabaseConnection,
   syncOrdersToSupabase,
   syncProfileToSupabase,
   syncReviewsToSupabase,
@@ -3774,6 +3775,20 @@ function ASWAControlHub({
       <div style={{ display: "grid", gap: 12 }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 10 }}>
           <HubMetric label="Estado" value={data.supabaseEnabled ? "Conectado" : "Local"} hint={data.supabaseEnabled ? "Pedidos en nube y local" : "Aun no pegaste credenciales"} color={data.supabaseEnabled ? theme.greenLight : theme.goldLight} />
+          <HubMetric
+            label="Prueba"
+            value={
+              data.supabaseProbe.state === "ok"
+                ? "Verificada"
+                : data.supabaseProbe.state === "checking"
+                  ? "Probando"
+                  : data.supabaseProbe.state === "error"
+                    ? "Error"
+                    : "Pendiente"
+            }
+            hint={data.supabaseProbe.message || "Sin verificar"}
+            color={data.supabaseProbe.state === "ok" ? theme.greenLight : data.supabaseProbe.state === "error" ? "#FF9B9B" : theme.goldLight}
+          />
           <HubMetric label="Tablas" value="3" hint="orders, profiles, reviews" />
           <HubMetric label="URL" value={data.supabaseUrl ? "Lista" : "Vacía"} hint={data.supabaseUrl || "Sin configurar"} />
           <HubMetric label="Modo" value={data.supabaseEnabled ? "Realtime" : "Offline"} hint="Se actualiza al recargar" />
@@ -3798,9 +3813,21 @@ function ASWAControlHub({
               <button type="button" onClick={actions.saveSupabaseConnection} style={{ background: `linear-gradient(135deg, ${theme.green}, ${theme.greenLight})`, border: "none", borderRadius: 12, color: "#fff", padding: 12, cursor: "pointer", fontWeight: 900 }}>
                 Guardar y recargar
               </button>
+              <button type="button" onClick={actions.testSupabaseConnection} style={{ background: `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})`, border: "none", borderRadius: 12, color: "#0F1A0E", padding: 12, cursor: "pointer", fontWeight: 900 }}>
+                Probar conexión
+              </button>
               <button type="button" onClick={actions.clearSupabaseConnection} style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 12, color: theme.cream, padding: 12, cursor: "pointer", fontWeight: 800 }}>
                 Quitar conexión
               </button>
+            </div>
+            <div style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${theme.border}`, borderRadius: 14, padding: 12, color: theme.creamDim, fontSize: 12, lineHeight: 1.6 }}>
+              <div style={{ color: theme.goldLight, fontWeight: 900, fontSize: 11, letterSpacing: 1, textTransform: "uppercase" }}>Resultado de la última prueba</div>
+              <div style={{ marginTop: 6, color: data.supabaseProbe.state === "ok" ? theme.greenLight : data.supabaseProbe.state === "error" ? "#FFB5B5" : theme.creamDim }}>
+                {data.supabaseProbe.message}
+              </div>
+              {typeof data.supabaseProbe.elapsedMs === "number" && (
+                <div style={{ marginTop: 4, color: theme.textDim, fontSize: 11 }}>Tiempo estimado: {data.supabaseProbe.elapsedMs} ms</div>
+              )}
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
               <button type="button" onClick={actions.copySupabaseChecklist} style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 12, color: theme.cream, padding: 12, cursor: "pointer", fontWeight: 800 }}>
@@ -6200,6 +6227,7 @@ export default function VNDRX() {
   const [gpsState, setGpsState] = useState(null);
   const [reviewDraft, setReviewDraft] = useState({ stars: 0, note: "", tag: "" });
   const [supabaseDraft, setSupabaseDraft] = useState(() => readSupabaseRuntimeConfig());
+  const [supabaseProbe, setSupabaseProbe] = useState({ state: "idle", message: "Sin verificar todavía." });
   const installPromptRef = useRef(null);
   const toastTimerRef = useRef(null);
   const ordersRef = useRef(orders);
@@ -6368,9 +6396,42 @@ export default function VNDRX() {
     window.setTimeout(() => window.location.reload(), 500);
   };
 
+  const testSupabaseConnection = async () => {
+    const next = {
+      url: supabaseDraft.url.trim(),
+      key: supabaseDraft.key.trim(),
+    };
+
+    if (!next.url || !next.key) {
+      setSupabaseProbe({ state: "empty", message: "Pega la URL y la anon key para poder probar." });
+      showToast("Primero pega la URL y la anon key");
+      return;
+    }
+
+    setSupabaseProbe({ state: "checking", message: "Probando conexión..." });
+    const result = await probeSupabaseConnection();
+    if (result.ok) {
+      setSupabaseProbe({
+        state: "ok",
+        message: result.message,
+        elapsedMs: result.elapsedMs,
+      });
+      showToast(`Supabase responde en ${result.elapsedMs || 0} ms`, "success");
+      return;
+    }
+
+    setSupabaseProbe({
+      state: "error",
+      message: result.message,
+      elapsedMs: result.elapsedMs,
+    });
+    showToast(result.message || "No se pudo verificar Supabase");
+  };
+
   const clearSupabaseConnection = () => {
     clearSupabaseRuntimeConfig();
     setSupabaseDraft({ url: "", key: "" });
+    setSupabaseProbe({ state: "idle", message: "Sin verificar todavía." });
     showToast("Conexion Supabase eliminada. Recargando...");
     window.setTimeout(() => window.location.reload(), 400);
   };
@@ -6813,6 +6874,7 @@ export default function VNDRX() {
     supabaseEnabled: SUPABASE_ENABLED,
     supabaseUrl: SUPABASE_RUNTIME_CONFIG.url || "",
     supabaseDraft,
+    supabaseProbe,
     promoAssets: isAswa ? ASWA_PROMO_LIBRARY : isJora ? JORA_PROMO_LIBRARY : [],
   };
 
@@ -6838,6 +6900,7 @@ export default function VNDRX() {
     saveReview,
     setSupabaseDraft,
     saveSupabaseConnection,
+    testSupabaseConnection,
     clearSupabaseConnection,
     copySupabaseSql: () => copySupabaseTemplate(SUPABASE_SCHEMA_TEXT, "SQL de Supabase"),
     copySupabaseEnv: () => copySupabaseTemplate(SUPABASE_ENV_TEXT, "Plantilla .env"),
