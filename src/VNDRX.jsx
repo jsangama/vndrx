@@ -1749,6 +1749,7 @@ const PAYMENT_PROFILES = {
     contactNote: "Envia tu comprobante al WhatsApp de ASWA: 955 273 229 / 986 445 531.",
   },
 };
+const ASWA_PAYMENT_STORE_KEYS = new Set(["aswa", "tela", "bocaditos", "artesania"]);
 const paymentBadgeStyle = (opt, selected = false) => ({
   width: 38,
   height: 38,
@@ -7189,7 +7190,7 @@ export default function VNDRX() {
           referredBy={profile.referredBy}
           gpsState={gpsState}
           initialStep={cartStartStep}
-          storeKey={selectedCompany === "aswa" ? "aswa" : "reyleon"}
+          storeKey={ASWA_PAYMENT_STORE_KEYS.has(selectedCompany) ? "aswa" : "reyleon"}
         />
       )}
     </div>
