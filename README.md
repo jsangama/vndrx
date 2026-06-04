@@ -32,6 +32,44 @@ Tienda multi-marca para pedidos reales por web, WhatsApp y medios de pago del cl
 - Titular Yape: `Noyolith Quine Rojas`
 - Cuentas bancarias del molino visibles en el checkout de Rey Leon.
 
+## Base de datos
+
+La app trabaja con `localStorage` y, si configuras Supabase, también respalda y sincroniza pedidos, perfil y reseñas en la nube.
+
+### Para activarlo
+
+1. Crea un proyecto en Supabase.
+2. Ejecuta el SQL de [supabase/schema.sql](./supabase/schema.sql).
+3. Elige una de estas dos opciones para configurar la conexion:
+
+```bash
+# Opcion A: archivo .env.local
+```
+
+```bash
+VITE_SUPABASE_URL=tu_url_de_supabase
+VITE_SUPABASE_ANON_KEY=tu_clave_anon_publica
+```
+
+```bash
+# Opcion B: panel "Base de datos" dentro de la app
+```
+
+Pega la URL y la anon key en el hub interno y guarda la conexion.
+
+4. Reinicia el servidor de desarrollo con `npm run dev`, o deja que la app recargue si usaste el panel interno.
+
+### Tablas que usa
+
+- `vndrx_orders`
+- `vndrx_profiles`
+- `vndrx_reviews`
+
+### Importante
+
+- Sin esas variables de entorno, la app sigue funcionando en modo local.
+- Con Supabase activo, los pedidos del panel se comparten entre dispositivos.
+
 ## Desarrollo local
 
 ```bash

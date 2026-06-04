@@ -1,5 +1,27 @@
 import { useEffect, useRef, useState } from "react";
 
+import {
+  SUPABASE_ENABLED,
+  SUPABASE_RUNTIME_CONFIG,
+  clearSupabaseRuntimeConfig,
+  readSupabaseRuntimeConfig,
+  saveSupabaseRuntimeConfig,
+  supabase,
+} from "./lib/supabase";
+import {
+  SUPABASE_CHECKLIST_TEXT,
+  SUPABASE_ENV_TEXT,
+  SUPABASE_SCHEMA_TEXT,
+} from "./lib/supabaseTemplates";
+import {
+  deleteOrderFromSupabase,
+  fetchOrdersFromSupabase,
+  fetchReviewsFromSupabase,
+  syncOrdersToSupabase,
+  syncProfileToSupabase,
+  syncReviewsToSupabase,
+} from "./lib/supabaseSync";
+
 import promoMain from "./assets/aswa/promo-san-juanero-main.png";
 import promoAlt from "./assets/aswa/promo-san-juanera-alt.png";
 import promoFlayer from "./assets/aswa/promo-san-juanera-flayer.png";
@@ -1339,6 +1361,20 @@ const COMPANY_VIEWS = {
     companyContact: "Ventas directas del molino",
     primaryButton: "Ver arroces",
     secondaryButton: "Cambiar empresa",
+    look: {
+      page: "linear-gradient(180deg, #FBF7EF 0%, #F4EBDD 44%, #ECE3D5 100%)",
+      heroTop: "#FFF9F2",
+      heroBottom: "#F3E7D4",
+      nav: "rgba(255, 253, 248, 0.92)",
+      surface: "#FFFDF8",
+      surface2: "#FFF8EE",
+      accent: "#A36D2C",
+      accent2: "#D6A65C",
+      leaf: "#47654B",
+      leaf2: "#6A8A6E",
+      shadow: "0 20px 40px rgba(76, 56, 23, 0.14)",
+      glow: "radial-gradient(circle at 0% 0%, rgba(163,109,44,0.20) 0, transparent 32%), radial-gradient(circle at 100% 0%, rgba(71,101,75,0.12) 0, transparent 30%)",
+    },
   },
   aswa: {
     key: "aswa",
@@ -1357,6 +1393,20 @@ const COMPANY_VIEWS = {
     companyContact: "Pedidos sanjuaneros y escolares",
     primaryButton: "Ver productos ASWA",
     secondaryButton: "Abrir app ASWA",
+    look: {
+      page: "linear-gradient(180deg, #FBF3E4 0%, #F4ECDD 42%, #EAF0E2 100%)",
+      heroTop: "#FFF8E9",
+      heroBottom: "#EDF4E8",
+      nav: "rgba(255, 252, 245, 0.92)",
+      surface: "#FFFDF8",
+      surface2: "#FFF7EB",
+      accent: "#47654B",
+      accent2: "#C47A1E",
+      leaf: "#47654B",
+      leaf2: "#6A8A6E",
+      shadow: "0 22px 44px rgba(71, 101, 75, 0.14)",
+      glow: "radial-gradient(circle at 10% 0%, rgba(71,101,75,0.20) 0, transparent 30%), radial-gradient(circle at 90% 0%, rgba(196,122,30,0.18) 0, transparent 32%)",
+    },
   },
   jora: {
     key: "jora",
@@ -1375,6 +1425,20 @@ const COMPANY_VIEWS = {
     companyContact: "Pedidos y consejos de uso",
     primaryButton: "Ver Jora",
     secondaryButton: "Cambiar empresa",
+    look: {
+      page: "linear-gradient(180deg, #FCF4E7 0%, #F5E9D7 46%, #EFE0C9 100%)",
+      heroTop: "#FFF7E9",
+      heroBottom: "#F3E1C2",
+      nav: "rgba(255, 250, 240, 0.92)",
+      surface: "#FFFDF8",
+      surface2: "#FFF7E8",
+      accent: "#8A5A1C",
+      accent2: "#D59B3D",
+      leaf: "#6B4210",
+      leaf2: "#D59B3D",
+      shadow: "0 22px 44px rgba(107, 66, 16, 0.14)",
+      glow: "radial-gradient(circle at 0% 0%, rgba(213,155,61,0.24) 0, transparent 30%), radial-gradient(circle at 100% 100%, rgba(138,90,28,0.16) 0, transparent 28%)",
+    },
   },
   tela: {
     key: "tela",
@@ -1393,6 +1457,20 @@ const COMPANY_VIEWS = {
     companyContact: "Pedidos textiles y hogar",
     primaryButton: "Ver productos Tela",
     secondaryButton: "Cotizar por WhatsApp",
+    look: {
+      page: "linear-gradient(180deg, #FBF4F7 0%, #F3E8EC 46%, #E9E1EA 100%)",
+      heroTop: "#FFF8FB",
+      heroBottom: "#F0E3EA",
+      nav: "rgba(255, 252, 248, 0.92)",
+      surface: "#FFFDF8",
+      surface2: "#FFF6F9",
+      accent: "#6A3552",
+      accent2: "#D58AA7",
+      leaf: "#335E43",
+      leaf2: "#A9CFB1",
+      shadow: "0 22px 44px rgba(106, 53, 82, 0.13)",
+      glow: "radial-gradient(circle at 0% 0%, rgba(213,138,167,0.22) 0, transparent 30%), radial-gradient(circle at 100% 0%, rgba(106,53,82,0.16) 0, transparent 32%)",
+    },
   },
   bocaditos: {
     key: "bocaditos",
@@ -1411,6 +1489,20 @@ const COMPANY_VIEWS = {
     companyContact: "Pedidos artesanales y regionales",
     primaryButton: "Ver bocaditos",
     secondaryButton: "Pedir por WhatsApp",
+    look: {
+      page: "linear-gradient(180deg, #FBF1E5 0%, #F5E6D7 46%, #EFE0CF 100%)",
+      heroTop: "#FFF8EE",
+      heroBottom: "#F3E2D1",
+      nav: "rgba(255, 252, 248, 0.92)",
+      surface: "#FFFDF8",
+      surface2: "#FFF7EE",
+      accent: "#B66A2C",
+      accent2: "#D97A2E",
+      leaf: "#8C3F21",
+      leaf2: "#D9A34B",
+      shadow: "0 22px 44px rgba(182, 106, 44, 0.13)",
+      glow: "radial-gradient(circle at 0% 0%, rgba(217,122,46,0.20) 0, transparent 30%), radial-gradient(circle at 100% 0%, rgba(140,63,33,0.16) 0, transparent 32%)",
+    },
   },
   artesania: {
     key: "artesania",
@@ -1429,6 +1521,20 @@ const COMPANY_VIEWS = {
     companyContact: "Pedidos de barro y decoracion",
     primaryButton: "Ver artesania",
     secondaryButton: "Pedir por WhatsApp",
+    look: {
+      page: "linear-gradient(180deg, #F8F2E9 0%, #F2E8DB 46%, #E9DFD0 100%)",
+      heroTop: "#FFF8F2",
+      heroBottom: "#F0E4D6",
+      nav: "rgba(255, 252, 248, 0.92)",
+      surface: "#FFFDF8",
+      surface2: "#FFF7EF",
+      accent: "#7A4A2A",
+      accent2: "#C98A5B",
+      leaf: "#5C7A4E",
+      leaf2: "#A8B78D",
+      shadow: "0 22px 44px rgba(122, 74, 42, 0.13)",
+      glow: "radial-gradient(circle at 0% 0%, rgba(201,138,91,0.20) 0, transparent 30%), radial-gradient(circle at 100% 0%, rgba(92,122,78,0.16) 0, transparent 32%)",
+    },
   },
 };
 
@@ -2220,9 +2326,11 @@ function createOrderRecord({ supplier, items, customer, payment, extras }) {
   const subtotal = items.reduce((a, i) => a + i.pres.price * i.qty, 0);
   const delivery = items.reduce((a, i) => a + (i.zone?.cost || 0), 0);
   const total = subtotal + delivery;
+  const now = new Date().toISOString();
   return {
     id: `ORD-${Date.now()}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`,
-    createdAt: new Date().toISOString(),
+    createdAt: now,
+    updatedAt: now,
     supplierKey: supplier.key,
     supplierName: supplier.name,
     items,
@@ -2262,6 +2370,24 @@ function CertBadge({ cert }) {
     }}>{cert}</span>
   );
 }
+
+const getRecordTime = (record) => {
+  const value = record?.updatedAt || record?.updated_at || record?.createdAt || record?.created_at || 0;
+  const time = new Date(value).getTime();
+  return Number.isNaN(time) ? 0 : time;
+};
+
+const mergeRecordsById = (base = [], incoming = []) => {
+  const merged = new Map();
+  [...base, ...incoming].forEach((record) => {
+    if (!record?.id) return;
+    const current = merged.get(record.id);
+    if (!current || getRecordTime(record) >= getRecordTime(current)) {
+      merged.set(record.id, record);
+    }
+  });
+  return Array.from(merged.values()).sort((a, b) => getRecordTime(b) - getRecordTime(a));
+};
 
 function ProductAvatar({ product, size = 52, radius = 14, onClick, title, ariaLabel }) {
   const media = getProductMedia(product);
@@ -3165,6 +3291,7 @@ function ASWAControlHub({
     { id: "soporte", label: "Soporte", icon: "💬" },
     { id: "promos", label: "Promos", icon: "🎨" },
     { id: "panel", label: "Panel", icon: "🛠️" },
+    { id: "db", label: "Base de datos", icon: "☁️" },
     { id: "install", label: "Instalar", icon: "⬇️" },
   ];
 
@@ -3639,6 +3766,62 @@ function ASWAControlHub({
                 ))}
               </div>
             )}
+          </div>
+        </HubSection>
+      </div>
+    ),
+    db: (
+      <div style={{ display: "grid", gap: 12 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 10 }}>
+          <HubMetric label="Estado" value={data.supabaseEnabled ? "Conectado" : "Local"} hint={data.supabaseEnabled ? "Pedidos en nube y local" : "Aun no pegaste credenciales"} color={data.supabaseEnabled ? theme.greenLight : theme.goldLight} />
+          <HubMetric label="Tablas" value="3" hint="orders, profiles, reviews" />
+          <HubMetric label="URL" value={data.supabaseUrl ? "Lista" : "Vacía"} hint={data.supabaseUrl || "Sin configurar"} />
+          <HubMetric label="Modo" value={data.supabaseEnabled ? "Realtime" : "Offline"} hint="Se actualiza al recargar" />
+        </div>
+
+        <HubSection title="Conectar Supabase" subtitle="Pega tu URL y anon key. Al guardar, la app recarga y empieza a sincronizar pedidos.">
+          <div style={{ display: "grid", gap: 10 }}>
+            <input
+              value={data.supabaseDraft.url}
+              onChange={(e) => actions.setSupabaseDraft((prev) => ({ ...prev, url: e.target.value }))}
+              placeholder="https://tu-proyecto.supabase.co"
+              style={{ width: "100%", background: theme.bg, border: `1px solid ${theme.border}`, borderRadius: 10, color: theme.cream, padding: "11px 12px", fontSize: 13 }}
+            />
+            <textarea
+              value={data.supabaseDraft.key}
+              onChange={(e) => actions.setSupabaseDraft((prev) => ({ ...prev, key: e.target.value }))}
+              placeholder="anon public key"
+              rows={4}
+              style={{ width: "100%", background: theme.bg, border: `1px solid ${theme.border}`, borderRadius: 10, color: theme.cream, padding: "11px 12px", fontSize: 13, resize: "vertical", minHeight: 100, fontFamily: "monospace" }}
+            />
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
+              <button type="button" onClick={actions.saveSupabaseConnection} style={{ background: `linear-gradient(135deg, ${theme.green}, ${theme.greenLight})`, border: "none", borderRadius: 12, color: "#fff", padding: 12, cursor: "pointer", fontWeight: 900 }}>
+                Guardar y recargar
+              </button>
+              <button type="button" onClick={actions.clearSupabaseConnection} style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 12, color: theme.cream, padding: 12, cursor: "pointer", fontWeight: 800 }}>
+                Quitar conexión
+              </button>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
+              <button type="button" onClick={actions.copySupabaseChecklist} style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 12, color: theme.cream, padding: 12, cursor: "pointer", fontWeight: 800 }}>
+                Copiar checklist
+              </button>
+              <button type="button" onClick={actions.copySupabaseSql} style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 12, color: theme.cream, padding: 12, cursor: "pointer", fontWeight: 800 }}>
+                Copiar SQL
+              </button>
+              <button type="button" onClick={actions.copySupabaseEnv} style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 12, color: theme.cream, padding: 12, cursor: "pointer", fontWeight: 800 }}>
+                Copiar .env
+              </button>
+            </div>
+          </div>
+        </HubSection>
+
+        <HubSection title="Pasos rápidos" subtitle="Conecta la base sin salir de la tienda.">
+          <div style={{ display: "grid", gap: 8, color: theme.creamDim, fontSize: 12, lineHeight: 1.65 }}>
+            <div>1. Crea tu proyecto en Supabase.</div>
+            <div>2. Ejecuta el archivo <strong style={{ color: theme.goldLight }}>supabase/schema.sql</strong>.</div>
+            <div>3. Pega la URL y la anon key en este panel.</div>
+            <div>4. Guarda y deja que la app recargue sola.</div>
           </div>
         </HubSection>
       </div>
@@ -4524,10 +4707,20 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
   const media = getProductMedia(product);
   const mediaSrc = typeof media === "string" ? media : media?.src;
   const careLabel = product.careLabel || (getSupplierKey(product) === "tela" ? "Cuidados" : getSupplierKey(product) === "bocaditos" ? "Listo para comer" : getSupplierKey(product) === "artesania" ? "Hecho a mano" : "Cocina con calma");
+  const schoolQuantityEditable = Boolean(product.schoolOnly || minQty > 1);
 
   const pres = product.presentations[selPres];
   const subtotal = pres.price * qty;
   const total = subtotal + (zone?.cost || 0);
+  const clampQty = (value) => {
+    const parsed = Number.parseInt(String(value), 10);
+    if (Number.isNaN(parsed)) return minQty;
+    return Math.max(minQty, parsed);
+  };
+
+  useEffect(() => {
+    setQty((current) => Math.max(minQty, current || minQty));
+  }, [minQty]);
 
   return (
     <article
@@ -4647,7 +4840,7 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
               <button
                 key={i}
                 type="button"
-                onClick={() => { setSelPres(i); setQty(1); }}
+                onClick={() => { setSelPres(i); setQty(minQty); }}
                 style={{
                   background: selPres === i ? HOME.soft : "#FFF",
                   border: `1px solid ${selPres === i ? HOME.accent2 : HOME.border}`,
@@ -4683,14 +4876,44 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
         <div style={{ background: HOME.soft2, border: `1px solid ${HOME.border}`, borderRadius: 16, padding: 12, marginBottom: 14 }}>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 10, marginBottom: 8 }}>
             <span style={{ color: HOME.muted, fontSize: 11 }}>Cantidad</span>
-            <span style={{ color: HOME.accent, fontSize: 11, fontWeight: 800 }}>Tu pedido se siente como en casa</span>
+            <span style={{ color: HOME.accent, fontSize: 11, fontWeight: 800 }}>{schoolQuantityEditable ? "Escribe la cantidad que necesitas" : "Tu pedido se siente como en casa"}</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, marginBottom: 10 }}>
-            <div style={{ display: "flex", alignItems: "center", background: "#FFF", borderRadius: 999, border: `1px solid ${HOME.border}`, overflow: "hidden" }}>
-              <button onClick={() => setQty(Math.max(minQty, qty - 1))} type="button" style={{ background: "none", border: "none", color: HOME.text, width: 34, height: 34, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>−</button>
-              <span style={{ fontFamily: "monospace", color: HOME.text, minWidth: 30, textAlign: "center", fontSize: 14, fontWeight: 800 }}>{qty}</span>
-              <button onClick={() => setQty(qty + 1)} type="button" style={{ background: "none", border: "none", color: HOME.text, width: 34, height: 34, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>+</button>
-            </div>
+            {schoolQuantityEditable ? (
+              <div style={{ display: "flex", alignItems: "center", background: "#FFF", borderRadius: 999, border: `1px solid ${HOME.border}`, overflow: "hidden" }}>
+                <button onClick={() => setQty(Math.max(minQty, qty - 1))} type="button" style={{ background: "none", border: "none", color: HOME.text, width: 34, height: 34, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>−</button>
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  min={minQty}
+                  value={qty}
+                  onFocus={(e) => e.currentTarget.select()}
+                  onChange={(e) => setQty(clampQty(e.target.value))}
+                  style={{
+                    appearance: "textfield",
+                    WebkitAppearance: "none",
+                    MozAppearance: "textfield",
+                    border: "none",
+                    background: "transparent",
+                    color: HOME.text,
+                    width: 72,
+                    height: 34,
+                    textAlign: "center",
+                    fontSize: 15,
+                    fontWeight: 900,
+                    fontFamily: "monospace",
+                    outline: "none",
+                  }}
+                />
+                <button onClick={() => setQty(qty + 1)} type="button" style={{ background: "none", border: "none", color: HOME.text, width: 34, height: 34, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>+</button>
+              </div>
+            ) : (
+              <div style={{ display: "flex", alignItems: "center", background: "#FFF", borderRadius: 999, border: `1px solid ${HOME.border}`, overflow: "hidden" }}>
+                <button onClick={() => setQty(Math.max(minQty, qty - 1))} type="button" style={{ background: "none", border: "none", color: HOME.text, width: 34, height: 34, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>−</button>
+                <span style={{ fontFamily: "monospace", color: HOME.text, minWidth: 30, textAlign: "center", fontSize: 14, fontWeight: 800, padding: "0 6px" }}>{qty}</span>
+                <button onClick={() => setQty(qty + 1)} type="button" style={{ background: "none", border: "none", color: HOME.text, width: 34, height: 34, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>+</button>
+              </div>
+            )}
             <div style={{ textAlign: "right" }}>
               <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Total</div>
               <div style={{ color: HOME.text, fontFamily: "monospace", fontSize: 18, fontWeight: 900 }}>S/ {total.toFixed(2)}</div>
@@ -5976,8 +6199,11 @@ export default function VNDRX() {
   const [canInstall, setCanInstall] = useState(false);
   const [gpsState, setGpsState] = useState(null);
   const [reviewDraft, setReviewDraft] = useState({ stars: 0, note: "", tag: "" });
+  const [supabaseDraft, setSupabaseDraft] = useState(() => readSupabaseRuntimeConfig());
   const installPromptRef = useRef(null);
   const toastTimerRef = useRef(null);
+  const ordersRef = useRef(orders);
+  const reviewsRef = useRef(reviews);
 
   useEffect(() => {
     try {
@@ -5986,6 +6212,14 @@ export default function VNDRX() {
       // Ignored if storage is unavailable.
     }
   }, [cart]);
+
+  useEffect(() => {
+    ordersRef.current = orders;
+  }, [orders]);
+
+  useEffect(() => {
+    reviewsRef.current = reviews;
+  }, [reviews]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -6032,12 +6266,122 @@ export default function VNDRX() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!SUPABASE_ENABLED) return;
+    let cancelled = false;
+
+    const hydrateSupabaseState = async () => {
+      try {
+        const [remoteOrders, remoteReviews] = await Promise.all([
+          fetchOrdersFromSupabase(),
+          fetchReviewsFromSupabase(),
+        ]);
+        if (cancelled) return;
+
+        const mergedOrders = mergeRecordsById(ordersRef.current, remoteOrders).slice(0, 80);
+        const mergedReviews = mergeRecordsById(reviewsRef.current, remoteReviews).slice(0, 40);
+        setOrders(mergedOrders);
+        setReviews(mergedReviews);
+        syncOrdersToSupabase(mergedOrders).catch((error) => {
+          console.warn("Supabase order hydrate sync failed", error);
+        });
+        syncReviewsToSupabase(mergedReviews).catch((error) => {
+          console.warn("Supabase review hydrate sync failed", error);
+        });
+      } catch (error) {
+        console.warn("Supabase hydrate failed", error);
+      }
+    };
+
+    hydrateSupabaseState();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!SUPABASE_ENABLED || !supabase) return;
+    let cancelled = false;
+    let refreshTimer = null;
+
+    const refreshRemoteState = async () => {
+      if (refreshTimer) {
+        window.clearTimeout(refreshTimer);
+      }
+      refreshTimer = window.setTimeout(async () => {
+        try {
+          const [remoteOrders, remoteReviews] = await Promise.all([
+            fetchOrdersFromSupabase(),
+            fetchReviewsFromSupabase(),
+          ]);
+          if (cancelled) return;
+          setOrders((current) => mergeRecordsById(current, remoteOrders).slice(0, 80));
+          setReviews((current) => mergeRecordsById(current, remoteReviews).slice(0, 40));
+        } catch (error) {
+          console.warn("Supabase realtime refresh failed", error);
+        }
+      }, 180);
+    };
+
+    const channel = supabase
+      .channel("vndrx-live-sync")
+      .on("postgres_changes", { event: "*", schema: "public", table: "vndrx_orders" }, refreshRemoteState)
+      .on("postgres_changes", { event: "*", schema: "public", table: "vndrx_reviews" }, refreshRemoteState)
+      .on("postgres_changes", { event: "*", schema: "public", table: "vndrx_profiles" }, refreshRemoteState)
+      .subscribe();
+
+    return () => {
+      cancelled = true;
+      if (refreshTimer) {
+        window.clearTimeout(refreshTimer);
+      }
+      supabase.removeChannel(channel).catch(() => {});
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!SUPABASE_ENABLED || !profile.referralCode) return;
+    syncProfileToSupabase(profile).catch((error) => {
+      console.warn("Supabase profile sync failed", error);
+    });
+  }, [profile]);
+
   const showToast = (message, type = "info") => {
     setToast({ message, type });
     if (toastTimerRef.current) {
       window.clearTimeout(toastTimerRef.current);
     }
     toastTimerRef.current = window.setTimeout(() => setToast(null), 2800);
+  };
+
+  const saveSupabaseConnection = () => {
+    const next = {
+      url: supabaseDraft.url.trim(),
+      key: supabaseDraft.key.trim(),
+    };
+    if (!next.url || !next.key) {
+      showToast("Pega la URL y la anon key de Supabase");
+      return;
+    }
+    saveSupabaseRuntimeConfig(next);
+    showToast("Conexion Supabase guardada. Recargando...", "success");
+    window.setTimeout(() => window.location.reload(), 500);
+  };
+
+  const clearSupabaseConnection = () => {
+    clearSupabaseRuntimeConfig();
+    setSupabaseDraft({ url: "", key: "" });
+    showToast("Conexion Supabase eliminada. Recargando...");
+    window.setTimeout(() => window.location.reload(), 400);
+  };
+
+  const copySupabaseTemplate = async (text, label) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast(`${label} copiado`, "success");
+    } catch {
+      showToast(`No se pudo copiar ${label.toLowerCase()}`);
+    }
   };
 
   const selectCompany = (companyKey) => {
@@ -6111,11 +6455,28 @@ export default function VNDRX() {
       referralCode: prev.referralCode || makeReferralCode(),
       referredBy: order.customer?.referredBy || prev.referredBy,
     }));
+    syncOrdersToSupabase([order]).catch((error) => {
+      console.warn("Supabase order sync failed", error);
+    });
     showToast(`Pedido guardado. +${order.bonusEarned} bonos`, "success");
   };
 
   const updateOrderStatus = (orderId, status) => {
-    setOrders((prev) => prev.map((order) => (order.id === orderId ? { ...order, status } : order)));
+    const updatedAt = new Date().toISOString();
+    const changedOrder = orders.find((order) => order.id === orderId);
+    setOrders((prev) => {
+      const next = prev.map((order) => (
+        order.id === orderId
+          ? { ...order, status, updatedAt }
+          : order
+      ));
+      return next;
+    });
+    if (changedOrder) {
+      syncOrdersToSupabase([{ ...changedOrder, status, updatedAt }]).catch((error) => {
+        console.warn("Supabase order status sync failed", error);
+      });
+    }
     showToast(`Estado actualizado: ${status}`);
   };
 
@@ -6123,6 +6484,9 @@ export default function VNDRX() {
 
   const removeOrder = (orderId) => {
     setOrders((prev) => prev.filter((order) => order.id !== orderId));
+    deleteOrderFromSupabase(orderId).catch((error) => {
+      console.warn("Supabase order delete failed", error);
+    });
     showToast("Pedido eliminado");
   };
 
@@ -6171,11 +6535,15 @@ export default function VNDRX() {
     const entry = {
       id: `REV-${Date.now()}`,
       createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       stars: reviewDraft.stars,
       note: reviewDraft.note.trim(),
       tag: reviewDraft.tag.trim(),
     };
     setReviews((prev) => [entry, ...prev].slice(0, 20));
+    syncReviewsToSupabase([entry]).catch((error) => {
+      console.warn("Supabase review sync failed", error);
+    });
     setReviewDraft({ stars: 0, note: "", tag: "" });
     showToast("Gracias por tu calificacion", "success");
   };
@@ -6398,6 +6766,20 @@ export default function VNDRX() {
   };
 
   const selectedCompanyView = selectedCompany ? COMPANY_VIEWS[selectedCompany] : null;
+  const scene = selectedCompanyView?.look || {
+    page: HOME.page,
+    heroTop: "#FFF9F2",
+    heroBottom: HOME.page,
+    nav: "rgba(255, 253, 248, 0.9)",
+    surface: HOME.surface,
+    surface2: HOME.soft2,
+    accent: HOME.accent,
+    accent2: HOME.accent2,
+    leaf: HOME.leaf,
+    leaf2: HOME.leaf2,
+    shadow: HOME.shadow,
+    glow: "none",
+  };
   const companyFilters = selectedCompany ? COMPANY_FILTERS[selectedCompany] || [] : [];
   const isAswa = selectedCompany === "aswa";
   const isJora = selectedCompany === "jora";
@@ -6428,6 +6810,9 @@ export default function VNDRX() {
     topSupplierName,
     gpsState,
     canInstall,
+    supabaseEnabled: SUPABASE_ENABLED,
+    supabaseUrl: SUPABASE_RUNTIME_CONFIG.url || "",
+    supabaseDraft,
     promoAssets: isAswa ? ASWA_PROMO_LIBRARY : isJora ? JORA_PROMO_LIBRARY : [],
   };
 
@@ -6451,6 +6836,12 @@ export default function VNDRX() {
     removeOrder,
     setReviewDraft,
     saveReview,
+    setSupabaseDraft,
+    saveSupabaseConnection,
+    clearSupabaseConnection,
+    copySupabaseSql: () => copySupabaseTemplate(SUPABASE_SCHEMA_TEXT, "SQL de Supabase"),
+    copySupabaseEnv: () => copySupabaseTemplate(SUPABASE_ENV_TEXT, "Plantilla .env"),
+    copySupabaseChecklist: () => copySupabaseTemplate(SUPABASE_CHECKLIST_TEXT, "Checklist"),
   };
 
   const toastBubble = toast ? (
@@ -6477,48 +6868,51 @@ export default function VNDRX() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: HOME.page, fontFamily: "'Trebuchet MS', 'Segoe UI', sans-serif", color: HOME.text }}>
-      <style>{`* { box-sizing: border-box; } ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: ${HOME.page}; } ::-webkit-scrollbar-thumb { background: ${HOME.border}; border-radius: 3px; } input { outline: none; } input::placeholder { color: ${HOME.muted}; } input:focus { border-color: ${HOME.accent} !important; }`}</style>
+    <div style={{ minHeight: "100vh", background: scene.glow === "none" ? scene.page : `${scene.glow}, ${scene.page}`, fontFamily: "'Trebuchet MS', 'Segoe UI', sans-serif", color: scene.text, position: "relative", isolation: "isolate", overflow: "hidden" }}>
+      <style>{`* { box-sizing: border-box; } ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: ${scene.page}; } ::-webkit-scrollbar-thumb { background: ${scene.border}; border-radius: 3px; } input { outline: none; } input::placeholder { color: ${scene.muted}; } input:focus { border-color: ${scene.accent} !important; }`}</style>
 
       {/* NAV */}
-      <nav style={{ background: "rgba(255, 252, 248, 0.9)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${HOME.border}`, padding: "0 20px", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 8px 20px rgba(76, 56, 23, 0.06)" }}>
+      <nav style={{ background: scene.nav, backdropFilter: "blur(16px)", borderBottom: `1px solid ${scene.border}`, padding: "0 20px", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 10px 26px rgba(76, 56, 23, 0.08)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.accent2})`, borderRadius: 16, width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, boxShadow: "0 10px 20px rgba(71,101,75,0.18)" }}>{isAswa ? "🌽" : isJora ? "🍯" : isTela ? "🧵" : isBocaditos ? "🍪" : isArtesania ? "🏺" : "🌾"}</div>
+          <div style={{ background: `linear-gradient(135deg, ${scene.leaf}, ${scene.accent2})`, borderRadius: 16, width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, boxShadow: "0 10px 20px rgba(71,101,75,0.18)" }}>{isAswa ? "🌽" : isJora ? "🍯" : isTela ? "🧵" : isBocaditos ? "🍪" : isArtesania ? "🏺" : "🌾"}</div>
           <div>
-            <div style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 900, color: HOME.text, lineHeight: 1 }}>{selectedCompanyView?.shortName || "VNDRX"}</div>
-            <div style={{ fontSize: 10, color: HOME.muted, letterSpacing: 1.8, fontFamily: "monospace", textTransform: "uppercase" }}>{selectedCompanyView?.tagline || "pedido facil y cercano"}</div>
+            <div style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 900, color: scene.text, lineHeight: 1 }}>{selectedCompanyView?.shortName || "VNDRX"}</div>
+            <div style={{ fontSize: 10, color: scene.muted, letterSpacing: 1.8, fontFamily: "monospace", textTransform: "uppercase" }}>{selectedCompanyView?.tagline || "pedido facil y cercano"}</div>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 6, marginTop: 6, background: SUPABASE_ENABLED ? "#EAF7ED" : scene.surface2, border: `1px solid ${SUPABASE_ENABLED ? "#BFE7C6" : scene.border}`, color: SUPABASE_ENABLED ? scene.leaf : scene.muted, borderRadius: 999, padding: "4px 8px", fontSize: 9, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>
+              {SUPABASE_ENABLED ? "Supabase activo" : "Modo local"}
+            </div>
           </div>
         </div>
         <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder={`Buscar en ${selectedCompanyView?.shortName || "la tienda"}...`} style={{ background: "#FFF", border: `1px solid ${HOME.border}`, borderRadius: 999, color: HOME.text, padding: "10px 14px", fontSize: 13, width: 240, boxShadow: "0 8px 16px rgba(76,56,23,0.05)" }} />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder={`Buscar en ${selectedCompanyView?.shortName || "la tienda"}...`} style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 999, color: scene.text, padding: "10px 14px", fontSize: 13, width: 240, boxShadow: "0 10px 20px rgba(76,56,23,0.06)" }} />
           {selectedCompanyView && (
-            <button onClick={changeCompany} style={{ background: "#FFF", border: `1px solid ${HOME.border}`, borderRadius: 999, color: HOME.text, padding: "10px 14px", cursor: "pointer", fontSize: 13, fontWeight: 800, boxShadow: "0 8px 16px rgba(76,56,23,0.05)" }}>
+            <button onClick={changeCompany} style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 999, color: scene.text, padding: "10px 14px", cursor: "pointer", fontSize: 13, fontWeight: 800, boxShadow: "0 10px 20px rgba(76,56,23,0.06)" }}>
               Cambiar empresa
             </button>
           )}
-          <button onClick={() => openCart("cart")} style={{ background: cartCount > 0 ? `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})` : "#FFF", border: `1px solid ${cartCount > 0 ? HOME.leaf : HOME.border}`, borderRadius: 999, color: cartCount > 0 ? "#fff" : HOME.text, padding: "10px 15px", cursor: "pointer", fontSize: 13, fontWeight: 800, boxShadow: cartCount > 0 ? "0 10px 18px rgba(71,101,75,0.16)" : "0 8px 16px rgba(76,56,23,0.05)" }}>
+          <button onClick={() => openCart("cart")} style={{ background: cartCount > 0 ? `linear-gradient(135deg, ${scene.leaf}, ${scene.leaf2})` : scene.surface, border: `1px solid ${cartCount > 0 ? scene.leaf : scene.border}`, borderRadius: 999, color: cartCount > 0 ? "#fff" : scene.text, padding: "10px 15px", cursor: "pointer", fontSize: 13, fontWeight: 800, boxShadow: cartCount > 0 ? "0 12px 22px rgba(71,101,75,0.16)" : "0 10px 20px rgba(76,56,23,0.06)" }}>
             🛒 {cartCount > 0 ? `${cartCount} items` : "Carrito"}
           </button>
         </div>
       </nav>
 
       {/* HERO / WELCOME */}
-      <div style={{ background: `linear-gradient(180deg, #FFF9F2 0%, ${HOME.page} 100%)`, borderBottom: `1px solid ${HOME.border}`, padding: "34px 20px 24px" }}>
+      <div style={{ background: `linear-gradient(180deg, ${scene.heroTop} 0%, ${scene.heroBottom} 100%)`, borderBottom: `1px solid ${scene.border}`, padding: "34px 20px 24px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.15fr) minmax(0, 0.85fr)", gap: 18, alignItems: "stretch" }}>
-            <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 28, padding: 24, boxShadow: HOME.shadow }}>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 999, padding: "6px 14px", marginBottom: 14, fontSize: 11, color: HOME.accent, fontFamily: "monospace", letterSpacing: 1, textTransform: "uppercase" }}>
+            <div style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 28, padding: 24, boxShadow: scene.shadow }}>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: scene.surface2, border: `1px solid ${scene.border}`, borderRadius: 999, padding: "6px 14px", marginBottom: 14, fontSize: 11, color: scene.accent, fontFamily: "monospace", letterSpacing: 1, textTransform: "uppercase" }}>
                 {selectedCompanyView?.heroNote || "Te atendemos como en casa"}
               </div>
-              <h1 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(30px,4vw,48px)", fontWeight: 900, lineHeight: 1.05, margin: "0 0 10px", color: HOME.text }}>
+              <h1 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(30px,4vw,48px)", fontWeight: 900, lineHeight: 1.05, margin: "0 0 10px", color: scene.text }}>
                 {selectedCompanyView?.heroTitle || "Pide tranquilo, recibe en casa"}
               </h1>
-              <p style={{ color: HOME.muted, fontSize: 15, lineHeight: 1.75, margin: "0 0 18px", maxWidth: 600 }}>
+              <p style={{ color: scene.muted, fontSize: 15, lineHeight: 1.75, margin: "0 0 18px", maxWidth: 600 }}>
                 {selectedCompanyView?.heroText || "En VNDRX te ayudamos a elegir, pagar y pedir sin enredos. Todo esta pensado para que tu cliente se sienta acompañado, como cuando alguien de confianza le atiende en persona."}
               </p>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 18 }}>
                 {(selectedCompanyView?.heroChips || ["pedido facil", "foto real", "whatsapp directo", "pago claro"]).map((item) => (
-                  <span key={item} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 999, padding: "7px 11px", fontSize: 11, color: HOME.text, fontWeight: 700 }}>
+                  <span key={item} style={{ background: scene.surface2, border: `1px solid ${scene.border}`, borderRadius: 999, padding: "7px 11px", fontSize: 11, color: scene.text, fontWeight: 700 }}>
                     {item}
                   </span>
                 ))}
@@ -6527,7 +6921,7 @@ export default function VNDRX() {
                 <button
                   type="button"
                   onClick={() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" })}
-                  style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})`, border: "none", color: "#fff", borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.18)" }}
+                  style={{ background: `linear-gradient(135deg, ${scene.leaf}, ${scene.leaf2})`, border: "none", color: "#fff", borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.18)" }}
                 >
                   Ver catálogo
                 </button>
@@ -6540,14 +6934,14 @@ export default function VNDRX() {
                         "ASWA La Rica Chicha",
                         "Mas productos dentro de VNDRX, sin salir de la app",
                       )}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Mas productos ASWA
                     </button>
                     <button
                       type="button"
                       onClick={() => window.open(ASWA_APP_URL, "_blank", "noopener,noreferrer")}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Abrir en pestaña
                     </button>
@@ -6557,14 +6951,14 @@ export default function VNDRX() {
                     <button
                       type="button"
                       onClick={() => supportWhatsApp("Hola, quiero pedir chicha de jora.")}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Pedir Jora
                     </button>
                     <button
                       type="button"
                       onClick={() => supportWhatsApp("Hola, quiero saber como usar la chicha de jora para sazonar comida y beberla con miel de abeja.")}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Consultar uso
                     </button>
@@ -6574,14 +6968,14 @@ export default function VNDRX() {
                     <button
                       type="button"
                       onClick={() => supportWhatsApp("Hola, quiero consultar productos de la tienda Tela.")}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Pedir Tela
                     </button>
                     <button
                       type="button"
                       onClick={() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" })}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Ver hogar
                     </button>
@@ -6591,14 +6985,14 @@ export default function VNDRX() {
                     <button
                       type="button"
                       onClick={() => supportWhatsApp("Hola, quiero pedir bocaditos regionales artesanales.")}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Pedir Bocaditos
                     </button>
                     <button
                       type="button"
                       onClick={() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" })}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Ver bocaditos
                     </button>
@@ -6607,7 +7001,7 @@ export default function VNDRX() {
                   <button
                     type="button"
                     onClick={() => supportWhatsApp(`Hola, quiero consultar precios de ${selectedCompanyView?.shortName || "la tienda"}.`)}
-                    style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                    style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                   >
                     Contactar ventas
                   </button>
@@ -6616,39 +7010,39 @@ export default function VNDRX() {
             </div>
 
             <div style={{ display: "grid", gap: 14 }}>
-              <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 24, padding: 18, boxShadow: HOME.shadow }}>
-                <div style={{ color: HOME.accent, fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase", marginBottom: 10 }}>Cómo pedir</div>
+              <div style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 24, padding: 18, boxShadow: scene.shadow }}>
+                <div style={{ color: scene.accent, fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase", marginBottom: 10 }}>Cómo pedir</div>
                 <div style={{ display: "grid", gap: 10 }}>
                   {[
                     "1. Elige tu producto favorito",
                     "2. Toca Agregar o Pedir ahora",
                     "3. Confirma por WhatsApp",
                   ].map((step) => (
-                    <div key={step} style={{ background: HOME.soft2, border: `1px solid ${HOME.border}`, borderRadius: 16, padding: "10px 12px", color: HOME.text, fontSize: 13, fontWeight: 700, lineHeight: 1.45 }}>
+                    <div key={step} style={{ background: scene.surface2, border: `1px solid ${scene.border}`, borderRadius: 16, padding: "10px 12px", color: scene.text, fontSize: 13, fontWeight: 700, lineHeight: 1.45 }}>
                       {step}
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div style={{ background: `linear-gradient(135deg, #FFF8EF, #F6EEDD)`, border: `1px solid ${HOME.border}`, borderRadius: 24, padding: 18, boxShadow: HOME.shadow }}>
-                <div style={{ color: HOME.muted, fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>Atencion directa</div>
-                <div style={{ color: HOME.text, fontSize: 18, fontWeight: 900, fontFamily: "Georgia, serif", marginBottom: 10 }}>{selectedCompanyView?.infoTitle || "Tu pedido entra al WhatsApp central"}</div>
+              <div style={{ background: `linear-gradient(135deg, #FFF8EF, #F6EEDD)`, border: `1px solid ${scene.border}`, borderRadius: 24, padding: 18, boxShadow: scene.shadow }}>
+                <div style={{ color: scene.muted, fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>Atencion directa</div>
+                <div style={{ color: scene.text, fontSize: 18, fontWeight: 900, fontFamily: "Georgia, serif", marginBottom: 10 }}>{selectedCompanyView?.infoTitle || "Tu pedido entra al WhatsApp central"}</div>
                 <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }}>
                   <div>
-                    <div style={{ color: HOME.muted, fontSize: 11, textTransform: "uppercase", fontWeight: 800, letterSpacing: 1 }}>Número</div>
-                    <div style={{ color: HOME.leaf, fontSize: 18, fontWeight: 900 }}>{ORDER_PHONE_DISPLAY}</div>
+                    <div style={{ color: scene.muted, fontSize: 11, textTransform: "uppercase", fontWeight: 800, letterSpacing: 1 }}>Número</div>
+                    <div style={{ color: scene.leaf, fontSize: 18, fontWeight: 900 }}>{ORDER_PHONE_DISPLAY}</div>
                   </div>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                     {isAswa ? (
                       <>
-                        <span style={{ background: "#EAF5EA", color: HOME.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>ASWA</span>
-                        <span style={{ background: "#F9EEDB", color: HOME.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Escolar gratis</span>
+                        <span style={{ background: "#EAF5EA", color: scene.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>ASWA</span>
+                        <span style={{ background: "#F9EEDB", color: scene.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Escolar gratis</span>
                       </>
                     ) : isJora ? (
                       <>
-                        <span style={{ background: "#F9EEDB", color: HOME.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Jora</span>
-                        <span style={{ background: "#EAF5EA", color: HOME.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Sazonador y bebida</span>
+                        <span style={{ background: "#F9EEDB", color: scene.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Jora</span>
+                        <span style={{ background: "#EAF5EA", color: scene.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Sazonador y bebida</span>
                       </>
                     ) : isTela ? (
                       <>
@@ -6667,8 +7061,8 @@ export default function VNDRX() {
                       </>
                     ) : (
                       <>
-                        <span style={{ background: "#F9EEDB", color: HOME.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Rey Leon</span>
-                        <span style={{ background: "#EAF5EA", color: HOME.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Delivery por zona</span>
+                        <span style={{ background: "#F9EEDB", color: scene.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Rey Leon</span>
+                        <span style={{ background: "#EAF5EA", color: scene.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Delivery por zona</span>
                       </>
                     )}
                   </div>
@@ -6678,17 +7072,17 @@ export default function VNDRX() {
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: 12, marginTop: 14 }}>
-            <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14, boxShadow: HOME.shadow }}>
-              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Atención amable</div>
-              <div style={{ color: HOME.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Te guiamos paso a paso para que comprar se sienta fácil y cercano.</div>
+            <div style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 18, padding: 14, boxShadow: scene.shadow }}>
+              <div style={{ color: scene.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Atención amable</div>
+              <div style={{ color: scene.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Te guiamos paso a paso para que comprar se sienta fácil y cercano.</div>
             </div>
-            <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14, boxShadow: HOME.shadow }}>
-              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Pedido rápido</div>
-              <div style={{ color: HOME.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Cada producto tiene un botón para agregarlo o abrir el pedido al instante.</div>
+            <div style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 18, padding: 14, boxShadow: scene.shadow }}>
+              <div style={{ color: scene.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Pedido rápido</div>
+              <div style={{ color: scene.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Cada producto tiene un botón para agregarlo o abrir el pedido al instante.</div>
             </div>
-            <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14, boxShadow: HOME.shadow }}>
-              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Confianza</div>
-              <div style={{ color: HOME.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Fotos reales, precios visibles y mensaje listo para WhatsApp.</div>
+            <div style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 18, padding: 14, boxShadow: scene.shadow }}>
+              <div style={{ color: scene.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Confianza</div>
+              <div style={{ color: scene.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Fotos reales, precios visibles y mensaje listo para WhatsApp.</div>
             </div>
           </div>
         </div>
@@ -6715,17 +7109,17 @@ export default function VNDRX() {
         <div style={{
           background: "rgba(255,255,255,0.82)",
           backdropFilter: "blur(8px)",
-          border: `1px solid ${HOME.border}`,
+          border: `1px solid ${scene.border}`,
           borderRadius: 22,
           padding: 16,
-          boxShadow: HOME.shadow,
+          boxShadow: scene.shadow,
         }}>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
             <div>
-              <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>
+              <div style={{ color: scene.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>
                 {isAswa ? "Centro ASWA" : isJora ? "Chicha de Jora" : isTela ? "Tienda Tela" : isBocaditos ? "Bocaditos Regionales" : isArtesania ? "Artesania Lamista" : "Molino Rey Leon"}
               </div>
-              <div style={{ color: HOME.text, fontSize: 16, fontWeight: 900, marginTop: 4 }}>
+              <div style={{ color: scene.text, fontSize: 16, fontWeight: 900, marginTop: 4 }}>
                 {isAswa
                   ? "Tutorial, referidos, bonos, GPS, historial y soporte en un solo lugar"
                   : isJora
@@ -6738,7 +7132,7 @@ export default function VNDRX() {
                           ? "Tinajas, platos, pate, olla arrocera, tiestos y floreros artesanales en una tienda separada"
                     : "Arroz, derivados y precios directos del molino"}
               </div>
-              <div style={{ color: HOME.muted, fontSize: 12, lineHeight: 1.5, marginTop: 4 }}>
+              <div style={{ color: scene.muted, fontSize: 12, lineHeight: 1.5, marginTop: 4 }}>
                 {isAswa
                   ? "Lo mejor de ASWA sumado a tu tienda actual para vender mas rapido."
                   : isJora
@@ -6753,27 +7147,27 @@ export default function VNDRX() {
               </div>
             </div>
             {isAswa ? (
-              <button type="button" onClick={() => { setHubTab("tutorial"); setHubOpen(true); }} style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})`, border: "none", color: "#fff", borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.16)" }}>
+              <button type="button" onClick={() => { setHubTab("tutorial"); setHubOpen(true); }} style={{ background: `linear-gradient(135deg, ${scene.leaf}, ${scene.leaf2})`, border: "none", color: "#fff", borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.16)" }}>
                 Abrir hub
               </button>
             ) : isJora ? (
-              <button type="button" onClick={() => supportWhatsApp("Hola, quiero consultar la chicha de jora.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+              <button type="button" onClick={() => supportWhatsApp("Hola, quiero consultar la chicha de jora.")} style={{ background: scene.surface2, border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
                 Consultar Jora
               </button>
             ) : isTela ? (
-              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir productos de la tienda Tela.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir productos de la tienda Tela.")} style={{ background: scene.surface2, border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
                 Pedir Tela
               </button>
             ) : isBocaditos ? (
-              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir bocaditos regionales artesanales.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir bocaditos regionales artesanales.")} style={{ background: scene.surface2, border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
                 Pedir Bocaditos
               </button>
             ) : isArtesania ? (
-              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir artesania lamista.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir artesania lamista.")} style={{ background: scene.surface2, border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
                 Pedir Artesania
               </button>
             ) : (
-              <div style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 999, padding: "10px 14px", color: HOME.text, fontSize: 12, fontWeight: 800 }}>
+              <div style={{ background: scene.surface2, border: `1px solid ${scene.border}`, borderRadius: 999, padding: "10px 14px", color: scene.text, fontSize: 12, fontWeight: 800 }}>
                 {selectedCompanyView?.companyPhone || ORDER_PHONE_DISPLAY}
               </div>
             )}
@@ -6798,10 +7192,10 @@ export default function VNDRX() {
                   onClick={() => { setHubTab(item.id); setHubOpen(true); }}
                   style={{
                     background: "#FFF",
-                    border: `1px solid ${HOME.border}`,
+                    border: `1px solid ${scene.border}`,
                     borderRadius: 14,
                     padding: "11px 10px",
-                    color: HOME.text,
+                    color: scene.text,
                     cursor: "pointer",
                     textAlign: "left",
                     boxShadow: "0 8px 18px rgba(76,56,23,0.04)",
@@ -6822,8 +7216,8 @@ export default function VNDRX() {
                 )}
                 style={{
                   background: "linear-gradient(135deg, #F9EEDB, #FFF8EF)",
-                  border: `1px solid ${HOME.border}`,
-                  color: HOME.text,
+                  border: `1px solid ${scene.border}`,
+                  color: scene.text,
                   borderRadius: 999,
                   padding: "11px 16px",
                   cursor: "pointer",
@@ -6845,9 +7239,9 @@ export default function VNDRX() {
                 { title: "Bebible", desc: "Endulza al gusto", color: "#F0C040" },
                 { title: "Miel recomendada", desc: "Sabor mas suave y natural", color: "#8A5A1C" },
               ].map((item) => (
-                <div key={item.title} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 14, boxShadow: HOME.shadow }}>
+                <div key={item.title} style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 14, padding: 14, boxShadow: scene.shadow }}>
                   <div style={{ display: "inline-flex", background: `${item.color}20`, color: item.color, borderRadius: 999, padding: "5px 10px", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{item.title}</div>
-                  <div style={{ color: HOME.text, fontSize: 13, fontWeight: 700, lineHeight: 1.5, marginTop: 8 }}>{item.desc}</div>
+                  <div style={{ color: scene.text, fontSize: 13, fontWeight: 700, lineHeight: 1.5, marginTop: 8 }}>{item.desc}</div>
                 </div>
               ))}
             </div>
@@ -6880,9 +7274,9 @@ export default function VNDRX() {
                 { title: "Moda regional", desc: "Panueloletas y vestidos", color: "#D58AA7" },
                 { title: "Hogar", desc: "Sabanas y cubrecamas", color: "#A9CFB1" },
               ].map((item) => (
-                <div key={item.title} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 14, boxShadow: HOME.shadow }} >
+                <div key={item.title} style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 14, padding: 14, boxShadow: scene.shadow }} >
                   <div style={{ display: "inline-flex", background: `${item.color}20`, color: item.color, borderRadius: 999, padding: "5px 10px", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{item.title}</div>
-                  <div style={{ color: HOME.text, fontSize: 13, fontWeight: 700, lineHeight: 1.5, marginTop: 8 }}>{item.desc}</div>
+                  <div style={{ color: scene.text, fontSize: 13, fontWeight: 700, lineHeight: 1.5, marginTop: 8 }}>{item.desc}</div>
                 </div>
               ))}
             </div>
@@ -6915,9 +7309,9 @@ export default function VNDRX() {
                 { title: "Galletas", desc: "Rosquitas y turcas", color: "#8C3F21" },
                 { title: "Dulces", desc: "Turrón, cocada y suspiros", color: "#D97A2E" },
               ].map((item) => (
-                <div key={item.title} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 14, boxShadow: HOME.shadow }} >
+                <div key={item.title} style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 14, padding: 14, boxShadow: scene.shadow }} >
                   <div style={{ display: "inline-flex", background: `${item.color}20`, color: item.color, borderRadius: 999, padding: "5px 10px", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{item.title}</div>
-                  <div style={{ color: HOME.text, fontSize: 13, fontWeight: 700, lineHeight: 1.5, marginTop: 8 }}>{item.desc}</div>
+                  <div style={{ color: scene.text, fontSize: 13, fontWeight: 700, lineHeight: 1.5, marginTop: 8 }}>{item.desc}</div>
                 </div>
               ))}
             </div>
@@ -6946,7 +7340,7 @@ export default function VNDRX() {
       </div>
 
       {/* LINE FILTERS */}
-      <div style={{ background: "rgba(255,255,255,0.74)", borderBottom: `1px solid ${HOME.border}`, padding: "12px 20px", display: "flex", gap: 8, overflowX: "auto", backdropFilter: "blur(8px)" }}>
+      <div style={{ background: scene.nav, borderBottom: `1px solid ${scene.border}`, padding: "12px 20px", display: "flex", gap: 8, overflowX: "auto", backdropFilter: "blur(16px)", boxShadow: "0 8px 20px rgba(76,56,23,0.04)" }}>
         {companyFilters.map(({ id, label }) => {
           const lc = id === "all"
             ? null
@@ -6966,15 +7360,15 @@ export default function VNDRX() {
               bocaditos_galleta: LINE_COLORS.bocaditos_galleta,
               bocaditos_dulce: LINE_COLORS.bocaditos_dulce,
               bocaditos_chifle: LINE_COLORS.bocaditos_chifle,
-              bidon: { badge: HOME.gold, bg: "#FDF0D8", label: "BIDON" },
-              escolar: { badge: HOME.leaf, bg: "#EAF5EA", label: "ESCOLAR" },
-            }[id] || { badge: HOME.accent2, bg: HOME.soft, label });
+              bidon: { badge: scene.accent2, bg: "#FDF0D8", label: "BIDON" },
+              escolar: { badge: scene.leaf, bg: "#EAF5EA", label: "ESCOLAR" },
+            }[id] || { badge: scene.accent2, bg: scene.surface2, label });
           const active = activeLine === id;
           return (
             <button key={id} onClick={() => setActiveLine(id)} style={{
-              background: active ? (lc ? `${lc.badge}18` : HOME.soft) : "#FFF",
-              border: `1px solid ${active ? (lc ? lc.badge : HOME.accent2) : HOME.border}`,
-              borderRadius: 999, color: active ? HOME.text : HOME.muted,
+              background: active ? (lc ? `${lc.badge}18` : scene.surface2) : "#FFF",
+              border: `1px solid ${active ? (lc ? lc.badge : scene.accent2) : scene.border}`,
+              borderRadius: 999, color: active ? scene.text : scene.muted,
               padding: "8px 16px", cursor: "pointer", fontSize: 12,
               fontWeight: active ? 800 : 700, whiteSpace: "nowrap", transition: "all 0.2s",
               boxShadow: active ? "0 8px 16px rgba(76,56,23,0.08)" : "none",
@@ -6983,7 +7377,7 @@ export default function VNDRX() {
             </button>
           );
         })}
-        <span style={{ marginLeft: "auto", color: HOME.muted, fontSize: 12, alignSelf: "center", whiteSpace: "nowrap" }}>
+        <span style={{ marginLeft: "auto", color: scene.muted, fontSize: 12, alignSelf: "center", whiteSpace: "nowrap" }}>
           {filtered.length} producto{filtered.length !== 1 ? "s" : ""}
         </span>
       </div>
