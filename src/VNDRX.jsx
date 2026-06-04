@@ -1558,6 +1558,197 @@ const REYLEON_BANK_DETAILS = {
     cci: "002-550-114-640-751-071-28",
   },
 };
+const ASWA_PAYMENT_REMOTE_QRS = {
+  yape: "https://jsangama.github.io/aswa/assets/images/embedded/qr-1-13161f6f2f35.jpg",
+  plin_bbva: "https://jsangama.github.io/aswa/assets/images/embedded/qr-2-5305f8bf2727.jpg",
+  plin_ibk: "https://jsangama.github.io/aswa/assets/images/embedded/qr-3-c5ac10b27d47.jpg",
+  bim: "https://jsangama.github.io/aswa/assets/images/embedded/qr-4-7074a3e7e686.jpg",
+  agora: "https://jsangama.github.io/aswa/assets/images/embedded/qr-5-02a305862e47.jpg",
+  binance: "https://jsangama.github.io/aswa/assets/images/embedded/qr-6-755481b36bc7.jpg",
+};
+const ASWA_PAYMENT_METHODS = [
+  {
+    val: "cod",
+    label: "Pago contra entrega",
+    badge: "EF",
+    detail: "Paga al recibir tu pedido",
+    hint: "Efectivo exacto al motorizado o en el local.",
+    color: theme.greenLight,
+  },
+  {
+    val: "yape",
+    label: "Yape",
+    badge: "YP",
+    detail: "+51 947 999 736 · Telma Pezo Melendez",
+    hint: "Escanea el QR oficial de ASWA o comparte la captura al WhatsApp de pedidos.",
+    color: "#C084FC",
+  },
+  {
+    val: "plin_bbva",
+    label: "Plin BBVA",
+    badge: "PB",
+    detail: "+51 947 999 736",
+    hint: "Metodo oficial de ASWA compartido por WhatsApp.",
+    color: "#2563EB",
+  },
+  {
+    val: "plin_ibk",
+    label: "Plin Interbank",
+    badge: "PI",
+    detail: "+51 947 999 736",
+    hint: "Metodo oficial de ASWA compartido por WhatsApp.",
+    color: "#16A34A",
+  },
+  {
+    val: "bim",
+    label: "BIM",
+    badge: "BM",
+    detail: "947 999 736",
+    hint: "Metodo oficial de ASWA compartido por WhatsApp.",
+    color: "#F59E0B",
+  },
+  {
+    val: "agora",
+    label: "Agora",
+    badge: "AG",
+    detail: "Telma Pezo Melendez",
+    hint: "Metodo oficial de ASWA compartido por WhatsApp.",
+    color: "#FB7185",
+  },
+  {
+    val: "binance",
+    label: "Binance Pay",
+    badge: "BN",
+    detail: "User-be284 / UID: 1225926023",
+    hint: "Metodo oficial de ASWA compartido por WhatsApp.",
+    color: "#FCD34D",
+  },
+  {
+    val: "interbank",
+    label: "Transferencia Interbank",
+    badge: "IB",
+    detail: "Cuenta y CCI del negocio",
+    hint: "Usa los datos del cuadro para transferir.",
+    color: "#60A5FA",
+  },
+  {
+    val: "bbva",
+    label: "Transferencia BBVA",
+    badge: "BV",
+    detail: "Cuenta y CCI del negocio",
+    hint: "Usa los datos del cuadro para transferir.",
+    color: "#3B82F6",
+  },
+  {
+    val: "banbif",
+    label: "Transferencia Banbif",
+    badge: "BF",
+    detail: "Cuenta y CCI del negocio",
+    hint: "Usa los datos del cuadro para transferir.",
+    color: "#8B5CF6",
+  },
+  {
+    val: "card",
+    label: "Tarjeta / online",
+    badge: "ON",
+    detail: "Link de cobro por WhatsApp",
+    hint: "Compartimos el enlace al confirmar.",
+    color: "#A78BFA",
+  },
+];
+const ASWA_BANK_DETAILS = {
+  interbank: {
+    bank: "Interbank",
+    account: "8983297623941",
+    cci: "00389801329762394149",
+  },
+  bbva: {
+    bank: "BBVA",
+    account: "0011-0310-0201637924",
+    cci: "01131000020163792406",
+    swift: "BCONPEPL",
+  },
+  banbif: {
+    bank: "Banbif",
+    account: "008033954299",
+    cci: "03868010803395429956",
+  },
+};
+const REYLEON_DIGITAL_PAYMENT_DETAILS = {
+  yape: {
+    title: "Yape del molino",
+    number: "918 429 034",
+    holder: "Noyolith Quine Rojas",
+    qr: ASSETS.yapeQr,
+    note: "Escanea el QR o comparte el numero para que el cliente pague directo al molino.",
+  },
+};
+const ASWA_DIGITAL_PAYMENT_DETAILS = {
+  yape: {
+    title: "Yape ASWA",
+    number: "+51 947 999 736",
+    holder: "Telma Pezo Melendez",
+    qr: ASWA_PAYMENT_REMOTE_QRS.yape,
+    note: "Pago oficial publicado por ASWA.",
+  },
+  plin_bbva: {
+    title: "Plin BBVA",
+    number: "+51 947 999 736",
+    holder: "Telma Pezo Melendez",
+    qr: ASWA_PAYMENT_REMOTE_QRS.plin_bbva,
+    note: "Pago oficial publicado por ASWA.",
+  },
+  plin_ibk: {
+    title: "Plin Interbank",
+    number: "+51 947 999 736",
+    holder: "Telma Pezo Melendez",
+    qr: ASWA_PAYMENT_REMOTE_QRS.plin_ibk,
+    note: "Pago oficial publicado por ASWA.",
+  },
+  bim: {
+    title: "BIM",
+    number: "947 999 736",
+    holder: "Telma Pezo Melendez",
+    qr: ASWA_PAYMENT_REMOTE_QRS.bim,
+    note: "Pago oficial publicado por ASWA.",
+  },
+  agora: {
+    title: "Agora",
+    number: "Telma Pezo Melendez",
+    holder: "ASWA",
+    qr: ASWA_PAYMENT_REMOTE_QRS.agora,
+    note: "Pago oficial publicado por ASWA.",
+  },
+  binance: {
+    title: "Binance Pay",
+    number: "User-be284 / UID: 1225926023",
+    holder: "ASWA",
+    qr: ASWA_PAYMENT_REMOTE_QRS.binance,
+    note: "Pago oficial publicado por ASWA.",
+  },
+};
+const PAYMENT_PROFILES = {
+  reyleon: {
+    key: "reyleon",
+    title: "Cuadro de pagos del molino",
+    badge: "REY LEON",
+    intro: "Elige tu medio de pago y revisa los datos del molino antes de cerrar el pedido.",
+    methods: REYLEON_PAYMENT_METHODS,
+    digitalDetails: REYLEON_DIGITAL_PAYMENT_DETAILS,
+    bankDetails: REYLEON_BANK_DETAILS,
+    contactNote: `Envia tu comprobante al WhatsApp del molino: ${ORDER_PHONE_DISPLAY}.`,
+  },
+  aswa: {
+    key: "aswa",
+    title: "Cuadro de pagos ASWA",
+    badge: "ASWA",
+    intro: "Metodos publicados por ASWA. Usa el Yape oficial o pide por WhatsApp los datos del metodo elegido.",
+    methods: ASWA_PAYMENT_METHODS,
+    digitalDetails: ASWA_DIGITAL_PAYMENT_DETAILS,
+    bankDetails: ASWA_BANK_DETAILS,
+    contactNote: "Envia tu comprobante al WhatsApp de ASWA: 955 273 229 / 986 445 531.",
+  },
+};
 const paymentBadgeStyle = (opt, selected = false) => ({
   width: 38,
   height: 38,
@@ -1573,6 +1764,9 @@ const paymentBadgeStyle = (opt, selected = false) => ({
   letterSpacing: 0.6,
   boxShadow: selected ? `0 0 0 4px ${opt.color}22` : "none",
 });
+function getPaymentProfile(storeKey) {
+  return PAYMENT_PROFILES[storeKey] || PAYMENT_PROFILES.reyleon;
+}
 const paymentDetailCardStyle = (tone = "#60A5FA") => ({
   marginTop: 12,
   background: `linear-gradient(135deg, ${tone}20, #11120f)`,
@@ -2008,9 +2202,14 @@ function buildCombinedOrderMessage({ groups, customer, payment, extras = {} }) {
 function paymentLabel(value) {
   if (value === "yape") return "Yape";
   if (value === "plin") return "Plin";
+  if (value === "plin_bbva" || value === "plinbbva") return "Plin BBVA";
+  if (value === "plin_ibk" || value === "plinibk") return "Plin Interbank";
   if (value === "bim") return "BIM";
   if (value === "agora") return "Agora";
+  if (value === "binance") return "Binance Pay";
+  if (value === "interbank" || value === "Interbank") return "Transferencia Interbank";
   if (value === "bbva") return "Transferencia BBVA";
+  if (value === "banbif" || value === "Banbif") return "Transferencia Banbif";
   if (value === "bcp") return "Transferencia BCP";
   if (value === "card") return "Tarjeta / online";
   return "Pago contra entrega";
@@ -4902,20 +5101,21 @@ function CartDrawer({ cart, onClose, onRemove }) {
                   </div>
                 )}
 
-                {selectedPaymentMethod.account && (
+                {selectedBankDetail && (
                   <div style={paymentDetailCardStyle(selectedPaymentMethod.color)}>
                     <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
                       <div style={{ minWidth: 190, flex: 1 }}>
-                        <div style={{ color: selectedPaymentMethod.color, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{selectedPaymentMethod.detail}</div>
-                        <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>{selectedPaymentMethod.account}</div>
-                        <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>CCI: {selectedPaymentMethod.cci}</div>
+                        <div style={{ color: selectedPaymentMethod.color, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{selectedBankDetail.bank}</div>
+                        <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>{selectedBankDetail.account}</div>
+                        <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>CCI: {selectedBankDetail.cci}</div>
+                        {selectedBankDetail.swift && <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>SWIFT: {selectedBankDetail.swift}</div>}
                         <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
                           Usa estos datos para transferir al molino. Si quieres, copia la cuenta o el CCI y comparte el comprobante al WhatsApp {ORDER_PHONE_DISPLAY}.
                         </div>
                         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
                           <button
                             type="button"
-                            onClick={() => navigator.clipboard?.writeText(selectedPaymentMethod.account || "")}
+                            onClick={() => navigator.clipboard?.writeText(selectedBankDetail.account || "")}
                             style={{
                               background: "#fff",
                               border: "none",
@@ -4931,7 +5131,7 @@ function CartDrawer({ cart, onClose, onRemove }) {
                           </button>
                           <button
                             type="button"
-                            onClick={() => navigator.clipboard?.writeText(selectedPaymentMethod.cci || "")}
+                            onClick={() => navigator.clipboard?.writeText(selectedBankDetail.cci || "")}
                             style={{
                               background: "transparent",
                               border: `1px solid ${selectedPaymentMethod.color}66`,
@@ -5073,7 +5273,7 @@ function CartDrawer({ cart, onClose, onRemove }) {
 
 // ── APP ──────────────────────────────────────────────────────────────────────
 
-function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer = {}, referralCode = "", referredBy = "", gpsState = {}, initialStep = "cart" }) {
+function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer = {}, referralCode = "", referredBy = "", gpsState = {}, initialStep = "cart", storeKey = "reyleon" }) {
   const [step, setStep] = useState(initialStep);
   const [payment, setPayment] = useState("cod");
   const [status, setStatus] = useState("");
@@ -5105,8 +5305,10 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
   const mixedSuppliers = groups.length > 1;
   const canSend = Boolean(customer.name.trim() && customer.phone.trim() && (fulfillmentMode === "recojo" || customer.address.trim()));
   const activeGps = gpsState?.label && gpsState?.url ? gpsState : null;
-  const selectedPaymentMethod = REYLEON_PAYMENT_METHODS.find((opt) => opt.val === payment) || REYLEON_PAYMENT_METHODS[0];
-  const selectedBankDetail = REYLEON_BANK_DETAILS[selectedPaymentMethod.val] || null;
+  const paymentProfile = getPaymentProfile(storeKey === "aswa" ? "aswa" : "reyleon");
+  const selectedPaymentMethod = paymentProfile.methods.find((opt) => opt.val === payment) || paymentProfile.methods[0];
+  const selectedDigitalDetail = paymentProfile.digitalDetails?.[selectedPaymentMethod.val] || null;
+  const selectedBankDetail = paymentProfile.bankDetails?.[selectedPaymentMethod.val] || null;
 
   const inputStyle = {
     width: "100%",
@@ -5130,6 +5332,13 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
   useEffect(() => {
     setStep(initialStep);
   }, [initialStep]);
+
+  useEffect(() => {
+    const available = paymentProfile.methods.some((opt) => opt.val === payment);
+    if (!available) {
+      setPayment(paymentProfile.methods[0]?.val || "cod");
+    }
+  }, [storeKey]);
 
   const setField = (field, value) => {
     setCustomer((prev) => ({ ...prev, [field]: value }));
@@ -5317,42 +5526,42 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
               <div style={{ background: theme.bgLight, borderRadius: 14, padding: 14, border: `1px solid ${theme.border}`, marginBottom: 14 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-start", marginBottom: 8 }}>
                   <div>
-                    <div style={{ color: theme.cream, fontSize: 14, fontWeight: 800 }}>Cuadro de pagos del molino</div>
+                    <div style={{ color: theme.cream, fontSize: 14, fontWeight: 800 }}>{paymentProfile.title}</div>
                     <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.45, marginTop: 4 }}>
-                      Elige tu medio de pago y revisa los datos del molino antes de cerrar el pedido.
+                      {paymentProfile.intro}
                     </div>
                   </div>
-                  <Badge text="REY LEÓN" color={theme.goldLight} />
+                  <Badge text={paymentProfile.badge} color={paymentProfile.key === "aswa" ? "#22C55E" : theme.goldLight} />
                 </div>
 
                 <div style={{ display: "grid", gap: 10 }}>
-                  {REYLEON_PAYMENT_METHODS.map((opt) => (
+                  {paymentProfile.methods.map((opt) => (
                     <button
                       key={opt.val}
                       onClick={() => setPayment(opt.val)}
-                    style={{
-                      background: payment === opt.val ? theme.bg : theme.bgCard,
-                      border: `1px solid ${payment === opt.val ? opt.color : theme.border}`,
-                      borderRadius: 14,
-                      padding: "12px 14px",
-                      cursor: "pointer",
-                      display: "grid",
-                      gridTemplateColumns: "42px 1fr auto",
-                      gap: 12,
-                      alignItems: "center",
-                      textAlign: "left",
-                    }}
-                  >
-                    <div style={paymentBadgeStyle(opt, payment === opt.val)}>{opt.badge}</div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ color: theme.cream, fontWeight: 800, fontSize: 14 }}>{opt.label}</div>
-                      <div style={{ color: theme.textDim, fontSize: 12, marginTop: 3, lineHeight: 1.4 }}>{opt.detail}</div>
-                      <div style={{ color: theme.creamDim, fontSize: 11, marginTop: 4, lineHeight: 1.4 }}>{opt.hint}</div>
-                    </div>
-                    {payment === opt.val && <span style={{ color: opt.color, fontSize: 16, fontWeight: 800 }}>✓</span>}
-                  </button>
-                ))}
-              </div>
+                      style={{
+                        background: payment === opt.val ? theme.bg : theme.bgCard,
+                        border: `1px solid ${payment === opt.val ? opt.color : theme.border}`,
+                        borderRadius: 14,
+                        padding: "12px 14px",
+                        cursor: "pointer",
+                        display: "grid",
+                        gridTemplateColumns: "42px 1fr auto",
+                        gap: 12,
+                        alignItems: "center",
+                        textAlign: "left",
+                      }}
+                    >
+                      <div style={paymentBadgeStyle(opt, payment === opt.val)}>{opt.badge}</div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ color: theme.cream, fontWeight: 800, fontSize: 14 }}>{opt.label}</div>
+                        <div style={{ color: theme.textDim, fontSize: 12, marginTop: 3, lineHeight: 1.4 }}>{opt.detail}</div>
+                        <div style={{ color: theme.creamDim, fontSize: 11, marginTop: 4, lineHeight: 1.4 }}>{opt.hint}</div>
+                      </div>
+                      {payment === opt.val && <span style={{ color: opt.color, fontSize: 16, fontWeight: 800 }}>✓</span>}
+                    </button>
+                  ))}
+                </div>
 
                 <div style={{ marginTop: 10, background: theme.bg, borderRadius: 12, padding: 12, border: `1px solid ${theme.border}` }}>
                   <div style={{ color: theme.textDim, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Datos visibles</div>
@@ -5369,84 +5578,88 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
                     {selectedPaymentMethod.hint}
                   </div>
                   <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.5, marginTop: 8 }}>
-                    {selectedPaymentMethod.val === "yape"
-                      ? `Envía tu comprobante al WhatsApp del molino: ${ORDER_PHONE_DISPLAY}.`
-                      : selectedPaymentMethod.val === "cod"
-                        ? "Recomendado para empezar: paga al recibir tu pedido."
-                        : `Este método se confirma por WhatsApp con el molino: ${ORDER_PHONE_DISPLAY}.`}
+                    {paymentProfile.contactNote}
                   </div>
                 </div>
 
-                {selectedPaymentMethod.val === "yape" && (
+                {selectedDigitalDetail && (selectedDigitalDetail.qr || selectedDigitalDetail.number) && (
                   <div style={{ marginTop: 12, background: "linear-gradient(135deg, #201038, #11120f)", border: "1px solid #7C3AED55", borderRadius: 14, padding: 12 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
                       <div style={{ minWidth: 190, flex: 1 }}>
-                        <div style={{ color: "#D8B4FE", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Yape del molino</div>
-                        <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>918 429 034</div>
-                        <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>Titular: Noyolith Quine Rojas</div>
-                        <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
-                          Escanea el QR o comparte este número para que el cliente pague directo al molino.
-                        </div>
+                        <div style={{ color: "#D8B4FE", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{selectedDigitalDetail.title}</div>
+                        {selectedDigitalDetail.number && <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>{selectedDigitalDetail.number}</div>}
+                        {selectedDigitalDetail.holder && <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>Titular: {selectedDigitalDetail.holder}</div>}
+                        {selectedDigitalDetail.note && (
+                          <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
+                            {selectedDigitalDetail.note}
+                          </div>
+                        )}
                         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
-                          <button
-                            type="button"
-                            onClick={() => navigator.clipboard?.writeText("918429034")}
-                            style={{
-                              background: "#fff",
-                              border: "none",
-                              borderRadius: 10,
-                              color: "#201038",
-                              padding: "9px 12px",
-                              fontSize: 12,
-                              fontWeight: 900,
-                              cursor: "pointer",
-                            }}
-                          >
-                            Copiar número
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => window.open(ASSETS.yapeQr, "_blank", "noopener,noreferrer")}
-                            style={{
-                              background: "transparent",
-                              border: "1px solid #7C3AED66",
-                              borderRadius: 10,
-                              color: "#D8B4FE",
-                              padding: "9px 12px",
-                              fontSize: 12,
-                              fontWeight: 900,
-                              cursor: "pointer",
-                            }}
-                          >
-                            Abrir QR
-                          </button>
+                          {selectedDigitalDetail.number && (
+                            <button
+                              type="button"
+                              onClick={() => navigator.clipboard?.writeText(selectedDigitalDetail.number.replace(/\s+/g, ""))}
+                              style={{
+                                background: "#fff",
+                                border: "none",
+                                borderRadius: 10,
+                                color: "#201038",
+                                padding: "9px 12px",
+                                fontSize: 12,
+                                fontWeight: 900,
+                                cursor: "pointer",
+                              }}
+                            >
+                              Copiar numero
+                            </button>
+                          )}
+                          {selectedDigitalDetail.qr && (
+                            <button
+                              type="button"
+                              onClick={() => window.open(selectedDigitalDetail.qr, "_blank", "noopener,noreferrer")}
+                              style={{
+                                background: "transparent",
+                                border: "1px solid #7C3AED66",
+                                borderRadius: 10,
+                                color: "#D8B4FE",
+                                padding: "9px 12px",
+                                fontSize: 12,
+                                fontWeight: 900,
+                                cursor: "pointer",
+                              }}
+                            >
+                              Abrir QR
+                            </button>
+                          )}
                         </div>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => window.open(ASSETS.yapeQr, "_blank", "noopener,noreferrer")}
-                        style={{
-                          width: 126,
-                          minWidth: 126,
-                          border: "1px solid #7C3AED55",
-                          borderRadius: 14,
-                          padding: 8,
-                          background: "#0D0520",
-                          cursor: "pointer",
-                          overflow: "hidden",
-                          flexShrink: 0,
-                        }}
-                      >
-                        <img
-                          src={ASSETS.yapeQr}
-                          alt="QR de Yape del molino"
-                          loading="lazy"
-                          style={{ width: "100%", display: "block", objectFit: "contain", borderRadius: 8 }}
-                        />
-                      </button>
+                      {selectedDigitalDetail.qr && (
+                        <button
+                          type="button"
+                          onClick={() => window.open(selectedDigitalDetail.qr, "_blank", "noopener,noreferrer")}
+                          style={{
+                            width: 126,
+                            minWidth: 126,
+                            border: "1px solid #7C3AED55",
+                            borderRadius: 14,
+                            padding: 8,
+                            background: "#0D0520",
+                            cursor: "pointer",
+                            overflow: "hidden",
+                            flexShrink: 0,
+                          }}
+                        >
+                          <img
+                            src={selectedDigitalDetail.qr}
+                            alt={`QR de ${selectedDigitalDetail.title}`}
+                            loading="lazy"
+                            style={{ width: "100%", display: "block", objectFit: "contain", borderRadius: 8 }}
+                          />
+                        </button>
+                      )}
                     </div>
                     <div style={{ marginTop: 10, background: "#0D0520", borderRadius: 10, padding: "9px 12px", color: "#D8B4FE", fontSize: 12, lineHeight: 1.5 }}>
-                      Después de pagar, envía la captura al WhatsApp del molino: <strong style={{ color: theme.cream }}>{ORDER_PHONE_DISPLAY}</strong>.
+                      {paymentProfile.contactNote}
                     </div>
                   </div>
                 )}
@@ -5458,8 +5671,9 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
                         <div style={{ color: selectedPaymentMethod.color, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{selectedBankDetail.bank}</div>
                         <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>{selectedBankDetail.account}</div>
                         <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>CCI: {selectedBankDetail.cci}</div>
+                        {selectedBankDetail.swift && <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>SWIFT: {selectedBankDetail.swift}</div>}
                         <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
-                          Usa estos datos para transferir al molino. Copia la cuenta o el CCI y comparte el comprobante por WhatsApp al {ORDER_PHONE_DISPLAY}.
+                          Usa estos datos para transferir. Copia la cuenta o el CCI y comparte el comprobante por WhatsApp.
                         </div>
                         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
                           <button
@@ -6975,6 +7189,7 @@ export default function VNDRX() {
           referredBy={profile.referredBy}
           gpsState={gpsState}
           initialStep={cartStartStep}
+          storeKey={selectedCompany === "aswa" ? "aswa" : "reyleon"}
         />
       )}
     </div>
