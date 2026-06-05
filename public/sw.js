@@ -1,4 +1,4 @@
-const CACHE_NAME = "vndrx-aswa-v2";
+const CACHE_NAME = "vndrx-v3";
 const APP_SHELL = [
   "./manifest.webmanifest",
   "./icon-192.svg",

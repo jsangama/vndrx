@@ -6,16 +6,16 @@
   "display": "standalone",
   "background_color": "#0f1a0e",
   "theme_color": "#0f1a0e",
-  "description": "Tienda directa con pedidos por WhatsApp, bonos, referidos y soporte.",
+  "description": "Tienda multi-marca con pedidos por WhatsApp y pagos directos.",
   "icons": [
     {
-      "src": "/icon-192.svg",
+      "src": "./icon-192.svg",
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "any maskable"
     },
     {
-      "src": "/icon-512.svg",
+      "src": "./icon-512.svg",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any maskable"
