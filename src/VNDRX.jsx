@@ -1,5 +1,30 @@
 import { useEffect, useRef, useState } from "react";
 
+import {
+  SUPABASE_CONFIG_KEY,
+  SUPABASE_ENABLED,
+  SUPABASE_RUNTIME_CONFIG,
+  clearSupabaseRuntimeConfig,
+  readSupabaseRuntimeConfig,
+  saveSupabaseRuntimeConfig,
+  supabase,
+} from "./lib/supabase";
+import {
+  SUPABASE_CHECKLIST_TEXT,
+  SUPABASE_ENV_TEXT,
+  SUPABASE_SCHEMA_TEXT,
+} from "./lib/supabaseTemplates";
+import {
+  deleteOrderFromSupabase,
+  fetchOrdersFromSupabase,
+  fetchUserRoleFromSupabase,
+  fetchReviewsFromSupabase,
+  probeSupabaseConnection,
+  syncOrdersToSupabase,
+  syncProfileToSupabase,
+  syncReviewsToSupabase,
+} from "./lib/supabaseSync";
+
 import promoMain from "./assets/aswa/promo-san-juanero-main.png";
 import promoAlt from "./assets/aswa/promo-san-juanera-alt.png";
 import promoFlayer from "./assets/aswa/promo-san-juanera-flayer.png";
@@ -1339,6 +1364,20 @@ const COMPANY_VIEWS = {
     companyContact: "Ventas directas del molino",
     primaryButton: "Ver arroces",
     secondaryButton: "Cambiar empresa",
+    look: {
+      page: "linear-gradient(180deg, #FBF7EF 0%, #F4EBDD 44%, #ECE3D5 100%)",
+      heroTop: "#FFF9F2",
+      heroBottom: "#F3E7D4",
+      nav: "rgba(255, 253, 248, 0.92)",
+      surface: "#FFFDF8",
+      surface2: "#FFF8EE",
+      accent: "#A36D2C",
+      accent2: "#D6A65C",
+      leaf: "#47654B",
+      leaf2: "#6A8A6E",
+      shadow: "0 20px 40px rgba(76, 56, 23, 0.14)",
+      glow: "radial-gradient(circle at 0% 0%, rgba(163,109,44,0.20) 0, transparent 32%), radial-gradient(circle at 100% 0%, rgba(71,101,75,0.12) 0, transparent 30%)",
+    },
   },
   aswa: {
     key: "aswa",
@@ -1357,6 +1396,20 @@ const COMPANY_VIEWS = {
     companyContact: "Pedidos sanjuaneros y escolares",
     primaryButton: "Ver productos ASWA",
     secondaryButton: "Abrir app ASWA",
+    look: {
+      page: "linear-gradient(180deg, #FBF3E4 0%, #F4ECDD 42%, #EAF0E2 100%)",
+      heroTop: "#FFF8E9",
+      heroBottom: "#EDF4E8",
+      nav: "rgba(255, 252, 245, 0.92)",
+      surface: "#FFFDF8",
+      surface2: "#FFF7EB",
+      accent: "#47654B",
+      accent2: "#C47A1E",
+      leaf: "#47654B",
+      leaf2: "#6A8A6E",
+      shadow: "0 22px 44px rgba(71, 101, 75, 0.14)",
+      glow: "radial-gradient(circle at 10% 0%, rgba(71,101,75,0.20) 0, transparent 30%), radial-gradient(circle at 90% 0%, rgba(196,122,30,0.18) 0, transparent 32%)",
+    },
   },
   jora: {
     key: "jora",
@@ -1375,6 +1428,20 @@ const COMPANY_VIEWS = {
     companyContact: "Pedidos y consejos de uso",
     primaryButton: "Ver Jora",
     secondaryButton: "Cambiar empresa",
+    look: {
+      page: "linear-gradient(180deg, #FCF4E7 0%, #F5E9D7 46%, #EFE0C9 100%)",
+      heroTop: "#FFF7E9",
+      heroBottom: "#F3E1C2",
+      nav: "rgba(255, 250, 240, 0.92)",
+      surface: "#FFFDF8",
+      surface2: "#FFF7E8",
+      accent: "#8A5A1C",
+      accent2: "#D59B3D",
+      leaf: "#6B4210",
+      leaf2: "#D59B3D",
+      shadow: "0 22px 44px rgba(107, 66, 16, 0.14)",
+      glow: "radial-gradient(circle at 0% 0%, rgba(213,155,61,0.24) 0, transparent 30%), radial-gradient(circle at 100% 100%, rgba(138,90,28,0.16) 0, transparent 28%)",
+    },
   },
   tela: {
     key: "tela",
@@ -1393,6 +1460,20 @@ const COMPANY_VIEWS = {
     companyContact: "Pedidos textiles y hogar",
     primaryButton: "Ver productos Tela",
     secondaryButton: "Cotizar por WhatsApp",
+    look: {
+      page: "linear-gradient(180deg, #FBF4F7 0%, #F3E8EC 46%, #E9E1EA 100%)",
+      heroTop: "#FFF8FB",
+      heroBottom: "#F0E3EA",
+      nav: "rgba(255, 252, 248, 0.92)",
+      surface: "#FFFDF8",
+      surface2: "#FFF6F9",
+      accent: "#6A3552",
+      accent2: "#D58AA7",
+      leaf: "#335E43",
+      leaf2: "#A9CFB1",
+      shadow: "0 22px 44px rgba(106, 53, 82, 0.13)",
+      glow: "radial-gradient(circle at 0% 0%, rgba(213,138,167,0.22) 0, transparent 30%), radial-gradient(circle at 100% 0%, rgba(106,53,82,0.16) 0, transparent 32%)",
+    },
   },
   bocaditos: {
     key: "bocaditos",
@@ -1411,6 +1492,20 @@ const COMPANY_VIEWS = {
     companyContact: "Pedidos artesanales y regionales",
     primaryButton: "Ver bocaditos",
     secondaryButton: "Pedir por WhatsApp",
+    look: {
+      page: "linear-gradient(180deg, #FBF1E5 0%, #F5E6D7 46%, #EFE0CF 100%)",
+      heroTop: "#FFF8EE",
+      heroBottom: "#F3E2D1",
+      nav: "rgba(255, 252, 248, 0.92)",
+      surface: "#FFFDF8",
+      surface2: "#FFF7EE",
+      accent: "#B66A2C",
+      accent2: "#D97A2E",
+      leaf: "#8C3F21",
+      leaf2: "#D9A34B",
+      shadow: "0 22px 44px rgba(182, 106, 44, 0.13)",
+      glow: "radial-gradient(circle at 0% 0%, rgba(217,122,46,0.20) 0, transparent 30%), radial-gradient(circle at 100% 0%, rgba(140,63,33,0.16) 0, transparent 32%)",
+    },
   },
   artesania: {
     key: "artesania",
@@ -1429,6 +1524,20 @@ const COMPANY_VIEWS = {
     companyContact: "Pedidos de barro y decoracion",
     primaryButton: "Ver artesania",
     secondaryButton: "Pedir por WhatsApp",
+    look: {
+      page: "linear-gradient(180deg, #F8F2E9 0%, #F2E8DB 46%, #E9DFD0 100%)",
+      heroTop: "#FFF8F2",
+      heroBottom: "#F0E4D6",
+      nav: "rgba(255, 252, 248, 0.92)",
+      surface: "#FFFDF8",
+      surface2: "#FFF7EF",
+      accent: "#7A4A2A",
+      accent2: "#C98A5B",
+      leaf: "#5C7A4E",
+      leaf2: "#A8B78D",
+      shadow: "0 22px 44px rgba(122, 74, 42, 0.13)",
+      glow: "radial-gradient(circle at 0% 0%, rgba(201,138,91,0.20) 0, transparent 30%), radial-gradient(circle at 100% 0%, rgba(92,122,78,0.16) 0, transparent 32%)",
+    },
   },
 };
 
@@ -1558,6 +1667,198 @@ const REYLEON_BANK_DETAILS = {
     cci: "002-550-114-640-751-071-28",
   },
 };
+const ASWA_PAYMENT_REMOTE_QRS = {
+  yape: "https://jsangama.github.io/aswa/assets/images/embedded/qr-1-13161f6f2f35.jpg",
+  plin_bbva: "https://jsangama.github.io/aswa/assets/images/embedded/qr-2-5305f8bf2727.jpg",
+  plin_ibk: "https://jsangama.github.io/aswa/assets/images/embedded/qr-3-c5ac10b27d47.jpg",
+  bim: "https://jsangama.github.io/aswa/assets/images/embedded/qr-4-7074a3e7e686.jpg",
+  agora: "https://jsangama.github.io/aswa/assets/images/embedded/qr-5-02a305862e47.jpg",
+  binance: "https://jsangama.github.io/aswa/assets/images/embedded/qr-6-755481b36bc7.jpg",
+};
+const ASWA_PAYMENT_METHODS = [
+  {
+    val: "cod",
+    label: "Pago contra entrega",
+    badge: "EF",
+    detail: "Paga al recibir tu pedido",
+    hint: "Efectivo exacto al motorizado o en el local.",
+    color: theme.greenLight,
+  },
+  {
+    val: "yape",
+    label: "Yape",
+    badge: "YP",
+    detail: "+51 947 999 736 · Telma Pezo Melendez",
+    hint: "Escanea el QR oficial de ASWA o comparte la captura al WhatsApp de pedidos.",
+    color: "#C084FC",
+  },
+  {
+    val: "plin_bbva",
+    label: "Plin BBVA",
+    badge: "PB",
+    detail: "+51 947 999 736",
+    hint: "Metodo oficial de ASWA compartido por WhatsApp.",
+    color: "#2563EB",
+  },
+  {
+    val: "plin_ibk",
+    label: "Plin Interbank",
+    badge: "PI",
+    detail: "+51 947 999 736",
+    hint: "Metodo oficial de ASWA compartido por WhatsApp.",
+    color: "#16A34A",
+  },
+  {
+    val: "bim",
+    label: "BIM",
+    badge: "BM",
+    detail: "947 999 736",
+    hint: "Metodo oficial de ASWA compartido por WhatsApp.",
+    color: "#F59E0B",
+  },
+  {
+    val: "agora",
+    label: "Agora",
+    badge: "AG",
+    detail: "Telma Pezo Melendez",
+    hint: "Metodo oficial de ASWA compartido por WhatsApp.",
+    color: "#FB7185",
+  },
+  {
+    val: "binance",
+    label: "Binance Pay",
+    badge: "BN",
+    detail: "User-be284 / UID: 1225926023",
+    hint: "Metodo oficial de ASWA compartido por WhatsApp.",
+    color: "#FCD34D",
+  },
+  {
+    val: "interbank",
+    label: "Transferencia Interbank",
+    badge: "IB",
+    detail: "Cuenta y CCI del negocio",
+    hint: "Usa los datos del cuadro para transferir.",
+    color: "#60A5FA",
+  },
+  {
+    val: "bbva",
+    label: "Transferencia BBVA",
+    badge: "BV",
+    detail: "Cuenta y CCI del negocio",
+    hint: "Usa los datos del cuadro para transferir.",
+    color: "#3B82F6",
+  },
+  {
+    val: "banbif",
+    label: "Transferencia Banbif",
+    badge: "BF",
+    detail: "Cuenta y CCI del negocio",
+    hint: "Usa los datos del cuadro para transferir.",
+    color: "#8B5CF6",
+  },
+  {
+    val: "card",
+    label: "Tarjeta / online",
+    badge: "ON",
+    detail: "Link de cobro por WhatsApp",
+    hint: "Compartimos el enlace al confirmar.",
+    color: "#A78BFA",
+  },
+];
+const ASWA_BANK_DETAILS = {
+  interbank: {
+    bank: "Interbank",
+    account: "8983297623941",
+    cci: "00389801329762394149",
+  },
+  bbva: {
+    bank: "BBVA",
+    account: "0011-0310-0201637924",
+    cci: "01131000020163792406",
+    swift: "BCONPEPL",
+  },
+  banbif: {
+    bank: "Banbif",
+    account: "008033954299",
+    cci: "03868010803395429956",
+  },
+};
+const REYLEON_DIGITAL_PAYMENT_DETAILS = {
+  yape: {
+    title: "Yape del molino",
+    number: "918 429 034",
+    holder: "Noyolith Quine Rojas",
+    qr: ASSETS.yapeQr,
+    note: "Escanea el QR o comparte el numero para que el cliente pague directo al molino.",
+  },
+};
+const ASWA_DIGITAL_PAYMENT_DETAILS = {
+  yape: {
+    title: "Yape ASWA",
+    number: "+51 947 999 736",
+    holder: "Telma Pezo Melendez",
+    qr: ASWA_PAYMENT_REMOTE_QRS.yape,
+    note: "Pago oficial publicado por ASWA.",
+  },
+  plin_bbva: {
+    title: "Plin BBVA",
+    number: "+51 947 999 736",
+    holder: "Telma Pezo Melendez",
+    qr: ASWA_PAYMENT_REMOTE_QRS.plin_bbva,
+    note: "Pago oficial publicado por ASWA.",
+  },
+  plin_ibk: {
+    title: "Plin Interbank",
+    number: "+51 947 999 736",
+    holder: "Telma Pezo Melendez",
+    qr: ASWA_PAYMENT_REMOTE_QRS.plin_ibk,
+    note: "Pago oficial publicado por ASWA.",
+  },
+  bim: {
+    title: "BIM",
+    number: "947 999 736",
+    holder: "Telma Pezo Melendez",
+    qr: ASWA_PAYMENT_REMOTE_QRS.bim,
+    note: "Pago oficial publicado por ASWA.",
+  },
+  agora: {
+    title: "Agora",
+    number: "Telma Pezo Melendez",
+    holder: "ASWA",
+    qr: ASWA_PAYMENT_REMOTE_QRS.agora,
+    note: "Pago oficial publicado por ASWA.",
+  },
+  binance: {
+    title: "Binance Pay",
+    number: "User-be284 / UID: 1225926023",
+    holder: "ASWA",
+    qr: ASWA_PAYMENT_REMOTE_QRS.binance,
+    note: "Pago oficial publicado por ASWA.",
+  },
+};
+const PAYMENT_PROFILES = {
+  reyleon: {
+    key: "reyleon",
+    title: "Cuadro de pagos del molino",
+    badge: "REY LEON",
+    intro: "Elige tu medio de pago y revisa los datos del molino antes de cerrar el pedido.",
+    methods: REYLEON_PAYMENT_METHODS,
+    digitalDetails: REYLEON_DIGITAL_PAYMENT_DETAILS,
+    bankDetails: REYLEON_BANK_DETAILS,
+    contactNote: `Envia tu comprobante al WhatsApp del molino: ${ORDER_PHONE_DISPLAY}.`,
+  },
+  aswa: {
+    key: "aswa",
+    title: "Cuadro de pagos ASWA",
+    badge: "ASWA",
+    intro: "Metodos publicados por ASWA. Usa el Yape oficial o pide por WhatsApp los datos del metodo elegido.",
+    methods: ASWA_PAYMENT_METHODS,
+    digitalDetails: ASWA_DIGITAL_PAYMENT_DETAILS,
+    bankDetails: ASWA_BANK_DETAILS,
+    contactNote: "Envia tu comprobante al WhatsApp de ASWA: 955 273 229 / 986 445 531.",
+  },
+};
+const ASWA_PAYMENT_STORE_KEYS = new Set(["aswa", "tela", "bocaditos", "artesania"]);
 const paymentBadgeStyle = (opt, selected = false) => ({
   width: 38,
   height: 38,
@@ -1573,6 +1874,9 @@ const paymentBadgeStyle = (opt, selected = false) => ({
   letterSpacing: 0.6,
   boxShadow: selected ? `0 0 0 4px ${opt.color}22` : "none",
 });
+function getPaymentProfile(storeKey) {
+  return PAYMENT_PROFILES[storeKey] || PAYMENT_PROFILES.reyleon;
+}
 const paymentDetailCardStyle = (tone = "#60A5FA") => ({
   marginTop: 12,
   background: `linear-gradient(135deg, ${tone}20, #11120f)`,
@@ -1732,6 +2036,22 @@ const DEFAULT_PROFILE = {
   referralCode: "",
   referredBy: "",
   shareCount: 0,
+};
+
+const ADMIN_ACCESS_ROLES = new Set(["admin", "vendedor", "reparto"]);
+
+const ROLE_LABELS = {
+  admin: "Administrador",
+  vendedor: "Vendedor",
+  reparto: "Reparto",
+  cliente: "Cliente",
+};
+
+const ROLE_HINTS = {
+  admin: "Control completo",
+  vendedor: "Ventas y seguimiento",
+  reparto: "Despacho y ruta",
+  cliente: "Solo tienda publica",
 };
 
 function loadStoredState(key, fallback) {
@@ -2008,9 +2328,14 @@ function buildCombinedOrderMessage({ groups, customer, payment, extras = {} }) {
 function paymentLabel(value) {
   if (value === "yape") return "Yape";
   if (value === "plin") return "Plin";
+  if (value === "plin_bbva" || value === "plinbbva") return "Plin BBVA";
+  if (value === "plin_ibk" || value === "plinibk") return "Plin Interbank";
   if (value === "bim") return "BIM";
   if (value === "agora") return "Agora";
+  if (value === "binance") return "Binance Pay";
+  if (value === "interbank" || value === "Interbank") return "Transferencia Interbank";
   if (value === "bbva") return "Transferencia BBVA";
+  if (value === "banbif" || value === "Banbif") return "Transferencia Banbif";
   if (value === "bcp") return "Transferencia BCP";
   if (value === "card") return "Tarjeta / online";
   return "Pago contra entrega";
@@ -2020,9 +2345,11 @@ function createOrderRecord({ supplier, items, customer, payment, extras }) {
   const subtotal = items.reduce((a, i) => a + i.pres.price * i.qty, 0);
   const delivery = items.reduce((a, i) => a + (i.zone?.cost || 0), 0);
   const total = subtotal + delivery;
+  const now = new Date().toISOString();
   return {
     id: `ORD-${Date.now()}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`,
-    createdAt: new Date().toISOString(),
+    createdAt: now,
+    updatedAt: now,
     supplierKey: supplier.key,
     supplierName: supplier.name,
     items,
@@ -2062,6 +2389,24 @@ function CertBadge({ cert }) {
     }}>{cert}</span>
   );
 }
+
+const getRecordTime = (record) => {
+  const value = record?.updatedAt || record?.updated_at || record?.createdAt || record?.created_at || 0;
+  const time = new Date(value).getTime();
+  return Number.isNaN(time) ? 0 : time;
+};
+
+const mergeRecordsById = (base = [], incoming = []) => {
+  const merged = new Map();
+  [...base, ...incoming].forEach((record) => {
+    if (!record?.id) return;
+    const current = merged.get(record.id);
+    if (!current || getRecordTime(record) >= getRecordTime(current)) {
+      merged.set(record.id, record);
+    }
+  });
+  return Array.from(merged.values()).sort((a, b) => getRecordTime(b) - getRecordTime(a));
+};
 
 function ProductAvatar({ product, size = 52, radius = 14, onClick, title, ariaLabel }) {
   const media = getProductMedia(product);
@@ -2964,7 +3309,8 @@ function ASWAControlHub({
     { id: "historial", label: "Historial", icon: "🕘" },
     { id: "soporte", label: "Soporte", icon: "💬" },
     { id: "promos", label: "Promos", icon: "🎨" },
-    { id: "panel", label: "Panel", icon: "🛠️" },
+    { id: "panel", label: "Panel", icon: data.canManagePanel ? "🛠️" : "🔒" },
+    { id: "db", label: "Base de datos", icon: "☁️" },
     { id: "install", label: "Instalar", icon: "⬇️" },
   ];
 
@@ -3048,6 +3394,111 @@ function ASWAControlHub({
     const next = statusFlow[(index + 1) % statusFlow.length];
     actions.cycleOrderStatus(order.id, next);
   };
+
+  const panelAccessGate = (
+    <HubSection title="Panel privado" subtitle="Acceso reservado para admin, vendedor o reparto.">
+      <div style={{ display: "grid", gap: 12 }}>
+        <div style={{ background: "linear-gradient(135deg, #111a10, #0b120a)", border: `1px solid ${theme.border}`, borderRadius: 16, padding: 16 }}>
+          <div style={{ color: theme.goldLight, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Acceso interno</div>
+          <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>
+            {data.adminAccessStatus === "disabled"
+              ? "Primero conecta Supabase"
+              : data.adminAccessStatus === "loading"
+                ? "Verificando sesion y rol..."
+                : "Ingresa para abrir el panel completo"}
+          </div>
+          <div style={{ color: theme.creamDim, fontSize: 12, lineHeight: 1.6, marginTop: 8 }}>
+            {data.adminAccessStatus === "disabled"
+              ? "La tienda necesita la URL y la anon key de Supabase antes de permitir el acceso interno."
+              : "Solo los usuarios con rol admin, vendedor o reparto pueden ver el panel completo. El rol cliente se queda en la tienda publica."}
+          </div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 12 }}>
+            <span style={{ background: "rgba(240,192,64,0.14)", border: `1px solid ${theme.goldLight}55`, color: theme.goldLight, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 900 }}>Roles: admin / vendedor / reparto</span>
+            <span style={{ background: "rgba(71,101,75,0.16)", border: `1px solid ${theme.greenLight}55`, color: theme.greenLight, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 900 }}>Cliente no entra</span>
+          </div>
+        </div>
+
+        {data.adminAccessStatus === "disabled" ? (
+          <div style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 16, padding: 16, display: "grid", gap: 12 }}>
+            <div style={{ color: theme.cream, fontWeight: 900 }}>Configura la base primero</div>
+            <div style={{ color: theme.creamDim, fontSize: 12, lineHeight: 1.6 }}>
+              Abre el panel de Base de datos, pega la URL y la anon key de Supabase y guarda la conexión. Después vuelve aquí para iniciar sesión.
+            </div>
+            <button
+              type="button"
+              onClick={() => onTabChange("db")}
+              style={{ background: `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})`, border: "none", borderRadius: 12, color: "#0F1A0E", padding: 12, cursor: "pointer", fontWeight: 900 }}
+            >
+              Ir a Base de datos
+            </button>
+          </div>
+        ) : data.adminAccessStatus === "loading" ? (
+          <div style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 16, padding: 16, color: theme.creamDim, fontSize: 12, lineHeight: 1.6 }}>
+            Estamos leyendo tu sesion de Supabase y tu rol. En un momento se desbloquea el panel si tu usuario tiene permiso.
+          </div>
+        ) : data.adminAccessStatus === "allowed" ? null : (
+          <div style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 16, padding: 16, display: "grid", gap: 12 }}>
+            <div>
+              <div style={{ color: theme.cream, fontWeight: 900 }}>Iniciar sesion</div>
+              <div style={{ color: theme.creamDim, fontSize: 12, lineHeight: 1.6, marginTop: 6 }}>
+                Usa tu cuenta de Supabase Auth y tu rol asignado en <strong style={{ color: theme.goldLight }}>vndrx_user_roles</strong>.
+              </div>
+            </div>
+            <input
+              type="email"
+              value={data.authDraft.email}
+              onChange={(event) => actions.setAuthDraft((prev) => ({ ...prev, email: event.target.value }))}
+              placeholder="correo@tuempresa.com"
+              style={{ width: "100%", background: theme.bg, border: `1px solid ${theme.border}`, borderRadius: 10, color: theme.cream, padding: "11px 12px", fontSize: 13 }}
+            />
+            <input
+              type="password"
+              value={data.authDraft.password}
+              onChange={(event) => actions.setAuthDraft((prev) => ({ ...prev, password: event.target.value }))}
+              placeholder="Contraseña"
+              style={{ width: "100%", background: theme.bg, border: `1px solid ${theme.border}`, borderRadius: 10, color: theme.cream, padding: "11px 12px", fontSize: 13 }}
+            />
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
+              <button
+                type="button"
+                onClick={actions.signInAdmin}
+                disabled={data.authSubmitting}
+                style={{ background: `linear-gradient(135deg, ${theme.green}, ${theme.greenLight})`, border: "none", borderRadius: 12, color: "#fff", padding: 12, cursor: data.authSubmitting ? "wait" : "pointer", fontWeight: 900, opacity: data.authSubmitting ? 0.8 : 1 }}
+              >
+                {data.authSubmitting ? "Entrando..." : "Entrar"}
+              </button>
+              {data.adminSession ? (
+                <button
+                  type="button"
+                  onClick={actions.signOutAdmin}
+                  disabled={data.authSubmitting}
+                  style={{ background: theme.bg, border: `1px solid ${theme.border}`, borderRadius: 12, color: theme.cream, padding: 12, cursor: data.authSubmitting ? "wait" : "pointer", fontWeight: 800, opacity: data.authSubmitting ? 0.8 : 1 }}
+                >
+                  Cerrar sesion
+                </button>
+              ) : null}
+            </div>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <span style={{ background: "rgba(240,192,64,0.12)", border: `1px solid ${theme.goldLight}55`, color: theme.goldLight, borderRadius: 999, padding: "5px 9px", fontSize: 10, fontWeight: 900 }}>Admin</span>
+              <span style={{ background: "rgba(71,101,75,0.12)", border: `1px solid ${theme.greenLight}55`, color: theme.greenLight, borderRadius: 999, padding: "5px 9px", fontSize: 10, fontWeight: 900 }}>Vendedor</span>
+              <span style={{ background: "rgba(196,122,30,0.12)", border: `1px solid ${theme.accent2}55`, color: theme.accent2, borderRadius: 999, padding: "5px 9px", fontSize: 10, fontWeight: 900 }}>Reparto</span>
+              <span style={{ background: "rgba(122,148,116,0.12)", border: `1px solid ${theme.border}`, color: theme.textDim, borderRadius: 999, padding: "5px 9px", fontSize: 10, fontWeight: 900 }}>Cliente</span>
+            </div>
+            {data.adminAccessError && (
+              <div style={{ background: "#2C1717", border: "1px solid #7A2D2D", borderRadius: 12, padding: 12, color: "#FFCECE", fontSize: 12, lineHeight: 1.55 }}>
+                {data.adminAccessError}
+              </div>
+            )}
+            {data.adminSession && (
+              <div style={{ background: "rgba(71,101,75,0.12)", border: `1px solid ${theme.greenLight}55`, borderRadius: 12, padding: 12, color: theme.creamDim, fontSize: 12, lineHeight: 1.55 }}>
+                Sesion actual: <strong style={{ color: theme.cream }}>{data.adminSession.user?.email || "sin correo"}</strong> · Rol actual: <strong style={{ color: theme.goldLight }}>{data.adminRoleLabel || "Cliente"}</strong>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </HubSection>
+  );
 
   const gridActions = {
     tutorial: (
@@ -3294,7 +3745,7 @@ function ASWAControlHub({
         </div>
       </HubSection>
     ),
-    panel: (
+    panel: data.canManagePanel ? (
       <div style={{ display: "grid", gap: 12 }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10 }}>
           <HubMetric label="Total pedidos" value={data.orders.length} hint={`Activos: ${data.activeOrders}`} />
@@ -3442,6 +3893,138 @@ function ASWAControlHub({
           </div>
         </HubSection>
       </div>
+    ) : panelAccessGate,
+    db: (
+      <div style={{ display: "grid", gap: 12 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 10 }}>
+          <HubMetric label="Estado" value={data.supabaseEnabled ? "Conectado" : "Local"} hint={data.supabaseEnabled ? "Pedidos en nube y local" : "Aun no pegaste credenciales"} color={data.supabaseEnabled ? theme.greenLight : theme.goldLight} />
+          <HubMetric
+            label="Prueba"
+            value={
+              data.supabaseProbe.state === "ok"
+                ? "Verificada"
+                : data.supabaseProbe.state === "checking"
+                  ? "Probando"
+                  : data.supabaseProbe.state === "error"
+                    ? "Error"
+                    : "Pendiente"
+            }
+            hint={data.supabaseProbe.message || "Sin verificar"}
+            color={data.supabaseProbe.state === "ok" ? theme.greenLight : data.supabaseProbe.state === "error" ? "#FF9B9B" : theme.goldLight}
+          />
+          <HubMetric
+            label="Migración"
+            value={
+              data.supabaseMigration.state === "ok"
+                ? "Subida"
+                : data.supabaseMigration.state === "checking"
+                  ? "Subiendo"
+                  : data.supabaseMigration.state === "error"
+                    ? "Revisar"
+                    : "Pendiente"
+            }
+            hint={data.supabaseMigration.message || "Aún no se subió el historial local"}
+            color={data.supabaseMigration.state === "ok" ? theme.greenLight : data.supabaseMigration.state === "error" ? "#FFB5B5" : theme.goldLight}
+          />
+          <HubMetric
+            label="Respaldo"
+            value={
+              data.supabaseBackup.state === "ok"
+                ? "Listo"
+                : data.supabaseBackup.state === "error"
+                  ? "Error"
+                  : "Pendiente"
+            }
+            hint={data.supabaseBackup.message || "Descarga tu copia local"}
+            color={data.supabaseBackup.state === "ok" ? theme.greenLight : data.supabaseBackup.state === "error" ? "#FFB5B5" : theme.goldLight}
+          />
+          <HubMetric label="Tablas" value="3" hint="orders, profiles, reviews" />
+          <HubMetric label="URL" value={data.supabaseUrl ? "Lista" : "Vacía"} hint={data.supabaseUrl || "Sin configurar"} />
+          <HubMetric label="Modo" value={data.supabaseEnabled ? "Realtime" : "Offline"} hint="Se actualiza al recargar" />
+        </div>
+
+        <HubSection title="Conectar Supabase" subtitle="Pega tu URL y anon key. Al guardar, la app recarga y empieza a sincronizar pedidos.">
+          <div style={{ display: "grid", gap: 10 }}>
+            <input
+              value={data.supabaseDraft.url}
+              onChange={(e) => actions.setSupabaseDraft((prev) => ({ ...prev, url: e.target.value }))}
+              placeholder="https://tu-proyecto.supabase.co"
+              style={{ width: "100%", background: theme.bg, border: `1px solid ${theme.border}`, borderRadius: 10, color: theme.cream, padding: "11px 12px", fontSize: 13 }}
+            />
+            <textarea
+              value={data.supabaseDraft.key}
+              onChange={(e) => actions.setSupabaseDraft((prev) => ({ ...prev, key: e.target.value }))}
+              placeholder="anon public key"
+              rows={4}
+              style={{ width: "100%", background: theme.bg, border: `1px solid ${theme.border}`, borderRadius: 10, color: theme.cream, padding: "11px 12px", fontSize: 13, resize: "vertical", minHeight: 100, fontFamily: "monospace" }}
+            />
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
+              <button type="button" onClick={actions.saveSupabaseConnection} style={{ background: `linear-gradient(135deg, ${theme.green}, ${theme.greenLight})`, border: "none", borderRadius: 12, color: "#fff", padding: 12, cursor: "pointer", fontWeight: 900 }}>
+                Guardar y recargar
+              </button>
+              <button type="button" onClick={actions.testSupabaseConnection} style={{ background: `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})`, border: "none", borderRadius: 12, color: "#0F1A0E", padding: 12, cursor: "pointer", fontWeight: 900 }}>
+                Probar conexión
+              </button>
+              <button type="button" onClick={actions.downloadLocalBackup} style={{ background: `linear-gradient(135deg, ${theme.leaf}, ${theme.leaf2})`, border: "none", borderRadius: 12, color: "#fff", padding: 12, cursor: "pointer", fontWeight: 900 }}>
+                Descargar respaldo
+              </button>
+              <button type="button" onClick={actions.migrateLocalDataToSupabase} style={{ background: `linear-gradient(135deg, ${theme.accent2}, ${theme.goldLight})`, border: "none", borderRadius: 12, color: "#0F1A0E", padding: 12, cursor: "pointer", fontWeight: 900 }}>
+                Subir datos locales
+              </button>
+              <button type="button" onClick={actions.clearSupabaseConnection} style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 12, color: theme.cream, padding: 12, cursor: "pointer", fontWeight: 800 }}>
+                Quitar conexión
+              </button>
+            </div>
+            <div style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${theme.border}`, borderRadius: 14, padding: 12, color: theme.creamDim, fontSize: 12, lineHeight: 1.6 }}>
+              <div style={{ color: theme.goldLight, fontWeight: 900, fontSize: 11, letterSpacing: 1, textTransform: "uppercase" }}>Resultado de la última prueba</div>
+              <div style={{ marginTop: 6, color: data.supabaseProbe.state === "ok" ? theme.greenLight : data.supabaseProbe.state === "error" ? "#FFB5B5" : theme.creamDim }}>
+                {data.supabaseProbe.message}
+              </div>
+              {typeof data.supabaseProbe.elapsedMs === "number" && (
+                <div style={{ marginTop: 4, color: theme.textDim, fontSize: 11 }}>Tiempo estimado: {data.supabaseProbe.elapsedMs} ms</div>
+              )}
+            </div>
+            <div style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${theme.border}`, borderRadius: 14, padding: 12, color: theme.creamDim, fontSize: 12, lineHeight: 1.6 }}>
+              <div style={{ color: theme.goldLight, fontWeight: 900, fontSize: 11, letterSpacing: 1, textTransform: "uppercase" }}>Subir historial local</div>
+              <div style={{ marginTop: 6, color: data.supabaseMigration.state === "ok" ? theme.greenLight : data.supabaseMigration.state === "error" ? "#FFB5B5" : theme.creamDim }}>
+                {data.supabaseMigration.message}
+              </div>
+              <div style={{ marginTop: 4, color: theme.textDim, fontSize: 11 }}>
+                Ideal para copiar pedidos, perfil y reseñas al activar la nube por primera vez.
+              </div>
+            </div>
+            <div style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${theme.border}`, borderRadius: 14, padding: 12, color: theme.creamDim, fontSize: 12, lineHeight: 1.6 }}>
+              <div style={{ color: theme.goldLight, fontWeight: 900, fontSize: 11, letterSpacing: 1, textTransform: "uppercase" }}>Respaldo local</div>
+              <div style={{ marginTop: 6, color: data.supabaseBackup.state === "ok" ? theme.greenLight : data.supabaseBackup.state === "error" ? "#FFB5B5" : theme.creamDim }}>
+                {data.supabaseBackup.message}
+              </div>
+              <div style={{ marginTop: 4, color: theme.textDim, fontSize: 11 }}>
+                Guarda una copia antes de migrar a Supabase o antes de hacer cambios grandes.
+              </div>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
+              <button type="button" onClick={actions.copySupabaseChecklist} style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 12, color: theme.cream, padding: 12, cursor: "pointer", fontWeight: 800 }}>
+                Copiar checklist
+              </button>
+              <button type="button" onClick={actions.copySupabaseSql} style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 12, color: theme.cream, padding: 12, cursor: "pointer", fontWeight: 800 }}>
+                Copiar SQL
+              </button>
+              <button type="button" onClick={actions.copySupabaseEnv} style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 12, color: theme.cream, padding: 12, cursor: "pointer", fontWeight: 800 }}>
+                Copiar .env
+              </button>
+            </div>
+          </div>
+        </HubSection>
+
+        <HubSection title="Pasos rápidos" subtitle="Conecta la base sin salir de la tienda.">
+          <div style={{ display: "grid", gap: 8, color: theme.creamDim, fontSize: 12, lineHeight: 1.65 }}>
+            <div>1. Crea tu proyecto en Supabase.</div>
+            <div>2. Ejecuta el archivo <strong style={{ color: theme.goldLight }}>supabase/schema.sql</strong>.</div>
+            <div>3. Pega la URL y la anon key en este panel.</div>
+            <div>4. Guarda y deja que la app recargue sola.</div>
+          </div>
+        </HubSection>
+      </div>
     ),
     install: (
       <HubSection title="Instalar app" subtitle="Si tu navegador lo permite, instala la tienda como app.">
@@ -3471,7 +4054,23 @@ function ASWAControlHub({
               <div style={{ color: HOME.text, fontSize: 22, fontWeight: 900, marginTop: 6 }}>Herramientas de venta, bonos y pedidos</div>
               <div style={{ color: HOME.muted, fontSize: 12, marginTop: 6, lineHeight: 1.5 }}>Lo que trae ASWA para vender mejor, resumido dentro de tu tienda y conectado al pedido real por WhatsApp.</div>
             </div>
-            <button type="button" onClick={onClose} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 12, color: HOME.text, width: 38, height: 38, cursor: "pointer", fontSize: 18, fontWeight: 800 }}>×</button>
+            <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+              {data.adminSession && (
+                <span style={{ background: "rgba(71,101,75,0.12)", border: `1px solid ${theme.greenLight}55`, color: theme.green, borderRadius: 999, padding: "7px 10px", fontSize: 11, fontWeight: 900, letterSpacing: 0.4 }}>
+                  {data.adminRoleLabel || "Cliente"}
+                </span>
+              )}
+              {data.adminSession && (
+                <button
+                  type="button"
+                  onClick={actions.signOutAdmin}
+                  style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 12, color: HOME.text, padding: "9px 12px", cursor: "pointer", fontSize: 12, fontWeight: 800 }}
+                >
+                  Salir
+                </button>
+              )}
+              <button type="button" onClick={onClose} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 12, color: HOME.text, width: 38, height: 38, cursor: "pointer", fontSize: 18, fontWeight: 800 }}>×</button>
+            </div>
           </div>
         </div>
 
@@ -3481,6 +4080,7 @@ function ASWAControlHub({
             <HubMetric label="Bonos" value={data.bonusPoints} hint={`Nivel ${bonusTierLabel.name}`} color={bonusTierLabel.color} />
             <HubMetric label="Reseñas" value={data.reviews.length} hint={`Promedio ${avgRating}/5`} />
             <HubMetric label="Compartidos" value={data.profile.shareCount || 0} hint="Codigo y enlace" />
+            <HubMetric label="Acceso" value={data.adminRoleLabel || "Cliente"} hint={data.adminRoleHint || "Inicia sesion para el panel"} color={data.canManagePanel ? theme.greenLight : theme.goldLight} />
           </div>
 
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -4324,10 +4924,20 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
   const media = getProductMedia(product);
   const mediaSrc = typeof media === "string" ? media : media?.src;
   const careLabel = product.careLabel || (getSupplierKey(product) === "tela" ? "Cuidados" : getSupplierKey(product) === "bocaditos" ? "Listo para comer" : getSupplierKey(product) === "artesania" ? "Hecho a mano" : "Cocina con calma");
+  const schoolQuantityEditable = Boolean(product.schoolOnly || minQty > 1);
 
   const pres = product.presentations[selPres];
   const subtotal = pres.price * qty;
   const total = subtotal + (zone?.cost || 0);
+  const clampQty = (value) => {
+    const parsed = Number.parseInt(String(value), 10);
+    if (Number.isNaN(parsed)) return minQty;
+    return Math.max(minQty, parsed);
+  };
+
+  useEffect(() => {
+    setQty((current) => Math.max(minQty, current || minQty));
+  }, [minQty]);
 
   return (
     <article
@@ -4447,7 +5057,7 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
               <button
                 key={i}
                 type="button"
-                onClick={() => { setSelPres(i); setQty(1); }}
+                onClick={() => { setSelPres(i); setQty(minQty); }}
                 style={{
                   background: selPres === i ? HOME.soft : "#FFF",
                   border: `1px solid ${selPres === i ? HOME.accent2 : HOME.border}`,
@@ -4483,14 +5093,44 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
         <div style={{ background: HOME.soft2, border: `1px solid ${HOME.border}`, borderRadius: 16, padding: 12, marginBottom: 14 }}>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 10, marginBottom: 8 }}>
             <span style={{ color: HOME.muted, fontSize: 11 }}>Cantidad</span>
-            <span style={{ color: HOME.accent, fontSize: 11, fontWeight: 800 }}>Tu pedido se siente como en casa</span>
+            <span style={{ color: HOME.accent, fontSize: 11, fontWeight: 800 }}>{schoolQuantityEditable ? "Escribe la cantidad que necesitas" : "Tu pedido se siente como en casa"}</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, marginBottom: 10 }}>
-            <div style={{ display: "flex", alignItems: "center", background: "#FFF", borderRadius: 999, border: `1px solid ${HOME.border}`, overflow: "hidden" }}>
-              <button onClick={() => setQty(Math.max(minQty, qty - 1))} type="button" style={{ background: "none", border: "none", color: HOME.text, width: 34, height: 34, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>−</button>
-              <span style={{ fontFamily: "monospace", color: HOME.text, minWidth: 30, textAlign: "center", fontSize: 14, fontWeight: 800 }}>{qty}</span>
-              <button onClick={() => setQty(qty + 1)} type="button" style={{ background: "none", border: "none", color: HOME.text, width: 34, height: 34, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>+</button>
-            </div>
+            {schoolQuantityEditable ? (
+              <div style={{ display: "flex", alignItems: "center", background: "#FFF", borderRadius: 999, border: `1px solid ${HOME.border}`, overflow: "hidden" }}>
+                <button onClick={() => setQty(Math.max(minQty, qty - 1))} type="button" style={{ background: "none", border: "none", color: HOME.text, width: 34, height: 34, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>−</button>
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  min={minQty}
+                  value={qty}
+                  onFocus={(e) => e.currentTarget.select()}
+                  onChange={(e) => setQty(clampQty(e.target.value))}
+                  style={{
+                    appearance: "textfield",
+                    WebkitAppearance: "none",
+                    MozAppearance: "textfield",
+                    border: "none",
+                    background: "transparent",
+                    color: HOME.text,
+                    width: 72,
+                    height: 34,
+                    textAlign: "center",
+                    fontSize: 15,
+                    fontWeight: 900,
+                    fontFamily: "monospace",
+                    outline: "none",
+                  }}
+                />
+                <button onClick={() => setQty(qty + 1)} type="button" style={{ background: "none", border: "none", color: HOME.text, width: 34, height: 34, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>+</button>
+              </div>
+            ) : (
+              <div style={{ display: "flex", alignItems: "center", background: "#FFF", borderRadius: 999, border: `1px solid ${HOME.border}`, overflow: "hidden" }}>
+                <button onClick={() => setQty(Math.max(minQty, qty - 1))} type="button" style={{ background: "none", border: "none", color: HOME.text, width: 34, height: 34, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>−</button>
+                <span style={{ fontFamily: "monospace", color: HOME.text, minWidth: 30, textAlign: "center", fontSize: 14, fontWeight: 800, padding: "0 6px" }}>{qty}</span>
+                <button onClick={() => setQty(qty + 1)} type="button" style={{ background: "none", border: "none", color: HOME.text, width: 34, height: 34, cursor: "pointer", fontSize: 16, fontWeight: 700 }}>+</button>
+              </div>
+            )}
             <div style={{ textAlign: "right" }}>
               <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Total</div>
               <div style={{ color: HOME.text, fontFamily: "monospace", fontSize: 18, fontWeight: 900 }}>S/ {total.toFixed(2)}</div>
@@ -4902,20 +5542,21 @@ function CartDrawer({ cart, onClose, onRemove }) {
                   </div>
                 )}
 
-                {selectedPaymentMethod.account && (
+                {selectedBankDetail && (
                   <div style={paymentDetailCardStyle(selectedPaymentMethod.color)}>
                     <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
                       <div style={{ minWidth: 190, flex: 1 }}>
-                        <div style={{ color: selectedPaymentMethod.color, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{selectedPaymentMethod.detail}</div>
-                        <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>{selectedPaymentMethod.account}</div>
-                        <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>CCI: {selectedPaymentMethod.cci}</div>
+                        <div style={{ color: selectedPaymentMethod.color, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{selectedBankDetail.bank}</div>
+                        <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>{selectedBankDetail.account}</div>
+                        <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>CCI: {selectedBankDetail.cci}</div>
+                        {selectedBankDetail.swift && <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>SWIFT: {selectedBankDetail.swift}</div>}
                         <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
                           Usa estos datos para transferir al molino. Si quieres, copia la cuenta o el CCI y comparte el comprobante al WhatsApp {ORDER_PHONE_DISPLAY}.
                         </div>
                         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
                           <button
                             type="button"
-                            onClick={() => navigator.clipboard?.writeText(selectedPaymentMethod.account || "")}
+                            onClick={() => navigator.clipboard?.writeText(selectedBankDetail.account || "")}
                             style={{
                               background: "#fff",
                               border: "none",
@@ -4931,7 +5572,7 @@ function CartDrawer({ cart, onClose, onRemove }) {
                           </button>
                           <button
                             type="button"
-                            onClick={() => navigator.clipboard?.writeText(selectedPaymentMethod.cci || "")}
+                            onClick={() => navigator.clipboard?.writeText(selectedBankDetail.cci || "")}
                             style={{
                               background: "transparent",
                               border: `1px solid ${selectedPaymentMethod.color}66`,
@@ -5073,7 +5714,7 @@ function CartDrawer({ cart, onClose, onRemove }) {
 
 // ── APP ──────────────────────────────────────────────────────────────────────
 
-function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer = {}, referralCode = "", referredBy = "", gpsState = {}, initialStep = "cart" }) {
+function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer = {}, referralCode = "", referredBy = "", gpsState = {}, initialStep = "cart", storeKey = "reyleon" }) {
   const [step, setStep] = useState(initialStep);
   const [payment, setPayment] = useState("cod");
   const [status, setStatus] = useState("");
@@ -5105,8 +5746,10 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
   const mixedSuppliers = groups.length > 1;
   const canSend = Boolean(customer.name.trim() && customer.phone.trim() && (fulfillmentMode === "recojo" || customer.address.trim()));
   const activeGps = gpsState?.label && gpsState?.url ? gpsState : null;
-  const selectedPaymentMethod = REYLEON_PAYMENT_METHODS.find((opt) => opt.val === payment) || REYLEON_PAYMENT_METHODS[0];
-  const selectedBankDetail = REYLEON_BANK_DETAILS[selectedPaymentMethod.val] || null;
+  const paymentProfile = getPaymentProfile(storeKey === "aswa" ? "aswa" : "reyleon");
+  const selectedPaymentMethod = paymentProfile.methods.find((opt) => opt.val === payment) || paymentProfile.methods[0];
+  const selectedDigitalDetail = paymentProfile.digitalDetails?.[selectedPaymentMethod.val] || null;
+  const selectedBankDetail = paymentProfile.bankDetails?.[selectedPaymentMethod.val] || null;
 
   const inputStyle = {
     width: "100%",
@@ -5130,6 +5773,13 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
   useEffect(() => {
     setStep(initialStep);
   }, [initialStep]);
+
+  useEffect(() => {
+    const available = paymentProfile.methods.some((opt) => opt.val === payment);
+    if (!available) {
+      setPayment(paymentProfile.methods[0]?.val || "cod");
+    }
+  }, [storeKey]);
 
   const setField = (field, value) => {
     setCustomer((prev) => ({ ...prev, [field]: value }));
@@ -5317,42 +5967,42 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
               <div style={{ background: theme.bgLight, borderRadius: 14, padding: 14, border: `1px solid ${theme.border}`, marginBottom: 14 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-start", marginBottom: 8 }}>
                   <div>
-                    <div style={{ color: theme.cream, fontSize: 14, fontWeight: 800 }}>Cuadro de pagos del molino</div>
+                    <div style={{ color: theme.cream, fontSize: 14, fontWeight: 800 }}>{paymentProfile.title}</div>
                     <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.45, marginTop: 4 }}>
-                      Elige tu medio de pago y revisa los datos del molino antes de cerrar el pedido.
+                      {paymentProfile.intro}
                     </div>
                   </div>
-                  <Badge text="REY LEÓN" color={theme.goldLight} />
+                  <Badge text={paymentProfile.badge} color={paymentProfile.key === "aswa" ? "#22C55E" : theme.goldLight} />
                 </div>
 
                 <div style={{ display: "grid", gap: 10 }}>
-                  {REYLEON_PAYMENT_METHODS.map((opt) => (
+                  {paymentProfile.methods.map((opt) => (
                     <button
                       key={opt.val}
                       onClick={() => setPayment(opt.val)}
-                    style={{
-                      background: payment === opt.val ? theme.bg : theme.bgCard,
-                      border: `1px solid ${payment === opt.val ? opt.color : theme.border}`,
-                      borderRadius: 14,
-                      padding: "12px 14px",
-                      cursor: "pointer",
-                      display: "grid",
-                      gridTemplateColumns: "42px 1fr auto",
-                      gap: 12,
-                      alignItems: "center",
-                      textAlign: "left",
-                    }}
-                  >
-                    <div style={paymentBadgeStyle(opt, payment === opt.val)}>{opt.badge}</div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ color: theme.cream, fontWeight: 800, fontSize: 14 }}>{opt.label}</div>
-                      <div style={{ color: theme.textDim, fontSize: 12, marginTop: 3, lineHeight: 1.4 }}>{opt.detail}</div>
-                      <div style={{ color: theme.creamDim, fontSize: 11, marginTop: 4, lineHeight: 1.4 }}>{opt.hint}</div>
-                    </div>
-                    {payment === opt.val && <span style={{ color: opt.color, fontSize: 16, fontWeight: 800 }}>✓</span>}
-                  </button>
-                ))}
-              </div>
+                      style={{
+                        background: payment === opt.val ? theme.bg : theme.bgCard,
+                        border: `1px solid ${payment === opt.val ? opt.color : theme.border}`,
+                        borderRadius: 14,
+                        padding: "12px 14px",
+                        cursor: "pointer",
+                        display: "grid",
+                        gridTemplateColumns: "42px 1fr auto",
+                        gap: 12,
+                        alignItems: "center",
+                        textAlign: "left",
+                      }}
+                    >
+                      <div style={paymentBadgeStyle(opt, payment === opt.val)}>{opt.badge}</div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ color: theme.cream, fontWeight: 800, fontSize: 14 }}>{opt.label}</div>
+                        <div style={{ color: theme.textDim, fontSize: 12, marginTop: 3, lineHeight: 1.4 }}>{opt.detail}</div>
+                        <div style={{ color: theme.creamDim, fontSize: 11, marginTop: 4, lineHeight: 1.4 }}>{opt.hint}</div>
+                      </div>
+                      {payment === opt.val && <span style={{ color: opt.color, fontSize: 16, fontWeight: 800 }}>✓</span>}
+                    </button>
+                  ))}
+                </div>
 
                 <div style={{ marginTop: 10, background: theme.bg, borderRadius: 12, padding: 12, border: `1px solid ${theme.border}` }}>
                   <div style={{ color: theme.textDim, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Datos visibles</div>
@@ -5369,84 +6019,88 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
                     {selectedPaymentMethod.hint}
                   </div>
                   <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.5, marginTop: 8 }}>
-                    {selectedPaymentMethod.val === "yape"
-                      ? `Envía tu comprobante al WhatsApp del molino: ${ORDER_PHONE_DISPLAY}.`
-                      : selectedPaymentMethod.val === "cod"
-                        ? "Recomendado para empezar: paga al recibir tu pedido."
-                        : `Este método se confirma por WhatsApp con el molino: ${ORDER_PHONE_DISPLAY}.`}
+                    {paymentProfile.contactNote}
                   </div>
                 </div>
 
-                {selectedPaymentMethod.val === "yape" && (
+                {selectedDigitalDetail && (selectedDigitalDetail.qr || selectedDigitalDetail.number) && (
                   <div style={{ marginTop: 12, background: "linear-gradient(135deg, #201038, #11120f)", border: "1px solid #7C3AED55", borderRadius: 14, padding: 12 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
                       <div style={{ minWidth: 190, flex: 1 }}>
-                        <div style={{ color: "#D8B4FE", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Yape del molino</div>
-                        <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>918 429 034</div>
-                        <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>Titular: Noyolith Quine Rojas</div>
-                        <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
-                          Escanea el QR o comparte este número para que el cliente pague directo al molino.
-                        </div>
+                        <div style={{ color: "#D8B4FE", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{selectedDigitalDetail.title}</div>
+                        {selectedDigitalDetail.number && <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>{selectedDigitalDetail.number}</div>}
+                        {selectedDigitalDetail.holder && <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>Titular: {selectedDigitalDetail.holder}</div>}
+                        {selectedDigitalDetail.note && (
+                          <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
+                            {selectedDigitalDetail.note}
+                          </div>
+                        )}
                         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
-                          <button
-                            type="button"
-                            onClick={() => navigator.clipboard?.writeText("918429034")}
-                            style={{
-                              background: "#fff",
-                              border: "none",
-                              borderRadius: 10,
-                              color: "#201038",
-                              padding: "9px 12px",
-                              fontSize: 12,
-                              fontWeight: 900,
-                              cursor: "pointer",
-                            }}
-                          >
-                            Copiar número
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => window.open(ASSETS.yapeQr, "_blank", "noopener,noreferrer")}
-                            style={{
-                              background: "transparent",
-                              border: "1px solid #7C3AED66",
-                              borderRadius: 10,
-                              color: "#D8B4FE",
-                              padding: "9px 12px",
-                              fontSize: 12,
-                              fontWeight: 900,
-                              cursor: "pointer",
-                            }}
-                          >
-                            Abrir QR
-                          </button>
+                          {selectedDigitalDetail.number && (
+                            <button
+                              type="button"
+                              onClick={() => navigator.clipboard?.writeText(selectedDigitalDetail.number.replace(/\s+/g, ""))}
+                              style={{
+                                background: "#fff",
+                                border: "none",
+                                borderRadius: 10,
+                                color: "#201038",
+                                padding: "9px 12px",
+                                fontSize: 12,
+                                fontWeight: 900,
+                                cursor: "pointer",
+                              }}
+                            >
+                              Copiar numero
+                            </button>
+                          )}
+                          {selectedDigitalDetail.qr && (
+                            <button
+                              type="button"
+                              onClick={() => window.open(selectedDigitalDetail.qr, "_blank", "noopener,noreferrer")}
+                              style={{
+                                background: "transparent",
+                                border: "1px solid #7C3AED66",
+                                borderRadius: 10,
+                                color: "#D8B4FE",
+                                padding: "9px 12px",
+                                fontSize: 12,
+                                fontWeight: 900,
+                                cursor: "pointer",
+                              }}
+                            >
+                              Abrir QR
+                            </button>
+                          )}
                         </div>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => window.open(ASSETS.yapeQr, "_blank", "noopener,noreferrer")}
-                        style={{
-                          width: 126,
-                          minWidth: 126,
-                          border: "1px solid #7C3AED55",
-                          borderRadius: 14,
-                          padding: 8,
-                          background: "#0D0520",
-                          cursor: "pointer",
-                          overflow: "hidden",
-                          flexShrink: 0,
-                        }}
-                      >
-                        <img
-                          src={ASSETS.yapeQr}
-                          alt="QR de Yape del molino"
-                          loading="lazy"
-                          style={{ width: "100%", display: "block", objectFit: "contain", borderRadius: 8 }}
-                        />
-                      </button>
+                      {selectedDigitalDetail.qr && (
+                        <button
+                          type="button"
+                          onClick={() => window.open(selectedDigitalDetail.qr, "_blank", "noopener,noreferrer")}
+                          style={{
+                            width: 126,
+                            minWidth: 126,
+                            border: "1px solid #7C3AED55",
+                            borderRadius: 14,
+                            padding: 8,
+                            background: "#0D0520",
+                            cursor: "pointer",
+                            overflow: "hidden",
+                            flexShrink: 0,
+                          }}
+                        >
+                          <img
+                            src={selectedDigitalDetail.qr}
+                            alt={`QR de ${selectedDigitalDetail.title}`}
+                            loading="lazy"
+                            style={{ width: "100%", display: "block", objectFit: "contain", borderRadius: 8 }}
+                          />
+                        </button>
+                      )}
                     </div>
                     <div style={{ marginTop: 10, background: "#0D0520", borderRadius: 10, padding: "9px 12px", color: "#D8B4FE", fontSize: 12, lineHeight: 1.5 }}>
-                      Después de pagar, envía la captura al WhatsApp del molino: <strong style={{ color: theme.cream }}>{ORDER_PHONE_DISPLAY}</strong>.
+                      {paymentProfile.contactNote}
                     </div>
                   </div>
                 )}
@@ -5458,8 +6112,9 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
                         <div style={{ color: selectedPaymentMethod.color, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{selectedBankDetail.bank}</div>
                         <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>{selectedBankDetail.account}</div>
                         <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>CCI: {selectedBankDetail.cci}</div>
+                        {selectedBankDetail.swift && <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 4 }}>SWIFT: {selectedBankDetail.swift}</div>}
                         <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
-                          Usa estos datos para transferir al molino. Copia la cuenta o el CCI y comparte el comprobante por WhatsApp al {ORDER_PHONE_DISPLAY}.
+                          Usa estos datos para transferir. Copia la cuenta o el CCI y comparte el comprobante por WhatsApp.
                         </div>
                         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
                           <button
@@ -5761,8 +6416,20 @@ export default function VNDRX() {
   const [canInstall, setCanInstall] = useState(false);
   const [gpsState, setGpsState] = useState(null);
   const [reviewDraft, setReviewDraft] = useState({ stars: 0, note: "", tag: "" });
+  const [supabaseDraft, setSupabaseDraft] = useState(() => readSupabaseRuntimeConfig());
+  const [supabaseProbe, setSupabaseProbe] = useState({ state: "idle", message: "Sin verificar todavía." });
+  const [supabaseMigration, setSupabaseMigration] = useState({ state: "idle", message: "Aún no se subieron datos locales." });
+  const [supabaseBackup, setSupabaseBackup] = useState({ state: "idle", message: "Aun no generas un respaldo." });
+  const [adminSession, setAdminSession] = useState(null);
+  const [adminRole, setAdminRole] = useState("");
+  const [adminAccessStatus, setAdminAccessStatus] = useState(SUPABASE_ENABLED ? "loading" : "disabled");
+  const [adminAccessError, setAdminAccessError] = useState("");
+  const [authDraft, setAuthDraft] = useState({ email: "", password: "" });
+  const [authSubmitting, setAuthSubmitting] = useState(false);
   const installPromptRef = useRef(null);
   const toastTimerRef = useRef(null);
+  const ordersRef = useRef(orders);
+  const reviewsRef = useRef(reviews);
 
   useEffect(() => {
     try {
@@ -5771,6 +6438,14 @@ export default function VNDRX() {
       // Ignored if storage is unavailable.
     }
   }, [cart]);
+
+  useEffect(() => {
+    ordersRef.current = orders;
+  }, [orders]);
+
+  useEffect(() => {
+    reviewsRef.current = reviews;
+  }, [reviews]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -5817,6 +6492,152 @@ export default function VNDRX() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!SUPABASE_ENABLED) return;
+    let cancelled = false;
+
+    const hydrateSupabaseState = async () => {
+      try {
+        const [remoteOrders, remoteReviews] = await Promise.all([
+          fetchOrdersFromSupabase(),
+          fetchReviewsFromSupabase(),
+        ]);
+        if (cancelled) return;
+
+        const mergedOrders = mergeRecordsById(ordersRef.current, remoteOrders).slice(0, 80);
+        const mergedReviews = mergeRecordsById(reviewsRef.current, remoteReviews).slice(0, 40);
+        setOrders(mergedOrders);
+        setReviews(mergedReviews);
+        syncOrdersToSupabase(mergedOrders).catch((error) => {
+          console.warn("Supabase order hydrate sync failed", error);
+        });
+        syncReviewsToSupabase(mergedReviews).catch((error) => {
+          console.warn("Supabase review hydrate sync failed", error);
+        });
+      } catch (error) {
+        console.warn("Supabase hydrate failed", error);
+      }
+    };
+
+    hydrateSupabaseState();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!SUPABASE_ENABLED || !supabase) return;
+    let cancelled = false;
+    let refreshTimer = null;
+
+    const refreshRemoteState = async () => {
+      if (refreshTimer) {
+        window.clearTimeout(refreshTimer);
+      }
+      refreshTimer = window.setTimeout(async () => {
+        try {
+          const [remoteOrders, remoteReviews] = await Promise.all([
+            fetchOrdersFromSupabase(),
+            fetchReviewsFromSupabase(),
+          ]);
+          if (cancelled) return;
+          setOrders((current) => mergeRecordsById(current, remoteOrders).slice(0, 80));
+          setReviews((current) => mergeRecordsById(current, remoteReviews).slice(0, 40));
+        } catch (error) {
+          console.warn("Supabase realtime refresh failed", error);
+        }
+      }, 180);
+    };
+
+    const channel = supabase
+      .channel("vndrx-live-sync")
+      .on("postgres_changes", { event: "*", schema: "public", table: "vndrx_orders" }, refreshRemoteState)
+      .on("postgres_changes", { event: "*", schema: "public", table: "vndrx_reviews" }, refreshRemoteState)
+      .on("postgres_changes", { event: "*", schema: "public", table: "vndrx_profiles" }, refreshRemoteState)
+      .subscribe();
+
+    return () => {
+      cancelled = true;
+      if (refreshTimer) {
+        window.clearTimeout(refreshTimer);
+      }
+      supabase.removeChannel(channel).catch(() => {});
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!SUPABASE_ENABLED || !supabase?.auth) {
+      setAdminSession(null);
+      setAdminRole("");
+      setAdminAccessStatus("disabled");
+      setAdminAccessError("Conecta Supabase para usar el acceso interno.");
+      return;
+    }
+
+    let cancelled = false;
+
+    const applySession = async (session) => {
+      if (!session?.user) {
+        if (cancelled) return;
+        setAdminSession(null);
+        setAdminRole("");
+        setAdminAccessStatus("signed_out");
+        setAdminAccessError("");
+        return;
+      }
+
+      if (!cancelled) {
+        setAdminAccessStatus("loading");
+        setAdminAccessError("");
+      }
+
+      try {
+        const roleRecord = await fetchUserRoleFromSupabase(session.user.id);
+        if (cancelled) return;
+        const nextRole = roleRecord?.role || "cliente";
+        setAdminSession(session);
+        setAdminRole(nextRole);
+        setAdminAccessStatus(ADMIN_ACCESS_ROLES.has(nextRole) ? "allowed" : "forbidden");
+        setAdminAccessError(roleRecord
+          ? ""
+          : "Este usuario no tiene rol asignado. Agregalo en vndrx_user_roles desde Supabase.");
+      } catch (error) {
+        if (cancelled) return;
+        setAdminSession(session);
+        setAdminRole("cliente");
+        setAdminAccessStatus("error");
+        setAdminAccessError(error?.message || "No se pudo leer el rol de este usuario.");
+      }
+    };
+
+    supabase.auth.getSession().then(({ data }) => {
+      if (cancelled) return;
+      applySession(data.session);
+    }).catch((error) => {
+      if (cancelled) return;
+      setAdminSession(null);
+      setAdminRole("");
+      setAdminAccessStatus("error");
+      setAdminAccessError(error?.message || "No se pudo recuperar la sesion de Supabase.");
+    });
+
+    const { data: authSubscription } = supabase.auth.onAuthStateChange((_event, session) => {
+      applySession(session);
+    });
+
+    return () => {
+      cancelled = true;
+      authSubscription?.subscription?.unsubscribe?.();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!SUPABASE_ENABLED || !profile.referralCode) return;
+    syncProfileToSupabase(profile).catch((error) => {
+      console.warn("Supabase profile sync failed", error);
+    });
+  }, [profile]);
+
   const showToast = (message, type = "info") => {
     setToast({ message, type });
     if (toastTimerRef.current) {
@@ -5824,6 +6645,228 @@ export default function VNDRX() {
     }
     toastTimerRef.current = window.setTimeout(() => setToast(null), 2800);
   };
+
+  const saveSupabaseConnection = () => {
+    const next = {
+      url: supabaseDraft.url.trim(),
+      key: supabaseDraft.key.trim(),
+    };
+    if (!next.url || !next.key) {
+      showToast("Pega la URL y la anon key de Supabase");
+      return;
+    }
+    saveSupabaseRuntimeConfig(next);
+    showToast("Conexion Supabase guardada. Recargando...", "success");
+    window.setTimeout(() => window.location.reload(), 500);
+  };
+
+  const migrateLocalDataToSupabase = async () => {
+    if (!SUPABASE_ENABLED || !supabase) {
+      setSupabaseMigration({ state: "idle", message: "Primero conecta Supabase para poder subir datos." });
+      showToast("Primero conecta Supabase");
+      return;
+    }
+
+    setSupabaseMigration({ state: "checking", message: "Subiendo pedidos, perfil y reseñas locales..." });
+
+    try {
+      const [orderResults, reviewResults, profileResult] = await Promise.all([
+        syncOrdersToSupabase(ordersRef.current || []),
+        syncReviewsToSupabase(reviewsRef.current || []),
+        profile?.referralCode ? syncProfileToSupabase(profile) : Promise.resolve({ skipped: true }),
+      ]);
+
+      const countFailures = (results = []) => results.filter((result) => result && result.ok === false).length;
+      const orderFailures = countFailures(orderResults);
+      const reviewFailures = countFailures(reviewResults);
+      const profileFailed = profileResult && profileResult.ok === false;
+      const totalOrders = ordersRef.current?.length || 0;
+      const totalReviews = reviewsRef.current?.length || 0;
+      const summary = `Subidos ${Math.max(0, totalOrders - orderFailures)} pedidos y ${Math.max(0, totalReviews - reviewFailures)} reseñas${profile?.referralCode ? "" : " (perfil sin código)"}.`;
+
+      if (orderFailures || reviewFailures || profileFailed) {
+        setSupabaseMigration({
+          state: "error",
+          message: `${summary} Revisa si alguna tabla o política falló.`,
+        });
+        showToast("La migración tuvo observaciones");
+        return;
+      }
+
+      setSupabaseMigration({
+        state: "ok",
+        message: summary,
+      });
+      showToast("Datos locales subidos a Supabase", "success");
+    } catch (error) {
+      const message = error?.message || "No se pudo subir la data local a Supabase.";
+      setSupabaseMigration({ state: "error", message });
+      showToast(message);
+    }
+  };
+
+  const downloadLocalBackup = async () => {
+    try {
+      const storageKeys = [];
+      for (let index = 0; index < window.localStorage.length; index += 1) {
+        const key = window.localStorage.key(index);
+        if (key && (key.startsWith("vndrx-") || key === SUPABASE_CONFIG_KEY)) {
+          storageKeys.push(key);
+        }
+      }
+
+      const storageSnapshot = storageKeys.reduce((acc, key) => {
+        const raw = window.localStorage.getItem(key);
+        if (raw == null) return acc;
+        try {
+          acc[key] = JSON.parse(raw);
+        } catch {
+          acc[key] = raw;
+        }
+        return acc;
+      }, {});
+
+      const backup = {
+        meta: {
+          app: "VNDRX",
+          createdAt: new Date().toISOString(),
+          version: 1,
+        },
+        currentState: {
+          profile,
+          orders: ordersRef.current || [],
+          reviews: reviewsRef.current || [],
+          cart,
+          selectedCompany,
+          activeLine,
+        },
+        storageSnapshot,
+      };
+
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const dateCode = new Date().toISOString().slice(0, 10);
+      link.href = url;
+      link.download = `vndrx-backup-${dateCode}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+      setSupabaseBackup({
+        state: "ok",
+        message: `Respaldo descargado con ${storageKeys.length} claves locales.`,
+      });
+      showToast("Respaldo local descargado", "success");
+    } catch (error) {
+      const message = error?.message || "No se pudo generar el respaldo.";
+      setSupabaseBackup({ state: "error", message });
+      showToast(message);
+    }
+  };
+
+  const testSupabaseConnection = async () => {
+    const next = {
+      url: supabaseDraft.url.trim(),
+      key: supabaseDraft.key.trim(),
+    };
+
+    if (!next.url || !next.key) {
+      setSupabaseProbe({ state: "empty", message: "Pega la URL y la anon key para poder probar." });
+      showToast("Primero pega la URL y la anon key");
+      return;
+    }
+
+    setSupabaseProbe({ state: "checking", message: "Probando conexión..." });
+    const result = await probeSupabaseConnection();
+    if (result.ok) {
+      setSupabaseProbe({
+        state: "ok",
+        message: result.message,
+        elapsedMs: result.elapsedMs,
+      });
+      showToast(`Supabase responde en ${result.elapsedMs || 0} ms`, "success");
+      return;
+    }
+
+    setSupabaseProbe({
+      state: "error",
+      message: result.message,
+      elapsedMs: result.elapsedMs,
+    });
+    showToast(result.message || "No se pudo verificar Supabase");
+  };
+
+  const clearSupabaseConnection = () => {
+    clearSupabaseRuntimeConfig();
+    setSupabaseDraft({ url: "", key: "" });
+    setSupabaseProbe({ state: "idle", message: "Sin verificar todavía." });
+    setSupabaseMigration({ state: "idle", message: "Aún no se subieron datos locales." });
+    setSupabaseBackup({ state: "idle", message: "Aun no generas un respaldo." });
+    showToast("Conexion Supabase eliminada. Recargando...");
+    window.setTimeout(() => window.location.reload(), 400);
+  };
+
+  const copySupabaseTemplate = async (text, label) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast(`${label} copiado`, "success");
+    } catch {
+      showToast(`No se pudo copiar ${label.toLowerCase()}`);
+    }
+  };
+
+  const signInAdmin = async () => {
+    if (!SUPABASE_ENABLED || !supabase?.auth) {
+      setAdminAccessError("Primero conecta Supabase para iniciar sesion.");
+      showToast("Conecta Supabase primero");
+      return;
+    }
+
+    const email = authDraft.email.trim();
+    const password = authDraft.password.trim();
+    if (!email || !password) {
+      setAdminAccessError("Escribe email y contraseña para entrar.");
+      showToast("Completa email y contraseña");
+      return;
+    }
+
+    setAuthSubmitting(true);
+    setAdminAccessError("");
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      setAuthDraft((prev) => ({ ...prev, password: "" }));
+      showToast("Sesion iniciada", "success");
+    } catch (error) {
+      const message = error?.message || "No se pudo iniciar sesion.";
+      setAdminAccessError(message);
+      showToast(message);
+    } finally {
+      setAuthSubmitting(false);
+    }
+  };
+
+  const signOutAdmin = async () => {
+    if (!SUPABASE_ENABLED || !supabase?.auth) return;
+    setAuthSubmitting(true);
+    try {
+      await supabase.auth.signOut();
+      setAdminAccessError("");
+      showToast("Sesion cerrada", "success");
+    } catch (error) {
+      const message = error?.message || "No se pudo cerrar sesion.";
+      setAdminAccessError(message);
+      showToast(message);
+    } finally {
+      setAuthSubmitting(false);
+    }
+  };
+
+  const canManagePanel = ADMIN_ACCESS_ROLES.has(adminRole);
+  const adminRoleLabel = ROLE_LABELS[adminRole] || (adminAccessStatus === "disabled" ? "Sin Supabase" : adminAccessStatus === "loading" ? "Verificando" : "Sin sesión");
+  const adminRoleHint = ROLE_HINTS[adminRole] || (adminAccessStatus === "disabled" ? "Activa Supabase primero" : adminAccessStatus === "loading" ? "Leyendo acceso..." : adminAccessError || "Inicia sesión para entrar al panel");
 
   const selectCompany = (companyKey) => {
     setSelectedCompany(companyKey);
@@ -5896,11 +6939,28 @@ export default function VNDRX() {
       referralCode: prev.referralCode || makeReferralCode(),
       referredBy: order.customer?.referredBy || prev.referredBy,
     }));
+    syncOrdersToSupabase([order]).catch((error) => {
+      console.warn("Supabase order sync failed", error);
+    });
     showToast(`Pedido guardado. +${order.bonusEarned} bonos`, "success");
   };
 
   const updateOrderStatus = (orderId, status) => {
-    setOrders((prev) => prev.map((order) => (order.id === orderId ? { ...order, status } : order)));
+    const updatedAt = new Date().toISOString();
+    const changedOrder = orders.find((order) => order.id === orderId);
+    setOrders((prev) => {
+      const next = prev.map((order) => (
+        order.id === orderId
+          ? { ...order, status, updatedAt }
+          : order
+      ));
+      return next;
+    });
+    if (changedOrder) {
+      syncOrdersToSupabase([{ ...changedOrder, status, updatedAt }]).catch((error) => {
+        console.warn("Supabase order status sync failed", error);
+      });
+    }
     showToast(`Estado actualizado: ${status}`);
   };
 
@@ -5908,6 +6968,9 @@ export default function VNDRX() {
 
   const removeOrder = (orderId) => {
     setOrders((prev) => prev.filter((order) => order.id !== orderId));
+    deleteOrderFromSupabase(orderId).catch((error) => {
+      console.warn("Supabase order delete failed", error);
+    });
     showToast("Pedido eliminado");
   };
 
@@ -5956,11 +7019,15 @@ export default function VNDRX() {
     const entry = {
       id: `REV-${Date.now()}`,
       createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       stars: reviewDraft.stars,
       note: reviewDraft.note.trim(),
       tag: reviewDraft.tag.trim(),
     };
     setReviews((prev) => [entry, ...prev].slice(0, 20));
+    syncReviewsToSupabase([entry]).catch((error) => {
+      console.warn("Supabase review sync failed", error);
+    });
     setReviewDraft({ stars: 0, note: "", tag: "" });
     showToast("Gracias por tu calificacion", "success");
   };
@@ -6183,6 +7250,20 @@ export default function VNDRX() {
   };
 
   const selectedCompanyView = selectedCompany ? COMPANY_VIEWS[selectedCompany] : null;
+  const scene = selectedCompanyView?.look || {
+    page: HOME.page,
+    heroTop: "#FFF9F2",
+    heroBottom: HOME.page,
+    nav: "rgba(255, 253, 248, 0.9)",
+    surface: HOME.surface,
+    surface2: HOME.soft2,
+    accent: HOME.accent,
+    accent2: HOME.accent2,
+    leaf: HOME.leaf,
+    leaf2: HOME.leaf2,
+    shadow: HOME.shadow,
+    glow: "none",
+  };
   const companyFilters = selectedCompany ? COMPANY_FILTERS[selectedCompany] || [] : [];
   const isAswa = selectedCompany === "aswa";
   const isJora = selectedCompany === "jora";
@@ -6213,6 +7294,21 @@ export default function VNDRX() {
     topSupplierName,
     gpsState,
     canInstall,
+    supabaseEnabled: SUPABASE_ENABLED,
+    supabaseUrl: SUPABASE_RUNTIME_CONFIG.url || "",
+    supabaseDraft,
+    supabaseProbe,
+    supabaseMigration,
+    supabaseBackup,
+    adminSession,
+    adminRole,
+    adminAccessStatus,
+    adminAccessError,
+    adminRoleLabel,
+    adminRoleHint,
+    authDraft,
+    authSubmitting,
+    canManagePanel,
     promoAssets: isAswa ? ASWA_PROMO_LIBRARY : isJora ? JORA_PROMO_LIBRARY : [],
   };
 
@@ -6236,6 +7332,19 @@ export default function VNDRX() {
     removeOrder,
     setReviewDraft,
     saveReview,
+    setSupabaseDraft,
+    saveSupabaseConnection,
+    migrateLocalDataToSupabase,
+    testSupabaseConnection,
+    downloadLocalBackup,
+    clearSupabaseConnection,
+    copySupabaseSql: () => copySupabaseTemplate(SUPABASE_SCHEMA_TEXT, "SQL de Supabase"),
+    copySupabaseEnv: () => copySupabaseTemplate(SUPABASE_ENV_TEXT, "Plantilla .env"),
+    copySupabaseChecklist: () => copySupabaseTemplate(SUPABASE_CHECKLIST_TEXT, "Checklist"),
+    setAuthDraft,
+    signInAdmin,
+    signOutAdmin,
+    setHubTab,
   };
 
   const toastBubble = toast ? (
@@ -6262,48 +7371,51 @@ export default function VNDRX() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: HOME.page, fontFamily: "'Trebuchet MS', 'Segoe UI', sans-serif", color: HOME.text }}>
-      <style>{`* { box-sizing: border-box; } ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: ${HOME.page}; } ::-webkit-scrollbar-thumb { background: ${HOME.border}; border-radius: 3px; } input { outline: none; } input::placeholder { color: ${HOME.muted}; } input:focus { border-color: ${HOME.accent} !important; }`}</style>
+    <div style={{ minHeight: "100vh", background: scene.glow === "none" ? scene.page : `${scene.glow}, ${scene.page}`, fontFamily: "'Trebuchet MS', 'Segoe UI', sans-serif", color: scene.text, position: "relative", isolation: "isolate", overflow: "hidden" }}>
+      <style>{`* { box-sizing: border-box; } ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: ${scene.page}; } ::-webkit-scrollbar-thumb { background: ${scene.border}; border-radius: 3px; } input { outline: none; } input::placeholder { color: ${scene.muted}; } input:focus { border-color: ${scene.accent} !important; }`}</style>
 
       {/* NAV */}
-      <nav style={{ background: "rgba(255, 252, 248, 0.9)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${HOME.border}`, padding: "0 20px", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 8px 20px rgba(76, 56, 23, 0.06)" }}>
+      <nav style={{ background: scene.nav, backdropFilter: "blur(16px)", borderBottom: `1px solid ${scene.border}`, padding: "0 20px", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 10px 26px rgba(76, 56, 23, 0.08)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.accent2})`, borderRadius: 16, width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, boxShadow: "0 10px 20px rgba(71,101,75,0.18)" }}>{isAswa ? "🌽" : isJora ? "🍯" : isTela ? "🧵" : isBocaditos ? "🍪" : isArtesania ? "🏺" : "🌾"}</div>
+          <div style={{ background: `linear-gradient(135deg, ${scene.leaf}, ${scene.accent2})`, borderRadius: 16, width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, boxShadow: "0 10px 20px rgba(71,101,75,0.18)" }}>{isAswa ? "🌽" : isJora ? "🍯" : isTela ? "🧵" : isBocaditos ? "🍪" : isArtesania ? "🏺" : "🌾"}</div>
           <div>
-            <div style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 900, color: HOME.text, lineHeight: 1 }}>{selectedCompanyView?.shortName || "VNDRX"}</div>
-            <div style={{ fontSize: 10, color: HOME.muted, letterSpacing: 1.8, fontFamily: "monospace", textTransform: "uppercase" }}>{selectedCompanyView?.tagline || "pedido facil y cercano"}</div>
+            <div style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 900, color: scene.text, lineHeight: 1 }}>{selectedCompanyView?.shortName || "VNDRX"}</div>
+            <div style={{ fontSize: 10, color: scene.muted, letterSpacing: 1.8, fontFamily: "monospace", textTransform: "uppercase" }}>{selectedCompanyView?.tagline || "pedido facil y cercano"}</div>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 6, marginTop: 6, background: SUPABASE_ENABLED ? "#EAF7ED" : scene.surface2, border: `1px solid ${SUPABASE_ENABLED ? "#BFE7C6" : scene.border}`, color: SUPABASE_ENABLED ? scene.leaf : scene.muted, borderRadius: 999, padding: "4px 8px", fontSize: 9, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>
+              {SUPABASE_ENABLED ? "Supabase activo" : "Modo local"}
+            </div>
           </div>
         </div>
         <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder={`Buscar en ${selectedCompanyView?.shortName || "la tienda"}...`} style={{ background: "#FFF", border: `1px solid ${HOME.border}`, borderRadius: 999, color: HOME.text, padding: "10px 14px", fontSize: 13, width: 240, boxShadow: "0 8px 16px rgba(76,56,23,0.05)" }} />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder={`Buscar en ${selectedCompanyView?.shortName || "la tienda"}...`} style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 999, color: scene.text, padding: "10px 14px", fontSize: 13, width: 240, boxShadow: "0 10px 20px rgba(76,56,23,0.06)" }} />
           {selectedCompanyView && (
-            <button onClick={changeCompany} style={{ background: "#FFF", border: `1px solid ${HOME.border}`, borderRadius: 999, color: HOME.text, padding: "10px 14px", cursor: "pointer", fontSize: 13, fontWeight: 800, boxShadow: "0 8px 16px rgba(76,56,23,0.05)" }}>
+            <button onClick={changeCompany} style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 999, color: scene.text, padding: "10px 14px", cursor: "pointer", fontSize: 13, fontWeight: 800, boxShadow: "0 10px 20px rgba(76,56,23,0.06)" }}>
               Cambiar empresa
             </button>
           )}
-          <button onClick={() => openCart("cart")} style={{ background: cartCount > 0 ? `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})` : "#FFF", border: `1px solid ${cartCount > 0 ? HOME.leaf : HOME.border}`, borderRadius: 999, color: cartCount > 0 ? "#fff" : HOME.text, padding: "10px 15px", cursor: "pointer", fontSize: 13, fontWeight: 800, boxShadow: cartCount > 0 ? "0 10px 18px rgba(71,101,75,0.16)" : "0 8px 16px rgba(76,56,23,0.05)" }}>
+          <button onClick={() => openCart("cart")} style={{ background: cartCount > 0 ? `linear-gradient(135deg, ${scene.leaf}, ${scene.leaf2})` : scene.surface, border: `1px solid ${cartCount > 0 ? scene.leaf : scene.border}`, borderRadius: 999, color: cartCount > 0 ? "#fff" : scene.text, padding: "10px 15px", cursor: "pointer", fontSize: 13, fontWeight: 800, boxShadow: cartCount > 0 ? "0 12px 22px rgba(71,101,75,0.16)" : "0 10px 20px rgba(76,56,23,0.06)" }}>
             🛒 {cartCount > 0 ? `${cartCount} items` : "Carrito"}
           </button>
         </div>
       </nav>
 
       {/* HERO / WELCOME */}
-      <div style={{ background: `linear-gradient(180deg, #FFF9F2 0%, ${HOME.page} 100%)`, borderBottom: `1px solid ${HOME.border}`, padding: "34px 20px 24px" }}>
+      <div style={{ background: `linear-gradient(180deg, ${scene.heroTop} 0%, ${scene.heroBottom} 100%)`, borderBottom: `1px solid ${scene.border}`, padding: "34px 20px 24px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.15fr) minmax(0, 0.85fr)", gap: 18, alignItems: "stretch" }}>
-            <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 28, padding: 24, boxShadow: HOME.shadow }}>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 999, padding: "6px 14px", marginBottom: 14, fontSize: 11, color: HOME.accent, fontFamily: "monospace", letterSpacing: 1, textTransform: "uppercase" }}>
+            <div style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 28, padding: 24, boxShadow: scene.shadow }}>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: scene.surface2, border: `1px solid ${scene.border}`, borderRadius: 999, padding: "6px 14px", marginBottom: 14, fontSize: 11, color: scene.accent, fontFamily: "monospace", letterSpacing: 1, textTransform: "uppercase" }}>
                 {selectedCompanyView?.heroNote || "Te atendemos como en casa"}
               </div>
-              <h1 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(30px,4vw,48px)", fontWeight: 900, lineHeight: 1.05, margin: "0 0 10px", color: HOME.text }}>
+              <h1 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(30px,4vw,48px)", fontWeight: 900, lineHeight: 1.05, margin: "0 0 10px", color: scene.text }}>
                 {selectedCompanyView?.heroTitle || "Pide tranquilo, recibe en casa"}
               </h1>
-              <p style={{ color: HOME.muted, fontSize: 15, lineHeight: 1.75, margin: "0 0 18px", maxWidth: 600 }}>
+              <p style={{ color: scene.muted, fontSize: 15, lineHeight: 1.75, margin: "0 0 18px", maxWidth: 600 }}>
                 {selectedCompanyView?.heroText || "En VNDRX te ayudamos a elegir, pagar y pedir sin enredos. Todo esta pensado para que tu cliente se sienta acompañado, como cuando alguien de confianza le atiende en persona."}
               </p>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 18 }}>
                 {(selectedCompanyView?.heroChips || ["pedido facil", "foto real", "whatsapp directo", "pago claro"]).map((item) => (
-                  <span key={item} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 999, padding: "7px 11px", fontSize: 11, color: HOME.text, fontWeight: 700 }}>
+                  <span key={item} style={{ background: scene.surface2, border: `1px solid ${scene.border}`, borderRadius: 999, padding: "7px 11px", fontSize: 11, color: scene.text, fontWeight: 700 }}>
                     {item}
                   </span>
                 ))}
@@ -6312,7 +7424,7 @@ export default function VNDRX() {
                 <button
                   type="button"
                   onClick={() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" })}
-                  style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})`, border: "none", color: "#fff", borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.18)" }}
+                  style={{ background: `linear-gradient(135deg, ${scene.leaf}, ${scene.leaf2})`, border: "none", color: "#fff", borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.18)" }}
                 >
                   Ver catálogo
                 </button>
@@ -6325,14 +7437,14 @@ export default function VNDRX() {
                         "ASWA La Rica Chicha",
                         "Mas productos dentro de VNDRX, sin salir de la app",
                       )}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Mas productos ASWA
                     </button>
                     <button
                       type="button"
                       onClick={() => window.open(ASWA_APP_URL, "_blank", "noopener,noreferrer")}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Abrir en pestaña
                     </button>
@@ -6342,14 +7454,14 @@ export default function VNDRX() {
                     <button
                       type="button"
                       onClick={() => supportWhatsApp("Hola, quiero pedir chicha de jora.")}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Pedir Jora
                     </button>
                     <button
                       type="button"
                       onClick={() => supportWhatsApp("Hola, quiero saber como usar la chicha de jora para sazonar comida y beberla con miel de abeja.")}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Consultar uso
                     </button>
@@ -6359,14 +7471,14 @@ export default function VNDRX() {
                     <button
                       type="button"
                       onClick={() => supportWhatsApp("Hola, quiero consultar productos de la tienda Tela.")}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Pedir Tela
                     </button>
                     <button
                       type="button"
                       onClick={() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" })}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Ver hogar
                     </button>
@@ -6376,14 +7488,14 @@ export default function VNDRX() {
                     <button
                       type="button"
                       onClick={() => supportWhatsApp("Hola, quiero pedir bocaditos regionales artesanales.")}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Pedir Bocaditos
                     </button>
                     <button
                       type="button"
                       onClick={() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" })}
-                      style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                      style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                     >
                       Ver bocaditos
                     </button>
@@ -6392,7 +7504,7 @@ export default function VNDRX() {
                   <button
                     type="button"
                     onClick={() => supportWhatsApp(`Hola, quiero consultar precios de ${selectedCompanyView?.shortName || "la tienda"}.`)}
-                    style={{ background: "#FFF", border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
+                    style={{ background: "#FFF", border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "13px 18px", cursor: "pointer", fontWeight: 800 }}
                   >
                     Contactar ventas
                   </button>
@@ -6401,39 +7513,39 @@ export default function VNDRX() {
             </div>
 
             <div style={{ display: "grid", gap: 14 }}>
-              <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 24, padding: 18, boxShadow: HOME.shadow }}>
-                <div style={{ color: HOME.accent, fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase", marginBottom: 10 }}>Cómo pedir</div>
+              <div style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 24, padding: 18, boxShadow: scene.shadow }}>
+                <div style={{ color: scene.accent, fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase", marginBottom: 10 }}>Cómo pedir</div>
                 <div style={{ display: "grid", gap: 10 }}>
                   {[
                     "1. Elige tu producto favorito",
                     "2. Toca Agregar o Pedir ahora",
                     "3. Confirma por WhatsApp",
                   ].map((step) => (
-                    <div key={step} style={{ background: HOME.soft2, border: `1px solid ${HOME.border}`, borderRadius: 16, padding: "10px 12px", color: HOME.text, fontSize: 13, fontWeight: 700, lineHeight: 1.45 }}>
+                    <div key={step} style={{ background: scene.surface2, border: `1px solid ${scene.border}`, borderRadius: 16, padding: "10px 12px", color: scene.text, fontSize: 13, fontWeight: 700, lineHeight: 1.45 }}>
                       {step}
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div style={{ background: `linear-gradient(135deg, #FFF8EF, #F6EEDD)`, border: `1px solid ${HOME.border}`, borderRadius: 24, padding: 18, boxShadow: HOME.shadow }}>
-                <div style={{ color: HOME.muted, fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>Atencion directa</div>
-                <div style={{ color: HOME.text, fontSize: 18, fontWeight: 900, fontFamily: "Georgia, serif", marginBottom: 10 }}>{selectedCompanyView?.infoTitle || "Tu pedido entra al WhatsApp central"}</div>
+              <div style={{ background: `linear-gradient(135deg, #FFF8EF, #F6EEDD)`, border: `1px solid ${scene.border}`, borderRadius: 24, padding: 18, boxShadow: scene.shadow }}>
+                <div style={{ color: scene.muted, fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>Atencion directa</div>
+                <div style={{ color: scene.text, fontSize: 18, fontWeight: 900, fontFamily: "Georgia, serif", marginBottom: 10 }}>{selectedCompanyView?.infoTitle || "Tu pedido entra al WhatsApp central"}</div>
                 <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }}>
                   <div>
-                    <div style={{ color: HOME.muted, fontSize: 11, textTransform: "uppercase", fontWeight: 800, letterSpacing: 1 }}>Número</div>
-                    <div style={{ color: HOME.leaf, fontSize: 18, fontWeight: 900 }}>{ORDER_PHONE_DISPLAY}</div>
+                    <div style={{ color: scene.muted, fontSize: 11, textTransform: "uppercase", fontWeight: 800, letterSpacing: 1 }}>Número</div>
+                    <div style={{ color: scene.leaf, fontSize: 18, fontWeight: 900 }}>{ORDER_PHONE_DISPLAY}</div>
                   </div>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                     {isAswa ? (
                       <>
-                        <span style={{ background: "#EAF5EA", color: HOME.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>ASWA</span>
-                        <span style={{ background: "#F9EEDB", color: HOME.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Escolar gratis</span>
+                        <span style={{ background: "#EAF5EA", color: scene.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>ASWA</span>
+                        <span style={{ background: "#F9EEDB", color: scene.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Escolar gratis</span>
                       </>
                     ) : isJora ? (
                       <>
-                        <span style={{ background: "#F9EEDB", color: HOME.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Jora</span>
-                        <span style={{ background: "#EAF5EA", color: HOME.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Sazonador y bebida</span>
+                        <span style={{ background: "#F9EEDB", color: scene.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Jora</span>
+                        <span style={{ background: "#EAF5EA", color: scene.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Sazonador y bebida</span>
                       </>
                     ) : isTela ? (
                       <>
@@ -6452,8 +7564,8 @@ export default function VNDRX() {
                       </>
                     ) : (
                       <>
-                        <span style={{ background: "#F9EEDB", color: HOME.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Rey Leon</span>
-                        <span style={{ background: "#EAF5EA", color: HOME.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Delivery por zona</span>
+                        <span style={{ background: "#F9EEDB", color: scene.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Rey Leon</span>
+                        <span style={{ background: "#EAF5EA", color: scene.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Delivery por zona</span>
                       </>
                     )}
                   </div>
@@ -6463,17 +7575,17 @@ export default function VNDRX() {
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: 12, marginTop: 14 }}>
-            <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14, boxShadow: HOME.shadow }}>
-              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Atención amable</div>
-              <div style={{ color: HOME.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Te guiamos paso a paso para que comprar se sienta fácil y cercano.</div>
+            <div style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 18, padding: 14, boxShadow: scene.shadow }}>
+              <div style={{ color: scene.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Atención amable</div>
+              <div style={{ color: scene.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Te guiamos paso a paso para que comprar se sienta fácil y cercano.</div>
             </div>
-            <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14, boxShadow: HOME.shadow }}>
-              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Pedido rápido</div>
-              <div style={{ color: HOME.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Cada producto tiene un botón para agregarlo o abrir el pedido al instante.</div>
+            <div style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 18, padding: 14, boxShadow: scene.shadow }}>
+              <div style={{ color: scene.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Pedido rápido</div>
+              <div style={{ color: scene.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Cada producto tiene un botón para agregarlo o abrir el pedido al instante.</div>
             </div>
-            <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14, boxShadow: HOME.shadow }}>
-              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Confianza</div>
-              <div style={{ color: HOME.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Fotos reales, precios visibles y mensaje listo para WhatsApp.</div>
+            <div style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 18, padding: 14, boxShadow: scene.shadow }}>
+              <div style={{ color: scene.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Confianza</div>
+              <div style={{ color: scene.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Fotos reales, precios visibles y mensaje listo para WhatsApp.</div>
             </div>
           </div>
         </div>
@@ -6500,17 +7612,17 @@ export default function VNDRX() {
         <div style={{
           background: "rgba(255,255,255,0.82)",
           backdropFilter: "blur(8px)",
-          border: `1px solid ${HOME.border}`,
+          border: `1px solid ${scene.border}`,
           borderRadius: 22,
           padding: 16,
-          boxShadow: HOME.shadow,
+          boxShadow: scene.shadow,
         }}>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
             <div>
-              <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>
+              <div style={{ color: scene.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>
                 {isAswa ? "Centro ASWA" : isJora ? "Chicha de Jora" : isTela ? "Tienda Tela" : isBocaditos ? "Bocaditos Regionales" : isArtesania ? "Artesania Lamista" : "Molino Rey Leon"}
               </div>
-              <div style={{ color: HOME.text, fontSize: 16, fontWeight: 900, marginTop: 4 }}>
+              <div style={{ color: scene.text, fontSize: 16, fontWeight: 900, marginTop: 4 }}>
                 {isAswa
                   ? "Tutorial, referidos, bonos, GPS, historial y soporte en un solo lugar"
                   : isJora
@@ -6523,7 +7635,7 @@ export default function VNDRX() {
                           ? "Tinajas, platos, pate, olla arrocera, tiestos y floreros artesanales en una tienda separada"
                     : "Arroz, derivados y precios directos del molino"}
               </div>
-              <div style={{ color: HOME.muted, fontSize: 12, lineHeight: 1.5, marginTop: 4 }}>
+              <div style={{ color: scene.muted, fontSize: 12, lineHeight: 1.5, marginTop: 4 }}>
                 {isAswa
                   ? "Lo mejor de ASWA sumado a tu tienda actual para vender mas rapido."
                   : isJora
@@ -6538,27 +7650,27 @@ export default function VNDRX() {
               </div>
             </div>
             {isAswa ? (
-              <button type="button" onClick={() => { setHubTab("tutorial"); setHubOpen(true); }} style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})`, border: "none", color: "#fff", borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.16)" }}>
+              <button type="button" onClick={() => { setHubTab("tutorial"); setHubOpen(true); }} style={{ background: `linear-gradient(135deg, ${scene.leaf}, ${scene.leaf2})`, border: "none", color: "#fff", borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.16)" }}>
                 Abrir hub
               </button>
             ) : isJora ? (
-              <button type="button" onClick={() => supportWhatsApp("Hola, quiero consultar la chicha de jora.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+              <button type="button" onClick={() => supportWhatsApp("Hola, quiero consultar la chicha de jora.")} style={{ background: scene.surface2, border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
                 Consultar Jora
               </button>
             ) : isTela ? (
-              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir productos de la tienda Tela.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir productos de la tienda Tela.")} style={{ background: scene.surface2, border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
                 Pedir Tela
               </button>
             ) : isBocaditos ? (
-              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir bocaditos regionales artesanales.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir bocaditos regionales artesanales.")} style={{ background: scene.surface2, border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
                 Pedir Bocaditos
               </button>
             ) : isArtesania ? (
-              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir artesania lamista.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir artesania lamista.")} style={{ background: scene.surface2, border: `1px solid ${scene.border}`, color: scene.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
                 Pedir Artesania
               </button>
             ) : (
-              <div style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 999, padding: "10px 14px", color: HOME.text, fontSize: 12, fontWeight: 800 }}>
+              <div style={{ background: scene.surface2, border: `1px solid ${scene.border}`, borderRadius: 999, padding: "10px 14px", color: scene.text, fontSize: 12, fontWeight: 800 }}>
                 {selectedCompanyView?.companyPhone || ORDER_PHONE_DISPLAY}
               </div>
             )}
@@ -6583,10 +7695,10 @@ export default function VNDRX() {
                   onClick={() => { setHubTab(item.id); setHubOpen(true); }}
                   style={{
                     background: "#FFF",
-                    border: `1px solid ${HOME.border}`,
+                    border: `1px solid ${scene.border}`,
                     borderRadius: 14,
                     padding: "11px 10px",
-                    color: HOME.text,
+                    color: scene.text,
                     cursor: "pointer",
                     textAlign: "left",
                     boxShadow: "0 8px 18px rgba(76,56,23,0.04)",
@@ -6607,8 +7719,8 @@ export default function VNDRX() {
                 )}
                 style={{
                   background: "linear-gradient(135deg, #F9EEDB, #FFF8EF)",
-                  border: `1px solid ${HOME.border}`,
-                  color: HOME.text,
+                  border: `1px solid ${scene.border}`,
+                  color: scene.text,
                   borderRadius: 999,
                   padding: "11px 16px",
                   cursor: "pointer",
@@ -6630,9 +7742,9 @@ export default function VNDRX() {
                 { title: "Bebible", desc: "Endulza al gusto", color: "#F0C040" },
                 { title: "Miel recomendada", desc: "Sabor mas suave y natural", color: "#8A5A1C" },
               ].map((item) => (
-                <div key={item.title} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 14, boxShadow: HOME.shadow }}>
+                <div key={item.title} style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 14, padding: 14, boxShadow: scene.shadow }}>
                   <div style={{ display: "inline-flex", background: `${item.color}20`, color: item.color, borderRadius: 999, padding: "5px 10px", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{item.title}</div>
-                  <div style={{ color: HOME.text, fontSize: 13, fontWeight: 700, lineHeight: 1.5, marginTop: 8 }}>{item.desc}</div>
+                  <div style={{ color: scene.text, fontSize: 13, fontWeight: 700, lineHeight: 1.5, marginTop: 8 }}>{item.desc}</div>
                 </div>
               ))}
             </div>
@@ -6665,9 +7777,9 @@ export default function VNDRX() {
                 { title: "Moda regional", desc: "Panueloletas y vestidos", color: "#D58AA7" },
                 { title: "Hogar", desc: "Sabanas y cubrecamas", color: "#A9CFB1" },
               ].map((item) => (
-                <div key={item.title} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 14, boxShadow: HOME.shadow }} >
+                <div key={item.title} style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 14, padding: 14, boxShadow: scene.shadow }} >
                   <div style={{ display: "inline-flex", background: `${item.color}20`, color: item.color, borderRadius: 999, padding: "5px 10px", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{item.title}</div>
-                  <div style={{ color: HOME.text, fontSize: 13, fontWeight: 700, lineHeight: 1.5, marginTop: 8 }}>{item.desc}</div>
+                  <div style={{ color: scene.text, fontSize: 13, fontWeight: 700, lineHeight: 1.5, marginTop: 8 }}>{item.desc}</div>
                 </div>
               ))}
             </div>
@@ -6700,9 +7812,9 @@ export default function VNDRX() {
                 { title: "Galletas", desc: "Rosquitas y turcas", color: "#8C3F21" },
                 { title: "Dulces", desc: "Turrón, cocada y suspiros", color: "#D97A2E" },
               ].map((item) => (
-                <div key={item.title} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 14, boxShadow: HOME.shadow }} >
+                <div key={item.title} style={{ background: scene.surface, border: `1px solid ${scene.border}`, borderRadius: 14, padding: 14, boxShadow: scene.shadow }} >
                   <div style={{ display: "inline-flex", background: `${item.color}20`, color: item.color, borderRadius: 999, padding: "5px 10px", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{item.title}</div>
-                  <div style={{ color: HOME.text, fontSize: 13, fontWeight: 700, lineHeight: 1.5, marginTop: 8 }}>{item.desc}</div>
+                  <div style={{ color: scene.text, fontSize: 13, fontWeight: 700, lineHeight: 1.5, marginTop: 8 }}>{item.desc}</div>
                 </div>
               ))}
             </div>
@@ -6731,7 +7843,7 @@ export default function VNDRX() {
       </div>
 
       {/* LINE FILTERS */}
-      <div style={{ background: "rgba(255,255,255,0.74)", borderBottom: `1px solid ${HOME.border}`, padding: "12px 20px", display: "flex", gap: 8, overflowX: "auto", backdropFilter: "blur(8px)" }}>
+      <div style={{ background: scene.nav, borderBottom: `1px solid ${scene.border}`, padding: "12px 20px", display: "flex", gap: 8, overflowX: "auto", backdropFilter: "blur(16px)", boxShadow: "0 8px 20px rgba(76,56,23,0.04)" }}>
         {companyFilters.map(({ id, label }) => {
           const lc = id === "all"
             ? null
@@ -6751,15 +7863,15 @@ export default function VNDRX() {
               bocaditos_galleta: LINE_COLORS.bocaditos_galleta,
               bocaditos_dulce: LINE_COLORS.bocaditos_dulce,
               bocaditos_chifle: LINE_COLORS.bocaditos_chifle,
-              bidon: { badge: HOME.gold, bg: "#FDF0D8", label: "BIDON" },
-              escolar: { badge: HOME.leaf, bg: "#EAF5EA", label: "ESCOLAR" },
-            }[id] || { badge: HOME.accent2, bg: HOME.soft, label });
+              bidon: { badge: scene.accent2, bg: "#FDF0D8", label: "BIDON" },
+              escolar: { badge: scene.leaf, bg: "#EAF5EA", label: "ESCOLAR" },
+            }[id] || { badge: scene.accent2, bg: scene.surface2, label });
           const active = activeLine === id;
           return (
             <button key={id} onClick={() => setActiveLine(id)} style={{
-              background: active ? (lc ? `${lc.badge}18` : HOME.soft) : "#FFF",
-              border: `1px solid ${active ? (lc ? lc.badge : HOME.accent2) : HOME.border}`,
-              borderRadius: 999, color: active ? HOME.text : HOME.muted,
+              background: active ? (lc ? `${lc.badge}18` : scene.surface2) : "#FFF",
+              border: `1px solid ${active ? (lc ? lc.badge : scene.accent2) : scene.border}`,
+              borderRadius: 999, color: active ? scene.text : scene.muted,
               padding: "8px 16px", cursor: "pointer", fontSize: 12,
               fontWeight: active ? 800 : 700, whiteSpace: "nowrap", transition: "all 0.2s",
               boxShadow: active ? "0 8px 16px rgba(76,56,23,0.08)" : "none",
@@ -6768,7 +7880,7 @@ export default function VNDRX() {
             </button>
           );
         })}
-        <span style={{ marginLeft: "auto", color: HOME.muted, fontSize: 12, alignSelf: "center", whiteSpace: "nowrap" }}>
+        <span style={{ marginLeft: "auto", color: scene.muted, fontSize: 12, alignSelf: "center", whiteSpace: "nowrap" }}>
           {filtered.length} producto{filtered.length !== 1 ? "s" : ""}
         </span>
       </div>
@@ -6975,6 +8087,7 @@ export default function VNDRX() {
           referredBy={profile.referredBy}
           gpsState={gpsState}
           initialStep={cartStartStep}
+          storeKey={ASWA_PAYMENT_STORE_KEYS.has(selectedCompany) ? "aswa" : "reyleon"}
         />
       )}
     </div>
