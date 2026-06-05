@@ -39,6 +39,16 @@ npm install
 npm run dev
 ```
 
+## Modo dueño para pruebas
+
+Abre la tienda con `?dueno=1` al final de la URL:
+
+```text
+https://jsangama.github.io/vndrx/?dueno=1
+```
+
+Ese modo muestra un panel privado para probar cada tienda con datos de prueba, abrir el checkout real y marcar el mensaje como `PRUEBA DUENO - NO DESPACHAR`. Tambien permite borrar carrito y pedidos de prueba guardados en ese dispositivo.
+
 ## Build de produccion
 
 ```bash

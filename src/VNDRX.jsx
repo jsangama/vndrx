@@ -1476,6 +1476,15 @@ const COMPANY_FILTERS = {
 const ORDER_PHONE = "51955273229";
 const ORDER_PHONE_DISPLAY = "955 273 229";
 const ASWA_APP_URL = "https://jsangama.github.io/aswa/?v=guide141";
+const OWNER_TEST_NOTE = "PRUEBA DUENO - NO DESPACHAR";
+const OWNER_TEST_CUSTOMER = {
+  name: "Prueba Dueño VNDRX",
+  phone: "955273229",
+  district: "Zona de prueba",
+  address: "Direccion de prueba - no despachar",
+  reference: "Verificacion interna de tienda",
+  notes: OWNER_TEST_NOTE,
+};
 const REYLEON_PAYMENT_METHODS = [
   {
     val: "cod",
@@ -1896,6 +1905,7 @@ function groupCartBySupplier(cart) {
 
 function buildOrderContactLines(customer, extras = {}) {
   return [
+    extras.ownerTest ? OWNER_TEST_NOTE : null,
     customer.name ? `Nombre: ${customer.name}` : null,
     customer.phone ? `Teléfono: ${customer.phone}` : null,
     customer.district ? `Zona / distrito: ${customer.district}` : null,
@@ -2034,7 +2044,8 @@ function createOrderRecord({ supplier, items, customer, payment, extras }) {
     delivery,
     total,
     bonusEarned: calcBonusPoints(total),
-    status: "pendiente",
+    ownerTest: Boolean(extras?.ownerTest),
+    status: extras?.ownerTest ? "prueba" : "pendiente",
     channel: "whatsapp",
   };
 }
@@ -2049,6 +2060,88 @@ function Badge({ text, color }) {
       letterSpacing: 0.8, fontFamily: "'Trebuchet MS', 'Segoe UI', sans-serif", whiteSpace: "nowrap",
       boxShadow: "0 8px 18px rgba(0,0,0,0.05)",
     }}>{text}</span>
+  );
+}
+
+function OwnerTestPanel({ active, companies, selectedCompany, onTestStore, onClearTests, onExit }) {
+  if (!active) return null;
+
+  return (
+    <div style={{
+      position: "fixed",
+      right: 16,
+      top: 86,
+      zIndex: 120,
+      width: 300,
+      maxWidth: "calc(100vw - 32px)",
+      background: "#111A12F2",
+      border: "1px solid #D9A44166",
+      borderRadius: 16,
+      boxShadow: "0 20px 44px rgba(0,0,0,0.35)",
+      color: "#FFF8E7",
+      overflow: "hidden",
+    }}>
+      <div style={{ padding: 14, borderBottom: "1px solid #D9A44133", background: "#1B281A" }}>
+        <div style={{ color: "#F0C040", fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Modo dueño</div>
+        <div style={{ marginTop: 4, fontSize: 13, lineHeight: 1.45 }}>
+          Prueba pedidos reales con texto marcado como prueba. No aparece para clientes.
+        </div>
+      </div>
+      <div style={{ padding: 12, display: "grid", gap: 8 }}>
+        {companies.map(([key, company]) => (
+          <button
+            key={key}
+            type="button"
+            onClick={() => onTestStore(key)}
+            style={{
+              background: selectedCompany === key ? "#F0C040" : "#243322",
+              border: "1px solid #D9A44144",
+              borderRadius: 10,
+              color: selectedCompany === key ? "#10180F" : "#FFF8E7",
+              padding: "9px 10px",
+              cursor: "pointer",
+              textAlign: "left",
+              fontSize: 12,
+              fontWeight: 800,
+            }}
+          >
+            Probar {company.shortName}
+          </button>
+        ))}
+        <button
+          type="button"
+          onClick={onClearTests}
+          style={{
+            background: "#351A1A",
+            border: "1px solid #F8717166",
+            borderRadius: 10,
+            color: "#FECACA",
+            padding: "10px",
+            cursor: "pointer",
+            fontSize: 12,
+            fontWeight: 900,
+          }}
+        >
+          Borrar pruebas locales
+        </button>
+        <button
+          type="button"
+          onClick={onExit}
+          style={{
+            background: "transparent",
+            border: "1px solid #FFFFFF22",
+            borderRadius: 10,
+            color: "#D7DEC8",
+            padding: "9px",
+            cursor: "pointer",
+            fontSize: 12,
+            fontWeight: 800,
+          }}
+        >
+          Salir del modo dueño
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -5073,7 +5166,7 @@ function CartDrawer({ cart, onClose, onRemove }) {
 
 // ── APP ──────────────────────────────────────────────────────────────────────
 
-function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer = {}, referralCode = "", referredBy = "", gpsState = {}, initialStep = "cart" }) {
+function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer = {}, referralCode = "", referredBy = "", gpsState = {}, initialStep = "cart", ownerTestMode = false }) {
   const [step, setStep] = useState(initialStep);
   const [payment, setPayment] = useState("cod");
   const [status, setStatus] = useState("");
@@ -5136,6 +5229,7 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
   };
 
   const extras = {
+    ownerTest: ownerTestMode,
     gps: activeGps,
     fulfillmentMode,
     gift: giftEnabled ? { enabled: true, relation: giftRelation, recipient: giftName, phone: giftPhone, message: giftMessage } : null,
@@ -5234,7 +5328,7 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
               {step === "cart" ? "Tu pedido real" : "Checkout real"}
             </div>
             <div style={{ color: theme.textDim, fontSize: 11 }}>
-              {mixedSuppliers ? "Pedidos centralizados en un solo WhatsApp" : "Un pedido listo para enviar por WhatsApp"}
+              {ownerTestMode ? "Modo prueba: el mensaje ira marcado como NO DESPACHAR" : mixedSuppliers ? "Pedidos centralizados en un solo WhatsApp" : "Un pedido listo para enviar por WhatsApp"}
             </div>
           </div>
           <button onClick={onClose} style={{ background: theme.bg, border: `1px solid ${theme.border}`, color: theme.cream, borderRadius: 8, width: 32, height: 32, cursor: "pointer", fontSize: 16 }}>×</button>
@@ -5299,6 +5393,12 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
               {status && (
                 <div style={{ background: "#0A1C0A", border: `1px solid ${theme.border}`, borderRadius: 12, padding: "10px 12px", marginBottom: 14, color: theme.greenLight, fontSize: 12 }}>
                   {status}
+                </div>
+              )}
+
+              {ownerTestMode && (
+                <div style={{ background: "#241A08", border: "1px solid #D9A44166", borderRadius: 12, padding: "10px 12px", marginBottom: 14, color: "#F7D37B", fontSize: 12, lineHeight: 1.5 }}>
+                  <strong>Modo dueño:</strong> puedes abrir WhatsApp real para verificar el flujo. El mensaje incluye "{OWNER_TEST_NOTE}" para no despachar por error.
                 </div>
               )}
 
@@ -5761,6 +5861,11 @@ export default function VNDRX() {
   const [canInstall, setCanInstall] = useState(false);
   const [gpsState, setGpsState] = useState(null);
   const [reviewDraft, setReviewDraft] = useState({ stars: 0, note: "", tag: "" });
+  const [ownerTestMode, setOwnerTestMode] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const params = new URLSearchParams(window.location.search);
+    return params.get("dueno") === "1" || params.get("owner") === "1" || window.localStorage.getItem("vndrx-owner-test") === "1";
+  });
   const installPromptRef = useRef(null);
   const toastTimerRef = useRef(null);
 
@@ -5771,6 +5876,11 @@ export default function VNDRX() {
       // Ignored if storage is unavailable.
     }
   }, [cart]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !ownerTestMode) return;
+    window.localStorage.setItem("vndrx-owner-test", "1");
+  }, [ownerTestMode]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -5867,6 +5977,57 @@ export default function VNDRX() {
     openCart("checkout");
     showToast("Pedido rápido listo. Completa tus datos y envíalo.", "success");
   };
+  const testStoreAsOwner = (companyKey) => {
+    const product = products.find((item) => getSupplierKey(item) === companyKey);
+    const pres = product?.presentations?.[0];
+    if (!product || !pres) {
+      showToast("No hay producto disponible para probar esta tienda");
+      return;
+    }
+    setSelectedCompany(companyKey);
+    setActiveLine("all");
+    setSearch("");
+    setHubOpen(false);
+    setEmbeddedStore(null);
+    setCart([{
+      uid: `owner-test-${companyKey}-${product.id}-${Date.now()}`,
+      product,
+      pres,
+      qty: 1,
+      zone: getDefaultZone(product),
+      ownerTest: true,
+    }]);
+    setCartStartStep("checkout");
+    setCartOpen(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    showToast(`Prueba lista para ${COMPANY_VIEWS[companyKey].shortName}`, "success");
+  };
+
+  const clearOwnerTests = () => {
+    setCart([]);
+    setOrders((prev) => prev.filter((order) => !order.ownerTest && !order.customer?.notes?.includes(OWNER_TEST_NOTE)));
+    try {
+      window.localStorage.removeItem("vndrx-cart-v1");
+    } catch {
+      // Local cleanup is optional.
+    }
+    showToast("Pruebas locales borradas", "success");
+  };
+
+  const exitOwnerTestMode = () => {
+    setOwnerTestMode(false);
+    try {
+      window.localStorage.removeItem("vndrx-owner-test");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("dueno");
+      url.searchParams.delete("owner");
+      window.history.replaceState({}, "", url.toString());
+    } catch {
+      // URL cleanup is optional.
+    }
+    showToast("Modo dueño oculto");
+  };
+
   const cartCount = cart.reduce((a, i) => a + i.qty, 0);
   const totalHistory = orders.reduce((a, order) => a + (order.total || 0), 0);
   const bonusPoints = orders.reduce((a, order) => a + (order.bonusEarned || 0), 0);
@@ -5885,6 +6046,10 @@ export default function VNDRX() {
 
   const handleOrderSent = (order) => {
     setOrders((prev) => [order, ...prev].slice(0, 40));
+    if (order.ownerTest) {
+      showToast("Pedido de prueba guardado localmente", "success");
+      return;
+    }
     setProfile((prev) => ({
       ...prev,
       name: order.customer?.name || prev.name,
@@ -6257,8 +6422,24 @@ export default function VNDRX() {
     </div>
   ) : null;
 
+  const ownerTestPanel = (
+    <OwnerTestPanel
+      active={ownerTestMode}
+      companies={Object.entries(COMPANY_VIEWS)}
+      selectedCompany={selectedCompany}
+      onTestStore={testStoreAsOwner}
+      onClearTests={clearOwnerTests}
+      onExit={exitOwnerTestMode}
+    />
+  );
+
   if (!selectedCompany) {
-    return <CompanyChooserScreen onChooseCompany={selectCompany} toastBubble={toastBubble} />;
+    return (
+      <>
+        <CompanyChooserScreen onChooseCompany={selectCompany} toastBubble={toastBubble} />
+        {ownerTestPanel}
+      </>
+    );
   }
 
   return (
@@ -6970,13 +7151,15 @@ export default function VNDRX() {
           onClose={() => setCartOpen(false)}
           onRemove={removeFromCart}
           onOrderSent={handleOrderSent}
-          initialCustomer={profile}
+          initialCustomer={ownerTestMode ? { ...OWNER_TEST_CUSTOMER, referralCode: profile.referralCode, referredBy: profile.referredBy } : profile}
           referralCode={profile.referralCode}
           referredBy={profile.referredBy}
           gpsState={gpsState}
           initialStep={cartStartStep}
+          ownerTestMode={ownerTestMode}
         />
       )}
+      {ownerTestPanel}
     </div>
   );
 }
