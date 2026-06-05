@@ -49,6 +49,16 @@ https://jsangama.github.io/vndrx/?dueno=1
 
 Ese modo muestra un panel privado para verificar cada tienda, crear pedidos de prueba, ver un reporte por marca, copiar la vista previa del WhatsApp y marcar el mensaje como `PRUEBA DUENO - NO DESPACHAR`. Tambien permite borrar carrito y pedidos de prueba guardados en ese dispositivo.
 
+## Administracion con Supabase
+
+1. Crea un proyecto en Supabase.
+2. Ejecuta `supabase/schema.sql` en el SQL editor.
+3. Crea tu usuario dueño en Supabase Auth.
+4. Configura `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY` antes del build.
+5. Entra a `?dueno=1`, inicia sesion en el panel Supabase y publica el JSON editable.
+
+El JSON permite sobrescribir productos/precios con `productOverrides`, agregar productos con `extraProducts` y cambiar metodos de pago con `paymentMethods`.
+
 ## Build de produccion
 
 ```bash

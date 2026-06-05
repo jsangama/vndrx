@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { hasSupabaseConfig, loadCatalogConfig, saveCatalogConfig, signInOwner } from "./supabaseCatalog.js";
 
 import promoMain from "./assets/aswa/promo-san-juanero-main.png";
 import promoAlt from "./assets/aswa/promo-san-juanera-alt.png";
@@ -2052,6 +2053,35 @@ function createOrderRecord({ supplier, items, customer, payment, extras }) {
 
 // ── COMPONENTS ───────────────────────────────────────────────────────────────
 
+function applyCatalogConfig(baseProducts, config = {}) {
+  const overrides = config.productOverrides || {};
+  const merged = baseProducts.map((product) => ({
+    ...product,
+    ...(overrides[String(product.id)] || {}),
+  }));
+  const extraProducts = Array.isArray(config.extraProducts) ? config.extraProducts : [];
+  return [...merged, ...extraProducts].filter((product) => product && product.id && product.name !== false);
+}
+
+function getCatalogAdminSeed(config = {}) {
+  return {
+    productOverrides: config.productOverrides || {
+      "1": {
+        presentations: [
+          { label: "49 kg", price: 149, unit: "saco" },
+        ],
+      },
+    },
+    extraProducts: config.extraProducts || [],
+    paymentMethods: config.paymentMethods || REYLEON_PAYMENT_METHODS,
+    extraCompanies: config.extraCompanies || [],
+  };
+}
+
+function prettyJson(value) {
+  return JSON.stringify(value, null, 2);
+}
+
 function Badge({ text, color }) {
   return (
     <span style={{
@@ -2212,6 +2242,56 @@ function OwnerTestPanel({ active, companies, selectedCompany, report, testCount,
         >
           Salir del modo dueño
         </button>
+      </div>
+    </div>
+  );
+}
+
+function OwnerSupabasePanel({ active, configured, status, email, password, draft, onEmail, onPassword, onDraft, onLogin, onLoad, onSave, onUseSeed }) {
+  if (!active) return null;
+
+  return (
+    <div style={{
+      position: "fixed",
+      left: 16,
+      top: 86,
+      zIndex: 119,
+      width: 360,
+      maxWidth: "calc(100vw - 32px)",
+      maxHeight: "calc(100vh - 110px)",
+      background: "#10180FF2",
+      border: "1px solid #6EE7B766",
+      borderRadius: 16,
+      boxShadow: "0 20px 44px rgba(0,0,0,0.35)",
+      color: "#ECFDF5",
+      overflow: "hidden",
+      display: "flex",
+      flexDirection: "column",
+    }}>
+      <div style={{ padding: 14, borderBottom: "1px solid #6EE7B733", background: "#10251B" }}>
+        <div style={{ color: "#6EE7B7", fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Administrar Supabase</div>
+        <div style={{ marginTop: 4, fontSize: 12, lineHeight: 1.45 }}>
+          Edita precios, productos y metodos de pago en JSON. Los clientes leeran esta configuracion cuando Supabase este configurado.
+        </div>
+        <div style={{ marginTop: 6, color: configured ? "#86EFAC" : "#FACC15", fontSize: 11, fontWeight: 800 }}>
+          {configured ? "Supabase configurado" : "Faltan VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY"}
+        </div>
+      </div>
+      <div style={{ padding: 12, display: "grid", gap: 8, overflowY: "auto" }}>
+        <input value={email} onChange={(e) => onEmail(e.target.value)} placeholder="Correo dueño Supabase" style={{ background: "#07110B", border: "1px solid #6EE7B733", color: "#ECFDF5", borderRadius: 10, padding: "9px 10px", fontSize: 12 }} />
+        <input value={password} onChange={(e) => onPassword(e.target.value)} placeholder="Clave Supabase" type="password" style={{ background: "#07110B", border: "1px solid #6EE7B733", color: "#ECFDF5", borderRadius: 10, padding: "9px 10px", fontSize: 12 }} />
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+          <button type="button" onClick={onLogin} style={{ background: "#6EE7B7", border: "none", borderRadius: 10, color: "#052E1A", padding: "9px", cursor: "pointer", fontSize: 12, fontWeight: 900 }}>Iniciar sesion</button>
+          <button type="button" onClick={onLoad} style={{ background: "#183528", border: "1px solid #6EE7B744", borderRadius: 10, color: "#ECFDF5", padding: "9px", cursor: "pointer", fontSize: 12, fontWeight: 800 }}>Cargar</button>
+        </div>
+        <button type="button" onClick={onUseSeed} style={{ background: "#182218", border: "1px solid #FACC1544", borderRadius: 10, color: "#FDE68A", padding: "9px", cursor: "pointer", fontSize: 12, fontWeight: 800 }}>
+          Usar plantilla editable
+        </button>
+        <textarea value={draft} onChange={(e) => onDraft(e.target.value)} rows={15} spellCheck={false} style={{ background: "#07110B", border: "1px solid #6EE7B733", color: "#ECFDF5", borderRadius: 10, padding: 10, fontSize: 11, fontFamily: "Consolas, monospace", resize: "vertical", minHeight: 220 }} />
+        <button type="button" onClick={onSave} style={{ background: "linear-gradient(135deg, #10B981, #6EE7B7)", border: "none", borderRadius: 10, color: "#052E1A", padding: "10px", cursor: "pointer", fontSize: 12, fontWeight: 900 }}>
+          Publicar cambios en Supabase
+        </button>
+        {status && <div style={{ background: "#07110B", border: "1px solid #6EE7B733", borderRadius: 10, padding: 9, color: "#D1FAE5", fontSize: 11, lineHeight: 1.4 }}>{status}</div>}
       </div>
     </div>
   );
@@ -5238,7 +5318,7 @@ function CartDrawer({ cart, onClose, onRemove }) {
 
 // ── APP ──────────────────────────────────────────────────────────────────────
 
-function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer = {}, referralCode = "", referredBy = "", gpsState = {}, initialStep = "cart", ownerTestMode = false }) {
+function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer = {}, referralCode = "", referredBy = "", gpsState = {}, initialStep = "cart", ownerTestMode = false, paymentMethods = REYLEON_PAYMENT_METHODS }) {
   const [step, setStep] = useState(initialStep);
   const [payment, setPayment] = useState("cod");
   const [status, setStatus] = useState("");
@@ -5270,7 +5350,7 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
   const mixedSuppliers = groups.length > 1;
   const canSend = Boolean(customer.name.trim() && customer.phone.trim() && (fulfillmentMode === "recojo" || customer.address.trim()));
   const activeGps = gpsState?.label && gpsState?.url ? gpsState : null;
-  const selectedPaymentMethod = REYLEON_PAYMENT_METHODS.find((opt) => opt.val === payment) || REYLEON_PAYMENT_METHODS[0];
+  const selectedPaymentMethod = paymentMethods.find((opt) => opt.val === payment) || paymentMethods[0] || REYLEON_PAYMENT_METHODS[0];
   const selectedBankDetail = REYLEON_BANK_DETAILS[selectedPaymentMethod.val] || null;
 
   const inputStyle = {
@@ -5498,7 +5578,7 @@ function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer 
                 </div>
 
                 <div style={{ display: "grid", gap: 10 }}>
-                  {REYLEON_PAYMENT_METHODS.map((opt) => (
+                  {paymentMethods.map((opt) => (
                     <button
                       key={opt.val}
                       onClick={() => setPayment(opt.val)}
@@ -5938,6 +6018,12 @@ export default function VNDRX() {
     const params = new URLSearchParams(window.location.search);
     return params.get("dueno") === "1" || params.get("owner") === "1" || window.localStorage.getItem("vndrx-owner-test") === "1";
   });
+  const [catalogConfig, setCatalogConfig] = useState(null);
+  const [catalogDraft, setCatalogDraft] = useState("");
+  const [supabaseEmail, setSupabaseEmail] = useState("");
+  const [supabasePassword, setSupabasePassword] = useState("");
+  const [supabaseToken, setSupabaseToken] = useState("");
+  const [supabaseStatus, setSupabaseStatus] = useState("");
   const installPromptRef = useRef(null);
   const toastTimerRef = useRef(null);
 
@@ -5953,6 +6039,20 @@ export default function VNDRX() {
     if (typeof window === "undefined" || !ownerTestMode) return;
     window.localStorage.setItem("vndrx-owner-test", "1");
   }, [ownerTestMode]);
+
+  useEffect(() => {
+    if (!hasSupabaseConfig()) return;
+    loadCatalogConfig()
+      .then((row) => {
+        if (row?.data) {
+          setCatalogConfig(row.data);
+          setCatalogDraft(prettyJson(row.data));
+        }
+      })
+      .catch(() => {
+        // The static catalog remains available if Supabase is unavailable.
+      });
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -6049,8 +6149,13 @@ export default function VNDRX() {
     openCart("checkout");
     showToast("Pedido rápido listo. Completa tus datos y envíalo.", "success");
   };
+  const effectiveProducts = applyCatalogConfig(products, catalogConfig || {});
+  const effectivePaymentMethods = Array.isArray(catalogConfig?.paymentMethods) && catalogConfig.paymentMethods.length
+    ? catalogConfig.paymentMethods
+    : REYLEON_PAYMENT_METHODS;
+
   const testStoreAsOwner = (companyKey) => {
-    const product = products.find((item) => getSupplierKey(item) === companyKey);
+    const product = effectiveProducts.find((item) => getSupplierKey(item) === companyKey);
     const pres = product?.presentations?.[0];
     if (!product || !pres) {
       showToast("No hay producto disponible para probar esta tienda");
@@ -6078,7 +6183,7 @@ export default function VNDRX() {
   const testAllStoresAsOwner = () => {
     const testItems = Object.keys(COMPANY_VIEWS)
       .map((companyKey) => {
-        const product = products.find((item) => getSupplierKey(item) === companyKey);
+        const product = effectiveProducts.find((item) => getSupplierKey(item) === companyKey);
         const pres = product?.presentations?.[0];
         if (!product || !pres) return null;
         return {
@@ -6134,6 +6239,55 @@ export default function VNDRX() {
     showToast("Modo dueño oculto");
   };
 
+  const loginSupabaseOwner = async () => {
+    try {
+      setSupabaseStatus("Iniciando sesion...");
+      const session = await signInOwner(supabaseEmail.trim(), supabasePassword);
+      setSupabaseToken(session.access_token || "");
+      setSupabaseStatus("Sesion Supabase lista.");
+      showToast("Sesion Supabase lista", "success");
+    } catch (error) {
+      setSupabaseStatus(error.message || "No se pudo iniciar sesion");
+    }
+  };
+
+  const loadSupabaseCatalog = async () => {
+    try {
+      setSupabaseStatus("Cargando catalogo...");
+      const row = await loadCatalogConfig();
+      const next = row?.data || getCatalogAdminSeed(catalogConfig || {});
+      setCatalogConfig(next);
+      setCatalogDraft(prettyJson(next));
+      setSupabaseStatus(row?.updated_at ? `Catalogo cargado: ${row.updated_at}` : "Plantilla lista para publicar.");
+      showToast("Catalogo cargado", "success");
+    } catch (error) {
+      setSupabaseStatus(error.message || "No se pudo cargar Supabase");
+    }
+  };
+
+  const useCatalogSeed = () => {
+    const next = getCatalogAdminSeed(catalogConfig || {});
+    setCatalogDraft(prettyJson(next));
+    setSupabaseStatus("Plantilla editable cargada.");
+  };
+
+  const saveSupabaseCatalog = async () => {
+    try {
+      if (!supabaseToken) {
+        setSupabaseStatus("Primero inicia sesion como dueno.");
+        return;
+      }
+      const parsed = JSON.parse(catalogDraft);
+      setSupabaseStatus("Publicando cambios...");
+      await saveCatalogConfig(parsed, supabaseToken);
+      setCatalogConfig(parsed);
+      setSupabaseStatus("Cambios publicados en Supabase.");
+      showToast("Cambios publicados", "success");
+    } catch (error) {
+      setSupabaseStatus(error.message || "No se pudo publicar");
+    }
+  };
+
   const ownerPreviewMessage = cart.length > 0
     ? buildCombinedOrderMessage({
       groups: groupCartBySupplier(cart),
@@ -6144,7 +6298,7 @@ export default function VNDRX() {
     : "";
 
   const ownerStoreReport = Object.entries(COMPANY_VIEWS).map(([key, company]) => {
-    const storeProducts = products.filter((product) => getSupplierKey(product) === key);
+    const storeProducts = effectiveProducts.filter((product) => getSupplierKey(product) === key);
     const withMedia = storeProducts.filter((product) => Boolean(getProductMedia(product))).length;
     const withPrice = storeProducts.filter((product) => product.presentations?.some((pres) => Number(pres.price) > 0)).length;
     const issues = [];
@@ -6510,7 +6664,7 @@ export default function VNDRX() {
   const isBocaditos = selectedCompany === "bocaditos";
   const isArtesania = selectedCompany === "artesania";
   const selectedCompanyProducts = selectedCompany
-    ? products.filter((product) => getSupplierKey(product) === selectedCompany)
+    ? effectiveProducts.filter((product) => getSupplierKey(product) === selectedCompany)
     : [];
   const filtered = selectedCompanyProducts.filter((product) => {
     const matchCategory = activeLine === "all" || getProductCategory(product) === activeLine;
@@ -6593,11 +6747,30 @@ export default function VNDRX() {
     />
   );
 
+  const ownerSupabasePanel = (
+    <OwnerSupabasePanel
+      active={ownerTestMode}
+      configured={hasSupabaseConfig()}
+      status={supabaseStatus}
+      email={supabaseEmail}
+      password={supabasePassword}
+      draft={catalogDraft}
+      onEmail={setSupabaseEmail}
+      onPassword={setSupabasePassword}
+      onDraft={setCatalogDraft}
+      onLogin={loginSupabaseOwner}
+      onLoad={loadSupabaseCatalog}
+      onSave={saveSupabaseCatalog}
+      onUseSeed={useCatalogSeed}
+    />
+  );
+
   if (!selectedCompany) {
     return (
       <>
         <CompanyChooserScreen onChooseCompany={selectCompany} toastBubble={toastBubble} />
         {ownerTestPanel}
+        {ownerSupabasePanel}
       </>
     );
   }
@@ -7317,9 +7490,11 @@ export default function VNDRX() {
           gpsState={gpsState}
           initialStep={cartStartStep}
           ownerTestMode={ownerTestMode}
+          paymentMethods={effectivePaymentMethods}
         />
       )}
       {ownerTestPanel}
+      {ownerSupabasePanel}
     </div>
   );
 }
