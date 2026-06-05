@@ -1,5 +1,7 @@
-const CACHE_NAME = "vndrx-v3";
+const CACHE_NAME = "vndrx-v4";
 const APP_SHELL = [
+  "./",
+  "./index.html",
   "./manifest.webmanifest",
   "./icon-192.svg",
   "./icon-512.svg",
