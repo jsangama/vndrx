@@ -60,6 +60,7 @@ Pega la URL y la anon key en el hub interno y guarda la conexion.
 4. Reinicia el servidor de desarrollo con `npm run dev`, o deja que la app recargue si usaste el panel interno.
 5. Usa el botón `Probar conexión` del panel para confirmar que Supabase responde antes de empezar a vender.
 6. Si ya tenías pedidos guardados en el navegador, usa `Subir datos locales` para copiarlos a la nube.
+7. Usa `Descargar respaldo` si quieres guardar una copia JSON antes de migrar o cambiar algo grande.
 
 ### Tablas que usa
 

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import {
+  SUPABASE_CONFIG_KEY,
   SUPABASE_ENABLED,
   SUPABASE_RUNTIME_CONFIG,
   clearSupabaseRuntimeConfig,
@@ -3803,6 +3804,18 @@ function ASWAControlHub({
             hint={data.supabaseMigration.message || "Aún no se subió el historial local"}
             color={data.supabaseMigration.state === "ok" ? theme.greenLight : data.supabaseMigration.state === "error" ? "#FFB5B5" : theme.goldLight}
           />
+          <HubMetric
+            label="Respaldo"
+            value={
+              data.supabaseBackup.state === "ok"
+                ? "Listo"
+                : data.supabaseBackup.state === "error"
+                  ? "Error"
+                  : "Pendiente"
+            }
+            hint={data.supabaseBackup.message || "Descarga tu copia local"}
+            color={data.supabaseBackup.state === "ok" ? theme.greenLight : data.supabaseBackup.state === "error" ? "#FFB5B5" : theme.goldLight}
+          />
           <HubMetric label="Tablas" value="3" hint="orders, profiles, reviews" />
           <HubMetric label="URL" value={data.supabaseUrl ? "Lista" : "Vacía"} hint={data.supabaseUrl || "Sin configurar"} />
           <HubMetric label="Modo" value={data.supabaseEnabled ? "Realtime" : "Offline"} hint="Se actualiza al recargar" />
@@ -3830,6 +3843,9 @@ function ASWAControlHub({
               <button type="button" onClick={actions.testSupabaseConnection} style={{ background: `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})`, border: "none", borderRadius: 12, color: "#0F1A0E", padding: 12, cursor: "pointer", fontWeight: 900 }}>
                 Probar conexión
               </button>
+              <button type="button" onClick={actions.downloadLocalBackup} style={{ background: `linear-gradient(135deg, ${theme.leaf}, ${theme.leaf2})`, border: "none", borderRadius: 12, color: "#fff", padding: 12, cursor: "pointer", fontWeight: 900 }}>
+                Descargar respaldo
+              </button>
               <button type="button" onClick={actions.migrateLocalDataToSupabase} style={{ background: `linear-gradient(135deg, ${theme.accent2}, ${theme.goldLight})`, border: "none", borderRadius: 12, color: "#0F1A0E", padding: 12, cursor: "pointer", fontWeight: 900 }}>
                 Subir datos locales
               </button>
@@ -3853,6 +3869,15 @@ function ASWAControlHub({
               </div>
               <div style={{ marginTop: 4, color: theme.textDim, fontSize: 11 }}>
                 Ideal para copiar pedidos, perfil y reseñas al activar la nube por primera vez.
+            </div>
+            </div>
+            <div style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${theme.border}`, borderRadius: 14, padding: 12, color: theme.creamDim, fontSize: 12, lineHeight: 1.6 }}>
+              <div style={{ color: theme.goldLight, fontWeight: 900, fontSize: 11, letterSpacing: 1, textTransform: "uppercase" }}>Respaldo local</div>
+              <div style={{ marginTop: 6, color: data.supabaseBackup.state === "ok" ? theme.greenLight : data.supabaseBackup.state === "error" ? "#FFB5B5" : theme.creamDim }}>
+                {data.supabaseBackup.message}
+              </div>
+              <div style={{ marginTop: 4, color: theme.textDim, fontSize: 11 }}>
+                Guarda una copia antes de migrar a Supabase o antes de hacer cambios grandes.
               </div>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
@@ -6255,6 +6280,7 @@ export default function VNDRX() {
   const [supabaseDraft, setSupabaseDraft] = useState(() => readSupabaseRuntimeConfig());
   const [supabaseProbe, setSupabaseProbe] = useState({ state: "idle", message: "Sin verificar todavía." });
   const [supabaseMigration, setSupabaseMigration] = useState({ state: "idle", message: "Aún no se subieron datos locales." });
+  const [supabaseBackup, setSupabaseBackup] = useState({ state: "idle", message: "Aun no generas un respaldo." });
   const installPromptRef = useRef(null);
   const toastTimerRef = useRef(null);
   const ordersRef = useRef(orders);
@@ -6468,6 +6494,67 @@ export default function VNDRX() {
     }
   };
 
+  const downloadLocalBackup = async () => {
+    try {
+      const storageKeys = [];
+      for (let index = 0; index < window.localStorage.length; index += 1) {
+        const key = window.localStorage.key(index);
+        if (key && (key.startsWith("vndrx-") || key === SUPABASE_CONFIG_KEY)) {
+          storageKeys.push(key);
+        }
+      }
+
+      const storageSnapshot = storageKeys.reduce((acc, key) => {
+        const raw = window.localStorage.getItem(key);
+        if (raw == null) return acc;
+        try {
+          acc[key] = JSON.parse(raw);
+        } catch {
+          acc[key] = raw;
+        }
+        return acc;
+      }, {});
+
+      const backup = {
+        meta: {
+          app: "VNDRX",
+          createdAt: new Date().toISOString(),
+          version: 1,
+        },
+        currentState: {
+          profile,
+          orders: ordersRef.current || [],
+          reviews: reviewsRef.current || [],
+          cart,
+          selectedCompany,
+          activeLine,
+        },
+        storageSnapshot,
+      };
+
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const dateCode = new Date().toISOString().slice(0, 10);
+      link.href = url;
+      link.download = `vndrx-backup-${dateCode}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+      setSupabaseBackup({
+        state: "ok",
+        message: `Respaldo descargado con ${storageKeys.length} claves locales.`,
+      });
+      showToast("Respaldo local descargado", "success");
+    } catch (error) {
+      const message = error?.message || "No se pudo generar el respaldo.";
+      setSupabaseBackup({ state: "error", message });
+      showToast(message);
+    }
+  };
+
   const testSupabaseConnection = async () => {
     const next = {
       url: supabaseDraft.url.trim(),
@@ -6505,6 +6592,7 @@ export default function VNDRX() {
     setSupabaseDraft({ url: "", key: "" });
     setSupabaseProbe({ state: "idle", message: "Sin verificar todavía." });
     setSupabaseMigration({ state: "idle", message: "Aún no se subieron datos locales." });
+    setSupabaseBackup({ state: "idle", message: "Aun no generas un respaldo." });
     showToast("Conexion Supabase eliminada. Recargando...");
     window.setTimeout(() => window.location.reload(), 400);
   };
@@ -6949,6 +7037,7 @@ export default function VNDRX() {
     supabaseDraft,
     supabaseProbe,
     supabaseMigration,
+    supabaseBackup,
     promoAssets: isAswa ? ASWA_PROMO_LIBRARY : isJora ? JORA_PROMO_LIBRARY : [],
   };
 
@@ -6976,6 +7065,7 @@ export default function VNDRX() {
     saveSupabaseConnection,
     migrateLocalDataToSupabase,
     testSupabaseConnection,
+    downloadLocalBackup,
     clearSupabaseConnection,
     copySupabaseSql: () => copySupabaseTemplate(SUPABASE_SCHEMA_TEXT, "SQL de Supabase"),
     copySupabaseEnv: () => copySupabaseTemplate(SUPABASE_ENV_TEXT, "Plantilla .env"),
