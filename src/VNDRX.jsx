@@ -686,17 +686,17 @@ const products = [
   },
   {
     id: 24,
-    name: "Panueloletas Regionales",
+    name: "Pañoletas Regionales",
     subtitle: "Color y estilo para vestir",
     line: "tela_moda",
     supplier: "Tienda Tela",
     img: "🧣",
-    desc: "Panueloletas regionales para complementar la vestimenta y resaltar la identidad local. Ligeras, coloridas y faciles de combinar.",
+    desc: "Pañoletas regionales para complementar la vestimenta y resaltar la identidad local. Ligeras, coloridas y faciles de combinar.",
     quality: "Moda regional",
     variety: "Tela estampada",
     tags: ["Regional", "Coloridas", "Ligeras", "Accesorio"],
     presentations: [
-      { label: "Unidad", price: 16.00, unit: "panueloleta" },
+      { label: "Unidad", price: 16.00, unit: "pañoleta" },
       { label: "Par", price: 30.00, unit: "par" },
     ],
     saving: 0,
@@ -1381,14 +1381,14 @@ const COMPANY_VIEWS = {
     name: "Tienda Tela",
     shortName: "Tela",
     tagline: "Bolsas, moda regional y hogar",
-    description: "Elige Tela para ver bolsas, alforjas, panueloletas, vestidos regionales, mochilas, sabanas, edredones, colchas y cubrecamas en una tienda separada.",
+    description: "Elige Tela para ver bolsas, alforjas, pañoletas, vestidos regionales, mochilas, sabanas, edredones, colchas y cubrecamas en una tienda separada.",
     heroTitle: "Tela para vestir y decorar",
     heroText: "Una tienda propia para textiles del hogar, accesorios y moda regional. Todo listo para elegir sin mezclarlo con otras categorias.",
     heroChips: ["Bolsas y mochilas", "Moda regional", "Hogar y descanso"],
     heroImage: ASSETS.telaHome,
     heroNote: "TEXTIL TIENDA",
     infoTitle: "Tienda Tela",
-    infoBody: "Bolsas, alforjas, panueloletas, vestidos regionales, mochilas, sabanas, edredones, colchas y cubrecamas.",
+    infoBody: "Bolsas, alforjas, pañoletas, vestidos regionales, mochilas, sabanas, edredones, colchas y cubrecamas.",
     companyPhone: SUPPLIERS.tela.displayPhone,
     companyContact: "Pedidos textiles y hogar",
     primaryButton: "Ver productos Tela",
@@ -2760,7 +2760,7 @@ function TelaBoard() {
                     Tela para vestir y decorar
                   </div>
                   <div style={{ color: "#F7EED0", fontSize: 14, lineHeight: 1.7, marginTop: 10, maxWidth: 440 }}>
-                    Bolsas, alforjas, panueloletas, vestidos regionales, mochilas, sabanas, edredones, colchas y cubrecamas.
+                    Bolsas, alforjas, pañoletas, vestidos regionales, mochilas, sabanas, edredones, colchas y cubrecamas.
                   </div>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 12 }}>
                     {["Bolsas", "Moda regional", "Hogar y descanso"].map((chip) => (
@@ -2789,7 +2789,7 @@ function TelaBoard() {
               <PromoTile
                 image={ASSETS.telaModa}
                 title="Moda regional"
-                subtitle="Panueloletas y vestidos"
+                subtitle="Pañoletas y vestidos"
                 note="MODA"
                 accent="#D58AA7"
                 fit="contain"
@@ -2813,7 +2813,7 @@ function TelaBoard() {
               <div style={{ minWidth: 240 }}>
                 <div style={{ color: HOME.accent, fontSize: 13, fontWeight: 800, letterSpacing: 1, marginBottom: 5 }}>LISTA REAL PARA VENDER</div>
                 <div style={{ color: HOME.text, fontSize: 15, fontWeight: 700, lineHeight: 1.45 }}>
-                  Bolsas, alforjas, panueloletas, vestimenta regional y articulos de hogar para elegir rapido.
+                  Bolsas, alforjas, pañoletas, vestimenta regional y articulos de hogar para elegir rapido.
                 </div>
               </div>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -3605,7 +3605,7 @@ function CompanyChooserScreen({ onChooseCompany, toastBubble }) {
       accent: "#6A3552",
       chips: ["Bolsas", "Moda regional", "Hogar"],
       note: "Textiles",
-      description: "Entra a tienda tela para bolsas, alforjas, panueloletas, vestidos regionales y hogar.",
+      description: "Entra a tienda tela para bolsas, alforjas, pañoletas, vestidos regionales y hogar.",
       count: products.filter((product) => getSupplierKey(product) === "tela").length,
       extra: "Cuidados y descanso",
     },
@@ -6529,7 +6529,7 @@ export default function VNDRX() {
                   : isJora
                     ? "Para beberla, endulza al gusto; recomendamos miel de abeja. Para comida, usala como aderezo natural."
                     : isTela
-                      ? "Escoge bolsas, mochilas, panueloletas, vestidos regionales y articulos para el hogar sin mezclarlo con otras marcas."
+                      ? "Escoge bolsas, mochilas, pañoletas, vestidos regionales y articulos para el hogar sin mezclarlo con otras marcas."
                       : isBocaditos
                         ? "El cliente encuentra rapido bocaditos regionales con fotos reales y compra sin ver otras marcas."
                         : isArtesania
@@ -6662,7 +6662,7 @@ export default function VNDRX() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10, marginTop: 14 }}>
               {[
                 { title: "Bolsas", desc: "Compras y uso diario", color: "#7EA6D8" },
-                { title: "Moda regional", desc: "Panueloletas y vestidos", color: "#D58AA7" },
+                { title: "Moda regional", desc: "Pañoletas y vestidos", color: "#D58AA7" },
                 { title: "Hogar", desc: "Sabanas y cubrecamas", color: "#A9CFB1" },
               ].map((item) => (
                 <div key={item.title} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 14, boxShadow: HOME.shadow }} >
@@ -6829,7 +6829,7 @@ export default function VNDRX() {
                 Tienda Tela · Bolsas, moda regional y hogar
               </div>
               <div style={{ color: "#F2DFE5", fontSize: 13, marginTop: 4 }}>
-                Bolsas, alforjas, panueloletas, vestidos regionales, mochilas, sabanas, edredones, colchas y cubrecamas.
+                Bolsas, alforjas, pañoletas, vestidos regionales, mochilas, sabanas, edredones, colchas y cubrecamas.
               </div>
             </div>
             <div style={{ background: "#F0C040", borderRadius: 20, padding: "6px 16px", color: "#0F1A0E", fontSize: 12, fontWeight: 800 }}>
