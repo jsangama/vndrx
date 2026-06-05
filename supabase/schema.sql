@@ -33,9 +33,19 @@ create table if not exists public.vndrx_reviews (
   data jsonb not null default '{}'::jsonb
 );
 
+create table if not exists public.vndrx_user_roles (
+  user_id uuid primary key references auth.users (id) on delete cascade,
+  role text not null default 'cliente' check (role in ('admin', 'vendedor', 'reparto', 'cliente')),
+  display_name text not null default '',
+  notes text not null default '',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 alter table public.vndrx_orders enable row level security;
 alter table public.vndrx_profiles enable row level security;
 alter table public.vndrx_reviews enable row level security;
+alter table public.vndrx_user_roles enable row level security;
 
 drop policy if exists "Public read orders" on public.vndrx_orders;
 drop policy if exists "Public write orders" on public.vndrx_orders;
@@ -43,6 +53,7 @@ drop policy if exists "Public read profiles" on public.vndrx_profiles;
 drop policy if exists "Public write profiles" on public.vndrx_profiles;
 drop policy if exists "Public read reviews" on public.vndrx_reviews;
 drop policy if exists "Public write reviews" on public.vndrx_reviews;
+drop policy if exists "Read own role" on public.vndrx_user_roles;
 
 create policy "Public read orders"
 on public.vndrx_orders
@@ -77,6 +88,12 @@ for all
 using (true)
 with check (true);
 
+create policy "Read own role"
+on public.vndrx_user_roles
+for select
+to authenticated
+using (auth.uid() = user_id);
+
 do $$
 begin
   alter publication supabase_realtime add table public.vndrx_orders;
@@ -97,3 +114,7 @@ begin
 exception
   when duplicate_object then null;
 end $$;
+
+-- Ejemplos de alta manual de roles en el SQL Editor:
+-- insert into public.vndrx_user_roles (user_id, role, display_name)
+-- values ('00000000-0000-0000-0000-000000000000', 'admin', 'Tu nombre');

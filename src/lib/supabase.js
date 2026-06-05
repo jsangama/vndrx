@@ -5,6 +5,7 @@ export const SUPABASE_TABLES = {
   orders: "vndrx_orders",
   profiles: "vndrx_profiles",
   reviews: "vndrx_reviews",
+  userRoles: "vndrx_user_roles",
 };
 
 const normalizeConfig = (config = {}) => ({
@@ -53,8 +54,8 @@ export const SUPABASE_RUNTIME_CONFIG = runtimeConfig;
 export const supabase = SUPABASE_ENABLED
   ? createClient(runtimeConfig.url, runtimeConfig.key, {
       auth: {
-        persistSession: false,
-        autoRefreshToken: false,
+        persistSession: true,
+        autoRefreshToken: true,
         detectSessionInUrl: false,
       },
     })

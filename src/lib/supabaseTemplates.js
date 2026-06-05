@@ -8,4 +8,5 @@ export const SUPABASE_CHECKLIST_TEXT = [
   "2. Ejecuta el SQL de supabase/schema.sql.",
   "3. Pega la URL y la anon key en el panel Base de datos de VNDRX.",
   "4. Guarda y deja que la app recargue sola.",
+  "5. Crea usuarios en Supabase Auth y asigna su rol en vndrx_user_roles.",
 ].join("\n");

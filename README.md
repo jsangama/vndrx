@@ -61,12 +61,14 @@ Pega la URL y la anon key en el hub interno y guarda la conexion.
 5. Usa el botón `Probar conexión` del panel para confirmar que Supabase responde antes de empezar a vender.
 6. Si ya tenías pedidos guardados en el navegador, usa `Subir datos locales` para copiarlos a la nube.
 7. Usa `Descargar respaldo` si quieres guardar una copia JSON antes de migrar o cambiar algo grande.
+8. Crea usuarios en Supabase Auth y asigna el rol de cada uno en `vndrx_user_roles` para activar el acceso al panel interno.
 
 ### Tablas que usa
 
 - `vndrx_orders`
 - `vndrx_profiles`
 - `vndrx_reviews`
+- `vndrx_user_roles`
 
 ### Importante
 

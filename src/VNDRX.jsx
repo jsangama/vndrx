@@ -17,6 +17,7 @@ import {
 import {
   deleteOrderFromSupabase,
   fetchOrdersFromSupabase,
+  fetchUserRoleFromSupabase,
   fetchReviewsFromSupabase,
   probeSupabaseConnection,
   syncOrdersToSupabase,
@@ -2037,6 +2038,22 @@ const DEFAULT_PROFILE = {
   shareCount: 0,
 };
 
+const ADMIN_ACCESS_ROLES = new Set(["admin", "vendedor", "reparto"]);
+
+const ROLE_LABELS = {
+  admin: "Administrador",
+  vendedor: "Vendedor",
+  reparto: "Reparto",
+  cliente: "Cliente",
+};
+
+const ROLE_HINTS = {
+  admin: "Control completo",
+  vendedor: "Ventas y seguimiento",
+  reparto: "Despacho y ruta",
+  cliente: "Solo tienda publica",
+};
+
 function loadStoredState(key, fallback) {
   if (typeof window === "undefined") return typeof fallback === "function" ? fallback() : fallback;
   try {
@@ -3292,7 +3309,7 @@ function ASWAControlHub({
     { id: "historial", label: "Historial", icon: "🕘" },
     { id: "soporte", label: "Soporte", icon: "💬" },
     { id: "promos", label: "Promos", icon: "🎨" },
-    { id: "panel", label: "Panel", icon: "🛠️" },
+    { id: "panel", label: "Panel", icon: data.canManagePanel ? "🛠️" : "🔒" },
     { id: "db", label: "Base de datos", icon: "☁️" },
     { id: "install", label: "Instalar", icon: "⬇️" },
   ];
@@ -3377,6 +3394,111 @@ function ASWAControlHub({
     const next = statusFlow[(index + 1) % statusFlow.length];
     actions.cycleOrderStatus(order.id, next);
   };
+
+  const panelAccessGate = (
+    <HubSection title="Panel privado" subtitle="Acceso reservado para admin, vendedor o reparto.">
+      <div style={{ display: "grid", gap: 12 }}>
+        <div style={{ background: "linear-gradient(135deg, #111a10, #0b120a)", border: `1px solid ${theme.border}`, borderRadius: 16, padding: 16 }}>
+          <div style={{ color: theme.goldLight, fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Acceso interno</div>
+          <div style={{ color: theme.cream, fontSize: 18, fontWeight: 900, marginTop: 6 }}>
+            {data.adminAccessStatus === "disabled"
+              ? "Primero conecta Supabase"
+              : data.adminAccessStatus === "loading"
+                ? "Verificando sesion y rol..."
+                : "Ingresa para abrir el panel completo"}
+          </div>
+          <div style={{ color: theme.creamDim, fontSize: 12, lineHeight: 1.6, marginTop: 8 }}>
+            {data.adminAccessStatus === "disabled"
+              ? "La tienda necesita la URL y la anon key de Supabase antes de permitir el acceso interno."
+              : "Solo los usuarios con rol admin, vendedor o reparto pueden ver el panel completo. El rol cliente se queda en la tienda publica."}
+          </div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 12 }}>
+            <span style={{ background: "rgba(240,192,64,0.14)", border: `1px solid ${theme.goldLight}55`, color: theme.goldLight, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 900 }}>Roles: admin / vendedor / reparto</span>
+            <span style={{ background: "rgba(71,101,75,0.16)", border: `1px solid ${theme.greenLight}55`, color: theme.greenLight, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 900 }}>Cliente no entra</span>
+          </div>
+        </div>
+
+        {data.adminAccessStatus === "disabled" ? (
+          <div style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 16, padding: 16, display: "grid", gap: 12 }}>
+            <div style={{ color: theme.cream, fontWeight: 900 }}>Configura la base primero</div>
+            <div style={{ color: theme.creamDim, fontSize: 12, lineHeight: 1.6 }}>
+              Abre el panel de Base de datos, pega la URL y la anon key de Supabase y guarda la conexión. Después vuelve aquí para iniciar sesión.
+            </div>
+            <button
+              type="button"
+              onClick={() => onTabChange("db")}
+              style={{ background: `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})`, border: "none", borderRadius: 12, color: "#0F1A0E", padding: 12, cursor: "pointer", fontWeight: 900 }}
+            >
+              Ir a Base de datos
+            </button>
+          </div>
+        ) : data.adminAccessStatus === "loading" ? (
+          <div style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 16, padding: 16, color: theme.creamDim, fontSize: 12, lineHeight: 1.6 }}>
+            Estamos leyendo tu sesion de Supabase y tu rol. En un momento se desbloquea el panel si tu usuario tiene permiso.
+          </div>
+        ) : data.adminAccessStatus === "allowed" ? null : (
+          <div style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 16, padding: 16, display: "grid", gap: 12 }}>
+            <div>
+              <div style={{ color: theme.cream, fontWeight: 900 }}>Iniciar sesion</div>
+              <div style={{ color: theme.creamDim, fontSize: 12, lineHeight: 1.6, marginTop: 6 }}>
+                Usa tu cuenta de Supabase Auth y tu rol asignado en <strong style={{ color: theme.goldLight }}>vndrx_user_roles</strong>.
+              </div>
+            </div>
+            <input
+              type="email"
+              value={data.authDraft.email}
+              onChange={(event) => actions.setAuthDraft((prev) => ({ ...prev, email: event.target.value }))}
+              placeholder="correo@tuempresa.com"
+              style={{ width: "100%", background: theme.bg, border: `1px solid ${theme.border}`, borderRadius: 10, color: theme.cream, padding: "11px 12px", fontSize: 13 }}
+            />
+            <input
+              type="password"
+              value={data.authDraft.password}
+              onChange={(event) => actions.setAuthDraft((prev) => ({ ...prev, password: event.target.value }))}
+              placeholder="Contraseña"
+              style={{ width: "100%", background: theme.bg, border: `1px solid ${theme.border}`, borderRadius: 10, color: theme.cream, padding: "11px 12px", fontSize: 13 }}
+            />
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
+              <button
+                type="button"
+                onClick={actions.signInAdmin}
+                disabled={data.authSubmitting}
+                style={{ background: `linear-gradient(135deg, ${theme.green}, ${theme.greenLight})`, border: "none", borderRadius: 12, color: "#fff", padding: 12, cursor: data.authSubmitting ? "wait" : "pointer", fontWeight: 900, opacity: data.authSubmitting ? 0.8 : 1 }}
+              >
+                {data.authSubmitting ? "Entrando..." : "Entrar"}
+              </button>
+              {data.adminSession ? (
+                <button
+                  type="button"
+                  onClick={actions.signOutAdmin}
+                  disabled={data.authSubmitting}
+                  style={{ background: theme.bg, border: `1px solid ${theme.border}`, borderRadius: 12, color: theme.cream, padding: 12, cursor: data.authSubmitting ? "wait" : "pointer", fontWeight: 800, opacity: data.authSubmitting ? 0.8 : 1 }}
+                >
+                  Cerrar sesion
+                </button>
+              ) : null}
+            </div>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <span style={{ background: "rgba(240,192,64,0.12)", border: `1px solid ${theme.goldLight}55`, color: theme.goldLight, borderRadius: 999, padding: "5px 9px", fontSize: 10, fontWeight: 900 }}>Admin</span>
+              <span style={{ background: "rgba(71,101,75,0.12)", border: `1px solid ${theme.greenLight}55`, color: theme.greenLight, borderRadius: 999, padding: "5px 9px", fontSize: 10, fontWeight: 900 }}>Vendedor</span>
+              <span style={{ background: "rgba(196,122,30,0.12)", border: `1px solid ${theme.accent2}55`, color: theme.accent2, borderRadius: 999, padding: "5px 9px", fontSize: 10, fontWeight: 900 }}>Reparto</span>
+              <span style={{ background: "rgba(122,148,116,0.12)", border: `1px solid ${theme.border}`, color: theme.textDim, borderRadius: 999, padding: "5px 9px", fontSize: 10, fontWeight: 900 }}>Cliente</span>
+            </div>
+            {data.adminAccessError && (
+              <div style={{ background: "#2C1717", border: "1px solid #7A2D2D", borderRadius: 12, padding: 12, color: "#FFCECE", fontSize: 12, lineHeight: 1.55 }}>
+                {data.adminAccessError}
+              </div>
+            )}
+            {data.adminSession && (
+              <div style={{ background: "rgba(71,101,75,0.12)", border: `1px solid ${theme.greenLight}55`, borderRadius: 12, padding: 12, color: theme.creamDim, fontSize: 12, lineHeight: 1.55 }}>
+                Sesion actual: <strong style={{ color: theme.cream }}>{data.adminSession.user?.email || "sin correo"}</strong> · Rol actual: <strong style={{ color: theme.goldLight }}>{data.adminRoleLabel || "Cliente"}</strong>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </HubSection>
+  );
 
   const gridActions = {
     tutorial: (
@@ -3623,7 +3745,7 @@ function ASWAControlHub({
         </div>
       </HubSection>
     ),
-    panel: (
+    panel: data.canManagePanel ? (
       <div style={{ display: "grid", gap: 12 }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10 }}>
           <HubMetric label="Total pedidos" value={data.orders.length} hint={`Activos: ${data.activeOrders}`} />
@@ -3771,7 +3893,7 @@ function ASWAControlHub({
           </div>
         </HubSection>
       </div>
-    ),
+    ) : panelAccessGate,
     db: (
       <div style={{ display: "grid", gap: 12 }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 10 }}>
@@ -3869,7 +3991,7 @@ function ASWAControlHub({
               </div>
               <div style={{ marginTop: 4, color: theme.textDim, fontSize: 11 }}>
                 Ideal para copiar pedidos, perfil y reseñas al activar la nube por primera vez.
-            </div>
+              </div>
             </div>
             <div style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${theme.border}`, borderRadius: 14, padding: 12, color: theme.creamDim, fontSize: 12, lineHeight: 1.6 }}>
               <div style={{ color: theme.goldLight, fontWeight: 900, fontSize: 11, letterSpacing: 1, textTransform: "uppercase" }}>Respaldo local</div>
@@ -3932,7 +4054,23 @@ function ASWAControlHub({
               <div style={{ color: HOME.text, fontSize: 22, fontWeight: 900, marginTop: 6 }}>Herramientas de venta, bonos y pedidos</div>
               <div style={{ color: HOME.muted, fontSize: 12, marginTop: 6, lineHeight: 1.5 }}>Lo que trae ASWA para vender mejor, resumido dentro de tu tienda y conectado al pedido real por WhatsApp.</div>
             </div>
-            <button type="button" onClick={onClose} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 12, color: HOME.text, width: 38, height: 38, cursor: "pointer", fontSize: 18, fontWeight: 800 }}>×</button>
+            <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+              {data.adminSession && (
+                <span style={{ background: "rgba(71,101,75,0.12)", border: `1px solid ${theme.greenLight}55`, color: theme.green, borderRadius: 999, padding: "7px 10px", fontSize: 11, fontWeight: 900, letterSpacing: 0.4 }}>
+                  {data.adminRoleLabel || "Cliente"}
+                </span>
+              )}
+              {data.adminSession && (
+                <button
+                  type="button"
+                  onClick={actions.signOutAdmin}
+                  style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 12, color: HOME.text, padding: "9px 12px", cursor: "pointer", fontSize: 12, fontWeight: 800 }}
+                >
+                  Salir
+                </button>
+              )}
+              <button type="button" onClick={onClose} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 12, color: HOME.text, width: 38, height: 38, cursor: "pointer", fontSize: 18, fontWeight: 800 }}>×</button>
+            </div>
           </div>
         </div>
 
@@ -3942,6 +4080,7 @@ function ASWAControlHub({
             <HubMetric label="Bonos" value={data.bonusPoints} hint={`Nivel ${bonusTierLabel.name}`} color={bonusTierLabel.color} />
             <HubMetric label="Reseñas" value={data.reviews.length} hint={`Promedio ${avgRating}/5`} />
             <HubMetric label="Compartidos" value={data.profile.shareCount || 0} hint="Codigo y enlace" />
+            <HubMetric label="Acceso" value={data.adminRoleLabel || "Cliente"} hint={data.adminRoleHint || "Inicia sesion para el panel"} color={data.canManagePanel ? theme.greenLight : theme.goldLight} />
           </div>
 
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -6281,6 +6420,12 @@ export default function VNDRX() {
   const [supabaseProbe, setSupabaseProbe] = useState({ state: "idle", message: "Sin verificar todavía." });
   const [supabaseMigration, setSupabaseMigration] = useState({ state: "idle", message: "Aún no se subieron datos locales." });
   const [supabaseBackup, setSupabaseBackup] = useState({ state: "idle", message: "Aun no generas un respaldo." });
+  const [adminSession, setAdminSession] = useState(null);
+  const [adminRole, setAdminRole] = useState("");
+  const [adminAccessStatus, setAdminAccessStatus] = useState(SUPABASE_ENABLED ? "loading" : "disabled");
+  const [adminAccessError, setAdminAccessError] = useState("");
+  const [authDraft, setAuthDraft] = useState({ email: "", password: "" });
+  const [authSubmitting, setAuthSubmitting] = useState(false);
   const installPromptRef = useRef(null);
   const toastTimerRef = useRef(null);
   const ordersRef = useRef(orders);
@@ -6417,6 +6562,72 @@ export default function VNDRX() {
         window.clearTimeout(refreshTimer);
       }
       supabase.removeChannel(channel).catch(() => {});
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!SUPABASE_ENABLED || !supabase?.auth) {
+      setAdminSession(null);
+      setAdminRole("");
+      setAdminAccessStatus("disabled");
+      setAdminAccessError("Conecta Supabase para usar el acceso interno.");
+      return;
+    }
+
+    let cancelled = false;
+
+    const applySession = async (session) => {
+      if (!session?.user) {
+        if (cancelled) return;
+        setAdminSession(null);
+        setAdminRole("");
+        setAdminAccessStatus("signed_out");
+        setAdminAccessError("");
+        return;
+      }
+
+      if (!cancelled) {
+        setAdminAccessStatus("loading");
+        setAdminAccessError("");
+      }
+
+      try {
+        const roleRecord = await fetchUserRoleFromSupabase(session.user.id);
+        if (cancelled) return;
+        const nextRole = roleRecord?.role || "cliente";
+        setAdminSession(session);
+        setAdminRole(nextRole);
+        setAdminAccessStatus(ADMIN_ACCESS_ROLES.has(nextRole) ? "allowed" : "forbidden");
+        setAdminAccessError(roleRecord
+          ? ""
+          : "Este usuario no tiene rol asignado. Agregalo en vndrx_user_roles desde Supabase.");
+      } catch (error) {
+        if (cancelled) return;
+        setAdminSession(session);
+        setAdminRole("cliente");
+        setAdminAccessStatus("error");
+        setAdminAccessError(error?.message || "No se pudo leer el rol de este usuario.");
+      }
+    };
+
+    supabase.auth.getSession().then(({ data }) => {
+      if (cancelled) return;
+      applySession(data.session);
+    }).catch((error) => {
+      if (cancelled) return;
+      setAdminSession(null);
+      setAdminRole("");
+      setAdminAccessStatus("error");
+      setAdminAccessError(error?.message || "No se pudo recuperar la sesion de Supabase.");
+    });
+
+    const { data: authSubscription } = supabase.auth.onAuthStateChange((_event, session) => {
+      applySession(session);
+    });
+
+    return () => {
+      cancelled = true;
+      authSubscription?.subscription?.unsubscribe?.();
     };
   }, []);
 
@@ -6605,6 +6816,57 @@ export default function VNDRX() {
       showToast(`No se pudo copiar ${label.toLowerCase()}`);
     }
   };
+
+  const signInAdmin = async () => {
+    if (!SUPABASE_ENABLED || !supabase?.auth) {
+      setAdminAccessError("Primero conecta Supabase para iniciar sesion.");
+      showToast("Conecta Supabase primero");
+      return;
+    }
+
+    const email = authDraft.email.trim();
+    const password = authDraft.password.trim();
+    if (!email || !password) {
+      setAdminAccessError("Escribe email y contraseña para entrar.");
+      showToast("Completa email y contraseña");
+      return;
+    }
+
+    setAuthSubmitting(true);
+    setAdminAccessError("");
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      setAuthDraft((prev) => ({ ...prev, password: "" }));
+      showToast("Sesion iniciada", "success");
+    } catch (error) {
+      const message = error?.message || "No se pudo iniciar sesion.";
+      setAdminAccessError(message);
+      showToast(message);
+    } finally {
+      setAuthSubmitting(false);
+    }
+  };
+
+  const signOutAdmin = async () => {
+    if (!SUPABASE_ENABLED || !supabase?.auth) return;
+    setAuthSubmitting(true);
+    try {
+      await supabase.auth.signOut();
+      setAdminAccessError("");
+      showToast("Sesion cerrada", "success");
+    } catch (error) {
+      const message = error?.message || "No se pudo cerrar sesion.";
+      setAdminAccessError(message);
+      showToast(message);
+    } finally {
+      setAuthSubmitting(false);
+    }
+  };
+
+  const canManagePanel = ADMIN_ACCESS_ROLES.has(adminRole);
+  const adminRoleLabel = ROLE_LABELS[adminRole] || (adminAccessStatus === "disabled" ? "Sin Supabase" : adminAccessStatus === "loading" ? "Verificando" : "Sin sesión");
+  const adminRoleHint = ROLE_HINTS[adminRole] || (adminAccessStatus === "disabled" ? "Activa Supabase primero" : adminAccessStatus === "loading" ? "Leyendo acceso..." : adminAccessError || "Inicia sesión para entrar al panel");
 
   const selectCompany = (companyKey) => {
     setSelectedCompany(companyKey);
@@ -7038,6 +7300,15 @@ export default function VNDRX() {
     supabaseProbe,
     supabaseMigration,
     supabaseBackup,
+    adminSession,
+    adminRole,
+    adminAccessStatus,
+    adminAccessError,
+    adminRoleLabel,
+    adminRoleHint,
+    authDraft,
+    authSubmitting,
+    canManagePanel,
     promoAssets: isAswa ? ASWA_PROMO_LIBRARY : isJora ? JORA_PROMO_LIBRARY : [],
   };
 
@@ -7070,6 +7341,10 @@ export default function VNDRX() {
     copySupabaseSql: () => copySupabaseTemplate(SUPABASE_SCHEMA_TEXT, "SQL de Supabase"),
     copySupabaseEnv: () => copySupabaseTemplate(SUPABASE_ENV_TEXT, "Plantilla .env"),
     copySupabaseChecklist: () => copySupabaseTemplate(SUPABASE_CHECKLIST_TEXT, "Checklist"),
+    setAuthDraft,
+    signInAdmin,
+    signOutAdmin,
+    setHubTab,
   };
 
   const toastBubble = toast ? (

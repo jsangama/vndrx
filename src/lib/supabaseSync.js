@@ -153,6 +153,26 @@ export async function fetchReviewsFromSupabase() {
   return (result.data || []).map(reviewFromRow);
 }
 
+const roleFromRow = (row) => ({
+  userId: row.user_id,
+  role: row.role || "cliente",
+  displayName: row.display_name || "",
+  notes: row.notes || "",
+  createdAt: toIso(row.created_at),
+  updatedAt: toIso(row.updated_at || row.created_at),
+});
+
+export async function fetchUserRoleFromSupabase(userId) {
+  if (!SUPABASE_ENABLED || !supabase || !userId) return null;
+  const result = await supabase
+    .from(SUPABASE_TABLES.userRoles)
+    .select("*")
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (result.error) throw result.error;
+  return result.data ? roleFromRow(result.data) : null;
+}
+
 export async function probeSupabaseConnection() {
   if (!SUPABASE_ENABLED || !supabase) {
     return {
