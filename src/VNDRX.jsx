@@ -2063,8 +2063,13 @@ function Badge({ text, color }) {
   );
 }
 
-function OwnerTestPanel({ active, companies, selectedCompany, onTestStore, onClearTests, onExit }) {
+function OwnerTestPanel({ active, companies, selectedCompany, report, testCount, previewMessage, onTestStore, onTestAll, onClearTests, onCopyPreview, onExit }) {
   if (!active) return null;
+  const statusColor = {
+    ok: "#86EFAC",
+    warn: "#FACC15",
+    fail: "#FCA5A5",
+  };
 
   return (
     <div style={{
@@ -2080,6 +2085,9 @@ function OwnerTestPanel({ active, companies, selectedCompany, onTestStore, onCle
       boxShadow: "0 20px 44px rgba(0,0,0,0.35)",
       color: "#FFF8E7",
       overflow: "hidden",
+      maxHeight: "calc(100vh - 110px)",
+      display: "flex",
+      flexDirection: "column",
     }}>
       <div style={{ padding: 14, borderBottom: "1px solid #D9A44133", background: "#1B281A" }}>
         <div style={{ color: "#F0C040", fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Modo dueño</div>
@@ -2087,7 +2095,43 @@ function OwnerTestPanel({ active, companies, selectedCompany, onTestStore, onCle
           Prueba pedidos reales con texto marcado como prueba. No aparece para clientes.
         </div>
       </div>
-      <div style={{ padding: 12, display: "grid", gap: 8 }}>
+      <div style={{ padding: 12, display: "grid", gap: 8, overflowY: "auto" }}>
+        <button
+          type="button"
+          onClick={onTestAll}
+          style={{
+            background: "linear-gradient(135deg, #F0C040, #F7D37B)",
+            border: "none",
+            borderRadius: 10,
+            color: "#10180F",
+            padding: "10px",
+            cursor: "pointer",
+            fontSize: 12,
+            fontWeight: 900,
+          }}
+        >
+          Verificar todas las tiendas
+        </button>
+
+        <div style={{ display: "grid", gap: 6 }}>
+          {report.map((item) => (
+            <div key={item.key} style={{ background: "#182218", border: "1px solid #FFFFFF14", borderRadius: 10, padding: 9 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "center" }}>
+                <strong style={{ fontSize: 12 }}>{item.shortName}</strong>
+                <span style={{ color: statusColor[item.status], fontSize: 10, fontWeight: 900, textTransform: "uppercase" }}>{item.status}</span>
+              </div>
+              <div style={{ color: "#C7D2BE", fontSize: 11, marginTop: 4 }}>
+                {item.products} prod. · {item.withMedia} img. · {item.withPrice} precios
+              </div>
+              {item.issues.length > 0 && (
+                <div style={{ color: "#FACC15", fontSize: 10, lineHeight: 1.35, marginTop: 5 }}>
+                  {item.issues.join(" · ")}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
         {companies.map(([key, company]) => (
           <button
             key={key}
@@ -2108,6 +2152,34 @@ function OwnerTestPanel({ active, companies, selectedCompany, onTestStore, onCle
             Probar {company.shortName}
           </button>
         ))}
+
+        {previewMessage && (
+          <div style={{ background: "#0B120B", border: "1px solid #D9A44133", borderRadius: 10, padding: 10 }}>
+            <div style={{ color: "#F0C040", fontSize: 10, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Vista previa WhatsApp</div>
+            <pre style={{ whiteSpace: "pre-wrap", color: "#E8E2C8", fontSize: 10, lineHeight: 1.35, maxHeight: 150, overflow: "auto", margin: "8px 0 0", fontFamily: "Consolas, monospace" }}>
+              {previewMessage}
+            </pre>
+            <button
+              type="button"
+              onClick={onCopyPreview}
+              style={{
+                marginTop: 8,
+                background: "#243322",
+                border: "1px solid #D9A44144",
+                borderRadius: 8,
+                color: "#FFF8E7",
+                padding: "8px 9px",
+                cursor: "pointer",
+                fontSize: 11,
+                fontWeight: 800,
+                width: "100%",
+              }}
+            >
+              Copiar vista previa
+            </button>
+          </div>
+        )}
+
         <button
           type="button"
           onClick={onClearTests}
@@ -2122,7 +2194,7 @@ function OwnerTestPanel({ active, companies, selectedCompany, onTestStore, onCle
             fontWeight: 900,
           }}
         >
-          Borrar pruebas locales
+          Borrar pruebas locales{testCount ? ` (${testCount})` : ""}
         </button>
         <button
           type="button"
@@ -6003,6 +6075,40 @@ export default function VNDRX() {
     showToast(`Prueba lista para ${COMPANY_VIEWS[companyKey].shortName}`, "success");
   };
 
+  const testAllStoresAsOwner = () => {
+    const testItems = Object.keys(COMPANY_VIEWS)
+      .map((companyKey) => {
+        const product = products.find((item) => getSupplierKey(item) === companyKey);
+        const pres = product?.presentations?.[0];
+        if (!product || !pres) return null;
+        return {
+          uid: `owner-test-all-${companyKey}-${product.id}-${Date.now()}`,
+          product,
+          pres,
+          qty: 1,
+          zone: getDefaultZone(product),
+          ownerTest: true,
+        };
+      })
+      .filter(Boolean);
+
+    if (testItems.length === 0) {
+      showToast("No hay productos disponibles para verificar");
+      return;
+    }
+
+    setSelectedCompany(getSupplierKey(testItems[0].product));
+    setActiveLine("all");
+    setSearch("");
+    setHubOpen(false);
+    setEmbeddedStore(null);
+    setCart(testItems);
+    setCartStartStep("checkout");
+    setCartOpen(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    showToast(`Verificacion lista: ${testItems.length} tiendas`, "success");
+  };
+
   const clearOwnerTests = () => {
     setCart([]);
     setOrders((prev) => prev.filter((order) => !order.ownerTest && !order.customer?.notes?.includes(OWNER_TEST_NOTE)));
@@ -6026,6 +6132,55 @@ export default function VNDRX() {
       // URL cleanup is optional.
     }
     showToast("Modo dueño oculto");
+  };
+
+  const ownerPreviewMessage = cart.length > 0
+    ? buildCombinedOrderMessage({
+      groups: groupCartBySupplier(cart),
+      customer: { ...OWNER_TEST_CUSTOMER, referralCode: profile.referralCode, referredBy: profile.referredBy },
+      payment: paymentLabel("cod"),
+      extras: { ownerTest: true, fulfillmentMode: "delivery" },
+    })
+    : "";
+
+  const ownerStoreReport = Object.entries(COMPANY_VIEWS).map(([key, company]) => {
+    const storeProducts = products.filter((product) => getSupplierKey(product) === key);
+    const withMedia = storeProducts.filter((product) => Boolean(getProductMedia(product))).length;
+    const withPrice = storeProducts.filter((product) => product.presentations?.some((pres) => Number(pres.price) > 0)).length;
+    const issues = [];
+    if (storeProducts.length === 0) issues.push("sin productos");
+    if (withMedia < storeProducts.length) issues.push("faltan imagenes");
+    if (withPrice < storeProducts.length) issues.push("faltan precios");
+    if (!ORDER_PHONE) issues.push("sin WhatsApp");
+    const status = issues.some((issue) => issue === "sin productos" || issue === "sin WhatsApp")
+      ? "fail"
+      : issues.length > 0 ? "warn" : "ok";
+
+    return {
+      key,
+      shortName: company.shortName,
+      products: storeProducts.length,
+      withMedia,
+      withPrice,
+      issues,
+      status,
+    };
+  });
+
+  const ownerTestCount = cart.filter((item) => item.ownerTest).length
+    + orders.filter((order) => order.ownerTest || order.customer?.notes?.includes(OWNER_TEST_NOTE)).length;
+
+  const copyOwnerPreview = async () => {
+    if (!ownerPreviewMessage) {
+      showToast("Primero crea una prueba");
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(ownerPreviewMessage);
+      showToast("Vista previa copiada", "success");
+    } catch {
+      showToast("No se pudo copiar la vista previa");
+    }
   };
 
   const cartCount = cart.reduce((a, i) => a + i.qty, 0);
@@ -6427,8 +6582,13 @@ export default function VNDRX() {
       active={ownerTestMode}
       companies={Object.entries(COMPANY_VIEWS)}
       selectedCompany={selectedCompany}
+      report={ownerStoreReport}
+      testCount={ownerTestCount}
+      previewMessage={ownerPreviewMessage}
       onTestStore={testStoreAsOwner}
+      onTestAll={testAllStoresAsOwner}
       onClearTests={clearOwnerTests}
+      onCopyPreview={copyOwnerPreview}
       onExit={exitOwnerTestMode}
     />
   );
