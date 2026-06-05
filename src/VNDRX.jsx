@@ -3789,6 +3789,20 @@ function ASWAControlHub({
             hint={data.supabaseProbe.message || "Sin verificar"}
             color={data.supabaseProbe.state === "ok" ? theme.greenLight : data.supabaseProbe.state === "error" ? "#FF9B9B" : theme.goldLight}
           />
+          <HubMetric
+            label="Migración"
+            value={
+              data.supabaseMigration.state === "ok"
+                ? "Subida"
+                : data.supabaseMigration.state === "checking"
+                  ? "Subiendo"
+                  : data.supabaseMigration.state === "error"
+                    ? "Revisar"
+                    : "Pendiente"
+            }
+            hint={data.supabaseMigration.message || "Aún no se subió el historial local"}
+            color={data.supabaseMigration.state === "ok" ? theme.greenLight : data.supabaseMigration.state === "error" ? "#FFB5B5" : theme.goldLight}
+          />
           <HubMetric label="Tablas" value="3" hint="orders, profiles, reviews" />
           <HubMetric label="URL" value={data.supabaseUrl ? "Lista" : "Vacía"} hint={data.supabaseUrl || "Sin configurar"} />
           <HubMetric label="Modo" value={data.supabaseEnabled ? "Realtime" : "Offline"} hint="Se actualiza al recargar" />
@@ -3816,6 +3830,9 @@ function ASWAControlHub({
               <button type="button" onClick={actions.testSupabaseConnection} style={{ background: `linear-gradient(135deg, ${theme.gold}, ${theme.goldLight})`, border: "none", borderRadius: 12, color: "#0F1A0E", padding: 12, cursor: "pointer", fontWeight: 900 }}>
                 Probar conexión
               </button>
+              <button type="button" onClick={actions.migrateLocalDataToSupabase} style={{ background: `linear-gradient(135deg, ${theme.accent2}, ${theme.goldLight})`, border: "none", borderRadius: 12, color: "#0F1A0E", padding: 12, cursor: "pointer", fontWeight: 900 }}>
+                Subir datos locales
+              </button>
               <button type="button" onClick={actions.clearSupabaseConnection} style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 12, color: theme.cream, padding: 12, cursor: "pointer", fontWeight: 800 }}>
                 Quitar conexión
               </button>
@@ -3828,6 +3845,15 @@ function ASWAControlHub({
               {typeof data.supabaseProbe.elapsedMs === "number" && (
                 <div style={{ marginTop: 4, color: theme.textDim, fontSize: 11 }}>Tiempo estimado: {data.supabaseProbe.elapsedMs} ms</div>
               )}
+            </div>
+            <div style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${theme.border}`, borderRadius: 14, padding: 12, color: theme.creamDim, fontSize: 12, lineHeight: 1.6 }}>
+              <div style={{ color: theme.goldLight, fontWeight: 900, fontSize: 11, letterSpacing: 1, textTransform: "uppercase" }}>Subir historial local</div>
+              <div style={{ marginTop: 6, color: data.supabaseMigration.state === "ok" ? theme.greenLight : data.supabaseMigration.state === "error" ? "#FFB5B5" : theme.creamDim }}>
+                {data.supabaseMigration.message}
+              </div>
+              <div style={{ marginTop: 4, color: theme.textDim, fontSize: 11 }}>
+                Ideal para copiar pedidos, perfil y reseñas al activar la nube por primera vez.
+              </div>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
               <button type="button" onClick={actions.copySupabaseChecklist} style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 12, color: theme.cream, padding: 12, cursor: "pointer", fontWeight: 800 }}>
@@ -6228,6 +6254,7 @@ export default function VNDRX() {
   const [reviewDraft, setReviewDraft] = useState({ stars: 0, note: "", tag: "" });
   const [supabaseDraft, setSupabaseDraft] = useState(() => readSupabaseRuntimeConfig());
   const [supabaseProbe, setSupabaseProbe] = useState({ state: "idle", message: "Sin verificar todavía." });
+  const [supabaseMigration, setSupabaseMigration] = useState({ state: "idle", message: "Aún no se subieron datos locales." });
   const installPromptRef = useRef(null);
   const toastTimerRef = useRef(null);
   const ordersRef = useRef(orders);
@@ -6396,6 +6423,51 @@ export default function VNDRX() {
     window.setTimeout(() => window.location.reload(), 500);
   };
 
+  const migrateLocalDataToSupabase = async () => {
+    if (!SUPABASE_ENABLED || !supabase) {
+      setSupabaseMigration({ state: "idle", message: "Primero conecta Supabase para poder subir datos." });
+      showToast("Primero conecta Supabase");
+      return;
+    }
+
+    setSupabaseMigration({ state: "checking", message: "Subiendo pedidos, perfil y reseñas locales..." });
+
+    try {
+      const [orderResults, reviewResults, profileResult] = await Promise.all([
+        syncOrdersToSupabase(ordersRef.current || []),
+        syncReviewsToSupabase(reviewsRef.current || []),
+        profile?.referralCode ? syncProfileToSupabase(profile) : Promise.resolve({ skipped: true }),
+      ]);
+
+      const countFailures = (results = []) => results.filter((result) => result && result.ok === false).length;
+      const orderFailures = countFailures(orderResults);
+      const reviewFailures = countFailures(reviewResults);
+      const profileFailed = profileResult && profileResult.ok === false;
+      const totalOrders = ordersRef.current?.length || 0;
+      const totalReviews = reviewsRef.current?.length || 0;
+      const summary = `Subidos ${Math.max(0, totalOrders - orderFailures)} pedidos y ${Math.max(0, totalReviews - reviewFailures)} reseñas${profile?.referralCode ? "" : " (perfil sin código)"}.`;
+
+      if (orderFailures || reviewFailures || profileFailed) {
+        setSupabaseMigration({
+          state: "error",
+          message: `${summary} Revisa si alguna tabla o política falló.`,
+        });
+        showToast("La migración tuvo observaciones");
+        return;
+      }
+
+      setSupabaseMigration({
+        state: "ok",
+        message: summary,
+      });
+      showToast("Datos locales subidos a Supabase", "success");
+    } catch (error) {
+      const message = error?.message || "No se pudo subir la data local a Supabase.";
+      setSupabaseMigration({ state: "error", message });
+      showToast(message);
+    }
+  };
+
   const testSupabaseConnection = async () => {
     const next = {
       url: supabaseDraft.url.trim(),
@@ -6432,6 +6504,7 @@ export default function VNDRX() {
     clearSupabaseRuntimeConfig();
     setSupabaseDraft({ url: "", key: "" });
     setSupabaseProbe({ state: "idle", message: "Sin verificar todavía." });
+    setSupabaseMigration({ state: "idle", message: "Aún no se subieron datos locales." });
     showToast("Conexion Supabase eliminada. Recargando...");
     window.setTimeout(() => window.location.reload(), 400);
   };
@@ -6875,6 +6948,7 @@ export default function VNDRX() {
     supabaseUrl: SUPABASE_RUNTIME_CONFIG.url || "",
     supabaseDraft,
     supabaseProbe,
+    supabaseMigration,
     promoAssets: isAswa ? ASWA_PROMO_LIBRARY : isJora ? JORA_PROMO_LIBRARY : [],
   };
 
@@ -6900,6 +6974,7 @@ export default function VNDRX() {
     saveReview,
     setSupabaseDraft,
     saveSupabaseConnection,
+    migrateLocalDataToSupabase,
     testSupabaseConnection,
     clearSupabaseConnection,
     copySupabaseSql: () => copySupabaseTemplate(SUPABASE_SCHEMA_TEXT, "SQL de Supabase"),
