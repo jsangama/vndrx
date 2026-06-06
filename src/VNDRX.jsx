@@ -6016,7 +6016,7 @@ export default function VNDRX() {
   const [ownerTestMode, setOwnerTestMode] = useState(() => {
     if (typeof window === "undefined") return false;
     const params = new URLSearchParams(window.location.search);
-    return params.get("dueno") === "1" || params.get("owner") === "1" || window.localStorage.getItem("vndrx-owner-test") === "1";
+    return params.get("dueno") === "1" || params.get("owner") === "1";
   });
   const [catalogConfig, setCatalogConfig] = useState(null);
   const [catalogDraft, setCatalogDraft] = useState("");
@@ -6034,11 +6034,6 @@ export default function VNDRX() {
       // Ignored if storage is unavailable.
     }
   }, [cart]);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !ownerTestMode) return;
-    window.localStorage.setItem("vndrx-owner-test", "1");
-  }, [ownerTestMode]);
 
   useEffect(() => {
     if (!hasSupabaseConfig()) return;
