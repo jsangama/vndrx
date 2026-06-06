@@ -14,6 +14,7 @@ import juaneEscolarAlt from "./assets/aswa/juane-escolar-alt.png";
 import comboEscolar from "./assets/aswa/combo-escolar-san-juan.png";
 import comboEscolarAlt from "./assets/aswa/combo-escolar-san-juan-alt.png";
 import priceSheet from "./assets/rice/precios-arroz-1.png";
+import riceLineupHero from "./assets/rice/catalog/reyleon-linea-productos.jpeg";
 import joraHome from "./assets/jora/jora-home.svg";
 import joraSazon from "./assets/jora/jora-sazon.svg";
 import joraBebible from "./assets/jora/jora-bebible.svg";
@@ -105,6 +106,7 @@ const ASSETS = {
   comboEscolar,
   comboEscolarAlt,
   priceSheet,
+  riceLineupHero,
   joraHome,
   joraSazon,
   joraBebible,
@@ -1332,7 +1334,7 @@ const COMPANY_VIEWS = {
     heroTitle: "Pide tu arroz sin enredos",
     heroText: "Fotos reales, precios visibles y delivery por zona para que el cliente encuentre rápido lo que busca.",
     heroChips: ["Arroz premium", "Precios de origen", "Delivery por zona"],
-    heroImage: priceSheet,
+    heroImage: riceLineupHero,
     heroNote: "MOLINO DIRECTO",
     infoTitle: "Piladora Rey León",
     infoBody: "Arroz para hogar, menús, restaurantes e industria. Revisa premium, superior, económico y derivados en un catálogo limpio.",
@@ -1831,8 +1833,8 @@ function getProductCategory(product) {
 }
 
 const PRODUCT_MEDIA = {
-  1: { src: riceExtraVerdeCatalogo, fit: "cover" },
-  2: { src: riceAnejoFeronCatalogo, fit: "cover" },
+  1: { src: riceExtraVerdeCatalogo, fit: "contain" },
+  2: { src: riceAnejoFeronCatalogo, fit: "contain" },
   3: { src: riceAnejoValorCatalogo, fit: "contain" },
   4: { src: riceSuperiorVerdeCatalogo, fit: "contain" },
   5: { src: riceSuperiorAzulCatalogo, fit: "contain" },
@@ -3813,7 +3815,7 @@ function CompanyChooserScreen({ onChooseCompany, toastBubble }) {
     {
       key: "reyleon",
       view: COMPANY_VIEWS.reyleon,
-      image: ASSETS.priceSheet,
+      image: ASSETS.riceLineupHero,
       accent: HOME.accent,
       chips: ["Arroz premium", "Superior", "Derivados"],
       note: "Molino directo",

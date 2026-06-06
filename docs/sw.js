@@ -1,4 +1,4 @@
-const CACHE_NAME = "vndrx-v5";
+const CACHE_NAME = "vndrx-v6";
 const APP_SHELL = [
   "./",
   "./index.html",
