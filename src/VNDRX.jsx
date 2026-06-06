@@ -15,6 +15,8 @@ import comboEscolar from "./assets/aswa/combo-escolar-san-juan.png";
 import comboEscolarAlt from "./assets/aswa/combo-escolar-san-juan-alt.png";
 import priceSheet from "./assets/rice/precios-arroz-1.png";
 import riceLineupHero from "./assets/rice/catalog/reyleon-linea-productos.jpeg";
+import realPacificoLogo from "./assets/rice/catalog/real-pacifico-logo.jpeg";
+import molinoReyLeonFrente from "./assets/rice/catalog/molino-rey-leon-frente.jpeg";
 import joraHome from "./assets/jora/jora-home.svg";
 import joraSazon from "./assets/jora/jora-sazon.svg";
 import joraBebible from "./assets/jora/jora-bebible.svg";
@@ -107,6 +109,8 @@ const ASSETS = {
   comboEscolarAlt,
   priceSheet,
   riceLineupHero,
+  realPacificoLogo,
+  molinoReyLeonFrente,
   joraHome,
   joraSazon,
   joraBebible,
@@ -4431,20 +4435,39 @@ function ArtesaniaBoard() {
 }
 
 function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
+  const openAsset = (src) => window.open(src, "_blank", "noopener,noreferrer");
   const tiles = [
     {
-      image: riceExtraVerdeCatalogo,
-      title: "Arroz premium",
-      subtitle: "Ideal para casa, menues y restaurantes",
+      image: ASSETS.realPacificoLogo,
+      title: "Real Pacifico",
+      subtitle: "Marca principal del molino",
+      note: "MARCA",
+      accent: "#A61E18",
+      aspectRatio: "16 / 7",
+    },
+    {
+      image: ASSETS.molinoReyLeonFrente,
+      title: "Molino Rey Leon",
+      subtitle: "Produccion directa en Cacatachi",
       note: "MOLINO",
+      accent: HOME.leaf,
+      aspectRatio: "16 / 7",
+    },
+    {
+      image: riceExtraVerdeCatalogo,
+      title: "Extra Verde",
+      subtitle: "Linea premium para casa y restaurantes",
+      note: "PREMIUM",
       accent: HOME.accent,
+      aspectRatio: "1 / 1.15",
     },
     {
       image: riceSuperiorVerdeCatalogo,
-      title: "Arroz superior",
+      title: "Superior Verde",
       subtitle: "Uso diario, rendidor y claro para comprar",
-      note: "USO DIARIO",
+      note: "SUPERIOR",
       accent: HOME.leaf,
+      aspectRatio: "1 / 1.15",
     },
     {
       image: riceAfrechoCatalogo,
@@ -4452,6 +4475,7 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
       subtitle: "Afrecho, polvillo y cascarilla",
       note: "INDUSTRIA",
       accent: HOME.gold,
+      aspectRatio: "1 / 1.15",
     },
   ];
 
@@ -4466,14 +4490,14 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
       }}>
         <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 0.95fr) minmax(0, 1.05fr)", gap: 18, alignItems: "stretch" }}>
           <PromoTile
-            image={ASSETS.priceSheet}
-            title="Catálogo de precios"
-            subtitle="Consulta la lista comercial antes de pedir"
-            note="REY LEON"
-            accent={HOME.accent}
+            image={ASSETS.riceLineupHero}
+            title="Linea de productos Rey Leon"
+            subtitle="Bolsas Real Pacifico, Rey Leon y Valles del Guayo"
+            note="CATALOGO"
+            accent="#A61E18"
             fit="contain"
-            aspectRatio="3 / 4"
-            onClick={onOpenPriceSheet}
+            aspectRatio="16 / 10"
+            onClick={() => openAsset(ASSETS.riceLineupHero)}
           />
 
           <div style={{ display: "grid", gap: 14 }}>
@@ -4484,10 +4508,22 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
               padding: 16,
               boxShadow: HOME.shadow,
             }}>
-              <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Piladora Rey Leon</div>
-              <div style={{ color: HOME.text, fontSize: 18, fontWeight: 900, marginTop: 6 }}>Compra directo del molino y sin ruido visual</div>
+              <div style={{ display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap" }}>
+                <div style={{ width: 150, maxWidth: "100%", borderRadius: 14, overflow: "hidden", border: `1px solid ${HOME.border}`, background: "#111" }}>
+                  <img
+                    src={ASSETS.realPacificoLogo}
+                    alt="Logo Real Pacifico"
+                    loading="lazy"
+                    style={{ width: "100%", height: 58, objectFit: "contain", display: "block" }}
+                  />
+                </div>
+                <div>
+                  <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Piladora Rey Leon</div>
+                  <div style={{ color: HOME.text, fontSize: 18, fontWeight: 900, marginTop: 6 }}>Compra directo del molino y con fotos reales</div>
+                </div>
+              </div>
               <div style={{ color: HOME.muted, fontSize: 13, lineHeight: 1.65, marginTop: 8 }}>
-                Aqui el cliente ve solo los arroces y derivados de Rey Leon. Fotos reales, precios claros y delivery por zona para comprar rapido.
+                Aqui el cliente ve solo los arroces y derivados de Rey Leon. La portada, las bolsas y los derivados vienen de las imagenes del molino.
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10, marginTop: 14 }}>
                 <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 12 }}>
@@ -4511,8 +4547,8 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
                   note={tile.note}
                   accent={tile.accent}
                   fit="contain"
-                  aspectRatio="1 / 1.15"
-                  onClick={onOpenPriceSheet}
+                  aspectRatio={tile.aspectRatio}
+                  onClick={() => openAsset(tile.image)}
                 />
               ))}
             </div>
@@ -4535,6 +4571,22 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
                   Consulta precios o escribe al molino para cerrar tu compra.
                 </div>
               </div>
+              <button
+                type="button"
+                onClick={onOpenPriceSheet}
+                style={{
+                  background: HOME.surface,
+                  border: `1px solid ${HOME.border}`,
+                  borderRadius: 12,
+                  color: HOME.text,
+                  padding: "11px 14px",
+                  cursor: "pointer",
+                  fontSize: 13,
+                  fontWeight: 900,
+                }}
+              >
+                Ver lista de precios
+              </button>
               <button
                 type="button"
                 onClick={onContact}
