@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reloj Digital - Zonas Horarias</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⏰ Reloj Digital Global</h1>
+            <p class="subtitle">Hora actual en diferentes zonas horarias</p>
+        </div>
+
+        <div class="clocks-grid">
+            <!-- Lima, Perú -->
+            <div class="clock-card">
+                <div class="clock-header">
+                    <span class="city">🇵🇪 Lima</span>
+                    <span class="timezone">Peru (PET)</span>
+                </div>
+                <div class="clock-display" id="lima">
+                    <span class="time">--:--:--</span>
+                </div>
+                <div class="date" id="lima-date">--/--/----</div>
+            </div>
+
+            <!-- Nueva York -->
+            <div class="clock-card">
+                <div class="clock-header">
+                    <span class="city">🗽 Nueva York</span>
+                    <span class="timezone">USA (EST)</span>
+                </div>
+                <div class="clock-display" id="newyork">
+                    <span class="time">--:--:--</span>
+                </div>
+                <div class="date" id="newyork-date">--/--/----</div>
+            </div>
+
+            <!-- Londres -->
+            <div class="clock-card">
+                <div class="clock-header">
+                    <span class="city">🇬🇧 Londres</span>
+                    <span class="timezone">UK (GMT)</span>
+                </div>
+                <div class="clock-display" id="london">
+                    <span class="time">--:--:--</span>
+                </div>
+                <div class="date" id="london-date">--/--/----</div>
+            </div>
+
+            <!-- Tokio -->
+            <div class="clock-card">
+                <div class="clock-header">
+                    <span class="city">🗾 Tokio</span>
+                    <span class="timezone">Japan (JST)</span>
+                </div>
+                <div class="clock-display" id="tokyo">
+                    <span class="time">--:--:--</span>
+                </div>
+                <div class="date" id="tokyo-date">--/--/----</div>
+            </div>
+
+            <!-- Sídney -->
+            <div class="clock-card">
+                <div class="clock-header">
+                    <span class="city">🦘 Sídney</span>
+                    <span class="timezone">Australia (AEDT)</span>
+                </div>
+                <div class="clock-display" id="sydney">
+                    <span class="time">--:--:--</span>
+                </div>
+                <div class="date" id="sydney-date">--/--/----</div>
+            </div>
+
+            <!-- Dubai -->
+            <div class="clock-card">
+                <div class="clock-header">
+                    <span class="city">🏙️ Dubai</span>
+                    <span class="timezone">UAE (GST)</span>
+                </div>
+                <div class="clock-display" id="dubai">
+                    <span class="time">--:--:--</span>
+                </div>
+                <div class="date" id="dubai-date">--/--/----</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Actualizado en tiempo real • Zona horaria de tu dispositivo</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
