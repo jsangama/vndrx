@@ -85,6 +85,50 @@ async function saveCatalogConfig(data, token) {
   });
 }
 
+function safeStorageName(name = "comprobante.jpg") {
+  return name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9._-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    || "comprobante.jpg";
+}
+
+async function uploadPaymentProof(file, orderId) {
+  const { url, anonKey } = getSupabaseConfig();
+  if (!url || !anonKey) {
+    throw new Error("Supabase no esta configurado.");
+  }
+  if (!file) {
+    throw new Error("Selecciona una foto del comprobante.");
+  }
+
+  const folder = String(orderId || "pedido").replace(/[^a-zA-Z0-9._-]+/g, "-");
+  const fileName = `${Date.now()}-${safeStorageName(file.name)}`;
+  const objectPath = `payment-proofs/${folder}/${fileName}`;
+  const response = await fetch(`${normalizeUrl(url)}/storage/v1/object/${objectPath}`, {
+    method: "POST",
+    headers: {
+      apikey: anonKey,
+      Authorization: `Bearer ${anonKey}`,
+      "Content-Type": file.type || "application/octet-stream",
+      "x-upsert": "false",
+    },
+    body: file,
+  });
+
+  if (!response.ok) {
+    const message = await response.text();
+    throw new Error(message || "No se pudo subir el comprobante.");
+  }
+
+  return {
+    path: objectPath,
+    url: `${normalizeUrl(url)}/storage/v1/object/public/${objectPath}`,
+  };
+}
+
 export {
   CONFIG_ID,
   getSupabaseConfig,
@@ -92,4 +136,5 @@ export {
   loadCatalogConfig,
   saveCatalogConfig,
   signInOwner,
+  uploadPaymentProof,
 };

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { hasSupabaseConfig, loadCatalogConfig, saveCatalogConfig, signInOwner } from "./supabaseCatalog.js";
+import { hasSupabaseConfig, loadCatalogConfig, saveCatalogConfig, signInOwner, uploadPaymentProof } from "./supabaseCatalog.js";
 
 import promoMain from "./assets/aswa/promo-san-juanero-main.png";
 import promoAlt from "./assets/aswa/promo-san-juanera-alt.png";
@@ -2052,7 +2052,7 @@ function createOrderRecord({ supplier, items, customer, payment, extras }) {
     total,
     bonusEarned: calcBonusPoints(total),
     ownerTest: Boolean(extras?.ownerTest),
-    status: extras?.ownerTest ? "prueba" : "pendiente",
+    status: extras?.ownerTest ? "prueba" : (extras?.paymentStatus || "pendiente"),
     channel: "whatsapp",
   };
 }
@@ -4478,6 +4478,16 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
       aspectRatio: "1 / 1.15",
     },
   ];
+  const catalogHighlights = [
+    { image: riceAnejoFeronCatalogo, title: "Anejo Feron", note: "PREMIUM" },
+    { image: riceSuperiorAzulCatalogo, title: "Superior Azul", note: "EXPORTACION" },
+    { image: riceVallesDelGuayoCatalogo, title: "Valles del Guayo", note: "SUPERIOR" },
+    { image: riceIntegradoRojoCatalogo, title: "Integrado Rojo", note: "INTEGRADO" },
+    { image: riceIntegradoLilaCatalogo, title: "Integrado Lila", note: "INTEGRADO" },
+    { image: riceArrocilloCatalogo, title: "Arrocillo", note: "DERIVADO" },
+    { image: ricePolvilloFinoCatalogo, title: "Polvillo fino", note: "DERIVADO" },
+    { image: riceCascarillaPrensadaCatalogo, title: "Cascarilla prensada", note: "INDUSTRIA" },
+  ];
 
   return (
     <section style={{ maxWidth: 1200, margin: "18px auto 0", padding: "0 20px" }}>
@@ -4605,6 +4615,82 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
                 Contactar ventas del molino
               </button>
             </div>
+          </div>
+        </div>
+
+        <div style={{
+          marginTop: 16,
+          background: `${HOME.surface}CC`,
+          border: `1px solid ${HOME.border}`,
+          borderRadius: 18,
+          padding: 14,
+          boxShadow: "0 12px 24px rgba(76,56,23,0.08)",
+        }}>
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", flexWrap: "wrap", marginBottom: 12 }}>
+            <div>
+              <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Mas del catalogo Rey Leon</div>
+              <div style={{ color: HOME.text, fontSize: 14, fontWeight: 800, marginTop: 4 }}>Bolsas y derivados con imagen propia para reconocer rapido cada producto.</div>
+            </div>
+            <button
+              type="button"
+              onClick={onOpenPriceSheet}
+              style={{
+                background: HOME.soft,
+                border: `1px solid ${HOME.border}`,
+                borderRadius: 999,
+                color: HOME.text,
+                padding: "8px 12px",
+                cursor: "pointer",
+                fontSize: 12,
+                fontWeight: 900,
+              }}
+            >
+              Abrir precios
+            </button>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: 10 }}>
+            {catalogHighlights.map((item) => (
+              <button
+                key={item.title}
+                type="button"
+                onClick={() => openAsset(item.image)}
+                style={{
+                  padding: 0,
+                  border: `1px solid ${HOME.border}`,
+                  borderRadius: 14,
+                  overflow: "hidden",
+                  background: HOME.surface,
+                  cursor: "pointer",
+                  textAlign: "left",
+                }}
+              >
+                <div style={{ position: "relative", aspectRatio: "1 / 1.05", background: HOME.soft, overflow: "hidden" }}>
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    loading="lazy"
+                    style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+                  />
+                  <span style={{
+                    position: "absolute",
+                    top: 8,
+                    left: 8,
+                    background: "#0F1A0ECC",
+                    color: "#fff",
+                    borderRadius: 999,
+                    padding: "3px 8px",
+                    fontSize: 9,
+                    fontWeight: 900,
+                    letterSpacing: 0.8,
+                  }}>
+                    {item.note}
+                  </span>
+                </div>
+                <div style={{ padding: "9px 10px", color: HOME.text, fontSize: 12, fontWeight: 900, lineHeight: 1.2 }}>
+                  {item.title}
+                </div>
+              </button>
+            ))}
           </div>
         </div>
       </div>
@@ -5372,7 +5458,443 @@ function CartDrawer({ cart, onClose, onRemove }) {
 
 // ── APP ──────────────────────────────────────────────────────────────────────
 
-function CartDrawerReal({ cart, onClose, onRemove, onOrderSent, initialCustomer = {}, referralCode = "", referredBy = "", gpsState = {}, initialStep = "cart", ownerTestMode = false, paymentMethods = REYLEON_PAYMENT_METHODS }) {
+function CartDrawerReal({ cart, onClose, onRemove, onUpdateQty, onOrderSent, initialCustomer = {}, referralCode = "", referredBy = "", gpsState = {}, initialStep = "cart", ownerTestMode = false, paymentMethods = REYLEON_PAYMENT_METHODS }) {
+  const initialFlowStep = initialStep === "checkout" ? "delivery" : initialStep;
+  const [flowStep, setFlowStep] = useState(initialFlowStep);
+  const [buyer, setBuyer] = useState({
+    name: initialCustomer.name || "",
+    phone: initialCustomer.phone || "",
+    district: initialCustomer.district || "",
+    address: initialCustomer.address || "",
+    reference: initialCustomer.reference || "",
+    notes: initialCustomer.notes || "",
+    referralCode: initialCustomer.referralCode || referralCode,
+    referredBy: initialCustomer.referredBy || referredBy,
+  });
+  const [selectedZoneId, setSelectedZoneId] = useState("");
+  const [guidedPayment, setGuidedPayment] = useState(paymentMethods[0]?.val || "cod");
+  const [reviewOk, setReviewOk] = useState(false);
+  const [guidedStatus, setGuidedStatus] = useState("");
+  const [finalOrder, setFinalOrder] = useState(null);
+  const [proofFile, setProofFile] = useState(null);
+  const [proofStatus, setProofStatus] = useState("");
+  const [proofUpload, setProofUpload] = useState(null);
+
+  useEffect(() => {
+    setFlowStep(initialStep === "checkout" ? "delivery" : initialStep);
+  }, [initialStep]);
+
+  useEffect(() => {
+    setBuyer((prev) => ({
+      ...prev,
+      ...initialCustomer,
+      referralCode: initialCustomer.referralCode || referralCode || prev.referralCode,
+      referredBy: initialCustomer.referredBy || referredBy || prev.referredBy,
+    }));
+  }, [initialCustomer, referralCode, referredBy]);
+
+  const guidedZones = Array.from(
+    new Map(
+      cart
+        .flatMap((item) => item.product?.zones || ZONES_REYLEON)
+        .map((zoneItem) => [zoneItem.id || zoneItem.name, zoneItem])
+    ).values()
+  );
+  const fallbackZone = guidedZones.find((zoneItem) => zoneItem.id === "recojo") || guidedZones[0] || ZONES_REYLEON[0];
+  const selectedZone = guidedZones.find((zoneItem) => String(zoneItem.id) === String(selectedZoneId)) || fallbackZone;
+
+  useEffect(() => {
+    if (!selectedZoneId && fallbackZone?.id) setSelectedZoneId(fallbackZone.id);
+  }, [fallbackZone?.id, selectedZoneId]);
+
+  const guidedItems = cart.map((item) => ({ ...item, zone: selectedZone || item.zone }));
+  const guidedGroups = groupCartBySupplier(guidedItems);
+  const guidedSubtotal = guidedItems.reduce((sum, item) => sum + item.pres.price * item.qty, 0);
+  const guidedDelivery = guidedItems.length ? (selectedZone?.cost || 0) : 0;
+  const guidedTotal = guidedSubtotal + guidedDelivery;
+  const digitsPhone = buyer.phone.replace(/\D/g, "");
+  const phoneOk = digitsPhone.length >= 9;
+  const deliveryOk = phoneOk && buyer.name.trim().length >= 2 && Boolean(selectedZone?.id);
+  const chosenPayment = paymentMethods.find((item) => item.val === guidedPayment) || paymentMethods[0] || REYLEON_PAYMENT_METHODS[0];
+  const chosenBank = REYLEON_BANK_DETAILS[chosenPayment.val] || (chosenPayment.account || chosenPayment.cci ? chosenPayment : null);
+  const paymentNeedsProof = !["cod", "cash", "efectivo"].includes(chosenPayment.val);
+  const guidedGps = gpsState?.label && gpsState?.url ? gpsState : null;
+  const flowSupplier = guidedGroups.length > 1
+    ? { key: "mixto", name: "Pedido mixto VNDRX" }
+    : (guidedGroups[0]?.supplier || { key: "vndrx", name: "VNDRX" });
+  const flowExtras = {
+    ownerTest: ownerTestMode,
+    gps: guidedGps,
+    checkoutZone: selectedZone,
+    paymentStatus: paymentNeedsProof ? "Pendiente de verificacion de pago" : "Pendiente de confirmacion",
+    proofRequired: paymentNeedsProof,
+  };
+
+  const flowInput = {
+    width: "100%",
+    background: "#fff",
+    border: `1px solid ${HOME.border}`,
+    borderRadius: 14,
+    color: HOME.text,
+    padding: "13px 14px",
+    fontSize: 15,
+  };
+  const primaryButton = {
+    width: "100%",
+    border: "none",
+    borderRadius: 16,
+    background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})`,
+    color: "#fff",
+    padding: "15px 16px",
+    fontSize: 15,
+    fontWeight: 900,
+    cursor: "pointer",
+  };
+  const mutedButton = {
+    border: `1px solid ${HOME.border}`,
+    borderRadius: 14,
+    background: "#fff",
+    color: HOME.text,
+    padding: "12px 14px",
+    fontSize: 14,
+    fontWeight: 800,
+    cursor: "pointer",
+  };
+
+  const setBuyerField = (field, value) => {
+    setBuyer((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const goDelivery = () => {
+    if (!cart.length) return;
+    setGuidedStatus("");
+    setFlowStep("delivery");
+  };
+
+  const goPayment = () => {
+    if (!deliveryOk) {
+      setGuidedStatus("Completa tu nombre, celular y zona para continuar.");
+      return;
+    }
+    setGuidedStatus("");
+    setFlowStep("payment");
+  };
+
+  const goReview = () => {
+    setGuidedStatus("");
+    setReviewOk(false);
+    setFlowStep("review");
+  };
+
+  const confirmGuidedOrder = async () => {
+    if (!reviewOk) {
+      setGuidedStatus("Marca la casilla para confirmar tu pedido.");
+      return;
+    }
+
+    const customerData = {
+      ...buyer,
+      phone: digitsPhone,
+      district: selectedZone?.name || buyer.district,
+      address: selectedZone?.address || buyer.address,
+      notes: ownerTestMode ? [buyer.notes, OWNER_TEST_NOTE].filter(Boolean).join(" | ") : buyer.notes,
+    };
+    const orderRecord = createOrderRecord({
+      supplier: flowSupplier,
+      items: guidedItems,
+      customer: customerData,
+      payment: chosenPayment.val,
+      extras: flowExtras,
+    });
+    const message = guidedGroups.length > 1
+      ? buildCombinedOrderMessage({
+        groups: guidedGroups,
+        customer: customerData,
+        payment: paymentLabel(chosenPayment.val),
+        extras: { ...flowExtras, orderId: orderRecord.id },
+      })
+      : buildOrderMessage({
+        supplier: flowSupplier,
+        items: guidedItems,
+        customer: customerData,
+        payment: paymentLabel(chosenPayment.val),
+        extras: { ...flowExtras, orderId: orderRecord.id },
+      });
+
+    onOrderSent?.(orderRecord);
+    setFinalOrder(orderRecord);
+    setFlowStep("confirmation");
+    setGuidedStatus("Pedido generado. Envia el comprobante si pagaste por billetera o banco.");
+    try {
+      await navigator.clipboard?.writeText(message);
+    } catch {
+      // Clipboard is optional.
+    }
+    window.open(`https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+  };
+
+  const uploadProof = async () => {
+    if (!proofFile) {
+      setProofStatus("Selecciona la foto del comprobante.");
+      return;
+    }
+    if (!finalOrder?.id) {
+      setProofStatus("Primero confirma el pedido.");
+      return;
+    }
+    try {
+      setProofStatus("Subiendo comprobante...");
+      const uploaded = await uploadPaymentProof(proofFile, finalOrder.id);
+      setProofUpload(uploaded);
+      setProofStatus("Comprobante subido. Lo verificamos mas rapido por WhatsApp.");
+    } catch (error) {
+      setProofStatus("No se pudo subir aqui. Envialo por WhatsApp al 955 273 229.");
+    }
+  };
+
+  const stepItems = [
+    { id: "cart", label: "Carrito" },
+    { id: "delivery", label: "Datos" },
+    { id: "payment", label: "Pago" },
+    { id: "review", label: "Resumen" },
+  ];
+  const stepIndex = Math.max(0, stepItems.findIndex((item) => item.id === flowStep));
+
+  return (
+    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "#00000099", zIndex: 100, display: "flex", justifyContent: "flex-end" }}>
+      <div onClick={(event) => event.stopPropagation()} style={{ width: 520, maxWidth: "100vw", background: HOME.surface, height: "100%", display: "flex", flexDirection: "column", boxShadow: "-20px 0 60px rgba(0,0,0,0.28)" }}>
+        <div style={{ padding: "14px 16px", borderBottom: `1px solid ${HOME.border}`, background: "#FFFDF8" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center" }}>
+            <div>
+              <div style={{ fontFamily: "Georgia, serif", color: HOME.text, fontSize: 22, fontWeight: 900 }}>Tu pedido</div>
+              <div style={{ color: HOME.muted, fontSize: 12, marginTop: 2 }}>
+                {ownerTestMode ? "Modo dueno: prueba sin despachar" : "Compra guiada en pocos pasos"}
+              </div>
+            </div>
+            <button type="button" onClick={onClose} style={{ ...mutedButton, width: 42, height: 42, padding: 0, fontSize: 22 }}>x</button>
+          </div>
+          {flowStep !== "confirmation" && (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 6, marginTop: 14 }}>
+              {stepItems.map((item, index) => {
+                const active = index <= stepIndex;
+                return (
+                  <div key={item.id} style={{ background: active ? HOME.leaf : HOME.soft, color: active ? "#fff" : HOME.muted, borderRadius: 999, padding: "8px 5px", textAlign: "center", fontSize: 11, fontWeight: 900 }}>
+                    {index + 1}. {item.label}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        <div style={{ flex: 1, overflowY: "auto", padding: 16, background: HOME.page }}>
+          {guidedStatus && (
+            <div style={{ background: "#ECFDF5", border: "1px solid #86EFAC", color: "#14532D", borderRadius: 14, padding: 12, fontSize: 13, fontWeight: 800, marginBottom: 12 }}>
+              {guidedStatus}
+            </div>
+          )}
+
+          {flowStep === "cart" && (
+            <div style={{ display: "grid", gap: 12 }}>
+              {!cart.length ? (
+                <div style={{ background: "#fff", border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 22, textAlign: "center", color: HOME.text }}>
+                  <div style={{ fontSize: 38, marginBottom: 8 }}>🛒</div>
+                  <div style={{ fontWeight: 900, fontSize: 18 }}>Tu carrito esta vacio</div>
+                  <div style={{ color: HOME.muted, fontSize: 13, marginTop: 6 }}>Agrega productos del catalogo para empezar.</div>
+                </div>
+              ) : (
+                guidedItems.map((item) => {
+                  const lineTotal = item.pres.price * item.qty;
+                  return (
+                    <div key={item.uid} style={{ background: "#fff", border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 12 }}>
+                      <div style={{ display: "grid", gridTemplateColumns: "64px 1fr auto", gap: 10, alignItems: "center" }}>
+                        <ProductAvatar product={item.product} size={64} radius={14} />
+                        <div>
+                          <div style={{ color: HOME.text, fontSize: 14, fontWeight: 900, lineHeight: 1.25 }}>{item.product.name}</div>
+                          <div style={{ color: HOME.muted, fontSize: 12, marginTop: 3 }}>{item.pres.label} · {formatMoney(item.pres.price)}</div>
+                        </div>
+                        <button type="button" onClick={() => onRemove(item.uid)} style={{ ...mutedButton, width: 36, height: 36, padding: 0 }}>x</button>
+                      </div>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 12, gap: 10 }}>
+                        <div style={{ display: "flex", border: `1px solid ${HOME.border}`, borderRadius: 999, overflow: "hidden", background: HOME.soft }}>
+                          <button type="button" onClick={() => onUpdateQty?.(item.uid, item.qty - 1)} style={{ border: "none", background: "transparent", width: 42, height: 38, fontSize: 18, fontWeight: 900, cursor: "pointer" }}>-</button>
+                          <div style={{ minWidth: 38, height: 38, display: "grid", placeItems: "center", fontWeight: 900 }}>{item.qty}</div>
+                          <button type="button" onClick={() => onUpdateQty?.(item.uid, item.qty + 1)} style={{ border: "none", background: "transparent", width: 42, height: 38, fontSize: 18, fontWeight: 900, cursor: "pointer" }}>+</button>
+                        </div>
+                        <div style={{ color: HOME.text, fontSize: 18, fontWeight: 900 }}>{formatMoney(lineTotal)}</div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          )}
+
+          {flowStep === "delivery" && (
+            <div style={{ display: "grid", gap: 12 }}>
+              <div style={{ background: "#fff", border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14 }}>
+                <div style={{ color: HOME.text, fontSize: 17, fontWeight: 900, marginBottom: 10 }}>Datos de entrega</div>
+                <div style={{ display: "grid", gap: 10 }}>
+                  <input value={buyer.phone} onChange={(event) => setBuyerField("phone", event.target.value)} inputMode="tel" placeholder="Celular WhatsApp" style={flowInput} />
+                  {buyer.phone && !phoneOk && <div style={{ color: "#B91C1C", fontSize: 12, fontWeight: 800 }}>Ingresa un celular valido de 9 digitos.</div>}
+                  <input value={buyer.name} onChange={(event) => setBuyerField("name", event.target.value)} placeholder="Nombre" style={flowInput} />
+                  <select value={selectedZoneId} onChange={(event) => setSelectedZoneId(event.target.value)} style={flowInput}>
+                    {guidedZones.map((zoneItem) => (
+                      <option key={zoneItem.id || zoneItem.name} value={zoneItem.id}>{zoneItem.name} - {zoneItem.cost === 0 ? "gratis" : formatMoney(zoneItem.cost)}</option>
+                    ))}
+                  </select>
+                  <input value={buyer.reference} onChange={(event) => setBuyerField("reference", event.target.value)} placeholder="Referencia (opcional)" style={flowInput} />
+                </div>
+              </div>
+              <div style={{ background: "#fff", border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14, display: "flex", justifyContent: "space-between", gap: 12 }}>
+                <div>
+                  <div style={{ color: HOME.muted, fontSize: 12, fontWeight: 800 }}>Delivery</div>
+                  <div style={{ color: HOME.text, fontSize: 15, fontWeight: 900 }}>{selectedZone?.name}</div>
+                  <div style={{ color: HOME.muted, fontSize: 12, marginTop: 3 }}>{selectedZone?.address}</div>
+                </div>
+                <div style={{ color: HOME.leaf, fontSize: 18, fontWeight: 900 }}>{guidedDelivery === 0 ? "Gratis" : formatMoney(guidedDelivery)}</div>
+              </div>
+            </div>
+          )}
+
+          {flowStep === "payment" && (
+            <div style={{ display: "grid", gap: 12 }}>
+              <div style={{ background: "#fff", border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14 }}>
+                <div style={{ color: HOME.text, fontSize: 17, fontWeight: 900, marginBottom: 10 }}>Elige como pagar</div>
+                <div style={{ display: "grid", gap: 9 }}>
+                  {paymentMethods.map((method) => {
+                    const active = chosenPayment.val === method.val;
+                    return (
+                      <button key={method.val} type="button" onClick={() => setGuidedPayment(method.val)} style={{ border: `2px solid ${active ? method.color : HOME.border}`, background: active ? `${method.color}18` : "#fff", borderRadius: 16, padding: 12, display: "flex", gap: 10, alignItems: "center", textAlign: "left", cursor: "pointer" }}>
+                        <div style={{ background: method.color, color: "#fff", borderRadius: 12, width: 42, height: 42, display: "grid", placeItems: "center", fontWeight: 900 }}>{method.badge}</div>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ color: HOME.text, fontSize: 14, fontWeight: 900 }}>{method.label}</div>
+                          <div style={{ color: HOME.muted, fontSize: 12, marginTop: 2 }}>{method.detail}</div>
+                        </div>
+                        {active && <div style={{ color: method.color, fontSize: 20, fontWeight: 900 }}>✓</div>}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div style={{ background: "#fff", border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14 }}>
+                <div style={{ color: HOME.text, fontSize: 16, fontWeight: 900 }}>{chosenPayment.label}</div>
+                <div style={{ color: HOME.muted, fontSize: 13, lineHeight: 1.5, marginTop: 6 }}>{chosenPayment.hint || chosenPayment.detail}</div>
+                {chosenPayment.val === "yape" && (
+                  <div style={{ marginTop: 12, display: "grid", gridTemplateColumns: "1fr 112px", gap: 12, alignItems: "center" }}>
+                    <div>
+                      <div style={{ color: HOME.text, fontSize: 20, fontWeight: 900 }}>918 429 034</div>
+                      <div style={{ color: HOME.muted, fontSize: 13, marginTop: 3 }}>Noyolith Quine Rojas</div>
+                      <button type="button" onClick={() => navigator.clipboard?.writeText("918429034")} style={{ ...mutedButton, marginTop: 10 }}>Copiar numero</button>
+                    </div>
+                    <img src={ASSETS.yapeQr} alt="QR Yape" style={{ width: 112, borderRadius: 14, border: `1px solid ${HOME.border}` }} />
+                  </div>
+                )}
+                {chosenBank && (
+                  <div style={{ marginTop: 12, background: HOME.soft2, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 12, display: "grid", gap: 6 }}>
+                    <div style={{ color: HOME.text, fontWeight: 900 }}>{chosenBank.detail || chosenBank.bank}</div>
+                    <div style={{ color: HOME.text, fontFamily: "monospace" }}>Cuenta: {chosenBank.account}</div>
+                    {chosenBank.cci && <div style={{ color: HOME.text, fontFamily: "monospace" }}>CCI: {chosenBank.cci}</div>}
+                  </div>
+                )}
+                {paymentNeedsProof && (
+                  <div style={{ marginTop: 12, background: "#FFF7ED", border: "1px solid #FED7AA", borderRadius: 14, padding: 12, color: "#9A3412", fontSize: 13, fontWeight: 800 }}>
+                    Para continuar, paga y guarda tu comprobante. Lo subes despues de confirmar.
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {flowStep === "review" && (
+            <div style={{ display: "grid", gap: 12 }}>
+              <div style={{ background: "#fff", border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14 }}>
+                <div style={{ color: HOME.text, fontSize: 17, fontWeight: 900, marginBottom: 10 }}>Resumen final</div>
+                <div style={{ display: "grid", gap: 8 }}>
+                  {guidedItems.map((item) => (
+                    <div key={item.uid} style={{ display: "flex", justifyContent: "space-between", gap: 10, color: HOME.text, fontSize: 13 }}>
+                      <span>{item.qty} x {item.product.name} ({item.pres.label})</span>
+                      <strong>{formatMoney(item.pres.price * item.qty)}</strong>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ borderTop: `1px solid ${HOME.border}`, marginTop: 12, paddingTop: 12, display: "grid", gap: 7 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", color: HOME.muted }}><span>Productos</span><strong>{formatMoney(guidedSubtotal)}</strong></div>
+                  <div style={{ display: "flex", justifyContent: "space-between", color: HOME.muted }}><span>Delivery</span><strong>{guidedDelivery === 0 ? "Gratis" : formatMoney(guidedDelivery)}</strong></div>
+                  <div style={{ display: "flex", justifyContent: "space-between", color: HOME.text, fontSize: 20, fontWeight: 900 }}><span>Total</span><span>{formatMoney(guidedTotal)}</span></div>
+                </div>
+              </div>
+
+              <div style={{ background: "#fff", border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14, color: HOME.text, fontSize: 13, lineHeight: 1.6 }}>
+                <div><strong>Cliente:</strong> {buyer.name} · {digitsPhone}</div>
+                <div><strong>Zona:</strong> {selectedZone?.name}</div>
+                {buyer.reference && <div><strong>Referencia:</strong> {buyer.reference}</div>}
+                <div><strong>Pago:</strong> {chosenPayment.label}</div>
+                <label style={{ marginTop: 12, display: "flex", gap: 10, alignItems: "flex-start", cursor: "pointer", fontWeight: 900 }}>
+                  <input type="checkbox" checked={reviewOk} onChange={(event) => setReviewOk(event.target.checked)} />
+                  <span>Confirmo que los datos y el total estan correctos.</span>
+                </label>
+              </div>
+            </div>
+          )}
+
+          {flowStep === "confirmation" && (
+            <div style={{ display: "grid", gap: 12 }}>
+              <div style={{ background: "#ECFDF5", border: "1px solid #86EFAC", borderRadius: 18, padding: 16, color: "#14532D" }}>
+                <div style={{ fontSize: 20, fontWeight: 900 }}>Pedido generado</div>
+                <div style={{ fontFamily: "monospace", fontSize: 14, marginTop: 8 }}>{finalOrder?.id}</div>
+                <div style={{ marginTop: 8, fontSize: 13, fontWeight: 800 }}>
+                  Estado: {paymentNeedsProof ? "Pendiente de verificacion de pago" : "Pendiente de confirmacion"}
+                </div>
+              </div>
+
+              {paymentNeedsProof && (
+                <div style={{ background: "#fff", border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14 }}>
+                  <div style={{ color: HOME.text, fontSize: 17, fontWeight: 900 }}>Sube tu comprobante</div>
+                  <input type="file" accept="image/*" onChange={(event) => setProofFile(event.target.files?.[0] || null)} style={{ marginTop: 12, width: "100%" }} />
+                  <button type="button" onClick={uploadProof} style={{ ...primaryButton, marginTop: 12 }}>Subir comprobante</button>
+                  {proofStatus && <div style={{ color: proofUpload ? "#166534" : HOME.muted, fontSize: 13, marginTop: 10, fontWeight: 800 }}>{proofStatus}</div>}
+                </div>
+              )}
+
+              <div style={{ background: "#fff", border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14, color: HOME.text, fontSize: 14, lineHeight: 1.55 }}>
+                Envia tambien el comprobante por WhatsApp al <strong>955 273 229</strong> para verificar mas rapido.
+              </div>
+            </div>
+          )}
+        </div>
+
+        {flowStep !== "confirmation" && (
+          <div style={{ padding: 14, borderTop: `1px solid ${HOME.border}`, background: "#fff" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, marginBottom: 10 }}>
+              <div style={{ color: HOME.muted, fontSize: 12, fontWeight: 800 }}>Total</div>
+              <div style={{ color: HOME.text, fontSize: 22, fontWeight: 900 }}>{formatMoney(guidedTotal)}</div>
+            </div>
+            {flowStep === "cart" && <button type="button" onClick={goDelivery} disabled={!cart.length} style={{ ...primaryButton, opacity: cart.length ? 1 : 0.55 }}>Continuar con el pedido</button>}
+            {flowStep === "delivery" && (
+              <div style={{ display: "grid", gridTemplateColumns: "0.8fr 1.2fr", gap: 10 }}>
+                <button type="button" onClick={() => setFlowStep("cart")} style={mutedButton}>Volver</button>
+                <button type="button" onClick={goPayment} style={{ ...primaryButton, opacity: deliveryOk ? 1 : 0.65 }}>Ir a pago</button>
+              </div>
+            )}
+            {flowStep === "payment" && (
+              <div style={{ display: "grid", gridTemplateColumns: "0.8fr 1.2fr", gap: 10 }}>
+                <button type="button" onClick={() => setFlowStep("delivery")} style={mutedButton}>Volver</button>
+                <button type="button" onClick={goReview} style={primaryButton}>Ver resumen</button>
+              </div>
+            )}
+            {flowStep === "review" && (
+              <div style={{ display: "grid", gridTemplateColumns: "0.8fr 1.2fr", gap: 10 }}>
+                <button type="button" onClick={() => setFlowStep("payment")} style={mutedButton}>Volver</button>
+                <button type="button" onClick={confirmGuidedOrder} style={{ ...primaryButton, background: `linear-gradient(135deg, ${HOME.accent}, ${HOME.accent2})` }}>Confirmar y Enviar Pedido</button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
   const [step, setStep] = useState(initialStep);
   const [payment, setPayment] = useState("cod");
   const [status, setStatus] = useState("");
@@ -6189,14 +6711,20 @@ export default function VNDRX() {
   };
 
   const removeFromCart = uid => setCart(prev => prev.filter(i => i.uid !== uid));
+  const updateCartQty = (uid, nextQty) => {
+    setCart(prev => {
+      const updated = prev.map(i => i.uid === uid ? { ...i, qty: Math.max(0, Number(nextQty) || 0) } : i);
+      return updated.filter(i => i.qty > 0);
+    });
+  };
   const openCart = (step = "cart") => {
     setCartStartStep(step);
     setCartOpen(true);
   };
   const quickBuy = (product, pres, qty, zone) => {
     addToCart(product, pres, qty, zone);
-    openCart("checkout");
-    showToast("Pedido rápido listo. Completa tus datos y envíalo.", "success");
+    openCart("cart");
+    showToast("Producto agregado. Sigue los pasos para comprar.", "success");
   };
   const effectiveProducts = applyCatalogConfig(products, catalogConfig || {});
   const effectivePaymentMethods = Array.isArray(catalogConfig?.paymentMethods) && catalogConfig.paymentMethods.length
@@ -6223,7 +6751,7 @@ export default function VNDRX() {
       zone: getDefaultZone(product),
       ownerTest: true,
     }]);
-    setCartStartStep("checkout");
+    setCartStartStep("cart");
     setCartOpen(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
     showToast(`Prueba lista para ${COMPANY_VIEWS[companyKey].shortName}`, "success");
@@ -6257,7 +6785,7 @@ export default function VNDRX() {
     setHubOpen(false);
     setEmbeddedStore(null);
     setCart(testItems);
-    setCartStartStep("checkout");
+    setCartStartStep("cart");
     setCartOpen(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
     showToast(`Verificacion lista: ${testItems.length} tiendas`, "success");
@@ -6698,7 +7226,7 @@ export default function VNDRX() {
   const quickOrderFromHub = async () => {
     setHubOpen(false);
     if (cartCount > 0) {
-      openCart("checkout");
+      openCart("cart");
       showToast("Pedido rápido listo para enviar", "success");
       return;
     }
@@ -7498,11 +8026,7 @@ export default function VNDRX() {
 
       <button
         onClick={() => {
-          if (cartCount > 0) {
-            openCart("checkout");
-            return;
-          }
-          window.open(`https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent(`Hola, quiero hacer un pedido en ${selectedCompanyView?.shortName || "VNDRX"}.`)}`, "_blank", "noopener,noreferrer");
+          openCart("cart");
         }}
         style={{
           position: "fixed",
@@ -7532,6 +8056,7 @@ export default function VNDRX() {
           cart={cart}
           onClose={() => setCartOpen(false)}
           onRemove={removeFromCart}
+          onUpdateQty={updateCartQty}
           onOrderSent={handleOrderSent}
           initialCustomer={ownerTestMode ? { ...OWNER_TEST_CUSTOMER, referralCode: profile.referralCode, referredBy: profile.referredBy } : profile}
           referralCode={profile.referralCode}
