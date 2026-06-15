@@ -508,7 +508,7 @@ const products = [
     minOrderNote: "Precio escolar válido desde 15 unidades por presentación",
     schoolOnly: true,
     presentations: [
-      { label: "Botella 400 ml", price: 2.00, unit: "botella" },
+      { label: "Botella 400 ml", price: 2.50, unit: "botella" },
       { label: "Botella 2 L", price: 9.00, unit: "botella" },
       { label: "Botella 3 L", price: 13.00, unit: "botella" },
       { label: "Galón 4 L", price: 15.00, unit: "galón" },
@@ -557,7 +557,7 @@ const products = [
     minOrderNote: "Precio válido desde 15 combos",
     schoolOnly: true,
     presentations: [
-      { label: "Combo (Juane + 400ml)", price: 3.50, unit: "combo" },
+      { label: "Combo (Juane + 400ml)", price: 4.00, unit: "combo" },
     ],
     saving: 30,
     cooking: "Chicha fría + Juane a temperatura ambiente · ¡Listo para disfrutar!",
@@ -579,7 +579,7 @@ const products = [
     minOrderNote: "Precio válido desde 15 juanes",
     schoolOnly: true,
     presentations: [
-      { label: "Juane unitario", price: 2.00, unit: "juane" },
+      { label: "Juane unitario", price: 2.50, unit: "juane" },
     ],
     saving: 0,
     cooking: "Servir a temperatura ambiente · Acompañar con chicha ASWA fría",
@@ -1645,27 +1645,27 @@ const ASWA_PROMO_LIBRARY = [
     note: "ESCOLAR",
     accent: "#22C55E",
     featured: true,
-    message: "Combo escolar sanjuanero: juane + chicha de 400 ml por S/ 3.50. Ideal para instituciones educativas. Pedidos al 955 273 229.",
+    message: "Combo escolar sanjuanero: juane + chicha de 400 ml por S/ 4.00. Ideal para instituciones educativas. Pedidos al 955 273 229.",
   },
   {
     id: "chicha-400ml",
     src: ASSETS.chicha400ml,
     title: "Chicha ASWA 400 ml",
-    subtitle: "Desde S/ 2.00",
+    subtitle: "Desde S/ 2.50",
     note: "ASWA",
     accent: "#4ADE80",
     featured: true,
-    message: "Chicha ASWA 400 ml desde S/ 2.00. 100% natural y lista para vender. Pedidos al 955 273 229.",
+    message: "Chicha ASWA 400 ml desde S/ 2.50. 100% natural y lista para vender. Pedidos al 955 273 229.",
   },
   {
     id: "juane-escolar",
     src: ASSETS.juaneEscolar,
     title: "Juane escolar",
-    subtitle: "Desde S/ 2.00",
+    subtitle: "Desde S/ 2.50",
     note: "MENU",
     accent: "#F97316",
     featured: false,
-    message: "Juane escolar ASWA desde S/ 2.00. Tradicion amazonica lista para colegios y pedidos grandes. Pedidos al 955 273 229.",
+    message: "Juane escolar ASWA desde S/ 2.50. Tradicion amazonica lista para colegios y pedidos grandes. Pedidos al 955 273 229.",
   },
   {
     id: "combo-alt",
@@ -2647,7 +2647,7 @@ function PromoBoard() {
               <PromoTile
                 image={ASSETS.chicha400ml}
                 title="Chicha 400 ml"
-                subtitle="Desde S/ 2.00"
+                subtitle="Desde S/ 2.50"
                 note="ASWA"
                 accent="#22C55E"
                 fit="contain"
@@ -2657,7 +2657,7 @@ function PromoBoard() {
               <PromoTile
                 image={ASSETS.juaneEscolar}
                 title="Juane escolar"
-                subtitle="Desde S/ 2.00"
+                subtitle="Desde S/ 2.50"
                 note="ESCOLAR"
                 accent="#F59E0B"
                 fit="contain"
