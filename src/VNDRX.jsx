@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { hasSupabaseConfig, loadCatalogConfig, saveCatalogConfig, signInOwner, uploadPaymentProof } from "./supabaseCatalog.js";
+import { hasSupabaseConfig, loadCatalogConfig, saveCatalogConfig, saveOrderInSupabase, savePaymentProofRecord, signInOwner, uploadPaymentProof } from "./supabaseCatalog.js";
 
 import promoMain from "./assets/aswa/promo-san-juanero-main.png";
 import promoAlt from "./assets/aswa/promo-san-juanera-alt.png";
@@ -5626,6 +5626,12 @@ function CartDrawerReal({ cart, onClose, onRemove, onUpdateQty, onOrderSent, ini
     setFlowStep("confirmation");
     setGuidedStatus("Pedido generado. Envia el comprobante si pagaste por billetera o banco.");
     try {
+      await saveOrderInSupabase(orderRecord);
+      setGuidedStatus("Pedido guardado en Supabase. Envia el comprobante si pagaste por billetera o banco.");
+    } catch {
+      setGuidedStatus("Pedido generado por WhatsApp. Supabase aun no guardo este pedido.");
+    }
+    try {
       await navigator.clipboard?.writeText(message);
     } catch {
       // Clipboard is optional.
@@ -5645,6 +5651,11 @@ function CartDrawerReal({ cart, onClose, onRemove, onUpdateQty, onOrderSent, ini
     try {
       setProofStatus("Subiendo comprobante...");
       const uploaded = await uploadPaymentProof(proofFile, finalOrder.id);
+      try {
+        await savePaymentProofRecord({ orderId: finalOrder.id, ...uploaded });
+      } catch {
+        // The uploaded file is still valid even if the optional proof row is not ready yet.
+      }
       setProofUpload(uploaded);
       setProofStatus("Comprobante subido. Lo verificamos mas rapido por WhatsApp.");
     } catch (error) {

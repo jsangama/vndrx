@@ -85,6 +85,45 @@ async function saveCatalogConfig(data, token) {
   });
 }
 
+async function saveOrderInSupabase(order) {
+  if (!hasSupabaseConfig()) return null;
+  return supabaseRequest("/rest/v1/orders", {
+    method: "POST",
+    prefer: "return=representation",
+    body: {
+      id: order.id,
+      created_at: order.createdAt,
+      supplier_key: order.supplierKey,
+      supplier_name: order.supplierName,
+      status: order.status,
+      payment: order.payment,
+      payment_label: order.paymentLabel,
+      subtotal: order.subtotal,
+      delivery: order.delivery,
+      total: order.total,
+      customer: order.customer || {},
+      items: order.items || [],
+      extras: order.extras || {},
+      channel: order.channel || "whatsapp",
+      owner_test: Boolean(order.ownerTest),
+    },
+  });
+}
+
+async function savePaymentProofRecord({ orderId, path, url }) {
+  if (!hasSupabaseConfig()) return null;
+  return supabaseRequest("/rest/v1/payment_proofs", {
+    method: "POST",
+    prefer: "return=representation",
+    body: {
+      order_id: orderId,
+      file_path: path,
+      file_url: url,
+      status: "subido",
+    },
+  });
+}
+
 function safeStorageName(name = "comprobante.jpg") {
   return name
     .toLowerCase()
@@ -135,6 +174,8 @@ export {
   hasSupabaseConfig,
   loadCatalogConfig,
   saveCatalogConfig,
+  saveOrderInSupabase,
+  savePaymentProofRecord,
   signInOwner,
   uploadPaymentProof,
 };
