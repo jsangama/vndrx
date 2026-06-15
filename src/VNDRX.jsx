@@ -6,6 +6,7 @@ import promoAlt from "./assets/aswa/promo-san-juanera-alt.png";
 import promoFlayer from "./assets/aswa/promo-san-juanera-flayer.png";
 import promoSanJuaneroSpecial from "./assets/aswa/promo-san-juanero-special.png";
 import promoSanJuaneraSpecial from "./assets/aswa/promo-san-juanera-special.png";
+import aswaLogo from "./assets/aswa/aswa-logo.png";
 import bidon20l from "./assets/aswa/bidon-san-juanero-20l-2026.png";
 import bidon20lAlt from "./assets/aswa/bidon-san-juanero-20l-alt.png";
 import chicha400ml from "./assets/aswa/chicha-aswa-400ml.png";
@@ -100,6 +101,7 @@ const ASSETS = {
   promoFlayer,
   promoSanJuaneroSpecial,
   promoSanJuaneraSpecial,
+  aswaLogo,
   bidon20l,
   bidon20lAlt,
   chicha400ml,
@@ -1356,7 +1358,7 @@ const COMPANY_VIEWS = {
     heroTitle: "ASWA para pedidos rápidos",
     heroText: "Chicha, bidón y combo escolar con fotos reales, pago por Yape y acceso directo a su app.",
     heroChips: ["Delivery gratis escolar", "Bidón 20L", "App ASWA"],
-    heroImage: ASSETS.promoMain,
+    heroImage: ASSETS.aswaLogo,
     heroNote: "SAN JUAN 2026",
     infoTitle: "ASWA La Rica Chicha",
     infoBody: "La Rica Chicha para colegios, eventos y pedidos de temporada. El bidón público cobra delivery por zona y los escolares mantienen delivery gratis.",
@@ -3830,7 +3832,7 @@ function CompanyChooserScreen({ onChooseCompany, toastBubble }) {
     {
       key: "aswa",
       view: COMPANY_VIEWS.aswa,
-      image: ASSETS.promoMain,
+      image: ASSETS.aswaLogo,
       accent: HOME.leaf,
       chips: ["Chicha", "Bidon", "Escolar"],
       note: "San Juan 2026",
@@ -7370,7 +7372,11 @@ export default function VNDRX() {
       {/* NAV */}
       <nav style={{ background: "rgba(255, 252, 248, 0.9)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${HOME.border}`, padding: "0 20px", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 8px 20px rgba(76, 56, 23, 0.06)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.accent2})`, borderRadius: 16, width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, boxShadow: "0 10px 20px rgba(71,101,75,0.18)" }}>{isAswa ? "🌽" : isJora ? "🍯" : isTela ? "🧵" : isBocaditos ? "🍪" : isArtesania ? "🏺" : "🌾"}</div>
+          <div style={{ background: isAswa ? "#fff" : `linear-gradient(135deg, ${HOME.leaf}, ${HOME.accent2})`, borderRadius: 16, width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, boxShadow: "0 10px 20px rgba(71,101,75,0.18)", overflow: "hidden", border: isAswa ? `1px solid ${HOME.border}` : "none" }}>
+            {isAswa ? (
+              <img src={ASSETS.aswaLogo} alt="Logo ASWA" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            ) : isJora ? "🍯" : isTela ? "🧵" : isBocaditos ? "🍪" : isArtesania ? "🏺" : "🌾"}
+          </div>
           <div>
             <div style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 900, color: HOME.text, lineHeight: 1 }}>{selectedCompanyView?.shortName || "VNDRX"}</div>
             <div style={{ fontSize: 10, color: HOME.muted, letterSpacing: 1.8, fontFamily: "monospace", textTransform: "uppercase" }}>{selectedCompanyView?.tagline || "pedido facil y cercano"}</div>
@@ -7885,7 +7891,12 @@ export default function VNDRX() {
             borderRadius: 14, padding: "16px 22px", marginBottom: 28,
             display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap",
           }}>
-            <div style={{ fontSize: 36 }}>🎉</div>
+            <img
+              src={ASSETS.aswaLogo}
+              alt="Logo ASWA"
+              style={{ width: 56, height: 56, borderRadius: 18, objectFit: "cover", background: "#fff", border: "2px solid #F0C040", boxShadow: "0 10px 22px rgba(0,0,0,0.18)" }}
+              loading="lazy"
+            />
             <div style={{ flex: 1 }}>
               <div style={{ color: "#F0C040", fontSize: 16, fontWeight: 800, fontFamily: "Georgia, serif" }}>
                 Promociones Sanjuaneras 2026 · ASWA La Rica Chicha
@@ -7984,7 +7995,7 @@ export default function VNDRX() {
           {(
             isAswa
               ? [
-                { icon: "🌽", title: "Pedidos claros", desc: "Chicha, bidon y escolar separados para que el cliente elija rapido." },
+                { iconSrc: ASSETS.aswaLogo, title: "Pedidos claros", desc: "Chicha, bidon y escolar separados para que el cliente elija rapido." },
                 { icon: "🎒", title: "Delivery escolar", desc: "Las secciones educativas mantienen delivery gratis en sus promociones." },
                 { icon: "🟣", title: "Yape listo", desc: "Escanea, confirma y envia el pedido centralizado al numero correcto." },
                 { icon: "📱", title: "App ASWA", desc: "Los productos sanjuaneros abren la app hermana cuando haga falta." },
@@ -8004,7 +8015,16 @@ export default function VNDRX() {
               ]
           ).map(vp => (
             <div key={vp.title} style={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 14, padding: "16px 18px", textAlign: "center" }}>
-              <div style={{ fontSize: 28 }}>{vp.icon}</div>
+              {vp.iconSrc ? (
+                <img
+                  src={vp.iconSrc}
+                  alt={vp.title}
+                  style={{ width: 42, height: 42, borderRadius: 14, objectFit: "cover", background: "#fff", border: `1px solid ${theme.border}` }}
+                  loading="lazy"
+                />
+              ) : (
+                <div style={{ fontSize: 28 }}>{vp.icon}</div>
+              )}
               <div style={{ fontFamily: "Georgia, serif", fontSize: 14, fontWeight: 700, color: theme.cream, margin: "8px 0 5px" }}>{vp.title}</div>
               <div style={{ color: theme.textDim, fontSize: 12, lineHeight: 1.5 }}>{vp.desc}</div>
             </div>
