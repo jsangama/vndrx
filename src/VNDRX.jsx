@@ -1,5 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { hasSupabaseConfig, loadCatalogConfig, saveCatalogConfig, saveOrderInSupabase, savePaymentProofRecord, signInOwner, uploadPaymentProof } from "./supabaseCatalog.js";
+import { DEFAULT_PROFILE, STORAGE_KEYS, usePersistentState } from "./app/storage.js";
+import { getVisibleCompanyKeys, hasDeveloperAccess, resolveInitialCompany } from "./app/entryConfig.js?v=20260621";
+import { VNDRX_BRAND } from "./app/brandStrategy.js";
+import { MARKETPLACE_AUDIENCES, MARKETPLACE_BENEFITS, RECOMMENDED_PRODUCTS, SELLER_STEPS, TRUST_SIGNALS } from "./app/marketplaceContent.js";
+import { getShareUrl, makeReferralCode } from "./domain/referrals.js";
+import {
+  buildCombinedOrderMessage as buildSalesCombinedOrderMessage,
+  buildOrderMessage as buildSalesOrderMessage,
+  createOrderRecord as createSalesOrderRecord,
+  paymentLabel as salesPaymentLabel,
+} from "./domain/orders.js";
 
 import promoMain from "./assets/aswa/promo-san-juanero-main.png";
 import promoAlt from "./assets/aswa/promo-san-juanera-alt.png";
@@ -313,7 +324,7 @@ const products = [
   },
   {
     id: 5,
-    name: "Superior Azul (Rey León)",
+    name: "Superior Azul",
     subtitle: "Alta calidad · Apto exportación · 86% grano entero",
     line: "superior",
     img: "🔵",
@@ -1281,11 +1292,11 @@ const LINE_LABELS = {
 const SUPPLIERS = {
   reyleon: {
     key: "reyleon",
-    name: "Piladora Rey León",
-    shortName: "Rey León",
+    name: "Arroz del Pacifico",
+    shortName: "Arroz del Pacifico",
     phone: "51952232028",
     displayPhone: "952 232 028",
-    email: "ventas@reyleon.pe",
+    email: "ventas@arrozpacifico.com",
     site: "arrozpacifico.com",
   },
   aswa: {
@@ -1333,17 +1344,17 @@ const SUPPLIERS = {
 const COMPANY_VIEWS = {
   reyleon: {
     key: "reyleon",
-    name: "Piladora Rey León",
-    shortName: "Rey León",
+    name: "Arroz del Pacifico",
+    shortName: "Arroz del Pacifico",
     tagline: "Arroz directo del molino",
-    description: "Elige Rey León para ver todos sus arroces, derivados y precios de origen. Menos ruido al inicio, más claridad para comprar rápido.",
+    description: "Elige Arroz del Pacifico para ver arroces, derivados y precios de origen. Menos ruido al inicio, mas claridad para comprar rapido.",
     heroTitle: "Pide tu arroz sin enredos",
-    heroText: "Fotos reales, precios visibles y delivery por zona para que el cliente encuentre rápido lo que busca.",
+    heroText: "Fotos reales, precios visibles y delivery por zona para que el cliente encuentre rapido lo que busca.",
     heroChips: ["Arroz premium", "Precios de origen", "Delivery por zona"],
     heroImage: riceLineupHero,
-    heroNote: "MOLINO DIRECTO",
-    infoTitle: "Piladora Rey León",
-    infoBody: "Arroz para hogar, menús, restaurantes e industria. Revisa premium, superior, económico y derivados en un catálogo limpio.",
+    heroNote: "ARROZ DIRECTO",
+    infoTitle: "Arroz del Pacifico",
+    infoBody: "Arroz para hogar, menus, restaurantes e industria. Revisa premium, superior, economico y derivados en un catalogo limpio.",
     companyPhone: SUPPLIERS.reyleon.displayPhone,
     companyContact: "Ventas directas del molino",
     primaryButton: "Ver arroces",
@@ -1733,60 +1744,6 @@ const JORA_PROMO_LIBRARY = [
     message: "Chicha de jora en presentacion familiar para compartir en casa o en cocina. Pedidos al 955 273 229.",
   },
 ];
-
-const STORAGE_KEYS = {
-  profile: "vndrx-profile-v2",
-  orders: "vndrx-orders-v2",
-  reviews: "vndrx-reviews-v2",
-};
-
-const DEFAULT_PROFILE = {
-  name: "",
-  phone: "",
-  district: "",
-  address: "",
-  reference: "",
-  notes: "",
-  referralCode: "",
-  referredBy: "",
-  shareCount: 0,
-};
-
-function loadStoredState(key, fallback) {
-  if (typeof window === "undefined") return typeof fallback === "function" ? fallback() : fallback;
-  try {
-    const raw = window.localStorage.getItem(key);
-    if (!raw) return typeof fallback === "function" ? fallback() : fallback;
-    return JSON.parse(raw);
-  } catch {
-    return typeof fallback === "function" ? fallback() : fallback;
-  }
-}
-
-function usePersistentState(key, fallback) {
-  const [value, setValue] = useState(() => loadStoredState(key, fallback));
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem(key, JSON.stringify(value));
-    } catch {
-      // Storage may be unavailable in private contexts.
-    }
-  }, [key, value]);
-
-  return [value, setValue];
-}
-
-function makeReferralCode() {
-  return `ASWA-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
-}
-
-function getShareUrl(code) {
-  if (typeof window === "undefined") return "";
-  const current = window.location?.href?.split("#")[0]?.split("?")[0] || "";
-  if (!current) return "";
-  return `${current}?ref=${encodeURIComponent(code)}`;
-}
 
 function formatDateTime(value) {
   if (!value) return "";
@@ -3267,7 +3224,7 @@ function ASWAControlHub({
     { id: "aswa", label: "ASWA" },
     { id: "tela", label: "Tela" },
     { id: "bocaditos", label: "Bocaditos" },
-    { id: "reyleon", label: "Rey León" },
+    { id: "reyleon", label: "Arroz del Pacifico" },
   ];
   const filteredPanelOrders = data.orders.filter((order) => {
     if (panelFilter === "all") return true;
@@ -3454,7 +3411,7 @@ function ASWAControlHub({
                   {order.items.map((item) => `${item.qty} x ${item.product.name}`).join(" · ")}
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", marginTop: 10, color: theme.creamDim, fontSize: 12 }}>
-                  <span>{order.paymentLabel || paymentLabel(order.payment)}</span>
+                  <span>{order.paymentLabel || salesPaymentLabel(order.payment)}</span>
                   <strong style={{ color: theme.goldLight }}>{formatMoney(order.total || 0)}</strong>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 8, marginTop: 12 }}>
@@ -3627,7 +3584,7 @@ function ASWAControlHub({
                     {order.items.map((item) => `${item.qty} x ${item.product.name}`).join(" · ")}
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 10, color: theme.creamDim, fontSize: 12 }}>
-                    <span>{order.paymentLabel || paymentLabel(order.payment)}</span>
+                    <span>{order.paymentLabel || salesPaymentLabel(order.payment)}</span>
                     <strong style={{ color: theme.goldLight }}>{formatMoney(order.total || 0)}</strong>
                   </div>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))", gap: 8, marginTop: 12 }}>
@@ -3720,7 +3677,7 @@ function ASWAControlHub({
         <div style={{ padding: 18, borderBottom: `1px solid ${HOME.border}`, background: `linear-gradient(135deg, ${HOME.soft2}, ${HOME.surface})` }}>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
             <div>
-              <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1.2, textTransform: "uppercase" }}>Centro ASWA de funciones</div>
+              <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1.2, textTransform: "uppercase" }}>Panel ASWA privado</div>
               <div style={{ color: HOME.text, fontSize: 22, fontWeight: 900, marginTop: 6 }}>Herramientas de venta, bonos y pedidos</div>
               <div style={{ color: HOME.muted, fontSize: 12, marginTop: 6, lineHeight: 1.5 }}>Lo que trae ASWA para vender mejor, resumido dentro de tu tienda y conectado al pedido real por WhatsApp.</div>
             </div>
@@ -3816,7 +3773,8 @@ function getDefaultZone(product) {
   return zones[0];
 }
 
-function CompanyChooserScreen({ onChooseCompany, toastBubble }) {
+function CompanyChooserScreen({ onChooseCompany, onInstallApp, toastBubble, visibleCompanyKeys = Object.keys(COMPANY_VIEWS) }) {
+  const visibleSet = new Set(visibleCompanyKeys);
   const options = [
     {
       key: "reyleon",
@@ -3825,7 +3783,7 @@ function CompanyChooserScreen({ onChooseCompany, toastBubble }) {
       accent: HOME.accent,
       chips: ["Arroz premium", "Superior", "Derivados"],
       note: "Molino directo",
-      description: "Entra a la tienda de Rey Leon y mira solo sus arroces, derivados y precios de origen.",
+      description: "Entra a Arroz del Pacifico y mira solo sus arroces, derivados y precios de origen.",
       count: products.filter((product) => getSupplierKey(product) === "reyleon").length,
       extra: "Delivery por zona",
     },
@@ -3884,8 +3842,8 @@ function CompanyChooserScreen({ onChooseCompany, toastBubble }) {
       count: products.filter((product) => getSupplierKey(product) === "artesania").length,
       extra: "Barro y tradicion",
     },
-  ];
-
+  ].filter((option) => visibleSet.has(option.key));
+  const featuredStoreOptions = options;
   return (
     <div style={{ minHeight: "100vh", background: HOME.page, fontFamily: "'Trebuchet MS', 'Segoe UI', sans-serif", color: HOME.text }}>
       <style>{`* { box-sizing: border-box; } ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: ${HOME.page}; } ::-webkit-scrollbar-thumb { background: ${HOME.border}; border-radius: 3px; }`}</style>
@@ -3915,14 +3873,28 @@ function CompanyChooserScreen({ onChooseCompany, toastBubble }) {
                 textTransform: "uppercase",
                 marginBottom: 14,
               }}>
-                Elige tu empresa
+                Del productor al consumidor
               </div>
               <h1 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(30px, 4.2vw, 52px)", fontWeight: 900, lineHeight: 1.03, margin: 0 }}>
-                Primero selecciona la tienda que quieres visitar
+                Compra directo de productores y marcas locales
               </h1>
               <p style={{ color: HOME.muted, fontSize: 15, lineHeight: 1.7, margin: "12px 0 0", maxWidth: 720 }}>
-                La app se abre en modo limpio: eliges la marca que quieres visitar y enseguida ves solo su informacion, sus productos y su forma de pedir.
+                VNDRX conecta productores, negocios y consumidores en una sola plataforma para comprar mejor, vender mas y fortalecer el comercio local.
               </p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 18 }}>
+                <button type="button" onClick={() => document.getElementById("vndrx-tiendas")?.scrollIntoView({ behavior: "smooth" })} style={{ border: 0, background: HOME.leaf, color: "#fff", borderRadius: 999, padding: "12px 16px", fontWeight: 900, cursor: "pointer" }}>
+                  Comprar ahora
+                </button>
+                <button type="button" onClick={() => document.getElementById("vndrx-vender")?.scrollIntoView({ behavior: "smooth" })} style={{ border: `1px solid ${HOME.border}`, background: HOME.surface, color: HOME.text, borderRadius: 999, padding: "12px 16px", fontWeight: 900, cursor: "pointer" }}>
+                  Vender en VNDRX
+                </button>
+                <button type="button" onClick={() => document.getElementById("vndrx-tiendas")?.scrollIntoView({ behavior: "smooth" })} style={{ border: `1px solid ${HOME.border}`, background: HOME.soft, color: HOME.accent, borderRadius: 999, padding: "12px 16px", fontWeight: 900, cursor: "pointer" }}>
+                  Ver tiendas
+                </button>
+                <button type="button" onClick={onInstallApp} style={{ border: `1px solid ${HOME.border}`, background: HOME.surface, color: HOME.text, borderRadius: 999, padding: "12px 16px", fontWeight: 900, cursor: "pointer" }}>
+                  Instalar app
+                </button>
+              </div>
             </div>
             <div style={{
               background: HOME.surface,
@@ -3932,16 +3904,47 @@ function CompanyChooserScreen({ onChooseCompany, toastBubble }) {
               minWidth: 220,
               boxShadow: "0 10px 22px rgba(76,56,23,0.06)",
             }}>
-              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Modo tiendas separadas</div>
+              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Como funciona</div>
               <div style={{ color: HOME.text, fontSize: 13, fontWeight: 800, lineHeight: 1.5, marginTop: 6 }}>
-                Cada cliente empieza por la marca correcta y compra mas rapido sin ver todo mezclado.
+                Eliges una tienda, revisas productos y precios, confirmas delivery y envias tu pedido ordenado por WhatsApp.
               </div>
             </div>
           </div>
         </div>
 
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 10, marginTop: 14 }}>
+          {MARKETPLACE_BENEFITS.map((benefit) => (
+            <div key={benefit} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 16, padding: "12px 14px", color: HOME.text, fontSize: 12, fontWeight: 900, boxShadow: "0 8px 16px rgba(76,56,23,0.06)" }}>
+              {benefit}
+            </div>
+          ))}
+        </div>
+
+        <section style={{ marginTop: 22 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 14 }}>
+            {MARKETPLACE_AUDIENCES.map((item) => (
+              <article key={item.title} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 22, padding: 18, boxShadow: HOME.shadow }}>
+                <div style={{ color: HOME.accent, fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{item.action}</div>
+                <h2 style={{ fontFamily: "Georgia, serif", color: HOME.text, fontSize: 24, lineHeight: 1.1, margin: "8px 0 0" }}>{item.title}</h2>
+                <p style={{ color: HOME.muted, fontSize: 13, lineHeight: 1.65, margin: "10px 0 0" }}>{item.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="vndrx-tiendas" style={{ marginTop: 26 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 14, alignItems: "flex-end", flexWrap: "wrap", marginBottom: 12 }}>
+            <div>
+              <div style={{ color: HOME.accent, fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Tiendas destacadas</div>
+              <h2 style={{ fontFamily: "Georgia, serif", color: HOME.text, fontSize: 30, lineHeight: 1.05, margin: "6px 0 0" }}>Empieza comprando directo</h2>
+            </div>
+            <div style={{ color: HOME.muted, fontSize: 13, maxWidth: 360, lineHeight: 1.55 }}>
+              Cada productor o negocio tiene su propia tienda, identidad, productos, promociones, WhatsApp, delivery y metodos de pago.
+            </div>
+          </div>
+
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", gap: 18, marginTop: 18 }}>
-          {options.map((option) => (
+          {featuredStoreOptions.map((option) => (
             <button
               key={option.key}
               type="button"
@@ -4050,6 +4053,67 @@ function CompanyChooserScreen({ onChooseCompany, toastBubble }) {
             </button>
           ))}
         </div>
+        </section>
+
+        <section style={{ marginTop: 24, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: 14 }}>
+          {RECOMMENDED_PRODUCTS.map((item) => (
+            <article key={item.title} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 20, padding: 16, boxShadow: HOME.shadow }}>
+              <div style={{ color: HOME.leaf, fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>{item.store}</div>
+              <h3 style={{ fontFamily: "Georgia, serif", color: HOME.text, fontSize: 22, margin: "8px 0 0" }}>{item.title}</h3>
+              <p style={{ color: HOME.muted, fontSize: 13, lineHeight: 1.6, margin: "8px 0 0" }}>{item.text}</p>
+            </article>
+          ))}
+        </section>
+
+        <section style={{ marginTop: 24 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 14, alignItems: "flex-end", flexWrap: "wrap", marginBottom: 12 }}>
+            <div>
+              <div style={{ color: HOME.accent, fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Confianza para comprar directo</div>
+              <h2 style={{ fontFamily: "Georgia, serif", color: HOME.text, fontSize: 30, lineHeight: 1.05, margin: "6px 0 0" }}>Comprar directo tambien debe sentirse seguro</h2>
+            </div>
+            <div style={{ color: HOME.muted, fontSize: 13, maxWidth: 380, lineHeight: 1.55 }}>
+              VNDRX muestra senales claras antes del pedido: contacto, delivery, pagos, direccion, horarios y datos reales de cada tienda.
+            </div>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))", gap: 12 }}>
+            {TRUST_SIGNALS.map((signal) => (
+              <article key={signal.title} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 15, boxShadow: "0 10px 22px rgba(76,56,23,0.07)" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                  <span style={{ width: 26, height: 26, borderRadius: 999, background: "#EAF5EA", color: HOME.leaf, display: "grid", placeItems: "center", fontWeight: 900 }}>✓</span>
+                  <h3 style={{ color: HOME.text, fontSize: 15, margin: 0, fontWeight: 900 }}>{signal.title}</h3>
+                </div>
+                <p style={{ color: HOME.muted, fontSize: 12, lineHeight: 1.55, margin: "9px 0 0" }}>{signal.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="vndrx-vender" style={{
+          marginTop: 24,
+          background: `linear-gradient(135deg, ${HOME.leaf}, #223C2A)`,
+          borderRadius: 24,
+          padding: 22,
+          color: "#fff",
+          boxShadow: HOME.shadow,
+        }}>
+          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.2fr) minmax(240px, 0.8fr)", gap: 18, alignItems: "center" }}>
+            <div>
+              <div style={{ color: "#DDEFD8", fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Vende en VNDRX</div>
+              <h2 style={{ fontFamily: "Georgia, serif", fontSize: 30, lineHeight: 1.08, margin: "8px 0 0" }}>Publica tus productos y llega a mas clientes</h2>
+              <p style={{ color: "#F5F7EF", fontSize: 14, lineHeight: 1.7, margin: "10px 0 0" }}>
+                VNDRX ayuda a productores, marcas locales, restaurantes y negocios a mostrar su historia, vender directo, recibir pedidos por WhatsApp y mejorar su presencia digital.
+              </p>
+            </div>
+            <div style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: 18, padding: 16 }}>
+              {SELLER_STEPS.map((item) => (
+                <div key={item} style={{ padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,0.16)", fontSize: 13, fontWeight: 800 }}>{item}</div>
+              ))}
+              <button type="button" onClick={() => window.open(`https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent("Hola, quiero vender en VNDRX.")}`, "_blank", "noopener,noreferrer")} style={{ marginTop: 14, width: "100%", border: 0, borderRadius: 999, background: "#fff", color: HOME.leaf, padding: "12px 14px", fontWeight: 900, cursor: "pointer" }}>
+                Quiero vender en VNDRX
+              </button>
+            </div>
+          </div>
+        </section>
 
         <div style={{
           marginTop: 18,
@@ -4449,7 +4513,7 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
     },
     {
       image: ASSETS.molinoReyLeonFrente,
-      title: "Molino Rey Leon",
+      title: "Arroz del Pacifico",
       subtitle: "Produccion directa en Cacatachi",
       note: "MOLINO",
       accent: HOME.leaf,
@@ -4503,8 +4567,8 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
         <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 0.95fr) minmax(0, 1.05fr)", gap: 18, alignItems: "stretch" }}>
           <PromoTile
             image={ASSETS.riceLineupHero}
-            title="Linea de productos Rey Leon"
-            subtitle="Bolsas Real Pacifico, Rey Leon y Valles del Guayo"
+            title="Linea de productos Arroz del Pacifico"
+            subtitle="Bolsas Real Pacifico, arroz premium y Valles del Guayo"
             note="CATALOGO"
             accent="#A61E18"
             fit="contain"
@@ -4530,12 +4594,12 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
                   />
                 </div>
                 <div>
-                  <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Piladora Rey Leon</div>
+                  <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Arroz del Pacifico</div>
                   <div style={{ color: HOME.text, fontSize: 18, fontWeight: 900, marginTop: 6 }}>Compra directo del molino y con fotos reales</div>
                 </div>
               </div>
               <div style={{ color: HOME.muted, fontSize: 13, lineHeight: 1.65, marginTop: 8 }}>
-                Aqui el cliente ve solo los arroces y derivados de Rey Leon. La portada, las bolsas y los derivados vienen de las imagenes del molino.
+                Aqui el cliente ve solo los arroces y derivados de Arroz del Pacifico. La portada, las bolsas y los derivados vienen de imagenes reales del productor.
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10, marginTop: 14 }}>
                 <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 14, padding: 12 }}>
@@ -4630,7 +4694,7 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
         }}>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", flexWrap: "wrap", marginBottom: 12 }}>
             <div>
-              <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Mas del catalogo Rey Leon</div>
+              <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Mas del catalogo Arroz del Pacifico</div>
               <div style={{ color: HOME.text, fontSize: 14, fontWeight: 800, marginTop: 4 }}>Bolsas y derivados con imagen propia para reconocer rapido cada producto.</div>
             </div>
             <button
@@ -4705,7 +4769,6 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
   const [selPres, setSelPres] = useState(0);
   const minQty = product.minOrder || 1;
   const [qty, setQty] = useState(minQty);
-  const [zone, setZone] = useState(() => getDefaultZone(product));
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [imageZoomOpen, setImageZoomOpen] = useState(false);
   const media = getProductMedia(product);
@@ -4714,7 +4777,6 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
 
   const pres = product.presentations[selPres];
   const subtotal = pres.price * qty;
-  const total = subtotal + (zone?.cost || 0);
 
   return (
     <article
@@ -4852,10 +4914,6 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
           </div>
         </div>
 
-        {!product.schoolOnly && (
-          <DeliveryZoneSelector selected={zone} onSelect={setZone} zones={product.zones || ZONES_REYLEON} />
-        )}
-
         {product.schoolOnly && (
           <div style={{ background: "#EEF6FF", border: "1px solid #C5DAFF", borderRadius: 14, padding: 12, marginBottom: 14 }}>
             <div style={{ color: "#2E5BAA", fontSize: 11, fontWeight: 800, letterSpacing: 0.5, marginBottom: 6, textTransform: "uppercase" }}>
@@ -4870,7 +4928,7 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
         <div style={{ background: HOME.soft2, border: `1px solid ${HOME.border}`, borderRadius: 16, padding: 12, marginBottom: 14 }}>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 10, marginBottom: 8 }}>
             <span style={{ color: HOME.muted, fontSize: 11 }}>Cantidad</span>
-            <span style={{ color: HOME.accent, fontSize: 11, fontWeight: 800 }}>Tu pedido se siente como en casa</span>
+            <span style={{ color: HOME.accent, fontSize: 11, fontWeight: 800 }}>Delivery en el siguiente paso</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, marginBottom: 10 }}>
             <div style={{ display: "flex", alignItems: "center", background: "#FFF", borderRadius: 999, border: `1px solid ${HOME.border}`, overflow: "hidden" }}>
@@ -4880,18 +4938,18 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
             </div>
             <div style={{ textAlign: "right" }}>
               <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Total</div>
-              <div style={{ color: HOME.text, fontFamily: "monospace", fontSize: 18, fontWeight: 900 }}>S/ {total.toFixed(2)}</div>
+              <div style={{ color: HOME.text, fontFamily: "monospace", fontSize: 18, fontWeight: 900 }}>{formatMoney(subtotal)}</div>
             </div>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", color: HOME.muted, fontSize: 11, lineHeight: 1.4 }}>
             <span>{qty} × {pres.label}</span>
-            <span>Delivery {zone?.cost === 0 ? "gratis" : `+S/ ${zone?.cost.toFixed(2)}`}</span>
+            <span>Zona y celular en checkout</span>
           </div>
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
           <button
-            onClick={() => onAdd(product, pres, qty, zone)}
+            onClick={() => onAdd(product, pres, qty)}
             type="button"
             style={{
               width: "100%",
@@ -4909,7 +4967,7 @@ function ProductCard({ product, onAdd, onQuickBuy, cartItem }) {
             {cartItem ? `✓ En tu pedido (${cartItem.qty})` : "Agregar al pedido"}
           </button>
           <button
-            onClick={() => onQuickBuy?.(product, pres, qty, zone)}
+            onClick={() => onQuickBuy?.(product, pres, qty)}
             type="button"
             style={{
               width: "100%",
@@ -5072,7 +5130,7 @@ function CartDrawer({ cart, onClose, onRemove }) {
               {step === "payment" && "Forma de Pago"}
               {step === "confirm" && "¡Pedido Confirmado!"}
             </div>
-            <div style={{ color: theme.textDim, fontSize: 11 }}>Piladora Rey León · Sin intermediarios</div>
+            <div style={{ color: theme.textDim, fontSize: 11 }}>Arroz del Pacifico · Sin intermediarios</div>
           </div>
           <button onClick={onClose} style={{ background: theme.bg, border: `1px solid ${theme.border}`, color: theme.cream, borderRadius: 8, width: 32, height: 32, cursor: "pointer", fontSize: 16 }}>×</button>
         </div>
@@ -5416,13 +5474,13 @@ function CartDrawer({ cart, onClose, onRemove }) {
               <div style={{ fontSize: 60 }}>✅</div>
               <div style={{ fontFamily: "Georgia, serif", fontSize: 22, color: theme.cream, marginTop: 14, fontWeight: 700 }}>¡Pedido Confirmado!</div>
               <div style={{ color: theme.creamDim, fontSize: 13, marginTop: 8, lineHeight: 1.7 }}>
-                Tu pedido fue enviado directamente a la Piladora Rey León.<br />Recibirás confirmación al correo.
+                Tu pedido fue enviado directamente a Arroz del Pacifico.<br />Recibirás confirmación al correo.
               </div>
               <div style={{ background: theme.bgLight, borderRadius: 12, padding: 16, marginTop: 20, border: `1px solid ${theme.border}`, textAlign: "left" }}>
                 <div style={{ color: theme.greenLight, fontSize: 12, fontWeight: 700, marginBottom: 8 }}>📦 CADENA DIRECTA:</div>
                 {cart.map(item => (
                   <div key={item.uid} style={{ color: theme.creamDim, fontSize: 12, marginBottom: 5 }}>
-                    <ProductAvatar product={item.product} size={30} radius={8} /> <strong style={{ color: theme.cream }}>Piladora Rey León</strong>
+                    <ProductAvatar product={item.product} size={30} radius={8} /> <strong style={{ color: theme.cream }}>Arroz del Pacifico</strong>
                     <span style={{ color: theme.textDim }}> → 🚚 {item.zone?.name} → 🏠 Tu hogar</span>
                   </div>
                 ))}
@@ -5502,17 +5560,14 @@ function CartDrawerReal({ cart, onClose, onRemove, onUpdateQty, onOrderSent, ini
         .map((zoneItem) => [zoneItem.id || zoneItem.name, zoneItem])
     ).values()
   );
-  const fallbackZone = guidedZones.find((zoneItem) => zoneItem.id === "recojo") || guidedZones[0] || ZONES_REYLEON[0];
-  const selectedZone = guidedZones.find((zoneItem) => String(zoneItem.id) === String(selectedZoneId)) || fallbackZone;
-
-  useEffect(() => {
-    if (!selectedZoneId && fallbackZone?.id) setSelectedZoneId(fallbackZone.id);
-  }, [fallbackZone?.id, selectedZoneId]);
+  const selectedZone = selectedZoneId
+    ? guidedZones.find((zoneItem) => String(zoneItem.id || zoneItem.name) === String(selectedZoneId))
+    : null;
 
   const guidedItems = cart.map((item) => ({ ...item, zone: selectedZone || item.zone }));
   const guidedGroups = groupCartBySupplier(guidedItems);
   const guidedSubtotal = guidedItems.reduce((sum, item) => sum + item.pres.price * item.qty, 0);
-  const guidedDelivery = guidedItems.length ? (selectedZone?.cost || 0) : 0;
+  const guidedDelivery = guidedItems.length && selectedZone ? (selectedZone.cost || 0) : 0;
   const guidedTotal = guidedSubtotal + guidedDelivery;
   const digitsPhone = buyer.phone.replace(/\D/g, "");
   const phoneOk = digitsPhone.length >= 9;
@@ -5601,35 +5656,35 @@ function CartDrawerReal({ cart, onClose, onRemove, onUpdateQty, onOrderSent, ini
       address: selectedZone?.address || buyer.address,
       notes: ownerTestMode ? [buyer.notes, OWNER_TEST_NOTE].filter(Boolean).join(" | ") : buyer.notes,
     };
-    const orderRecord = createOrderRecord({
+    const orderRecord = createSalesOrderRecord({
       supplier: flowSupplier,
       items: guidedItems,
       customer: customerData,
       payment: chosenPayment.val,
-      extras: flowExtras,
+      extras: { ...flowExtras, ownerTestNote: OWNER_TEST_NOTE },
     });
     const message = guidedGroups.length > 1
-      ? buildCombinedOrderMessage({
+      ? buildSalesCombinedOrderMessage({
         groups: guidedGroups,
         customer: customerData,
-        payment: paymentLabel(chosenPayment.val),
-        extras: { ...flowExtras, orderId: orderRecord.id },
+        payment: salesPaymentLabel(chosenPayment.val),
+        extras: { ...flowExtras, ownerTestNote: OWNER_TEST_NOTE, orderId: orderRecord.id },
       })
-      : buildOrderMessage({
+      : buildSalesOrderMessage({
         supplier: flowSupplier,
         items: guidedItems,
         customer: customerData,
-        payment: paymentLabel(chosenPayment.val),
-        extras: { ...flowExtras, orderId: orderRecord.id },
+        payment: salesPaymentLabel(chosenPayment.val),
+        extras: { ...flowExtras, ownerTestNote: OWNER_TEST_NOTE, orderId: orderRecord.id },
       });
 
     onOrderSent?.(orderRecord);
     setFinalOrder(orderRecord);
     setFlowStep("confirmation");
-    setGuidedStatus("Pedido generado. Envia el comprobante si pagaste por billetera o banco.");
+    setGuidedStatus(paymentNeedsProof ? "Pedido generado. Ahora sube el comprobante para que pase a verificacion." : "Pedido generado. Te confirmamos por WhatsApp.");
     try {
       await saveOrderInSupabase(orderRecord);
-      setGuidedStatus("Pedido guardado en Supabase. Envia el comprobante si pagaste por billetera o banco.");
+      setGuidedStatus(paymentNeedsProof ? "Pedido guardado. Sube el comprobante para continuar con la verificacion." : "Pedido guardado. Te confirmamos por WhatsApp.");
     } catch {
       setGuidedStatus("Pedido generado por WhatsApp. Supabase aun no guardo este pedido.");
     }
@@ -5752,9 +5807,13 @@ function CartDrawerReal({ cart, onClose, onRemove, onUpdateQty, onOrderSent, ini
                   {buyer.phone && !phoneOk && <div style={{ color: "#B91C1C", fontSize: 12, fontWeight: 800 }}>Ingresa un celular valido de 9 digitos.</div>}
                   <input value={buyer.name} onChange={(event) => setBuyerField("name", event.target.value)} placeholder="Nombre" style={flowInput} />
                   <select value={selectedZoneId} onChange={(event) => setSelectedZoneId(event.target.value)} style={flowInput}>
-                    {guidedZones.map((zoneItem) => (
-                      <option key={zoneItem.id || zoneItem.name} value={zoneItem.id}>{zoneItem.name} - {zoneItem.cost === 0 ? "gratis" : formatMoney(zoneItem.cost)}</option>
-                    ))}
+                    <option value="">Selecciona tu zona de entrega</option>
+                    {guidedZones.map((zoneItem) => {
+                      const zoneValue = zoneItem.id || zoneItem.name;
+                      return (
+                        <option key={zoneValue} value={zoneValue}>{zoneItem.name} - {zoneItem.cost === 0 ? "gratis" : formatMoney(zoneItem.cost)}</option>
+                      );
+                    })}
                   </select>
                   <input value={buyer.reference} onChange={(event) => setBuyerField("reference", event.target.value)} placeholder="Referencia (opcional)" style={flowInput} />
                 </div>
@@ -5762,10 +5821,10 @@ function CartDrawerReal({ cart, onClose, onRemove, onUpdateQty, onOrderSent, ini
               <div style={{ background: "#fff", border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14, display: "flex", justifyContent: "space-between", gap: 12 }}>
                 <div>
                   <div style={{ color: HOME.muted, fontSize: 12, fontWeight: 800 }}>Delivery</div>
-                  <div style={{ color: HOME.text, fontSize: 15, fontWeight: 900 }}>{selectedZone?.name}</div>
-                  <div style={{ color: HOME.muted, fontSize: 12, marginTop: 3 }}>{selectedZone?.address}</div>
+                  <div style={{ color: HOME.text, fontSize: 15, fontWeight: 900 }}>{selectedZone?.name || "Selecciona una zona"}</div>
+                  <div style={{ color: HOME.muted, fontSize: 12, marginTop: 3 }}>{selectedZone?.address || "El costo se calcula automaticamente."}</div>
                 </div>
-                <div style={{ color: HOME.leaf, fontSize: 18, fontWeight: 900 }}>{guidedDelivery === 0 ? "Gratis" : formatMoney(guidedDelivery)}</div>
+                <div style={{ color: HOME.leaf, fontSize: 18, fontWeight: 900 }}>{selectedZone ? (guidedDelivery === 0 ? "Gratis" : formatMoney(guidedDelivery)) : "--"}</div>
               </div>
             </div>
           )}
@@ -5813,7 +5872,7 @@ function CartDrawerReal({ cart, onClose, onRemove, onUpdateQty, onOrderSent, ini
                 )}
                 {paymentNeedsProof && (
                   <div style={{ marginTop: 12, background: "#FFF7ED", border: "1px solid #FED7AA", borderRadius: 14, padding: 12, color: "#9A3412", fontSize: 13, fontWeight: 800 }}>
-                    Para continuar, paga y guarda tu comprobante. Lo subes despues de confirmar.
+                    Para continuar con la verificacion, paga y guarda tu comprobante. Lo subes en el siguiente paso.
                   </div>
                 )}
               </div>
@@ -5858,13 +5917,13 @@ function CartDrawerReal({ cart, onClose, onRemove, onUpdateQty, onOrderSent, ini
                 <div style={{ fontSize: 20, fontWeight: 900 }}>Pedido generado</div>
                 <div style={{ fontFamily: "monospace", fontSize: 14, marginTop: 8 }}>{finalOrder?.id}</div>
                 <div style={{ marginTop: 8, fontSize: 13, fontWeight: 800 }}>
-                  Estado: {paymentNeedsProof ? "Pendiente de verificacion de pago" : "Pendiente de confirmacion"}
+                  Estado: {paymentNeedsProof ? "Pendiente de comprobante y verificacion de pago" : "Pendiente de confirmacion"}
                 </div>
               </div>
 
               {paymentNeedsProof && (
                 <div style={{ background: "#fff", border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14 }}>
-                  <div style={{ color: HOME.text, fontSize: 17, fontWeight: 900 }}>Sube tu comprobante</div>
+                  <div style={{ color: HOME.text, fontSize: 17, fontWeight: 900 }}>Sube tu comprobante para continuar</div>
                   <input type="file" accept="image/*" onChange={(event) => setProofFile(event.target.files?.[0] || null)} style={{ marginTop: 12, width: "100%" }} />
                   <button type="button" onClick={uploadProof} style={{ ...primaryButton, marginTop: 12 }}>Subir comprobante</button>
                   {proofStatus && <div style={{ color: proofUpload ? "#166534" : HOME.muted, fontSize: 13, marginTop: 10, fontWeight: 800 }}>{proofStatus}</div>}
@@ -5872,7 +5931,11 @@ function CartDrawerReal({ cart, onClose, onRemove, onUpdateQty, onOrderSent, ini
               )}
 
               <div style={{ background: "#fff", border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14, color: HOME.text, fontSize: 14, lineHeight: 1.55 }}>
-                Envia tambien el comprobante por WhatsApp al <strong>955 273 229</strong> para verificar mas rapido.
+                {paymentNeedsProof ? (
+                  <>Envia tambien el comprobante por WhatsApp al <strong>955 273 229</strong> para verificar mas rapido.</>
+                ) : (
+                  <>Te confirmamos el pedido por WhatsApp al celular registrado.</>
+                )}
               </div>
             </div>
           )}
@@ -5978,19 +6041,19 @@ function CartDrawerReal({ cart, onClose, onRemove, onUpdateQty, onOrderSent, ini
   };
 
   const makeGroupMessage = (group) =>
-    buildOrderMessage({
+    buildSalesOrderMessage({
       supplier: group.supplier,
       items: group.items,
       customer,
-      payment: paymentLabel(payment),
+      payment: salesPaymentLabel(payment),
       extras,
     });
 
   const makeCombinedMessage = () =>
-    buildCombinedOrderMessage({
+    buildSalesCombinedOrderMessage({
       groups,
       customer,
-      payment: paymentLabel(payment),
+      payment: salesPaymentLabel(payment),
       extras,
     });
 
@@ -6019,7 +6082,7 @@ function CartDrawerReal({ cart, onClose, onRemove, onUpdateQty, onOrderSent, ini
     const url = `https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank", "noopener,noreferrer");
     setStatus(`Pedido listo para enviar a ${ORDER_PHONE_DISPLAY}`);
-    const orderRecord = createOrderRecord({
+    const orderRecord = createSalesOrderRecord({
       supplier: group.supplier,
       items: group.items,
       customer: {
@@ -6042,7 +6105,7 @@ function CartDrawerReal({ cart, onClose, onRemove, onUpdateQty, onOrderSent, ini
     const url = `https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank", "noopener,noreferrer");
     setStatus(`Pedido completo listo para enviar a ${ORDER_PHONE_DISPLAY}`);
-    const orderRecord = createOrderRecord({
+    const orderRecord = createSalesOrderRecord({
       supplier: mixedSuppliers ? { key: "mixto", name: "Pedido mixto" } : groups[0]?.supplier,
       items: cart,
       customer: {
@@ -6122,7 +6185,7 @@ function CartDrawerReal({ cart, onClose, onRemove, onUpdateQty, onOrderSent, ini
 
                 {mixedSuppliers && (
                   <div style={{ background: "#1A1000", border: "1px solid #C47A1E55", borderRadius: 12, padding: 12, marginTop: 6, color: "#F7C56A", fontSize: 12, lineHeight: 1.5 }}>
-                    Tu carrito mezcla productos de Rey León y ASWA. En el checkout te dejamos los botones separados por marca.
+                    Tu carrito mezcla productos de Arroz del Pacifico y ASWA. En el checkout te dejamos los botones separados por marca.
                   </div>
                 )}
               </>
@@ -6574,16 +6637,27 @@ function CartDrawerReal({ cart, onClose, onRemove, onUpdateQty, onOrderSent, ini
   );
 }
 
-export default function VNDRX() {
-  const [cart, setCart] = useState(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      const stored = window.localStorage.getItem("vndrx-cart-v1");
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
+function loadCartForCurrentAccess() {
+  if (typeof window === "undefined") return [];
+  try {
+    const stored = window.localStorage.getItem("vndrx-cart-v1");
+    const parsed = stored ? JSON.parse(stored) : [];
+    if (!Array.isArray(parsed)) return [];
+    if (hasDeveloperAccess(window.location.search)) return parsed;
+
+    const visible = new Set(getVisibleCompanyKeys(Object.keys(COMPANY_VIEWS), window.location.search));
+    const sanitized = parsed.filter((item) => item?.product && visible.has(getSupplierKey(item.product)));
+    if (sanitized.length !== parsed.length) {
+      window.localStorage.setItem("vndrx-cart-v1", JSON.stringify(sanitized));
     }
-  });
+    return sanitized;
+  } catch {
+    return [];
+  }
+}
+
+export default function VNDRX() {
+  const [cart, setCart] = useState(loadCartForCurrentAccess);
   const [profile, setProfile] = usePersistentState(STORAGE_KEYS.profile, () => ({
     ...DEFAULT_PROFILE,
     referralCode: makeReferralCode(),
@@ -6593,7 +6667,15 @@ export default function VNDRX() {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartStartStep, setCartStartStep] = useState("cart");
   const [activeLine, setActiveLine] = useState("all");
-  const [selectedCompany, setSelectedCompany] = useState(null);
+  const [ownerTestMode, setOwnerTestMode] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return hasDeveloperAccess(window.location.search);
+  });
+  const [selectedCompany, setSelectedCompany] = useState(() => {
+    if (typeof window === "undefined") return "aswa";
+    return resolveInitialCompany(getVisibleCompanyKeys(Object.keys(COMPANY_VIEWS), window.location.search), window.location.search);
+  });
+  const [companyChooserOpen, setCompanyChooserOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [hubOpen, setHubOpen] = useState(false);
   const [hubTab, setHubTab] = useState("tutorial");
@@ -6602,11 +6684,6 @@ export default function VNDRX() {
   const [canInstall, setCanInstall] = useState(false);
   const [gpsState, setGpsState] = useState(null);
   const [reviewDraft, setReviewDraft] = useState({ stars: 0, note: "", tag: "" });
-  const [ownerTestMode, setOwnerTestMode] = useState(() => {
-    if (typeof window === "undefined") return false;
-    const params = new URLSearchParams(window.location.search);
-    return params.get("dueno") === "1" || params.get("owner") === "1";
-  });
   const [catalogConfig, setCatalogConfig] = useState(null);
   const [catalogDraft, setCatalogDraft] = useState("");
   const [supabaseEmail, setSupabaseEmail] = useState("");
@@ -6664,7 +6741,17 @@ export default function VNDRX() {
     };
 
     if ("serviceWorker" in navigator && window.location?.protocol?.startsWith("http")) {
-      navigator.serviceWorker.register("./sw.js").catch(() => {});
+      const isLocalPreview = ["localhost", "127.0.0.1", "::1"].includes(window.location.hostname);
+      if (isLocalPreview) {
+        navigator.serviceWorker.getRegistrations?.().then((registrations) => {
+          registrations.forEach((registration) => registration.unregister());
+        }).catch(() => {});
+        window.caches?.keys?.().then((keys) => {
+          keys.forEach((key) => window.caches.delete(key));
+        }).catch(() => {});
+      } else {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      }
     }
 
     window.addEventListener("beforeinstallprompt", onBeforeInstall);
@@ -6693,6 +6780,7 @@ export default function VNDRX() {
 
   const selectCompany = (companyKey) => {
     setSelectedCompany(companyKey);
+    setCompanyChooserOpen(false);
     setActiveLine("all");
     setSearch("");
     setHubOpen(false);
@@ -6707,11 +6795,10 @@ export default function VNDRX() {
     setHubOpen(false);
     setEmbeddedStore(null);
     setCartOpen(false);
-    setSelectedCompany(null);
+    setCompanyChooserOpen(true);
     setActiveLine("all");
     setSearch("");
     window.scrollTo({ top: 0, behavior: "smooth" });
-    showToast("Elige una empresa para empezar");
   };
 
   const addToCart = (product, pres, qty, zone) => {
@@ -6734,10 +6821,10 @@ export default function VNDRX() {
     setCartStartStep(step);
     setCartOpen(true);
   };
-  const quickBuy = (product, pres, qty, zone) => {
-    addToCart(product, pres, qty, zone);
-    openCart("cart");
-    showToast("Producto agregado. Sigue los pasos para comprar.", "success");
+  const quickBuy = (product, pres, qty) => {
+    addToCart(product, pres, qty);
+    openCart("checkout");
+    showToast("Producto elegido. Completa tus datos para comprar.", "success");
   };
   const effectiveProducts = applyCatalogConfig(products, catalogConfig || {});
   const effectivePaymentMethods = Array.isArray(catalogConfig?.paymentMethods) && catalogConfig.paymentMethods.length
@@ -6822,6 +6909,7 @@ export default function VNDRX() {
       const url = new URL(window.location.href);
       url.searchParams.delete("dueno");
       url.searchParams.delete("owner");
+      url.searchParams.delete("dev");
       window.history.replaceState({}, "", url.toString());
     } catch {
       // URL cleanup is optional.
@@ -6879,11 +6967,11 @@ export default function VNDRX() {
   };
 
   const ownerPreviewMessage = cart.length > 0
-    ? buildCombinedOrderMessage({
+    ? buildSalesCombinedOrderMessage({
       groups: groupCartBySupplier(cart),
       customer: { ...OWNER_TEST_CUSTOMER, referralCode: profile.referralCode, referredBy: profile.referredBy },
-      payment: paymentLabel("cod"),
-      extras: { ownerTest: true, fulfillmentMode: "delivery" },
+      payment: salesPaymentLabel("cod"),
+      extras: { ownerTest: true, ownerTestNote: OWNER_TEST_NOTE, fulfillmentMode: "delivery" },
     })
     : "";
 
@@ -6941,7 +7029,7 @@ export default function VNDRX() {
   const topSupplierKey = Object.entries(orderTotalsBySupplier).sort((a, b) => b[1] - a[1])[0]?.[0] || "reyleon";
   const topSupplierName = topSupplierKey === "mixto"
     ? "Pedido mixto"
-    : SUPPLIERS[topSupplierKey]?.shortName || "Rey Leon";
+    : SUPPLIERS[topSupplierKey]?.shortName || "Arroz del Pacifico";
 
   const handleOrderSent = (order) => {
     setOrders((prev) => [order, ...prev].slice(0, 40));
@@ -6989,17 +7077,17 @@ export default function VNDRX() {
   const openOrder = async (order) => {
     const orderGroups = groupCartBySupplier(order.items || []);
     const message = (order.supplierKey === "mixto" || orderGroups.length > 1)
-      ? buildCombinedOrderMessage({
+      ? buildSalesCombinedOrderMessage({
         groups: orderGroups,
         customer: order.customer,
-        payment: order.paymentLabel || paymentLabel(order.payment),
+        payment: order.paymentLabel || salesPaymentLabel(order.payment),
         extras: order.extras || {},
       })
-      : buildOrderMessage({
+      : buildSalesOrderMessage({
         supplier: { key: order.supplierKey, name: order.supplierName },
         items: order.items,
         customer: order.customer,
-        payment: order.paymentLabel || paymentLabel(order.payment),
+        payment: order.paymentLabel || salesPaymentLabel(order.payment),
         extras: order.extras || {},
       });
     const url = `https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent(message)}`;
@@ -7247,6 +7335,7 @@ export default function VNDRX() {
   };
 
   const selectedCompanyView = selectedCompany ? COMPANY_VIEWS[selectedCompany] : null;
+  const visibleCompanyKeys = getVisibleCompanyKeys(Object.keys(COMPANY_VIEWS), typeof window === "undefined" ? "" : window.location.search);
   const companyFilters = selectedCompany ? COMPANY_FILTERS[selectedCompany] || [] : [];
   const isAswa = selectedCompany === "aswa";
   const isJora = selectedCompany === "jora";
@@ -7265,6 +7354,19 @@ export default function VNDRX() {
       || product.desc.toLowerCase().includes(searchText);
     return matchCategory && matchSearch;
   });
+  const featuredProducts = selectedCompanyProducts.slice(0, 3);
+  const visibleCompanyKeySet = new Set(visibleCompanyKeys);
+  const visibleCompanySignature = visibleCompanyKeys.join("|");
+
+  useEffect(() => {
+    if (ownerTestMode) return;
+    setCart((prev) => prev.filter((item) => visibleCompanyKeySet.has(getSupplierKey(item.product))));
+    if (selectedCompany && !visibleCompanyKeySet.has(selectedCompany)) {
+      setSelectedCompany(resolveInitialCompany(visibleCompanyKeys, ""));
+      setActiveLine("all");
+      setSearch("");
+    }
+  }, [ownerTestMode, selectedCompany, visibleCompanySignature]);
 
   const hubData = {
     profile,
@@ -7355,10 +7457,10 @@ export default function VNDRX() {
     />
   );
 
-  if (!selectedCompany) {
+  if (companyChooserOpen || !selectedCompany) {
     return (
       <>
-        <CompanyChooserScreen onChooseCompany={selectCompany} toastBubble={toastBubble} />
+        <CompanyChooserScreen onChooseCompany={selectCompany} onInstallApp={installApp} toastBubble={toastBubble} visibleCompanyKeys={visibleCompanyKeys} />
         {ownerTestPanel}
         {ownerSupabasePanel}
       </>
@@ -7400,6 +7502,9 @@ export default function VNDRX() {
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.15fr) minmax(0, 0.85fr)", gap: 18, alignItems: "stretch" }}>
             <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 28, padding: 24, boxShadow: HOME.shadow }}>
+              <div style={{ color: HOME.leaf, fontSize: 12, fontWeight: 900, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 8 }}>
+                {VNDRX_BRAND.name} · {VNDRX_BRAND.slogan}
+              </div>
               <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 999, padding: "6px 14px", marginBottom: 14, fontSize: 11, color: HOME.accent, fontFamily: "monospace", letterSpacing: 1, textTransform: "uppercase" }}>
                 {selectedCompanyView?.heroNote || "Te atendemos como en casa"}
               </div>
@@ -7508,7 +7613,45 @@ export default function VNDRX() {
               </div>
             </div>
 
-            <div style={{ display: "grid", gap: 14 }}>
+            <div style={{ display: "grid", gap: 12 }}>
+              <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 24, padding: 16, boxShadow: HOME.shadow }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, marginBottom: 12 }}>
+                  <div>
+                    <div style={{ color: HOME.accent, fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Compra directa</div>
+                    <div style={{ color: HOME.text, fontSize: 18, fontWeight: 900, fontFamily: "Georgia, serif", marginTop: 3 }}>{selectedCompanyView?.shortName}</div>
+                  </div>
+                  <div style={{ color: HOME.leaf, fontSize: 12, fontWeight: 900 }}>{ORDER_PHONE_DISPLAY}</div>
+                </div>
+                <div style={{ display: "grid", gap: 10 }}>
+                  {featuredProducts.map((product) => {
+                    const pres = product.presentations?.[0];
+                    const media = getProductMedia(product);
+                    if (!pres) return null;
+                    return (
+                      <div key={product.id} style={{ display: "grid", gridTemplateColumns: "72px 1fr auto", gap: 10, alignItems: "center", background: HOME.soft2, border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 10 }}>
+                        <div style={{ width: 72, height: 72, borderRadius: 14, overflow: "hidden", background: "#fff", border: `1px solid ${HOME.border}` }}>
+                          {media ? <img src={media.src} alt={product.name} style={{ width: "100%", height: "100%", objectFit: media.fit || "cover" }} /> : null}
+                        </div>
+                        <div style={{ minWidth: 0 }}>
+                          <div style={{ color: HOME.text, fontSize: 13, fontWeight: 900, lineHeight: 1.25 }}>{product.name}</div>
+                          <div style={{ color: HOME.muted, fontSize: 11, marginTop: 4 }}>{pres.label}</div>
+                          <div style={{ color: HOME.leaf, fontSize: 16, fontWeight: 900, marginTop: 5 }}>{formatMoney(pres.price)}</div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => quickBuy(product, pres, product.minOrder || 1)}
+                          style={{ background: HOME.leaf, border: "none", color: "#fff", borderRadius: 999, padding: "10px 13px", cursor: "pointer", fontSize: 12, fontWeight: 900, whiteSpace: "nowrap" }}
+                        >
+                          Pedir
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: "none" }}>
               <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 24, padding: 18, boxShadow: HOME.shadow }}>
                 <div style={{ color: HOME.accent, fontSize: 11, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase", marginBottom: 10 }}>Cómo pedir</div>
                 <div style={{ display: "grid", gap: 10 }}>
@@ -7560,7 +7703,7 @@ export default function VNDRX() {
                       </>
                     ) : (
                       <>
-                        <span style={{ background: "#F9EEDB", color: HOME.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Rey Leon</span>
+                        <span style={{ background: "#F9EEDB", color: HOME.accent, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Arroz del Pacifico</span>
                         <span style={{ background: "#EAF5EA", color: HOME.leaf, borderRadius: 999, padding: "6px 10px", fontSize: 11, fontWeight: 800 }}>Delivery por zona</span>
                       </>
                     )}
@@ -7570,7 +7713,7 @@ export default function VNDRX() {
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: 12, marginTop: 14 }}>
+          <div style={{ display: "none" }}>
             <div style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, borderRadius: 18, padding: 14, boxShadow: HOME.shadow }}>
               <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Atención amable</div>
               <div style={{ color: HOME.text, fontSize: 13, lineHeight: 1.55, marginTop: 6 }}>Te guiamos paso a paso para que comprar se sienta fácil y cercano.</div>
@@ -7600,7 +7743,7 @@ export default function VNDRX() {
       ) : (
         <ReyLeonBoard
           onOpenPriceSheet={() => openPromoAsset(ASSETS.priceSheet)}
-          onContact={() => supportWhatsApp("Hola, quiero consultar precios de Rey Leon.")}
+          onContact={() => supportWhatsApp("Hola, quiero consultar precios de Arroz del Pacifico.")}
         />
       )}
 
@@ -7616,11 +7759,11 @@ export default function VNDRX() {
           <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" }}>
             <div>
               <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>
-                {isAswa ? "Centro ASWA" : isJora ? "Chicha de Jora" : isTela ? "Tienda Tela" : isBocaditos ? "Bocaditos Regionales" : isArtesania ? "Artesania Lamista" : "Molino Rey Leon"}
+                {isAswa ? "Tienda ASWA" : isJora ? "Chicha de Jora" : isTela ? "Tienda Tela" : isBocaditos ? "Bocaditos Regionales" : isArtesania ? "Artesania Lamista" : "Arroz del Pacifico"}
               </div>
               <div style={{ color: HOME.text, fontSize: 16, fontWeight: 900, marginTop: 4 }}>
                 {isAswa
-                  ? "Tutorial, referidos, bonos, GPS, historial y soporte en un solo lugar"
+                  ? "Chicha, bidon y combos escolares listos para comprar con pago y delivery real"
                   : isJora
                     ? "Chicha de jora para sazonar, beber y compartir en una sola tienda"
                     : isTela
@@ -7633,7 +7776,7 @@ export default function VNDRX() {
               </div>
               <div style={{ color: HOME.muted, fontSize: 12, lineHeight: 1.5, marginTop: 4 }}>
                 {isAswa
-                  ? "Lo mejor de ASWA sumado a tu tienda actual para vender mas rapido."
+                  ? "El cliente elige producto, zona, pago y comprobante sin pasar por pantallas de prueba."
                   : isJora
                     ? "Para beberla, endulza al gusto; recomendamos miel de abeja. Para comida, usala como aderezo natural."
                     : isTela
@@ -7642,37 +7785,42 @@ export default function VNDRX() {
                         ? "El cliente encuentra rapido bocaditos regionales con fotos reales y compra sin ver otras marcas."
                         : isArtesania
                           ? "El cliente encuentra rapido artesania lamista con fotos reales y compra sin ver otras marcas."
-                    : "El cliente ve solo los productos de Rey Leon con fotos reales y compra sin ver otras marcas."}
+                    : "El cliente ve solo los productos de Arroz del Pacifico con fotos reales y compra sin ver otras marcas."}
               </div>
             </div>
-            {isAswa ? (
-              <button type="button" onClick={() => { setHubTab("tutorial"); setHubOpen(true); }} style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})`, border: "none", color: "#fff", borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.16)" }}>
-                Abrir hub
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "flex-end", alignItems: "center" }}>
+              <button type="button" onClick={installApp} style={{ background: HOME.surface, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+                Instalar app
               </button>
-            ) : isJora ? (
-              <button type="button" onClick={() => supportWhatsApp("Hola, quiero consultar la chicha de jora.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
-                Consultar Jora
-              </button>
-            ) : isTela ? (
-              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir productos de la tienda Tela.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
-                Pedir Tela
-              </button>
-            ) : isBocaditos ? (
-              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir bocaditos regionales artesanales.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
-                Pedir Bocaditos
-              </button>
-            ) : isArtesania ? (
-              <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir artesania lamista.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
-                Pedir Artesania
-              </button>
-            ) : (
-              <div style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 999, padding: "10px 14px", color: HOME.text, fontSize: 12, fontWeight: 800 }}>
-                {selectedCompanyView?.companyPhone || ORDER_PHONE_DISPLAY}
-              </div>
-            )}
+              {isAswa ? (
+                <button type="button" onClick={() => openCart("cart")} style={{ background: `linear-gradient(135deg, ${HOME.leaf}, ${HOME.leaf2})`, border: "none", color: "#fff", borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.16)" }}>
+                  Ver pedido
+                </button>
+              ) : isJora ? (
+                <button type="button" onClick={() => supportWhatsApp("Hola, quiero consultar la chicha de jora.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+                  Consultar Jora
+                </button>
+              ) : isTela ? (
+                <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir productos de la tienda Tela.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+                  Pedir Tela
+                </button>
+              ) : isBocaditos ? (
+                <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir bocaditos regionales artesanales.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+                  Pedir Bocaditos
+                </button>
+              ) : isArtesania ? (
+                <button type="button" onClick={() => supportWhatsApp("Hola, quiero pedir artesania lamista.")} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "11px 16px", cursor: "pointer", fontWeight: 900, boxShadow: "0 12px 22px rgba(71,101,75,0.08)" }}>
+                  Pedir Artesania
+                </button>
+              ) : (
+                <div style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, borderRadius: 999, padding: "10px 14px", color: HOME.text, fontSize: 12, fontWeight: 800 }}>
+                  {selectedCompanyView?.companyPhone || ORDER_PHONE_DISPLAY}
+                </div>
+              )}
+            </div>
           </div>
 
-          {isAswa && (
+          {isAswa && ownerTestMode && (
             <>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 8, marginTop: 14 }}>
               {[
@@ -8008,7 +8156,7 @@ export default function VNDRX() {
                   { icon: "💬", title: "Pedido directo", desc: "Un solo boton para preguntar, pedir y compartir por WhatsApp." },
                 ]
               : [
-                { icon: "🏭", title: "Del Molino a Ti", desc: "Compras directamente a la Piladora Rey Leon. Sin bodega, sin minimarket." },
+                { icon: "🏭", title: "Del Molino a Ti", desc: "Compras directamente a Arroz del Pacifico. Sin bodega, sin minimarket." },
                 { icon: "✅", title: "ISO 9001 · HACCP · BPM", desc: "Certificaciones internacionales que garantizan calidad en cada grano." },
                 { icon: "🚚", title: "Delivery por Zona", desc: "Costo fijo por zona, no por cantidad. Pides 1 o 10 sacos, mismo delivery." },
                 { icon: "💰", title: "Precio de Origen", desc: "Ahorras comprando directo del productor con precios visibles." },

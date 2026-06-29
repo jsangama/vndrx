@@ -1,40 +1,19 @@
-const CACHE_NAME = "vndrx-v7";
-const APP_SHELL = [
-  "./",
-  "./index.html",
-  "./manifest.webmanifest",
-  "./icon-192.svg",
-  "./icon-512.svg",
-];
+const CACHE_NAME = "vndrx-v55";
+const CACHE_PREFIX = "vndrx-";
 
-const isSameOriginRequest = (request) => new URL(request.url).origin === self.location.origin;
-const isNavigationRequest = (request) => request.mode === "navigate";
-
-async function cacheFirst(request) {
-  const cached = await caches.match(request);
-  if (cached) return cached;
-  const response = await fetch(request);
-  const cache = await caches.open(CACHE_NAME);
-  cache.put(request, response.clone()).catch(() => {});
-  return response;
-}
-
-async function networkFirst(request) {
-  try {
-    const response = await fetch(request);
-    const cache = await caches.open(CACHE_NAME);
-    cache.put(request, response.clone()).catch(() => {});
-    return response;
-  } catch {
-    return (await caches.match(request)) || (await caches.match("./index.html"));
-  }
+async function deleteOldVndrxCaches() {
+  const keys = await caches.keys();
+  await Promise.all(
+    keys
+      .filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME)
+      .map((key) => caches.delete(key)),
+  );
 }
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
-      const cache = await caches.open(CACHE_NAME);
-      await cache.addAll(APP_SHELL);
+      await deleteOldVndrxCaches();
       self.skipWaiting();
     })(),
   );
@@ -43,24 +22,21 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
-      const keys = await caches.keys();
-      await Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)));
+      await deleteOldVndrxCaches();
       await self.clients.claim();
+      const clients = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+      clients.forEach((client) => client.postMessage({ type: "VNDRX_CACHE_CLEARED", version: CACHE_NAME }));
     })(),
   );
 });
 
 self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET" || !isSameOriginRequest(event.request)) return;
-
-  if (isNavigationRequest(event.request)) {
-    event.respondWith(networkFirst(event.request));
-    return;
-  }
-
+  if (event.request.method !== "GET") return;
   const url = new URL(event.request.url);
-  if (APP_SHELL.some((asset) => url.pathname.endsWith(asset.replace("./", "")))) {
-    event.respondWith(cacheFirst(event.request));
+  if (url.origin !== self.location.origin) return;
+
+  if (event.request.mode === "navigate" || url.pathname.endsWith(".html") || url.pathname.endsWith("/")) {
+    event.respondWith(fetch(event.request));
     return;
   }
 

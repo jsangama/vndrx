@@ -1,12 +1,12 @@
 {
-  "name": "VNDRX | Tienda directa",
+  "name": "VNDRX | ASWA y Arroz del Pacifico",
   "short_name": "VNDRX",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0f1a0e",
   "theme_color": "#0f1a0e",
-  "description": "Tienda multi-marca con pedidos por WhatsApp y pagos directos.",
+  "description": "Compra directa de ASWA La Rica Chicha y Arroz del Pacifico.",
   "icons": [
     {
       "src": "./icon-192.svg",
