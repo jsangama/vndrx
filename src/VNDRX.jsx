@@ -1616,8 +1616,8 @@ const SUPPLIERS = {
     key: "reyleon",
     name: "Arroz del Pacifico",
     shortName: "Arroz del Pacifico",
-    phone: "51952232028",
-    displayPhone: "952 232 028",
+    phone: "51914479149",
+    displayPhone: "914 479 149",
     email: "ventas@arrozpacifico.com",
     site: "arrozpacifico.com",
   },
@@ -1815,8 +1815,8 @@ const COMPANY_FILTERS = {
   ],
 };
 
-const ORDER_PHONE = "51955273229";
-const ORDER_PHONE_DISPLAY = "955 273 229";
+const ORDER_PHONE = "51914479149";
+const ORDER_PHONE_DISPLAY = "914 479 149";
 const ASWA_APP_URL = "https://jsangama.github.io/aswa/?v=guide141";
 const OWNER_TEST_NOTE = "PRUEBA DUENO - NO DESPACHAR";
 const OWNER_TEST_CUSTOMER = {
@@ -4886,14 +4886,14 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
     },
   ];
   const catalogHighlights = [
-    { image: riceAnejoFeronCatalogo, title: "Anejo Feron", note: "PREMIUM" },
-    { image: riceSuperiorAzulCatalogo, title: "Superior Azul", note: "EXPORTACION" },
-    { image: riceVallesDelGuayoCatalogo, title: "Valles del Guayo", note: "SUPERIOR" },
-    { image: riceIntegradoRojoCatalogo, title: "Integrado Rojo", note: "INTEGRADO" },
-    { image: riceIntegradoLilaCatalogo, title: "Integrado Lila", note: "INTEGRADO" },
-    { image: riceArrocilloCatalogo, title: "Arrocillo", note: "DERIVADO" },
-    { image: ricePolvilloFinoCatalogo, title: "Polvillo fino", note: "DERIVADO" },
-    { image: riceCascarillaPrensadaCatalogo, title: "Cascarilla prensada", note: "INDUSTRIA" },
+    { image: riceExtraVerde49kg, title: "Extra Verde 49 kg", note: "EXTRA" },
+    { image: riceAnejoFeron49kg, title: "Anejo Feron 49 kg", note: "PREMIUM" },
+    { image: riceAnejoValorCatalogo, title: "Anejo Valor 49 kg", note: "ANEJO" },
+    { image: riceSuperiorVerdeCatalogo, title: "Superior Verde 49 kg", note: "SUPERIOR" },
+    { image: riceSuperiorAzulCatalogo, title: "Superior Azul 49 kg", note: "SUPERIOR" },
+    { image: riceVallesDelGuayoCatalogo, title: "Valles del Guayo 49 kg", note: "SUPERIOR" },
+    { image: riceIntegradoRojoCatalogo, title: "Integrado Rojo 49 kg", note: "INTEGRADO" },
+    { image: riceIntegradoLilaCatalogo, title: "Integrado Lila 49 kg", note: "INTEGRADO" },
   ];
 
   return (
@@ -5036,7 +5036,7 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
           <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", flexWrap: "wrap", marginBottom: 12 }}>
             <div>
               <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1, textTransform: "uppercase" }}>Mas del catalogo Arroz del Pacifico</div>
-              <div style={{ color: HOME.text, fontSize: 14, fontWeight: 800, marginTop: 4 }}>Bolsas y derivados con imagen propia para reconocer rapido cada producto.</div>
+              <div style={{ color: HOME.text, fontSize: 14, fontWeight: 800, marginTop: 4 }}>Sacos de 49 kilos con imagen propia para reconocer rapido cada linea.</div>
             </div>
             <button
               type="button"
