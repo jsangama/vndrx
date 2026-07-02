@@ -27,7 +27,7 @@ import comboEscolar from "./assets/aswa/combo-escolar-san-juan.png";
 import comboEscolarAlt from "./assets/aswa/combo-escolar-san-juan-alt.png";
 import priceSheet from "./assets/rice/precios-arroz-1.png";
 import riceLineupHero from "./assets/rice/catalog/reyleon-linea-productos.jpeg";
-import realPacificoLogo from "./assets/rice/catalog/real-pacifico-logo.jpeg";
+import realPacificoLogo from "./assets/rice/catalog/real-pacifico-logo.png";
 import molinoReyLeonFrente from "./assets/rice/catalog/molino-rey-leon-frente.jpeg";
 import joraHome from "./assets/jora/jora-home.svg";
 import joraSazon from "./assets/jora/jora-sazon.svg";
@@ -60,6 +60,15 @@ import artesaniaOllaArrocera from "./assets/artesania/artesania-olla-arrocera.sv
 import artesaniaTiesto from "./assets/artesania/artesania-tiesto.svg";
 import artesaniaFlorero from "./assets/artesania/artesania-florero.svg";
 import riceExtraVerdeCatalogo from "./assets/rice/catalog/extra-verde-catalogo.jpeg";
+import riceExtraVerde750g from "./assets/rice/catalog/extra-verde-750g.png";
+import riceExtraVerde1kg from "./assets/rice/catalog/extra-verde-1kg.png";
+import riceExtraVerde5kg from "./assets/rice/catalog/extra-verde-5kg.png";
+import riceExtraVerde10kg from "./assets/rice/catalog/extra-verde-10kg.png";
+import riceExtraVerde245kg from "./assets/rice/catalog/extra-verde-24-5kg.png";
+import riceExtraVerde49kg from "./assets/rice/catalog/extra-verde-49kg.png";
+import riceExtraVerdePqte20x1kg from "./assets/rice/catalog/extra-verde-pqte-20x1kg.png";
+import riceExtraVerdePqte8x5kg from "./assets/rice/catalog/extra-verde-pqte-8x5kg.png";
+import riceExtraVerdePqte25x750g from "./assets/rice/catalog/extra-verde-pqte-25x750g.png";
 import riceAnejoFeronCatalogo from "./assets/rice/catalog/anejo-feron-catalogo.jpeg";
 import riceAnejoValorCatalogo from "./assets/rice/catalog/anejo-valor-catalogo.jpeg";
 import riceSuperiorVerdeCatalogo from "./assets/rice/catalog/superior-verde-catalogo.jpeg";
@@ -249,6 +258,150 @@ const products = [
     saving: 35,
     cooking: "1¼ taza de agua por taza de arroz · Fuego medio · Reposar 5 min",
     tip: "Agrega una pizca de sal y unas gotas de aceite para más sabor.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 52,
+    name: "Extra Verde 750 g",
+    subtitle: "Bolsa familiar pequena - Calidad extra",
+    line: "premium",
+    img: "EV",
+    desc: "Presentacion practica de Arroz Extra Verde para compras pequenas, pruebas de calidad y consumo diario.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["750 g", "Real Pacifico", "Calidad extra", "Compra directa"],
+    presentations: [{ label: "750 g", price: 2.60, unit: "bolsa" }],
+    saving: 35,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Ideal para probar la calidad Extra Verde antes de comprar por volumen.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 53,
+    name: "Extra Verde 1 kg",
+    subtitle: "Bolsa de 1 kilo - Uso diario",
+    line: "premium",
+    img: "EV",
+    desc: "Bolsa de Arroz Extra Verde de 1 kilo para hogares, bodegas y pedidos rapidos.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["1 kg", "Real Pacifico", "Uso diario", "Grano seleccionado"],
+    presentations: [{ label: "1 kg", price: 3.20, unit: "bolsa" }],
+    saving: 35,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Formato ideal para venta por unidad y consumo familiar.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 54,
+    name: "Extra Verde 5 kg",
+    subtitle: "Bolsa de 5 kilos - Ahorro familiar",
+    line: "premium",
+    img: "EV",
+    desc: "Presentacion de 5 kilos de Arroz Extra Verde para familias y negocios que compran mas de una vez por semana.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["5 kg", "Real Pacifico", "Familiar", "Mayor ahorro"],
+    presentations: [{ label: "5 kg", price: 16.50, unit: "bolsa" }],
+    saving: 35,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Buena opcion para cocina familiar, pequenos negocios y compras semanales.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 55,
+    name: "Extra Verde 10 kg",
+    subtitle: "Bolsa de 10 kilos - Compra para negocio",
+    line: "premium",
+    img: "EV",
+    desc: "Formato de 10 kilos de Arroz Extra Verde para restaurantes, menus, kioscos y compras por volumen.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["10 kg", "Negocio", "Restaurantes", "Calidad extra"],
+    presentations: [{ label: "10 kg", price: 32.00, unit: "bolsa" }],
+    saving: 35,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Recomendado para restaurantes y compras recurrentes.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 56,
+    name: "Extra Verde 24.5 kg",
+    subtitle: "Medio saco - Calidad extra",
+    line: "premium",
+    img: "EV",
+    desc: "Medio saco de Arroz Extra Verde para hogares grandes, restaurantes y negocios que buscan precio de origen.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["24.5 kg", "Medio saco", "Precio de origen", "Compra directa"],
+    presentations: [{ label: "24.5 kg", price: 75.50, unit: "saco" }],
+    saving: 35,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Una opcion fuerte para abastecimiento sin comprar el saco completo.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 57,
+    name: "Extra Verde 49 kg",
+    subtitle: "Saco completo - Venta directa del molino",
+    line: "premium",
+    img: "EV",
+    desc: "Saco de 49 kilos de Arroz Extra Verde Real Pacifico para restaurantes, distribuidores y compras mayoristas.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["49 kg", "Saco", "Mayorista", "Molino directo"],
+    presentations: [{ label: "49 kg", price: 149.00, unit: "saco" }],
+    saving: 35,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Mejor opcion para abastecimiento por volumen.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 58,
+    name: "Extra Verde paquete 20 x 1 kg",
+    subtitle: "Saco con 20 paquetes de 1 kilo",
+    line: "premium",
+    img: "EV",
+    desc: "Saco de 20 paquetes de 1 kilo de Arroz Extra Verde, listo para bodegas, minimarkets y venta por unidad.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["20 x 1 kg", "20 kg", "Bodega", "Venta por unidad"],
+    presentations: [{ label: "20 und x 1 kg (20 kg)", price: 64.50, unit: "saco" }],
+    saving: 35,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Ideal para negocios que venden paquetes individuales.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 59,
+    name: "Extra Verde paquete 8 x 5 kg",
+    subtitle: "Saco con 8 paquetes de 5 kilos",
+    line: "premium",
+    img: "EV",
+    desc: "Saco de 8 paquetes de 5 kilos de Arroz Extra Verde, pensado para abastecer negocios y familias por volumen.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["8 x 5 kg", "40 kg", "Mayorista", "Ahorro por volumen"],
+    presentations: [{ label: "8 und x 5 kg (40 kg)", price: 128.00, unit: "saco" }],
+    saving: 35,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Formato fuerte para abastecimiento comercial.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 60,
+    name: "Extra Verde paquete 25 x 750 g",
+    subtitle: "Saco con 25 paquetes de 750 gramos",
+    line: "premium",
+    img: "EV",
+    desc: "Saco de 25 paquetes de 750 gramos de Arroz Extra Verde, listo para ventas rapidas y exhibicion en tienda.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["25 x 750 g", "18.75 kg", "Bodega", "Venta rapida"],
+    presentations: [{ label: "25 und x 750 g (18.75 kg)", price: 62.50, unit: "saco" }],
+    saving: 35,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Presentacion practica para puntos de venta y clientes que compran formatos pequenos.",
     zones: ZONES_REYLEON,
   },
   {
@@ -1351,7 +1504,7 @@ const COMPANY_VIEWS = {
     heroTitle: "Pide tu arroz sin enredos",
     heroText: "Fotos reales, precios visibles y delivery por zona para que el cliente encuentre rapido lo que busca.",
     heroChips: ["Arroz premium", "Precios de origen", "Delivery por zona"],
-    heroImage: riceLineupHero,
+    heroImage: realPacificoLogo,
     heroNote: "ARROZ DIRECTO",
     infoTitle: "Arroz del Pacifico",
     infoBody: "Arroz para hogar, menus, restaurantes e industria. Revisa premium, superior, economico y derivados en un catalogo limpio.",
@@ -1797,6 +1950,15 @@ function getProductCategory(product) {
 
 const PRODUCT_MEDIA = {
   1: { src: riceExtraVerdeCatalogo, fit: "contain" },
+  52: { src: riceExtraVerde750g, fit: "contain" },
+  53: { src: riceExtraVerde1kg, fit: "contain" },
+  54: { src: riceExtraVerde5kg, fit: "contain" },
+  55: { src: riceExtraVerde10kg, fit: "contain" },
+  56: { src: riceExtraVerde245kg, fit: "contain" },
+  57: { src: riceExtraVerde49kg, fit: "contain" },
+  58: { src: riceExtraVerdePqte20x1kg, fit: "contain" },
+  59: { src: riceExtraVerdePqte8x5kg, fit: "contain" },
+  60: { src: riceExtraVerdePqte25x750g, fit: "contain" },
   2: { src: riceAnejoFeronCatalogo, fit: "contain" },
   3: { src: riceAnejoValorCatalogo, fit: "contain" },
   4: { src: riceSuperiorVerdeCatalogo, fit: "contain" },
@@ -3779,7 +3941,7 @@ function CompanyChooserScreen({ onChooseCompany, onInstallApp, toastBubble, visi
     {
       key: "reyleon",
       view: COMPANY_VIEWS.reyleon,
-      image: ASSETS.riceLineupHero,
+      image: ASSETS.realPacificoLogo,
       accent: HOME.accent,
       chips: ["Arroz premium", "Superior", "Derivados"],
       note: "Molino directo",

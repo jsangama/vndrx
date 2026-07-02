@@ -1,4 +1,4 @@
-const CACHE_NAME = "vndrx-v55";
+const CACHE_NAME = "vndrx-v58";
 const CACHE_PREFIX = "vndrx-";
 
 async function deleteOldVndrxCaches() {

@@ -14,7 +14,7 @@
     <link rel="apple-touch-icon" href="./icon-192.svg" />
     <script>
       (function clearVndrxCache() {
-        var reloadKey = "vndrx-cache-cleared-20260629-v55";
+        var reloadKey = "vndrx-cache-cleared-20260701-v58";
         var cleanupTasks = [];
 
         if ("serviceWorker" in navigator) {
@@ -56,7 +56,9 @@
         if (!sessionStorage.getItem(reloadKey) && cleanupTasks.length) {
           sessionStorage.setItem(reloadKey, "1");
           Promise.all(cleanupTasks).finally(function () {
-            location.replace(location.pathname + "?fresh=" + Date.now() + location.hash);
+            var nextUrl = new URL(location.href);
+            nextUrl.searchParams.set("fresh", Date.now());
+            location.replace(nextUrl.toString());
           });
         }
       })();
@@ -89,7 +91,7 @@
         window.setTimeout(scrubOldStoreChooser, 2500);
       })();
     </script>
-    <script type="module" crossorigin src="./assets/index-DlRe3wwC.js"></script>
+    <script type="module" crossorigin src="./assets/index-BYUsJwwF.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-o2z6U1Sw.css">
   </head>
   <body>
