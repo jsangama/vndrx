@@ -26,7 +26,6 @@ import juaneEscolarAlt from "./assets/aswa/juane-escolar-alt.png";
 import comboEscolar from "./assets/aswa/combo-escolar-san-juan.png";
 import comboEscolarAlt from "./assets/aswa/combo-escolar-san-juan-alt.png";
 import priceSheet from "./assets/rice/precios-arroz-1.png";
-import riceLineupHero from "./assets/rice/catalog/reyleon-linea-productos.jpeg";
 import realPacificoLogo from "./assets/rice/catalog/real-pacifico-logo.png";
 import molinoReyLeonFrente from "./assets/rice/catalog/molino-rey-leon-frente.jpeg";
 import joraHome from "./assets/jora/jora-home.svg";
@@ -69,6 +68,17 @@ import riceExtraVerde49kg from "./assets/rice/catalog/extra-verde-49kg.png";
 import riceExtraVerdePqte20x1kg from "./assets/rice/catalog/extra-verde-pqte-20x1kg.png";
 import riceExtraVerdePqte8x5kg from "./assets/rice/catalog/extra-verde-pqte-8x5kg.png";
 import riceExtraVerdePqte25x750g from "./assets/rice/catalog/extra-verde-pqte-25x750g.png";
+import riceAnejoFeron750g from "./assets/rice/catalog/anejo-feron-750g.png";
+import riceAnejoFeron1kg from "./assets/rice/catalog/anejo-feron-1kg.png";
+import riceAnejoFeron5kg from "./assets/rice/catalog/anejo-feron-5kg.png";
+import riceAnejoFeron10kg from "./assets/rice/catalog/anejo-feron-10kg.png";
+import riceAnejoFeron245kg from "./assets/rice/catalog/anejo-feron-24-5kg.png";
+import riceAnejoFeron49kg from "./assets/rice/catalog/anejo-feron-49kg.png";
+import riceAnejoFeronPqte20x1kg from "./assets/rice/catalog/anejo-feron-pqte-20x1kg.png";
+import riceAnejoFeronPqte8x5kg from "./assets/rice/catalog/anejo-feron-pqte-8x5kg.png";
+import riceAnejoFeronPqte25x750g from "./assets/rice/catalog/anejo-feron-pqte-25x750g.png";
+import riceAnejoValor10kg from "./assets/rice/catalog/anejo-valor-10kg.png";
+import riceMolinoPresentaciones from "./assets/rice/catalog/presentaciones-arroz-molino.png";
 import riceAnejoFeronCatalogo from "./assets/rice/catalog/anejo-feron-catalogo.jpeg";
 import riceAnejoValorCatalogo from "./assets/rice/catalog/anejo-valor-catalogo.jpeg";
 import riceSuperiorVerdeCatalogo from "./assets/rice/catalog/superior-verde-catalogo.jpeg";
@@ -130,7 +140,7 @@ const ASSETS = {
   comboEscolar,
   comboEscolarAlt,
   priceSheet,
-  riceLineupHero,
+  riceLineupHero: riceMolinoPresentaciones,
   realPacificoLogo,
   molinoReyLeonFrente,
   joraHome,
@@ -431,6 +441,165 @@ const products = [
     zones: ZONES_REYLEON,
   },
   {
+    id: 61,
+    name: "Anejo Feron 750 g",
+    subtitle: "Bolsa personal premium",
+    line: "premium",
+    img: "AF",
+    desc: "Arroz Anejo Feron en presentacion de 750 gramos, practico para hogares y puntos de venta.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["750 g", "Anejo Feron", "Premium", "Compra directa"],
+    presentations: [{ label: "750 g", price: 2.60, unit: "bolsa" }],
+    saving: 38,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Formato pequeno para probar el rendimiento del anejo.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 62,
+    name: "Anejo Feron 1 kg",
+    subtitle: "Bolsa de 1 kilo para uso diario",
+    line: "premium",
+    img: "AF",
+    desc: "Arroz Anejo Feron de 1 kilo, grano seleccionado y estacionado para cocinar mas suelto.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["1 kg", "Anejo Feron", "Uso diario", "Mayor rendimiento"],
+    presentations: [{ label: "1 kg", price: 3.40, unit: "bolsa" }],
+    saving: 38,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Buena opcion para venta por unidad y consumo familiar.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 63,
+    name: "Anejo Feron 5 kg",
+    subtitle: "Bolsa familiar de 5 kilos",
+    line: "premium",
+    img: "AF",
+    desc: "Presentacion familiar de Anejo Feron para hogares, menus pequenos y compras semanales.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["5 kg", "Anejo Feron", "Familiar", "Mayor ahorro"],
+    presentations: [{ label: "5 kg", price: 17.00, unit: "bolsa" }],
+    saving: 38,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Ideal para familias que buscan arroz suelto y rendidor.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 64,
+    name: "Anejo Feron 10 kg",
+    subtitle: "Bolsa de 10 kilos para negocio",
+    line: "premium",
+    img: "AF",
+    desc: "Formato de 10 kilos de Anejo Feron para restaurantes, menus y pedidos recurrentes.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["10 kg", "Anejo Feron", "Restaurantes", "Compra directa"],
+    presentations: [{ label: "10 kg", price: 34.00, unit: "bolsa" }],
+    saving: 38,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Recomendado para negocios que valoran rendimiento en olla.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 65,
+    name: "Anejo Feron 24.5 kg",
+    subtitle: "Medio saco premium",
+    line: "premium",
+    img: "AF",
+    desc: "Medio saco de Anejo Feron para abastecimiento directo del molino.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["24.5 kg", "Medio saco", "Anejo Feron", "Precio de origen"],
+    presentations: [{ label: "24.5 kg", price: 83.30, unit: "saco" }],
+    saving: 38,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Buen equilibrio entre volumen, precio y facilidad de manejo.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 66,
+    name: "Anejo Feron 49 kg",
+    subtitle: "Saco completo premium",
+    line: "premium",
+    img: "AF",
+    desc: "Saco de 49 kilos de Anejo Feron para mayoristas, restaurantes y distribuidores.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["49 kg", "Saco", "Mayorista", "Molino directo"],
+    presentations: [{ label: "49 kg", price: 160.00, unit: "saco" }],
+    saving: 38,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "La mejor opcion para abastecimiento por volumen.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 67,
+    name: "Anejo Feron paquete 20 x 1 kg",
+    subtitle: "Saco con 20 paquetes de 1 kilo",
+    line: "premium",
+    img: "AF",
+    desc: "Saco de Anejo Feron con 20 paquetes de 1 kilo, listo para bodegas y venta por unidad.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["20 x 1 kg", "20 kg", "Bodega", "Venta por unidad"],
+    presentations: [{ label: "20 und x 1 kg (20 kg)", price: 68.00, unit: "saco" }],
+    saving: 38,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Perfecto para puntos de venta que necesitan paquetes individuales.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 68,
+    name: "Anejo Feron paquete 8 x 5 kg",
+    subtitle: "Saco con 8 paquetes de 5 kilos",
+    line: "premium",
+    img: "AF",
+    desc: "Saco de Anejo Feron con 8 paquetes de 5 kilos para abastecer familias y negocios.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["8 x 5 kg", "40 kg", "Mayorista", "Ahorro por volumen"],
+    presentations: [{ label: "8 und x 5 kg (40 kg)", price: 136.00, unit: "saco" }],
+    saving: 38,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Formato fuerte para venta familiar y abastecimiento comercial.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 69,
+    name: "Anejo Feron paquete 25 x 750 g",
+    subtitle: "Saco con 25 paquetes de 750 gramos",
+    line: "premium",
+    img: "AF",
+    desc: "Saco de Anejo Feron con 25 paquetes de 750 gramos para tiendas y ventas rapidas.",
+    quality: "Extra - 95% grano entero",
+    variety: "Feron",
+    tags: ["25 x 750 g", "18.75 kg", "Bodega", "Venta rapida"],
+    presentations: [{ label: "25 und x 750 g (18.75 kg)", price: 63.75, unit: "saco" }],
+    saving: 38,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Presentacion practica para exhibicion y rotacion rapida.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 70,
+    name: "Anejo Valor 10 kg",
+    subtitle: "Bolsa de 10 kilos - Variedad Valor",
+    line: "premium",
+    img: "AV",
+    desc: "Arroz Anejo Valor de 10 kilos, grano entero seleccionado y estacionado para mayor rendimiento.",
+    quality: "Extra - 95% grano entero",
+    variety: "Valor",
+    tags: ["10 kg", "Anejo Valor", "Grano entero", "Mayor rendimiento"],
+    presentations: [{ label: "10 kg", price: 30.00, unit: "bolsa" }],
+    saving: 36,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Buena opcion para hogares grandes y negocios que prefieren variedad Valor.",
+    zones: ZONES_REYLEON,
+  },  {
     id: 3,
     name: "Arroz Añejo Valor",
     subtitle: "Grano dorado mediano · Variedad Valor",
@@ -1960,6 +2129,16 @@ const PRODUCT_MEDIA = {
   59: { src: riceExtraVerdePqte8x5kg, fit: "contain" },
   60: { src: riceExtraVerdePqte25x750g, fit: "contain" },
   2: { src: riceAnejoFeronCatalogo, fit: "contain" },
+  61: { src: riceAnejoFeron750g, fit: "contain" },
+  62: { src: riceAnejoFeron1kg, fit: "contain" },
+  63: { src: riceAnejoFeron5kg, fit: "contain" },
+  64: { src: riceAnejoFeron10kg, fit: "contain" },
+  65: { src: riceAnejoFeron245kg, fit: "contain" },
+  66: { src: riceAnejoFeron49kg, fit: "contain" },
+  67: { src: riceAnejoFeronPqte20x1kg, fit: "contain" },
+  68: { src: riceAnejoFeronPqte8x5kg, fit: "contain" },
+  69: { src: riceAnejoFeronPqte25x750g, fit: "contain" },
+  70: { src: riceAnejoValor10kg, fit: "contain" },
   3: { src: riceAnejoValorCatalogo, fit: "contain" },
   4: { src: riceSuperiorVerdeCatalogo, fit: "contain" },
   5: { src: riceSuperiorAzulCatalogo, fit: "contain" },
@@ -7500,6 +7679,7 @@ export default function VNDRX() {
   const visibleCompanyKeys = getVisibleCompanyKeys(Object.keys(COMPANY_VIEWS), typeof window === "undefined" ? "" : window.location.search);
   const companyFilters = selectedCompany ? COMPANY_FILTERS[selectedCompany] || [] : [];
   const isAswa = selectedCompany === "aswa";
+  const isReyleon = selectedCompany === "reyleon";
   const isJora = selectedCompany === "jora";
   const isTela = selectedCompany === "tela";
   const isBocaditos = selectedCompany === "bocaditos";
@@ -7636,9 +7816,11 @@ export default function VNDRX() {
       {/* NAV */}
       <nav style={{ background: "rgba(255, 252, 248, 0.9)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${HOME.border}`, padding: "0 20px", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 8px 20px rgba(76, 56, 23, 0.06)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ background: isAswa ? "#fff" : `linear-gradient(135deg, ${HOME.leaf}, ${HOME.accent2})`, borderRadius: 16, width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, boxShadow: "0 10px 20px rgba(71,101,75,0.18)", overflow: "hidden", border: isAswa ? `1px solid ${HOME.border}` : "none" }}>
+          <div style={{ background: isAswa || isReyleon ? "#fff" : `linear-gradient(135deg, ${HOME.leaf}, ${HOME.accent2})`, borderRadius: 16, width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, boxShadow: "0 10px 20px rgba(71,101,75,0.18)", overflow: "hidden", border: isAswa || isReyleon ? `1px solid ${HOME.border}` : "none" }}>
             {isAswa ? (
               <img src={ASSETS.aswaLogo} alt="Logo ASWA" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            ) : isReyleon ? (
+              <img src={ASSETS.realPacificoLogo} alt="Logo Real Pacifico" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             ) : isJora ? "🍯" : isTela ? "🧵" : isBocaditos ? "🍪" : isArtesania ? "🏺" : "🌾"}
           </div>
           <div>
