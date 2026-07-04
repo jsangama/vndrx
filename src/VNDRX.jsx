@@ -68,6 +68,7 @@ import riceExtraVerde49kg from "./assets/rice/catalog/extra-verde-49kg.png";
 import riceExtraVerdePqte20x1kg from "./assets/rice/catalog/extra-verde-pqte-20x1kg.png";
 import riceExtraVerdePqte8x5kg from "./assets/rice/catalog/extra-verde-pqte-8x5kg.png";
 import riceExtraVerdePqte25x750g from "./assets/rice/catalog/extra-verde-pqte-25x750g.png";
+import riceLineaExtraVerde from "./assets/rice/catalog/linea-extra-verde.png";
 import riceAnejoFeron750g from "./assets/rice/catalog/anejo-feron-750g.png";
 import riceAnejoFeron1kg from "./assets/rice/catalog/anejo-feron-1kg.png";
 import riceAnejoFeron5kg from "./assets/rice/catalog/anejo-feron-5kg.png";
@@ -77,7 +78,17 @@ import riceAnejoFeron49kg from "./assets/rice/catalog/anejo-feron-49kg.png";
 import riceAnejoFeronPqte20x1kg from "./assets/rice/catalog/anejo-feron-pqte-20x1kg.png";
 import riceAnejoFeronPqte8x5kg from "./assets/rice/catalog/anejo-feron-pqte-8x5kg.png";
 import riceAnejoFeronPqte25x750g from "./assets/rice/catalog/anejo-feron-pqte-25x750g.png";
+import riceLineaAnejoFeron from "./assets/rice/catalog/linea-anejo-feron.png";
+import riceAnejoValor750g from "./assets/rice/catalog/anejo-valor-750g.png";
+import riceAnejoValor1kg from "./assets/rice/catalog/anejo-valor-1kg.png";
+import riceAnejoValor5kg from "./assets/rice/catalog/anejo-valor-5kg.png";
 import riceAnejoValor10kg from "./assets/rice/catalog/anejo-valor-10kg.png";
+import riceAnejoValor245kg from "./assets/rice/catalog/anejo-valor-24-5kg.png";
+import riceAnejoValor49kg from "./assets/rice/catalog/anejo-valor-49kg.png";
+import riceAnejoValorPqte20x1kg from "./assets/rice/catalog/anejo-valor-pqte-20x1kg.png";
+import riceAnejoValorPqte8x5kg from "./assets/rice/catalog/anejo-valor-pqte-8x5kg.png";
+import riceAnejoValorPqte25x750g from "./assets/rice/catalog/anejo-valor-pqte-25x750g.png";
+import riceLineaAnejoValor from "./assets/rice/catalog/linea-anejo-valor.png";
 import riceMolinoPresentaciones from "./assets/rice/catalog/presentaciones-arroz-molino.png";
 import riceAnejoFeronCatalogo from "./assets/rice/catalog/anejo-feron-catalogo.jpeg";
 import riceAnejoValorCatalogo from "./assets/rice/catalog/anejo-valor-catalogo.jpeg";
@@ -86,6 +97,15 @@ import riceSuperiorAzulCatalogo from "./assets/rice/catalog/superior-azul-catalo
 import riceVallesDelGuayoCatalogo from "./assets/rice/catalog/valles-del-guayo-catalogo.jpeg";
 import riceIntegradoRojoCatalogo from "./assets/rice/catalog/integrado-rojo-catalogo.jpeg";
 import riceIntegradoLilaCatalogo from "./assets/rice/catalog/integrado-lila-catalogo.jpeg";
+import riceLineaSuperiorVerde from "./assets/rice/catalog/linea-superior-verde.png";
+import riceLineaSuperiorAzul from "./assets/rice/catalog/linea-superior-azul.png";
+import riceLineaVallesGuayo from "./assets/rice/catalog/linea-valles-guayo.png";
+import riceLineaIntegradoRojo from "./assets/rice/catalog/linea-integrado-rojo.png";
+import riceLineaIntegradoLila from "./assets/rice/catalog/linea-integrado-lila.png";
+import riceLineaDerivados1 from "./assets/rice/catalog/linea-derivados-1.png";
+import riceLineaDerivadosAfrecho from "./assets/rice/catalog/linea-derivados-afrecho.png";
+import riceLineaDerivadosPolvillo from "./assets/rice/catalog/linea-derivados-polvillo.png";
+import riceLineaDerivadosCascarilla from "./assets/rice/catalog/linea-derivados-cascarilla.png";
 import riceArroz34Catalogo from "./assets/rice/catalog/arroz-3-4-catalogo.jpeg";
 import riceArrocilloCatalogo from "./assets/rice/catalog/arrocillo-catalogo.jpeg";
 import riceAfrechoCatalogo from "./assets/rice/catalog/afrecho-catalogo.jpeg";
@@ -359,7 +379,7 @@ const products = [
     desc: "Saco de 49 kilos de Arroz Extra Verde Real Pacifico para restaurantes, distribuidores y compras mayoristas.",
     quality: "Extra - 95% grano entero",
     variety: "Feron",
-    tags: ["49 kg", "Saco", "Mayorista", "Molino directo"],
+    tags: ["Producto principal", "Mas vendido", "49 kg", "Molino directo"],
     presentations: [{ label: "49 kg", price: 149.00, unit: "saco" }],
     saving: 35,
     cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
@@ -529,7 +549,7 @@ const products = [
     desc: "Saco de 49 kilos de Anejo Feron para mayoristas, restaurantes y distribuidores.",
     quality: "Extra - 95% grano entero",
     variety: "Feron",
-    tags: ["49 kg", "Saco", "Mayorista", "Molino directo"],
+    tags: ["Producto principal", "Favorito de restaurantes", "49 kg", "Molino directo"],
     presentations: [{ label: "49 kg", price: 160.00, unit: "saco" }],
     saving: 38,
     cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
@@ -599,7 +619,136 @@ const products = [
     cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
     tip: "Buena opcion para hogares grandes y negocios que prefieren variedad Valor.",
     zones: ZONES_REYLEON,
-  },  {
+  },
+  {
+    id: 71,
+    name: "Anejo Valor 49 kg",
+    subtitle: "Saco completo - Mayor rendimiento",
+    line: "premium",
+    img: "AV",
+    desc: "Saco de 49 kilos de Arroz Anejo Valor Real Pacifico, pensado para restaurantes, distribuidores y compras de alto rendimiento.",
+    quality: "Extra - 95% grano entero",
+    variety: "Valor",
+    tags: ["Producto principal", "Mayor rendimiento", "49 kg", "Molino directo"],
+    presentations: [{ label: "49 kg", price: 144.00, unit: "saco" }],
+    saving: 36,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Producto recomendado para clientes que buscan rendimiento y abastecimiento por volumen.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 72,
+    name: "Anejo Valor 24.5 kg",
+    subtitle: "Medio saco - Variedad Valor",
+    line: "premium",
+    img: "AV",
+    desc: "Medio saco de Arroz Anejo Valor para hogares grandes, restaurantes y compras directas del molino.",
+    quality: "Extra - 95% grano entero",
+    variety: "Valor",
+    tags: ["24.5 kg", "Medio saco", "Anejo Valor", "Mayor rendimiento"],
+    presentations: [{ label: "24.5 kg", price: 73.50, unit: "saco" }],
+    saving: 36,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Buena alternativa cuando no necesitas el saco completo.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 73,
+    name: "Anejo Valor 5 kg",
+    subtitle: "Bolsa familiar de 5 kilos",
+    line: "premium",
+    img: "AV",
+    desc: "Arroz Anejo Valor en bolsa familiar de 5 kilos, grano entero seleccionado y estacionado.",
+    quality: "Extra - 95% grano entero",
+    variety: "Valor",
+    tags: ["5 kg", "Anejo Valor", "Familiar", "Mayor rendimiento"],
+    presentations: [{ label: "5 kg", price: 15.60, unit: "bolsa" }],
+    saving: 36,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Formato comodo para hogares y compras semanales.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 74,
+    name: "Anejo Valor 1 kg",
+    subtitle: "Bolsa de 1 kilo para uso diario",
+    line: "premium",
+    img: "AV",
+    desc: "Arroz Anejo Valor de 1 kilo para clientes que desean probar la variedad antes de comprar por volumen.",
+    quality: "Extra - 95% grano entero",
+    variety: "Valor",
+    tags: ["1 kg", "Anejo Valor", "Uso diario", "Grano entero"],
+    presentations: [{ label: "1 kg", price: 3.10, unit: "bolsa" }],
+    saving: 36,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Presentacion practica para compra pequena y venta por unidad.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 75,
+    name: "Anejo Valor 750 g",
+    subtitle: "Bolsa personal - Variedad Valor",
+    line: "premium",
+    img: "AV",
+    desc: "Presentacion de 750 gramos de Arroz Anejo Valor para compras pequenas, prueba de calidad y venta rapida.",
+    quality: "Extra - 95% grano entero",
+    variety: "Valor",
+    tags: ["750 g", "Anejo Valor", "Compra pequena", "Venta rapida"],
+    presentations: [{ label: "750 g", price: 2.50, unit: "bolsa" }],
+    saving: 36,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Ideal para puntos de venta y clientes nuevos.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 76,
+    name: "Anejo Valor paquete 8 x 5 kg",
+    subtitle: "Saco con 8 paquetes de 5 kilos",
+    line: "premium",
+    img: "AV",
+    desc: "Saco de Anejo Valor con 8 paquetes de 5 kilos, ideal para abastecer negocios y familias por volumen.",
+    quality: "Extra - 95% grano entero",
+    variety: "Valor",
+    tags: ["8 x 5 kg", "40 kg", "Mayorista", "Anejo Valor"],
+    presentations: [{ label: "8 und x 5 kg (40 kg)", price: 125.20, unit: "saco" }],
+    saving: 36,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Formato comercial para ventas por paquete.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 77,
+    name: "Anejo Valor paquete 20 x 1 kg",
+    subtitle: "Saco con 20 paquetes de 1 kilo",
+    line: "premium",
+    img: "AV",
+    desc: "Saco de Anejo Valor con 20 paquetes de 1 kilo, listo para bodegas, kioscos y venta por unidad.",
+    quality: "Extra - 95% grano entero",
+    variety: "Valor",
+    tags: ["20 x 1 kg", "20 kg", "Bodega", "Venta por unidad"],
+    presentations: [{ label: "20 und x 1 kg (20 kg)", price: 63.00, unit: "saco" }],
+    saving: 36,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Presentacion pensada para rotacion por unidad.",
+    zones: ZONES_REYLEON,
+  },
+  {
+    id: 78,
+    name: "Anejo Valor paquete 25 x 750 g",
+    subtitle: "Saco con 25 paquetes de 750 gramos",
+    line: "premium",
+    img: "AV",
+    desc: "Saco de Anejo Valor con 25 paquetes de 750 gramos para puntos de venta y clientes de compra frecuente.",
+    quality: "Extra - 95% grano entero",
+    variety: "Valor",
+    tags: ["25 x 750 g", "18.75 kg", "Bodega", "Venta rapida"],
+    presentations: [{ label: "25 und x 750 g (18.75 kg)", price: 60.00, unit: "saco" }],
+    saving: 36,
+    cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
+    tip: "Buena alternativa para exhibicion y venta rapida.",
+    zones: ZONES_REYLEON,
+  },
+  {
     id: 3,
     name: "Arroz Añejo Valor",
     subtitle: "Grano dorado mediano · Variedad Valor",
@@ -2139,6 +2288,14 @@ const PRODUCT_MEDIA = {
   68: { src: riceAnejoFeronPqte8x5kg, fit: "contain" },
   69: { src: riceAnejoFeronPqte25x750g, fit: "contain" },
   70: { src: riceAnejoValor10kg, fit: "contain" },
+  71: { src: riceAnejoValor49kg, fit: "contain" },
+  72: { src: riceAnejoValor245kg, fit: "contain" },
+  73: { src: riceAnejoValor5kg, fit: "contain" },
+  74: { src: riceAnejoValor1kg, fit: "contain" },
+  75: { src: riceAnejoValor750g, fit: "contain" },
+  76: { src: riceAnejoValorPqte8x5kg, fit: "contain" },
+  77: { src: riceAnejoValorPqte20x1kg, fit: "contain" },
+  78: { src: riceAnejoValorPqte25x750g, fit: "contain" },
   3: { src: riceAnejoValorCatalogo, fit: "contain" },
   4: { src: riceSuperiorVerdeCatalogo, fit: "contain" },
   5: { src: riceSuperiorAzulCatalogo, fit: "contain" },
@@ -2189,6 +2346,141 @@ const PRODUCT_MEDIA = {
   50: { src: ASSETS.artesaniaTiesto, fit: "contain" },
   51: { src: ASSETS.artesaniaFlorero, fit: "contain" },
 };
+
+const RICE_MAIN_PRODUCT_ORDER = [57, 66, 71, 4, 5, 6, 7, 8];
+const RICE_PRESENTATION_ORDER = [
+  ...RICE_MAIN_PRODUCT_ORDER,
+  56, 65, 72,
+  55, 64, 70,
+  54, 63, 73,
+  53, 62, 74,
+  52, 61, 75,
+  59, 68, 76,
+  58, 67, 77,
+  60, 69, 78,
+  9, 10, 11, 12, 13, 14,
+  1, 2, 3,
+];
+const RICE_ORDER_RANK = new Map(RICE_PRESENTATION_ORDER.map((id, index) => [id, index]));
+
+const RICE_CATALOG_LINES = [
+  {
+    key: "extra-verde",
+    title: "Arroz Extra Verde",
+    subtitle: "Linea premium para restaurantes, chifas y hogares exigentes.",
+    category: "premium",
+    heroImage: riceLineaExtraVerde,
+    tileImage: riceExtraVerde49kg,
+    mainProductId: 57,
+    moreProductIds: [56, 55, 54, 53, 52, 59, 58, 60],
+    badges: ["Producto principal", "Mas vendido"],
+    accent: "#2D7A31",
+  },
+  {
+    key: "anejo-feron",
+    title: "Arroz Anejo Feron",
+    subtitle: "Grano mas suelto y rendidor, favorito para restaurantes.",
+    category: "premium",
+    heroImage: riceLineaAnejoFeron,
+    tileImage: riceAnejoFeron49kg,
+    mainProductId: 66,
+    moreProductIds: [65, 64, 63, 62, 61, 68, 67, 69],
+    badges: ["Producto principal", "Favorito de restaurantes"],
+    accent: "#171717",
+  },
+  {
+    key: "anejo-valor",
+    title: "Arroz Anejo Valor",
+    subtitle: "Variedad Valor con mayor rendimiento para cocina diaria.",
+    category: "premium",
+    heroImage: riceLineaAnejoValor,
+    tileImage: riceAnejoValor49kg,
+    mainProductId: 71,
+    moreProductIds: [72, 70, 73, 74, 75, 76, 77, 78],
+    badges: ["Producto principal", "Mayor rendimiento"],
+    accent: "#D84A17",
+  },
+  {
+    key: "superior-verde",
+    title: "Superior Verde",
+    subtitle: "Arroz superior de consumo diario con grano entero 92%.",
+    category: "superior",
+    heroImage: riceLineaSuperiorVerde,
+    tileImage: riceSuperiorVerdeCatalogo,
+    mainProductId: 4,
+    moreProductIds: [],
+    badges: ["Producto principal"],
+    accent: "#276E3D",
+  },
+  {
+    key: "superior-azul",
+    title: "Superior Azul",
+    subtitle: "Linea superior apta para exportacion y compra directa.",
+    category: "superior",
+    heroImage: riceLineaSuperiorAzul,
+    tileImage: riceSuperiorAzulCatalogo,
+    mainProductId: 5,
+    moreProductIds: [],
+    badges: ["Producto principal"],
+    accent: "#2F3C8F",
+  },
+  {
+    key: "valles-guayo",
+    title: "Valles del Guayo",
+    subtitle: "Arroz superior rendidor para hogares y negocios.",
+    category: "superior",
+    heroImage: riceLineaVallesGuayo,
+    tileImage: riceVallesDelGuayoCatalogo,
+    mainProductId: 6,
+    moreProductIds: [],
+    badges: ["Producto principal"],
+    accent: "#E51F68",
+  },
+  {
+    key: "integrado-rojo",
+    title: "Integrado Rojo",
+    subtitle: "Linea economica para menus y abastecimiento diario.",
+    category: "economico",
+    heroImage: riceLineaIntegradoRojo,
+    tileImage: riceIntegradoRojoCatalogo,
+    mainProductId: 7,
+    moreProductIds: [],
+    badges: ["Producto principal"],
+    accent: "#D2242A",
+  },
+  {
+    key: "integrado-lila",
+    title: "Integrado Lila",
+    subtitle: "La opcion mas economica para compra por saco.",
+    category: "economico",
+    heroImage: riceLineaIntegradoLila,
+    tileImage: riceIntegradoLilaCatalogo,
+    mainProductId: 8,
+    moreProductIds: [],
+    badges: ["Producto principal"],
+    accent: "#704B93",
+  },
+  {
+    key: "derivados",
+    title: "Derivados del arroz",
+    subtitle: "Arroz 3/4, arrocillo, afrecho, polvillo y cascarilla para uso industrial.",
+    category: "derivados",
+    heroImages: [riceLineaDerivados1, riceLineaDerivadosAfrecho, riceLineaDerivadosPolvillo, riceLineaDerivadosCascarilla],
+    tileImage: riceLineaDerivados1,
+    productIds: [9, 10, 11, 12, 13, 14],
+    badges: ["Derivados", "Industria"],
+    accent: "#A45225",
+  },
+];
+
+function sortReyleonProducts(productList) {
+  return [...productList].sort((a, b) => {
+    const aRank = RICE_ORDER_RANK.has(a.id) ? RICE_ORDER_RANK.get(a.id) : 999;
+    const bRank = RICE_ORDER_RANK.has(b.id) ? RICE_ORDER_RANK.get(b.id) : 999;
+    if (aRank !== bRank) return aRank - bRank;
+    return a.name.localeCompare(b.name);
+  });
+}
 
 function getProductMedia(product) {
   return PRODUCT_MEDIA[product.id] || null;
@@ -4861,7 +5153,7 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
       aspectRatio: "16 / 7",
     },
     {
-      image: riceExtraVerdeCatalogo,
+      image: riceLineaExtraVerde,
       title: "Extra Verde",
       subtitle: "Linea premium para casa y restaurantes",
       note: "PREMIUM",
@@ -4877,7 +5169,7 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
       aspectRatio: "1 / 1.15",
     },
     {
-      image: riceAfrechoCatalogo,
+      image: riceLineaDerivados1,
       title: "Derivados",
       subtitle: "Afrecho, polvillo y cascarilla",
       note: "INDUSTRIA",
@@ -4888,7 +5180,7 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
   const catalogHighlights = [
     { image: riceExtraVerde49kg, title: "Extra Verde 49 kg", note: "EXTRA" },
     { image: riceAnejoFeron49kg, title: "Anejo Feron 49 kg", note: "PREMIUM" },
-    { image: riceAnejoValorCatalogo, title: "Anejo Valor 49 kg", note: "ANEJO" },
+    { image: riceAnejoValor49kg, title: "Anejo Valor 49 kg", note: "ANEJO" },
     { image: riceSuperiorVerdeCatalogo, title: "Superior Verde 49 kg", note: "SUPERIOR" },
     { image: riceSuperiorAzulCatalogo, title: "Superior Azul 49 kg", note: "SUPERIOR" },
     { image: riceVallesDelGuayoCatalogo, title: "Valles del Guayo 49 kg", note: "SUPERIOR" },
@@ -5101,6 +5393,208 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
           </div>
         </div>
       </div>
+    </section>
+  );
+}
+
+function RiceLineCatalog({ products, onAdd, onQuickBuy, cart }) {
+  const [activeLineKey, setActiveLineKey] = useState(null);
+  const productById = new Map(products.map((product) => [product.id, product]));
+  const activeLine = RICE_CATALOG_LINES.find((line) => line.key === activeLineKey);
+
+  const renderLineCard = (line) => {
+    const mainProduct = productById.get(line.mainProductId) || productById.get(line.productIds?.[0]);
+    return (
+      <button
+        key={line.key}
+        type="button"
+        onClick={() => setActiveLineKey(line.key)}
+        style={{
+          padding: 0,
+          border: `1px solid ${HOME.border}`,
+          background: HOME.surface,
+          borderRadius: 20,
+          overflow: "hidden",
+          cursor: "pointer",
+          textAlign: "left",
+          boxShadow: HOME.shadow,
+          display: "grid",
+          gridTemplateRows: "220px auto",
+        }}
+      >
+        <div style={{ position: "relative", background: "#FFF", borderBottom: `1px solid ${HOME.border}`, overflow: "hidden" }}>
+          <img
+            src={line.tileImage}
+            alt={line.title}
+            loading="lazy"
+            style={{ width: "100%", height: "100%", objectFit: "contain", display: "block", padding: 10 }}
+          />
+          <span style={{
+            position: "absolute",
+            top: 10,
+            left: 10,
+            background: line.accent,
+            color: "#fff",
+            borderRadius: 999,
+            padding: "5px 10px",
+            fontSize: 10,
+            fontWeight: 900,
+            letterSpacing: 0.8,
+            textTransform: "uppercase",
+          }}>
+            {line.key === "derivados" ? "Categoria" : "Saco 49 kg"}
+          </span>
+        </div>
+        <div style={{ padding: 16 }}>
+          <div style={{ color: HOME.accent, fontSize: 11, fontWeight: 900, letterSpacing: 1.1, textTransform: "uppercase" }}>
+            {line.key === "derivados" ? "Derivados" : "Linea de arroz"}
+          </div>
+          <div style={{ color: HOME.text, fontFamily: "Georgia, serif", fontSize: 21, fontWeight: 900, marginTop: 5, lineHeight: 1.1 }}>
+            {line.title}
+          </div>
+          <div style={{ color: HOME.muted, fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
+            {line.subtitle}
+          </div>
+          <div style={{ display: "flex", gap: 7, flexWrap: "wrap", marginTop: 12 }}>
+            {line.badges.map((badge) => (
+              <span key={badge} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "5px 9px", fontSize: 10, fontWeight: 800 }}>
+                {badge}
+              </span>
+            ))}
+            {mainProduct?.presentations?.[0] && (
+              <span style={{ background: "#EEF7EA", color: HOME.leaf, borderRadius: 999, padding: "5px 9px", fontSize: 10, fontWeight: 900 }}>
+                Desde {formatMoney(mainProduct.presentations[0].price)}
+              </span>
+            )}
+          </div>
+        </div>
+      </button>
+    );
+  };
+
+  const renderProductCard = (product, featured = false) => {
+    if (!product) return null;
+    return (
+      <div key={product.id} style={featured ? { transform: "scale(1.01)", transformOrigin: "top center" } : undefined}>
+        <ProductCard
+          product={product}
+          onAdd={onAdd}
+          onQuickBuy={onQuickBuy}
+          cartItem={cart.find((item) => item.product.id === product.id)}
+        />
+      </div>
+    );
+  };
+
+  if (!activeLine) {
+    return (
+      <section id="rice-lines" style={{ marginBottom: 28 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "end", flexWrap: "wrap", marginBottom: 14 }}>
+          <div>
+            <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1.2, textTransform: "uppercase" }}>
+              Elige tu linea de arroz
+            </div>
+            <h2 style={{ color: HOME.text, fontFamily: "Georgia, serif", fontSize: "clamp(26px, 3vw, 38px)", lineHeight: 1.05, margin: "5px 0 0" }}>
+              Primero el saco de 49 kg
+            </h2>
+          </div>
+          <div style={{ color: HOME.muted, fontSize: 13, lineHeight: 1.55, maxWidth: 420 }}>
+            Entra por categoria, revisa la ficha de la linea y compra primero el producto principal. Las presentaciones pequenas aparecen despues como alternativas.
+          </div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))", gap: 14 }}>
+          {RICE_CATALOG_LINES.map(renderLineCard)}
+        </div>
+      </section>
+    );
+  }
+
+  const mainProduct = productById.get(activeLine.mainProductId);
+  const moreProducts = (activeLine.moreProductIds || activeLine.productIds || [])
+    .map((id) => productById.get(id))
+    .filter(Boolean);
+  const heroImages = activeLine.heroImages || [activeLine.heroImage];
+
+  return (
+    <section id="rice-lines" style={{ marginBottom: 28 }}>
+      <button
+        type="button"
+        onClick={() => setActiveLineKey(null)}
+        style={{
+          background: HOME.surface,
+          border: `1px solid ${HOME.border}`,
+          color: HOME.text,
+          borderRadius: 999,
+          padding: "9px 13px",
+          cursor: "pointer",
+          fontSize: 12,
+          fontWeight: 900,
+          marginBottom: 14,
+        }}
+      >
+        Ver todas las lineas
+      </button>
+
+      <div style={{
+        background: HOME.surface,
+        border: `1px solid ${HOME.border}`,
+        borderRadius: 24,
+        padding: 16,
+        boxShadow: HOME.shadow,
+        marginBottom: 18,
+      }}>
+        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", flexWrap: "wrap", marginBottom: 12 }}>
+          <div>
+            <div style={{ color: activeLine.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1.2, textTransform: "uppercase" }}>
+              Presentacion visual de la linea
+            </div>
+            <h2 style={{ color: HOME.text, fontFamily: "Georgia, serif", fontSize: "clamp(26px, 3vw, 38px)", lineHeight: 1.05, margin: "5px 0 0" }}>
+              {activeLine.title}
+            </h2>
+          </div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {activeLine.badges.map((badge) => (
+              <span key={badge} style={{ background: HOME.soft, border: `1px solid ${HOME.border}`, color: HOME.text, borderRadius: 999, padding: "7px 11px", fontSize: 11, fontWeight: 900 }}>
+                {badge}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: heroImages.length > 1 ? "repeat(auto-fit, minmax(220px, 1fr))" : "1fr", gap: 12 }}>
+          {heroImages.map((image, index) => (
+            <button
+              key={`${activeLine.key}-${index}`}
+              type="button"
+              onClick={() => window.open(image, "_blank", "noopener,noreferrer")}
+              style={{ padding: 0, border: `1px solid ${HOME.border}`, borderRadius: 18, overflow: "hidden", background: "#FFF", cursor: "zoom-in" }}
+            >
+              <img src={image} alt={`${activeLine.title} ${index + 1}`} loading="lazy" style={{ width: "100%", maxHeight: 780, objectFit: "contain", display: "block" }} />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {mainProduct && (
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1.2, textTransform: "uppercase", marginBottom: 10 }}>
+            Producto recomendado / principal
+          </div>
+          <div style={{ maxWidth: 620 }}>
+            {renderProductCard(mainProduct, true)}
+          </div>
+        </div>
+      )}
+
+      {moreProducts.length > 0 && (
+        <div>
+          <div style={{ color: HOME.accent, fontSize: 12, fontWeight: 900, letterSpacing: 1.2, textTransform: "uppercase", marginBottom: 10 }}>
+            {activeLine.key === "derivados" ? "Productos derivados" : "Mas presentaciones de esta categoria"}
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: 18 }}>
+            {moreProducts.map((product) => renderProductCard(product))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -7687,7 +8181,7 @@ export default function VNDRX() {
   const selectedCompanyProducts = selectedCompany
     ? effectiveProducts.filter((product) => getSupplierKey(product) === selectedCompany)
     : [];
-  const filtered = selectedCompanyProducts.filter((product) => {
+  const filteredBase = selectedCompanyProducts.filter((product) => {
     const matchCategory = activeLine === "all" || getProductCategory(product) === activeLine;
     const searchText = search.trim().toLowerCase();
     const matchSearch = !searchText
@@ -7696,7 +8190,8 @@ export default function VNDRX() {
       || product.desc.toLowerCase().includes(searchText);
     return matchCategory && matchSearch;
   });
-  const featuredProducts = selectedCompanyProducts.slice(0, 3);
+  const filtered = isReyleon ? sortReyleonProducts(filteredBase) : filteredBase;
+  const featuredProducts = isReyleon ? sortReyleonProducts(selectedCompanyProducts).slice(0, 3) : selectedCompanyProducts.slice(0, 3);
   const visibleCompanyKeySet = new Set(visibleCompanyKeys);
   const visibleCompanySignature = visibleCompanyKeys.join("|");
 
@@ -8163,6 +8658,17 @@ export default function VNDRX() {
               )}
             </div>
           </div>
+
+          {isReyleon && (
+            <div style={{ marginTop: 18 }}>
+              <RiceLineCatalog
+                products={selectedCompanyProducts}
+                onAdd={addToCart}
+                onQuickBuy={quickBuy}
+                cart={cart}
+              />
+            </div>
+          )}
 
           {isAswa && ownerTestMode && (
             <>
