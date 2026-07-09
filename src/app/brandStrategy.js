@@ -1,12 +1,12 @@
 export const VNDRX_BRAND = {
   name: "VNDRX",
-  slogan: "Directo del productor al consumidor.",
+  slogan: "Conecta. Crece. Avanza.",
   mission:
-    "Conectar productores, fabricantes y empresas con consumidores finales mediante una plataforma digital sin intermediarios innecesarios.",
+    "Conectar productores, marcas locales, negocios y consumidores para crear oportunidades, facilitar compras y fortalecer el comercio directo.",
   vision:
-    "Convertirse en el marketplace lider de Latinoamerica para comercio directo entre productores y consumidores.",
+    "Convertirse en la plataforma lider de Latinoamerica para unir productores, empresas y compradores con confianza y valor real.",
   mainObjective:
-    "Reducir intermediarios y aumentar ganancias para productores y consumidores.",
+    "Impulsar mas ventas para productores y mejores compras para consumidores y negocios.",
 };
 
 export const VNDRX_PROBLEM = [

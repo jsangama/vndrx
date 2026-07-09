@@ -17,6 +17,8 @@ import promoAlt from "./assets/aswa/promo-san-juanera-alt.png";
 import promoFlayer from "./assets/aswa/promo-san-juanera-flayer.png";
 import promoSanJuaneroSpecial from "./assets/aswa/promo-san-juanero-special.png";
 import promoSanJuaneraSpecial from "./assets/aswa/promo-san-juanera-special.png";
+import vndrxLogo from "./assets/vndrx/vndrx-logo.png";
+import vndrxPlatformCover from "./assets/vndrx/vndrx-platform-cover.png";
 import aswaLogo from "./assets/aswa/aswa-logo.png";
 import bidon20l from "./assets/aswa/bidon-san-juanero-20l-2026.png";
 import bidon20lAlt from "./assets/aswa/bidon-san-juanero-20l-alt.png";
@@ -4485,63 +4487,72 @@ function CompanyChooserScreen({ onChooseCompany, onInstallApp, toastBubble, visi
 
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "30px 20px 42px" }}>
         <div style={{
-          background: `linear-gradient(135deg, ${HOME.surface} 0%, ${HOME.soft2} 100%)`,
-          border: `1px solid ${HOME.border}`,
+          position: "relative",
+          overflow: "hidden",
+          background: "#050805",
+          border: "1px solid rgba(128, 207, 42, 0.35)",
           borderRadius: 28,
-          padding: 22,
-          boxShadow: HOME.shadow,
+          minHeight: 520,
+          boxShadow: "0 28px 60px rgba(5, 15, 8, 0.24)",
+          color: "#F7FAF5",
         }}>
-          <div style={{ display: "flex", justifyContent: "space-between", gap: 16, flexWrap: "wrap", alignItems: "flex-start" }}>
-            <div style={{ maxWidth: 720 }}>
-              <div style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                background: HOME.soft,
-                border: `1px solid ${HOME.border}`,
-                borderRadius: 999,
-                padding: "6px 12px",
-                color: HOME.accent,
-                fontSize: 11,
-                fontWeight: 900,
-                letterSpacing: 1,
-                textTransform: "uppercase",
-                marginBottom: 14,
-              }}>
-                Del productor al consumidor
+          <img
+            src={vndrxPlatformCover}
+            alt="VNDRX conecta oportunidades e impulsa futuros"
+            loading="eager"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center",
+              opacity: 0.42,
+              filter: "saturate(1.12) contrast(1.05)",
+            }}
+          />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.92) 42%, rgba(0,0,0,0.62) 72%, rgba(0,0,0,0.38) 100%)" }} />
+          <div style={{ position: "relative", zIndex: 1, minHeight: 520, display: "grid", gridTemplateColumns: "minmax(0, 1fr)", alignItems: "center", padding: "clamp(26px, 5vw, 56px)" }}>
+            <div style={{ maxWidth: 650 }}>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 12, background: "rgba(4, 10, 5, 0.74)", border: "1px solid rgba(128, 207, 42, 0.35)", borderRadius: 999, padding: "8px 13px 8px 8px", marginBottom: 24, boxShadow: "0 16px 30px rgba(0,0,0,0.28)", backdropFilter: "blur(8px)" }}>
+                <span style={{ width: 38, height: 38, borderRadius: "50%", background: "#F7FAF5", display: "inline-flex", alignItems: "center", justifyContent: "center", overflow: "hidden", flex: "0 0 auto" }}>
+                  <img
+                    src={vndrxLogo}
+                    alt="VNDRX"
+                    style={{ width: 86, height: 86, objectFit: "cover", objectPosition: "center 34%", display: "block" }}
+                  />
+                </span>
+                <span style={{ display: "grid", gap: 1 }}>
+                  <strong style={{ color: "#fff", fontSize: 13, letterSpacing: 3, fontWeight: 950 }}>VNDRX</strong>
+                  <span style={{ color: "#9BE24A", fontSize: 10, letterSpacing: 1.7, fontWeight: 900, textTransform: "uppercase" }}>Conecta. Crece. Avanza.</span>
+                </span>
               </div>
-              <h1 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(30px, 4.2vw, 52px)", fontWeight: 900, lineHeight: 1.03, margin: 0 }}>
-                Compra directo de productores y marcas locales
+              <h1 style={{ fontFamily: "'Arial Black', 'Trebuchet MS', sans-serif", fontSize: "clamp(34px, 5vw, 64px)", fontWeight: 900, lineHeight: 0.98, margin: 0, letterSpacing: 0, textTransform: "uppercase", textShadow: "0 12px 28px rgba(0,0,0,0.68)" }}>
+                Conectamos oportunidades, impulsamos futuros.
               </h1>
-              <p style={{ color: HOME.muted, fontSize: 15, lineHeight: 1.7, margin: "12px 0 0", maxWidth: 720 }}>
-                VNDRX conecta productores, negocios y consumidores en una sola plataforma para comprar mejor, vender mas y fortalecer el comercio local.
+              <p style={{ color: "#EAF2E7", fontSize: "clamp(15px, 1.7vw, 19px)", lineHeight: 1.62, margin: "18px 0 0", maxWidth: 600, fontWeight: 700, textShadow: "0 8px 20px rgba(0,0,0,0.62)" }}>
+                Unimos productores, negocios y compradores para crear valor, generar impacto y construir un comercio local con mas oportunidades para todos.
               </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 18 }}>
-                <button type="button" onClick={() => document.getElementById("vndrx-tiendas")?.scrollIntoView({ behavior: "smooth" })} style={{ border: 0, background: HOME.leaf, color: "#fff", borderRadius: 999, padding: "12px 16px", fontWeight: 900, cursor: "pointer" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 22 }}>
+                {["Conecta personas", "Impulsa negocios", "Facilita compras", "Genera impacto"].map((item) => (
+                  <span key={item} style={{ border: "1px solid rgba(128, 207, 42, 0.36)", background: "rgba(8, 18, 8, 0.7)", color: "#DFF7C1", borderRadius: 999, padding: "8px 11px", fontSize: 11, fontWeight: 900, textTransform: "uppercase" }}>
+                    {item}
+                  </span>
+                ))}
+              </div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 26 }}>
+                <button type="button" onClick={() => document.getElementById("vndrx-tiendas")?.scrollIntoView({ behavior: "smooth" })} style={{ border: 0, background: "#82D12E", color: "#081008", borderRadius: 999, padding: "13px 17px", fontWeight: 950, cursor: "pointer", boxShadow: "0 12px 28px rgba(130, 209, 46, 0.24)" }}>
                   Comprar ahora
                 </button>
-                <button type="button" onClick={() => document.getElementById("vndrx-vender")?.scrollIntoView({ behavior: "smooth" })} style={{ border: `1px solid ${HOME.border}`, background: HOME.surface, color: HOME.text, borderRadius: 999, padding: "12px 16px", fontWeight: 900, cursor: "pointer" }}>
+                <button type="button" onClick={() => document.getElementById("vndrx-vender")?.scrollIntoView({ behavior: "smooth" })} style={{ border: "1px solid rgba(255,255,255,0.26)", background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 999, padding: "13px 17px", fontWeight: 950, cursor: "pointer", backdropFilter: "blur(8px)" }}>
                   Vender en VNDRX
                 </button>
-                <button type="button" onClick={() => document.getElementById("vndrx-tiendas")?.scrollIntoView({ behavior: "smooth" })} style={{ border: `1px solid ${HOME.border}`, background: HOME.soft, color: HOME.accent, borderRadius: 999, padding: "12px 16px", fontWeight: 900, cursor: "pointer" }}>
+                <button type="button" onClick={() => document.getElementById("vndrx-tiendas")?.scrollIntoView({ behavior: "smooth" })} style={{ border: "1px solid rgba(128,207,42,0.35)", background: "rgba(8,18,8,0.72)", color: "#DFF7C1", borderRadius: 999, padding: "13px 17px", fontWeight: 950, cursor: "pointer" }}>
                   Ver tiendas
                 </button>
-                <button type="button" onClick={onInstallApp} style={{ border: `1px solid ${HOME.border}`, background: HOME.surface, color: HOME.text, borderRadius: 999, padding: "12px 16px", fontWeight: 900, cursor: "pointer" }}>
+                <button type="button" onClick={onInstallApp} style={{ border: "1px solid rgba(255,255,255,0.22)", background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 999, padding: "13px 17px", fontWeight: 950, cursor: "pointer", backdropFilter: "blur(8px)" }}>
                   Instalar app
                 </button>
-              </div>
-            </div>
-            <div style={{
-              background: HOME.surface,
-              border: `1px solid ${HOME.border}`,
-              borderRadius: 18,
-              padding: "14px 16px",
-              minWidth: 220,
-              boxShadow: "0 10px 22px rgba(76,56,23,0.06)",
-            }}>
-              <div style={{ color: HOME.muted, fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Como funciona</div>
-              <div style={{ color: HOME.text, fontSize: 13, fontWeight: 800, lineHeight: 1.5, marginTop: 6 }}>
-                Eliges una tienda, revisas productos y precios, confirmas delivery y envias tu pedido ordenado por WhatsApp.
               </div>
             </div>
           </div>

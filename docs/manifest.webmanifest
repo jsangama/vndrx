@@ -1,12 +1,12 @@
 {
-  "name": "VNDRX | ASWA y Arroz del Pacifico",
+  "name": "VNDRX | Conecta. Crece. Avanza.",
   "short_name": "VNDRX",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0f1a0e",
   "theme_color": "#0f1a0e",
-  "description": "Compra directa de ASWA La Rica Chicha y Arroz del Pacifico.",
+  "description": "VNDRX conecta productores, negocios y consumidores para comprar directo, vender mejor e impulsar oportunidades.",
   "icons": [
     {
       "src": "./icon-192.svg",
