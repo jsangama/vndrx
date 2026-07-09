@@ -90,28 +90,30 @@ import riceAnejoValorPqte8x5kg from "./assets/rice/catalog/anejo-valor-pqte-8x5k
 import riceAnejoValorPqte25x750g from "./assets/rice/catalog/anejo-valor-pqte-25x750g.png";
 import riceLineaAnejoValor from "./assets/rice/catalog/linea-anejo-valor.png";
 import riceMolinoPresentaciones from "./assets/rice/catalog/presentaciones-arroz-molino.png";
+import riceLineaProductosRealPacifico from "./assets/rice/catalog/linea-productos-real-pacifico.png";
 import riceAnejoFeronCatalogo from "./assets/rice/catalog/anejo-feron-catalogo.jpeg";
 import riceAnejoValorCatalogo from "./assets/rice/catalog/anejo-valor-catalogo.jpeg";
-import riceSuperiorVerdeCatalogo from "./assets/rice/catalog/superior-verde-catalogo.jpeg";
-import riceSuperiorAzulCatalogo from "./assets/rice/catalog/superior-azul-catalogo.jpeg";
-import riceVallesDelGuayoCatalogo from "./assets/rice/catalog/valles-del-guayo-catalogo.jpeg";
-import riceIntegradoRojoCatalogo from "./assets/rice/catalog/integrado-rojo-catalogo.jpeg";
-import riceIntegradoLilaCatalogo from "./assets/rice/catalog/integrado-lila-catalogo.jpeg";
+import riceSuperiorVerdeCatalogo from "./assets/rice/catalog/superior-verde-49kg.png";
+import riceSuperiorAzulCatalogo from "./assets/rice/catalog/superior-azul-49kg.png";
+import riceVallesDelGuayoCatalogo from "./assets/rice/catalog/valles-guayo-49kg.png";
+import riceIntegradoRojoCatalogo from "./assets/rice/catalog/integrado-rojo-49kg.png";
+import riceIntegradoLilaCatalogo from "./assets/rice/catalog/integrado-lila-49kg.png";
 import riceLineaSuperiorVerde from "./assets/rice/catalog/linea-superior-verde.png";
 import riceLineaSuperiorAzul from "./assets/rice/catalog/linea-superior-azul.png";
 import riceLineaVallesGuayo from "./assets/rice/catalog/linea-valles-guayo.png";
 import riceLineaIntegradoRojo from "./assets/rice/catalog/linea-integrado-rojo.png";
 import riceLineaIntegradoLila from "./assets/rice/catalog/linea-integrado-lila.png";
 import riceLineaDerivados1 from "./assets/rice/catalog/linea-derivados-1.png";
+import riceLineaDerivadosArrocillo from "./assets/rice/catalog/linea-derivados-arrocillo.png";
 import riceLineaDerivadosAfrecho from "./assets/rice/catalog/linea-derivados-afrecho.png";
 import riceLineaDerivadosPolvillo from "./assets/rice/catalog/linea-derivados-polvillo.png";
 import riceLineaDerivadosCascarilla from "./assets/rice/catalog/linea-derivados-cascarilla.png";
-import riceArroz34Catalogo from "./assets/rice/catalog/arroz-3-4-catalogo.jpeg";
-import riceArrocilloCatalogo from "./assets/rice/catalog/arrocillo-catalogo.jpeg";
-import riceAfrechoCatalogo from "./assets/rice/catalog/afrecho-catalogo.jpeg";
-import ricePolvilloFinoCatalogo from "./assets/rice/catalog/polvillo-fino-catalogo.jpeg";
-import ricePolvilloGruesoCatalogo from "./assets/rice/catalog/polvillo-grueso-catalogo.jpeg";
-import riceCascarillaPrensadaCatalogo from "./assets/rice/catalog/cascarilla-prensada-catalogo.jpeg";
+import riceArroz34Catalogo from "./assets/rice/catalog/arroz-34-49kg.png";
+import riceArrocilloCatalogo from "./assets/rice/catalog/arrocillo-50kg.png";
+import riceAfrechoCatalogo from "./assets/rice/catalog/afrecho-50kg.png";
+import ricePolvilloFinoCatalogo from "./assets/rice/catalog/polvillo-fino-30kg.png";
+import ricePolvilloGruesoCatalogo from "./assets/rice/catalog/polvillo-grueso-30kg.png";
+import riceCascarillaPrensadaCatalogo from "./assets/rice/catalog/cascarilla-prensada.png";
 import yapeQrCard from "./assets/aswa/yape-molino-card.png";
 
 const theme = {
@@ -2465,7 +2467,7 @@ const RICE_CATALOG_LINES = [
     title: "Derivados del arroz",
     subtitle: "Arroz 3/4, arrocillo, afrecho, polvillo y cascarilla para uso industrial.",
     category: "derivados",
-    heroImages: [riceLineaDerivados1, riceLineaDerivadosAfrecho, riceLineaDerivadosPolvillo, riceLineaDerivadosCascarilla],
+    heroImages: [riceLineaDerivados1, riceLineaDerivadosArrocillo, riceLineaDerivadosAfrecho, riceLineaDerivadosPolvillo, riceLineaDerivadosCascarilla],
     tileImage: riceLineaDerivados1,
     productIds: [9, 10, 11, 12, 13, 14],
     badges: ["Derivados", "Industria"],
@@ -5161,12 +5163,12 @@ function ReyLeonBoard({ onOpenPriceSheet, onContact }) {
       aspectRatio: "1 / 1.15",
     },
     {
-      image: riceSuperiorVerdeCatalogo,
-      title: "Superior Verde",
-      subtitle: "Uso diario, rendidor y claro para comprar",
-      note: "SUPERIOR",
+      image: riceLineaProductosRealPacifico,
+      title: "Catalogo completo",
+      subtitle: "Lineas principales y derivados del arroz",
+      note: "REAL PACIFICO",
       accent: HOME.leaf,
-      aspectRatio: "1 / 1.15",
+      aspectRatio: "16 / 11",
     },
     {
       image: riceLineaDerivados1,
