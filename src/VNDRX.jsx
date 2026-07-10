@@ -5,6 +5,7 @@ import { getVisibleCompanyKeys, hasDeveloperAccess, resolveInitialCompany } from
 import { VNDRX_BRAND } from "./app/brandStrategy.js";
 import { MARKETPLACE_AUDIENCES, MARKETPLACE_BENEFITS, RECOMMENDED_PRODUCTS, SELLER_STEPS, TRUST_SIGNALS } from "./app/marketplaceContent.js";
 import { getShareUrl, makeReferralCode } from "./domain/referrals.js";
+import { HOME, theme } from "./styles/theme.js";
 import {
   buildCombinedOrderMessage as buildSalesCombinedOrderMessage,
   buildOrderMessage as buildSalesOrderMessage,
@@ -117,37 +118,6 @@ import ricePolvilloFinoCatalogo from "./assets/rice/catalog/polvillo-fino-30kg.p
 import ricePolvilloGruesoCatalogo from "./assets/rice/catalog/polvillo-grueso-30kg.png";
 import riceCascarillaPrensadaCatalogo from "./assets/rice/catalog/cascarilla-prensada.png";
 import yapeQrCard from "./assets/aswa/yape-molino-card.png";
-
-const theme = {
-  bg: "#0F1A0E",
-  bgCard: "#162014",
-  bgLight: "#1E2D1B",
-  gold: "#D4A017",
-  goldLight: "#F0C040",
-  green: "#2D6A27",
-  greenLight: "#4A9E3F",
-  greenDark: "#1A4018",
-  cream: "#F5EDD6",
-  creamDim: "#C8BC9A",
-  text: "#F5EDD6",
-  textDim: "#7A9474",
-  border: "#253823",
-};
-
-const HOME = {
-  page: "#F4EBDD",
-  surface: "#FFFDF8",
-  soft: "#F9F1E5",
-  soft2: "#FFF8EF",
-  text: "#273128",
-  muted: "#667166",
-  border: "#E5D9C7",
-  accent: "#A36D2C",
-  accent2: "#D6A65C",
-  leaf: "#47654B",
-  leaf2: "#6A8A6E",
-  shadow: "0 18px 36px rgba(76, 56, 23, 0.12)",
-};
 
 const ASSETS = {
   promoMain,
