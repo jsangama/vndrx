@@ -125,14 +125,34 @@ El JSON permite sobrescribir productos/precios con `productOverrides`, agregar p
 npm run build
 ```
 
+## Arquitectura modular
+
+VNDRX utiliza una arquitectura modular, escalable y mantenible. El proyecto esta distribuido en multiples archivos y carpetas, con componentes, servicios y paginas independientes, en lugar de concentrar toda la aplicacion en un unico `index.html`.
+
+La interfaz, la logica de negocio, el acceso a datos, las integraciones externas y las configuraciones deben mantenerse separadas para facilitar el mantenimiento, las pruebas y el crecimiento de la plataforma.
+
+La especificacion maestra vive en:
+
+- `internal/architecture/VNDRX_ARCHITECTURE_RULE.md`
+- `internal/architecture/VNDRX_PLATFORM_MODEL.md`
+
 ## Estructura
 
 - `src/app/`: configuracion de entrada, persistencia e identidad de producto.
+- `src/components/`: componentes reutilizables de interfaz.
+- `src/pages/`: pantallas y vistas completas.
+- `src/layouts/`: estructuras compartidas por tipo de usuario.
+- `src/services/`: integraciones externas y acceso a datos.
 - `src/domain/`: logica de pedidos, referidos y dominio de venta.
 - `src/VNDRX.jsx`: shell principal de ventas y pedidos mientras se extraen componentes.
 - `src/assets/`: imagenes y artes de las marcas.
+- `src/hooks/`, `src/context/`, `src/store/`, `src/routes/`: infraestructura de UI y estado para futuras fases.
+- `src/models/`, `src/utils/`, `src/validations/`, `src/constants/`, `src/config/`: soporte de dominio, validaciones y configuracion.
+- `backend/`: capa preparada para API, seguridad, pedidos, pagos, integraciones y operaciones futuras.
+- `database/`: capa preparada para migraciones, semillas y esquemas fuera de Supabase.
+- `internal/`: documentacion privada de producto, roadmap y arquitectura.
 - `public/`: service worker y archivos publicos.
-- `docs/`: build publicado para GitHub Pages.
+- `docs/`: build publicado para GitHub Pages. No usar como fuente editable de documentacion.
 
 ## Notas
 
