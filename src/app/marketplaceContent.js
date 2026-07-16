@@ -1,17 +1,17 @@
 export const MARKETPLACE_AUDIENCES = [
   {
     title: "Para consumidores",
-    text: "Compra productos locales, frescos y confiables con precios claros, contacto directo, delivery y pago seguro o contra entrega.",
+    text: "Compra productos locales, frescos y confiables directamente de productores y fabricantes verificados.",
     action: "Compra directo y con confianza",
   },
   {
     title: "Para productores",
-    text: "Publica tus productos, muestra tu historia, recibe pedidos por WhatsApp y llega a mas clientes sin depender de intermediarios.",
+    text: "Publica lo que produces, muestra tu historia, recibe pedidos por WhatsApp y llega a mas clientes.",
     action: "Vende mas con presencia digital",
   },
   {
     title: "Para restaurantes y negocios",
-    text: "Compra por volumen, pide cotizaciones, coordina pedidos recurrentes y conecta directo con productores de insumos locales.",
+    text: "Compra por volumen, pide cotizaciones, coordina pedidos recurrentes y conecta directo con quien produce.",
     action: "Compra para tu negocio",
   },
 ];
@@ -19,6 +19,8 @@ export const MARKETPLACE_AUDIENCES = [
 export const MARKETPLACE_BENEFITS = [
   "Compra local, compra directo",
   "Productores verificados",
+  "Fabricantes verificados",
+  "Origen real del producto",
   "Atencion por WhatsApp",
   "Delivery local",
   "Pago contra entrega",
@@ -30,11 +32,11 @@ export const MARKETPLACE_BENEFITS = [
 export const TRUST_SIGNALS = [
   {
     title: "Productores verificados",
-    text: "Cada tienda activa muestra informacion del negocio, productos reales y canales directos de atencion.",
+    text: "Cada tienda activa debe corresponder a quien fabrica, cultiva, cria, procesa o elabora sus productos.",
   },
   {
     title: "Compra directa",
-    text: "El pedido llega al productor o negocio sin pasos innecesarios ni intermediarios ocultos.",
+    text: "El pedido llega directamente al productor o fabricante responsable del producto.",
   },
   {
     title: "Atencion por WhatsApp",

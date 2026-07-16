@@ -8,25 +8,25 @@ Directo del productor al consumidor.
 
 ## Mision
 
-Conectar productores, fabricantes y empresas con consumidores finales mediante una plataforma digital sin intermediarios innecesarios.
+Conectar productores, fabricantes directos y consumidores finales mediante una plataforma digital donde quien vende debe ser quien produce.
 
 ## Vision
 
-Convertirse en el marketplace lider de Latinoamerica para comercio directo entre productores y consumidores.
+Convertirse en el marketplace lider de Latinoamerica para comercio directo entre productores, fabricantes directos y compradores.
 
 ## Problema
 
-- Existen demasiados intermediarios.
+- Hay cadenas comerciales ocultas que encarecen el producto.
 - Los productores ganan menos.
 - Los consumidores pagan mas.
 - Es dificil encontrar proveedores confiables.
 
 ## Solucion
 
-- Empresas venden directamente.
+- Productores venden directamente.
 - Agricultores venden directamente.
-- Fabricantes venden directamente.
-- Distribuidores autorizados venden directamente.
+- Fabricantes directos venden directamente.
+- Cada vendedor debe producir lo que publica.
 
 ## Tiendas visibles actualmente
 
@@ -48,7 +48,7 @@ Convertirse en el marketplace lider de Latinoamerica para comercio directo entre
 
 ## Objetivo principal
 
-Reducir intermediarios y aumentar ganancias para productores y consumidores.
+Conectar directamente a quien produce con quien compra, aumentando confianza, origen real y mejores oportunidades comerciales.
 
 ## Demo publica
 
@@ -135,6 +135,11 @@ La especificacion maestra vive en:
 
 - `internal/architecture/VNDRX_ARCHITECTURE_RULE.md`
 - `internal/architecture/VNDRX_PLATFORM_MODEL.md`
+- `internal/architecture/VNDRX_DIRECT_PRODUCTION_RULE.md`
+
+## Regla de produccion directa
+
+En VNDRX, quien vende debe ser quien produce. La plataforma solo admite productores y fabricantes directos verificados. El modelo de validacion vive en `src/domain/directProduction.js` y la base de datos propuesta vive en `database/schema/direct_production_sellers.sql`.
 
 ## Estructura
 

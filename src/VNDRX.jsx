@@ -5,6 +5,7 @@ import { getVisibleCompanyKeys, hasDeveloperAccess, resolveInitialCompany } from
 import { VNDRX_BRAND } from "./app/brandStrategy.js";
 import { MARKETPLACE_AUDIENCES, MARKETPLACE_BENEFITS, RECOMMENDED_PRODUCTS, SELLER_STEPS, TRUST_SIGNALS } from "./app/marketplaceContent.js";
 import { getShareUrl, makeReferralCode } from "./domain/referrals.js";
+import { DIRECT_PRODUCTION_LABEL } from "./domain/directProduction.js";
 import { HOME, theme } from "./styles/theme.js";
 import {
   buildCombinedOrderMessage as buildSalesCombinedOrderMessage,
@@ -350,7 +351,7 @@ const products = [
     subtitle: "Saco completo - Venta directa del molino",
     line: "premium",
     img: "EV",
-    desc: "Saco de 49 kilos de Arroz Extra Verde Real Pacifico para restaurantes, distribuidores y compras mayoristas.",
+    desc: "Saco de 49 kilos de Arroz Extra Verde Real Pacifico para restaurantes, negocios y compras empresariales directas.",
     quality: "Extra - 95% grano entero",
     variety: "Feron",
     tags: ["Producto principal", "Mas vendido", "49 kg", "Molino directo"],
@@ -385,7 +386,7 @@ const products = [
     desc: "Saco de 8 paquetes de 5 kilos de Arroz Extra Verde, pensado para abastecer negocios y familias por volumen.",
     quality: "Extra - 95% grano entero",
     variety: "Feron",
-    tags: ["8 x 5 kg", "40 kg", "Mayorista", "Ahorro por volumen"],
+    tags: ["8 x 5 kg", "40 kg", "Volumen directo", "Ahorro por volumen"],
     presentations: [{ label: "8 und x 5 kg (40 kg)", price: 128.00, unit: "saco" }],
     saving: 35,
     cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
@@ -520,7 +521,7 @@ const products = [
     subtitle: "Saco completo premium",
     line: "premium",
     img: "AF",
-    desc: "Saco de 49 kilos de Anejo Feron para mayoristas, restaurantes y distribuidores.",
+    desc: "Saco de 49 kilos de Anejo Feron para restaurantes, negocios y compradores empresariales directos.",
     quality: "Extra - 95% grano entero",
     variety: "Feron",
     tags: ["Producto principal", "Favorito de restaurantes", "49 kg", "Molino directo"],
@@ -555,7 +556,7 @@ const products = [
     desc: "Saco de Anejo Feron con 8 paquetes de 5 kilos para abastecer familias y negocios.",
     quality: "Extra - 95% grano entero",
     variety: "Feron",
-    tags: ["8 x 5 kg", "40 kg", "Mayorista", "Ahorro por volumen"],
+    tags: ["8 x 5 kg", "40 kg", "Volumen directo", "Ahorro por volumen"],
     presentations: [{ label: "8 und x 5 kg (40 kg)", price: 136.00, unit: "saco" }],
     saving: 38,
     cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
@@ -600,7 +601,7 @@ const products = [
     subtitle: "Saco completo - Mayor rendimiento",
     line: "premium",
     img: "AV",
-    desc: "Saco de 49 kilos de Arroz Anejo Valor Real Pacifico, pensado para restaurantes, distribuidores y compras de alto rendimiento.",
+    desc: "Saco de 49 kilos de Arroz Anejo Valor Real Pacifico, pensado para restaurantes, negocios y compras directas de alto rendimiento.",
     quality: "Extra - 95% grano entero",
     variety: "Valor",
     tags: ["Producto principal", "Mayor rendimiento", "49 kg", "Molino directo"],
@@ -683,7 +684,7 @@ const products = [
     desc: "Saco de Anejo Valor con 8 paquetes de 5 kilos, ideal para abastecer negocios y familias por volumen.",
     quality: "Extra - 95% grano entero",
     variety: "Valor",
-    tags: ["8 x 5 kg", "40 kg", "Mayorista", "Anejo Valor"],
+    tags: ["8 x 5 kg", "40 kg", "Volumen directo", "Anejo Valor"],
     presentations: [{ label: "8 und x 5 kg (40 kg)", price: 125.20, unit: "saco" }],
     saving: 36,
     cooking: "1 1/4 taza de agua por taza de arroz - Fuego medio - Reposar 5 min",
@@ -5948,7 +5949,7 @@ function CartDrawer({ cart, onClose, onRemove }) {
               {step === "payment" && "Forma de Pago"}
               {step === "confirm" && "¡Pedido Confirmado!"}
             </div>
-            <div style={{ color: theme.textDim, fontSize: 11 }}>Arroz del Pacifico · Sin intermediarios</div>
+            <div style={{ color: theme.textDim, fontSize: 11 }}>{DIRECT_PRODUCTION_LABEL}</div>
           </div>
           <button onClick={onClose} style={{ background: theme.bg, border: `1px solid ${theme.border}`, color: theme.cream, borderRadius: 8, width: 32, height: 32, cursor: "pointer", fontSize: 16 }}>×</button>
         </div>

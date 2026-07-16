@@ -23,8 +23,8 @@ export const VNDRX_ROADMAP = [
   {
     id: "phase-3",
     name: "Marketplace regional",
-    objective: "Unificar empresas, agricultores, productores y distribuidores en una compra directa.",
-    modules: ["Empresas", "Productores", "Distribuidores", "Consumidores"],
+    objective: "Unificar empresas productoras, agricultores y fabricantes directos en una compra directa.",
+    modules: ["Empresas productoras", "Productores", "Fabricantes directos", "Consumidores"],
   },
   {
     id: "phase-4",
@@ -54,7 +54,7 @@ export const VNDRX_ROADMAP = [
     id: "phase-8",
     name: "Ecosistema completo",
     objective: "Una sola plataforma donde empresas venden, productores ofrecen y consumidores compran directo.",
-    modules: ["Empresas", "Agricultores", "Distribuidores", "Consumidores", "IA"],
+    modules: ["Empresas productoras", "Agricultores", "Fabricantes directos", "Consumidores", "IA"],
   },
 ];
 

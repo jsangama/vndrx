@@ -2,7 +2,7 @@
 
 VNDRX sera una plataforma digital modular de comercio directo y abastecimiento inteligente que conectara productores, agricultores, emprendedores y empresas con compradores minoristas y empresariales.
 
-Permitira registrar oferta y demanda, coordinar pedidos mediante web y WhatsApp, consolidar produccion, organizar logistica, facilitar pagos, ofrecer acompanamiento de campo y reducir intermediarios innecesarios.
+Permitira registrar oferta y demanda, coordinar pedidos mediante web y WhatsApp, consolidar produccion, organizar logistica, facilitar pagos, ofrecer acompanamiento de campo y eliminar cadenas comerciales ocultas.
 
 La implementacion comenzara en San Martin y estara disenada para escalar progresivamente al Peru y a mercados internacionales.
 
@@ -10,7 +10,7 @@ La implementacion comenzara en San Martin y estara disenada para escalar progres
 
 Productores venden mejor. Consumidores compran mejor. Negocios compran directo. Todos ganan.
 
-VNDRX conecta productores, empresas y compradores; organiza la oferta, consolida pedidos, facilita la logistica y genera operaciones comerciales mas directas, transparentes y eficientes.
+VNDRX conecta productores, fabricantes directos y compradores; organiza la oferta, consolida pedidos, facilita la logistica y genera operaciones comerciales mas directas, transparentes y eficientes.
 
 ## Usuarios principales
 
@@ -18,7 +18,7 @@ VNDRX conecta productores, empresas y compradores; organiza la oferta, consolida
 - Productores agroindustriales.
 - Restaurantes y hoteles.
 - Supermercados y mercados.
-- Bodegas y distribuidores.
+- Bodegas y negocios compradores.
 - Empresas compradoras.
 - Transportistas.
 - Agentes de campo.
@@ -51,15 +51,19 @@ Cada modulo tendra componentes, paginas, servicios y datos separados. Nada debe 
 
 ## Venta directa del productor al comprador
 
-El productor registra su cosecha, disponibilidad y precio. Del otro lado, restaurantes, mercados, hoteles, bodegas y distribuidores publican lo que necesitan.
+El productor o fabricante directo registra su produccion, disponibilidad y precio. Del otro lado, restaurantes, mercados, hoteles, bodegas y empresas compradoras publican lo que necesitan.
 
 VNDRX encuentra coincidencias entre ambos:
 
 ```text
-Productor -> VNDRX -> comprador empresarial
+Productor o fabricante directo -> VNDRX -> comprador
 ```
 
-La plataforma facilita la operacion y reduce cadenas de intermediarios que encarecen el producto.
+La plataforma facilita la operacion y exige que quien vende sea quien produce.
+
+## Regla de produccion directa
+
+En VNDRX, quien vende debe ser quien produce. Solo pueden publicar productores y fabricantes directos verificados. No existe rol comercial de reventa dentro de la plataforma; los negocios compradores pueden abastecerse, pero no publicar productos de terceros como si fueran propios.
 
 ## Canales de operacion
 
