@@ -25,6 +25,14 @@ import aswaLogo from "./assets/aswa/aswa-logo.png";
 import bidon20l from "./assets/aswa/bidon-san-juanero-20l-2026.png";
 import bidon20lAlt from "./assets/aswa/bidon-san-juanero-20l-alt.png";
 import chicha400ml from "./assets/aswa/chicha-aswa-400ml.png";
+import aswaChicha400Real from "./assets/aswa/chicha-aswa-400ml-real.png";
+import aswaPresentacionesEnvases from "./assets/aswa/aswa-presentaciones-envases.jpg";
+import aswaFeriaVndrx from "./assets/aswa/aswa-vndrx-feria.png";
+import aswaDeliveryPresentaciones from "./assets/aswa/aswa-delivery-presentaciones.png";
+import aswa2Litros from "./assets/aswa/aswa-2-litros.png";
+import aswa3Litros from "./assets/aswa/aswa-3-litros.png";
+import aswa4Litros from "./assets/aswa/aswa-4-litros.png";
+import aswaGalonesBotellas from "./assets/aswa/aswa-galones-botellas.png";
 import juaneEscolar from "./assets/aswa/juane-escolar.png";
 import juaneEscolarAlt from "./assets/aswa/juane-escolar-alt.png";
 import comboEscolar from "./assets/aswa/combo-escolar-san-juan.png";
@@ -130,6 +138,14 @@ const ASSETS = {
   bidon20l,
   bidon20lAlt,
   chicha400ml,
+  aswaChicha400Real,
+  aswaPresentacionesEnvases,
+  aswaFeriaVndrx,
+  aswaDeliveryPresentaciones,
+  aswa2Litros,
+  aswa3Litros,
+  aswa4Litros,
+  aswaGalonesBotellas,
   juaneEscolar,
   juaneEscolarAlt,
   comboEscolar,
@@ -2155,7 +2171,7 @@ const ASWA_PROMO_LIBRARY = [
   },
   {
     id: "bidon-20l",
-    src: ASSETS.bidon20l,
+    src: ASSETS.aswaGalonesBotellas,
     title: "Bidon sanjuanero 20L",
     subtitle: "S/ 60 recarga o S/ 80 con bidon nuevo",
     note: "SAN JUAN",
@@ -2175,7 +2191,7 @@ const ASWA_PROMO_LIBRARY = [
   },
   {
     id: "chicha-400ml",
-    src: ASSETS.chicha400ml,
+    src: ASSETS.aswaChicha400Real,
     title: "Chicha ASWA 400 ml",
     subtitle: "Desde S/ 2.50",
     note: "ASWA",
@@ -2215,7 +2231,7 @@ const ASWA_PROMO_LIBRARY = [
   },
   {
     id: "bidon-alt",
-    src: ASSETS.bidon20lAlt,
+    src: ASSETS.aswaFeriaVndrx,
     title: "Bidon 20L alterno",
     subtitle: "Otra version del bidon sanjuanero",
     note: "2026",
@@ -2350,11 +2366,11 @@ const PRODUCT_MEDIA = {
   12: { src: ricePolvilloFinoCatalogo, fit: "contain" },
   13: { src: ricePolvilloGruesoCatalogo, fit: "contain" },
   14: { src: riceCascarillaPrensadaCatalogo, fit: "contain" },
-  15: { src: ASSETS.chicha400ml, fit: "contain" },
-  901: { src: ASSETS.chicha400ml, fit: "contain" },
-  902: { src: ASSETS.chicha400ml, fit: "contain" },
-  903: { src: ASSETS.chicha400ml, fit: "contain" },
-  16: { src: ASSETS.bidon20l, fit: "contain" },
+  15: { src: ASSETS.aswaChicha400Real, fit: "contain" },
+  901: { src: ASSETS.aswa2Litros, fit: "contain" },
+  902: { src: ASSETS.aswa3Litros, fit: "contain" },
+  903: { src: ASSETS.aswa4Litros, fit: "contain" },
+  16: { src: ASSETS.aswaPresentacionesEnvases, fit: "contain" },
   17: { src: ASSETS.comboEscolar, fit: "contain" },
   18: { src: ASSETS.juaneEscolar, fit: "contain" },
   19: { src: ASSETS.joraSazon, fit: "contain" },
@@ -3272,24 +3288,24 @@ function PromoBoard() {
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12 }}>
               <PromoTile
-                image={ASSETS.bidon20l}
+                image={ASSETS.aswaGalonesBotellas}
                 title="Bidón 20L"
                 subtitle="S/ 60 recarga · S/ 80 nuevo"
                 note="SAN JUAN"
                 accent="#F0C040"
                 fit="contain"
                 aspectRatio="1 / 1.1"
-                onClick={() => openAsset(ASSETS.bidon20l)}
+                onClick={() => openAsset(ASSETS.aswaGalonesBotellas)}
               />
               <PromoTile
-                image={ASSETS.chicha400ml}
+                image={ASSETS.aswaChicha400Real}
                 title="Chicha 400 ml"
                 subtitle="Desde S/ 2.50"
                 note="ASWA"
                 accent="#22C55E"
                 fit="contain"
                 aspectRatio="1 / 1.1"
-                onClick={() => openAsset(ASSETS.chicha400ml)}
+                onClick={() => openAsset(ASSETS.aswaChicha400Real)}
               />
               <PromoTile
                 image={ASSETS.juaneEscolar}
